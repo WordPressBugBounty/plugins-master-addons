@@ -37,7 +37,6 @@ class JLTMA_Megamenu_Options
 
     function get_jltma_get_megamenu_options()
     {
-
         $menu_id = $this->current_menu_id();
         $data = $this->get_option(self::$jltma_menu_settings_key, []);
         $data = (isset($data['menu_location_' . $menu_id])) ? $data['menu_location_' . $menu_id] : [];
@@ -186,8 +185,6 @@ class JLTMA_Megamenu_Options
         if (!current_user_can('manage_options')) {
             return;
         }
-
-        check_ajax_referer('jltma_megamenu_nonce');
 
         $menu_id = $this->current_menu_id();
         $is_enabled = isset($_REQUEST['is_enabled']) ? sanitize_key($_REQUEST['is_enabled']) : 0;

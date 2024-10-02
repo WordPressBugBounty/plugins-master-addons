@@ -135,7 +135,8 @@ if (!class_exists('Recommended_Plugins')) {
 				__('Recommended', 'master-addons'),
 				'manage_options',
 				'master-addons-recommended-plugins',
-				array($this, 'render_recommended_plugins')
+				array($this, 'render_recommended_plugins'),
+				99
 			);
 		}
 	}

@@ -4,8 +4,8 @@ if( !function_exists('ma_el_fs_add_licensing_helper')){
 	function ma_el_fs_add_licensing_helper() { ?>
 		<script type="text/javascript">
             (function () {
-                window.ma_el_fs = { can_use_premium_code: <?php
-					echo  json_encode( ma_el_fs()->can_use_premium_code() ) ;
+                window.ma_el_fs = { can_use_premium_code__premium_only: <?php
+					echo  json_encode( ma_el_fs()->can_use_premium_code__premium_only() ) ;
 					?>};
             })();
 		</script>

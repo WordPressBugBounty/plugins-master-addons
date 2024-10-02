@@ -110,11 +110,11 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
          * @return void
          */
         public function jltma_support_forum_url( $support_url ) {
-            if ( ma_el_fs()->is_premium() ) {
-                $support_url = 'https://master-addons.com/support/';
-            } else {
-                $support_url = 'https://wordpress.org/support/plugin/master-addons/';
-            }
+            // if (ma_el_fs()->is_premium()) {
+            // 	$support_url = 'https://master-addons.com/support/';
+            // } else {
+            $support_url = 'https://wordpress.org/support/plugin/master-addons/';
+            // }
             return $support_url;
         }
 
@@ -231,11 +231,6 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             }
             if ( !defined( 'JLTMA_TEMPLATES' ) ) {
                 define( 'JLTMA_TEMPLATES', plugin_dir_path( __FILE__ ) . 'inc/template-parts/' );
-            }
-            if ( ma_el_fs()->can_use_premium_code() ) {
-                if ( !defined( 'MASTER_ADDONS_PRO_ADDONS_VERSION' ) ) {
-                    define( 'MASTER_ADDONS_PRO_ADDONS_VERSION', ma_el_fs()->can_use_premium_code() );
-                }
             }
             define( 'JLTMA_ACTIVATION_REDIRECT_TRANSIENT_KEY', '_master_addons_activation_redirect' );
         }
@@ -443,7 +438,7 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
                 foreach ( $jltma_all_addons as $key => $widget ) {
                     if ( isset( $activated_widgets[$widget['key']] ) && $activated_widgets[$widget['key']] == true ) {
                         $widget_file = JLTMA_ADDONS . $widget['key'] . '/' . $widget['key'] . '.php';
-                        if ( !ma_el_fs()->can_use_premium_code() && (isset( $widget['is_pro'] ) && $widget['is_pro']) ) {
+                        if ( !ma_el_fs()->can_use_premium_code__premium_only() && (isset( $widget['is_pro'] ) && $widget['is_pro']) ) {
                             continue;
                         }
                         if ( file_exists( $widget_file ) ) {
@@ -470,7 +465,7 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
                     foreach ( JLTMA_Addon_Extensions::$jltma_extensions['jltma-extensions']['extension'] as $extensions ) {
                         if ( isset( $activated_extensions[$extensions['key']] ) && $activated_extensions[$extensions['key']] == true ) {
                             $extensions_file = JLTMA_PATH . '/inc/modules/' . $extensions['key'] . '/' . $extensions['key'] . '.php';
-                            if ( !ma_el_fs()->can_use_premium_code() && (isset( $extensions['is_pro'] ) && $extensions['is_pro']) ) {
+                            if ( !ma_el_fs()->can_use_premium_code__premium_only() && (isset( $extensions['is_pro'] ) && $extensions['is_pro']) ) {
                                 continue;
                             }
                             if ( file_exists( $extensions_file ) ) {
@@ -485,7 +480,7 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
                 foreach ( JLTMA_Addon_Extensions::$jltma_extensions['jltma-extensions']['extension'] as $extensions ) {
                     if ( isset( $activated_extensions[$extensions['key']] ) && $activated_extensions[$extensions['key']] == true ) {
                         $extensions_file = JLTMA_PATH . '/inc/modules/' . $extensions['key'] . '/' . $extensions['key'] . '.php';
-                        if ( !ma_el_fs()->can_use_premium_code() && (isset( $extensions['is_pro'] ) && $extensions['is_pro']) ) {
+                        if ( !ma_el_fs()->can_use_premium_code__premium_only() && (isset( $extensions['is_pro'] ) && $extensions['is_pro']) ) {
                             continue;
                         }
                         if ( file_exists( $extensions_file ) ) {
@@ -573,7 +568,7 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
                 // $links[] = '<a href="https://master-addons.com/docs/" target="_blank">' . esc_html__('Documentation', 'master-addons' ) . '</a>';
             }
             // go pro
-            // if (!ma_el_fs()->can_use_premium_code()) {
+            // if (!ma_el_fs()->can_use_premium_code__premium_only()) {
             // 	$links[] = sprintf('<a href="https://master-addons.com/" target="_blank" style="color: #39b54a; font-weight: bold;">' . esc_html__('Go Pro', 'master-addons' ) . '</a>');
             // }
             return $links;
@@ -618,9 +613,10 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             require_once JLTMA_PATH . '/inc/classes/Animation.php';
             // Traits: Global Controls
             require_once JLTMA_PATH . '/inc/traits/swiper-controls.php';
+            include_once JLTMA_PATH . '/inc/traits/widget-notice.php';
             // Recommeded Plugins
-            require_once JLTMA_PATH . '/lib/Recommended.php';
-            require_once JLTMA_PATH . '/inc/classes/Recommended_Plugins.php';
+            // require_once JLTMA_PATH . '/lib/Recommended.php';
+            // require_once JLTMA_PATH . '/inc/classes/Recommended_Plugins.php';
             // Notifications
             require_once JLTMA_PATH . '/inc/classes/Notifications/Base/Date.php';
             require_once JLTMA_PATH . '/inc/classes/Notifications/Base/Data.php';

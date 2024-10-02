@@ -19,6 +19,7 @@ if (!defined('ABSPATH')) exit; // If this file is called directly, abort.
 
 class JLTMA_Progress_Bars extends Widget_Base
 {
+	use \MasterAddons\Inc\Traits\Widget_Notice;
 
 	public function get_name()
 	{
@@ -42,10 +43,7 @@ class JLTMA_Progress_Bars extends Widget_Base
 
 	public function get_script_depends()
 	{
-		return [
-			'master-addons-waypoints',
-			'master-addons-scripts',
-		];
+		return [ 'master-addons-scripts' ];
 	}
 
 	public function get_help_url()
@@ -53,6 +51,10 @@ class JLTMA_Progress_Bars extends Widget_Base
 		return 'https://master-addons.com/demos/multiple-progress-bars/';
 	}
 
+	protected function is_dynamic_content(): bool
+	{
+		return false;
+	}
 
 	protected function register_controls()
 	{
@@ -174,36 +176,7 @@ class JLTMA_Progress_Bars extends Widget_Base
 		);
 		$this->end_controls_section();
 
-
-		//Upgrade to Pro
-		if (ma_el_fs()->is_not_paying()) {
-
-			$this->start_controls_section(
-				'jltma_section_pro_style_section',
-				[
-					'label' => esc_html__('Upgrade to Pro for More Features', 'master-addons' ),
-				]
-			);
-
-			$this->add_control(
-				'jltma_control_get_pro_style_tab',
-				[
-					'label' => esc_html__('Unlock more possibilities', 'master-addons' ),
-					'type' => Controls_Manager::CHOOSE,
-					'options' => [
-						'1' => [
-							'title' => esc_html__('', 'master-addons' ),
-							'icon' => 'fa fa-unlock-alt',
-						],
-					],
-					'default' => '1',
-					'description' => '<span class="pro-feature"> Upgrade to  <a href="' . ma_el_fs()->get_upgrade_url() . '" target="_blank">Pro Version</a> for more Elements with Customization Options.</span>'
-				]
-			);
-
-			$this->end_controls_section();
-		}
-
+		$this->upgrade_to_pro_message();
 
 		$this->start_controls_section(
 			'section_stats_bar_styling',
@@ -409,38 +382,6 @@ class JLTMA_Progress_Bars extends Widget_Base
 		);
 
 		$this->end_controls_section();
-
-
-
-		if (ma_el_fs()->is_not_paying()) {
-
-			$this->start_controls_section(
-				'jltma_section_upgrade_pro',
-				[
-					'label' => esc_html__('Upgrade to Pro for More Features', 'master-addons' ),
-					'tab' => Controls_Manager::TAB_STYLE
-				]
-			);
-
-			$this->add_control(
-				'maad_el_control_get_pro',
-				[
-					'label' => esc_html__('Unlock more possibilities', 'master-addons' ),
-					'type' => Controls_Manager::CHOOSE,
-					'options' => [
-						'1' => [
-							'title' => esc_html__('', 'master-addons' ),
-							'icon' => 'fa fa-unlock-alt',
-						],
-					],
-					'default' => '1',
-					//						wp_redirect( '' )
-					'description' => '<span class="pro-feature"> Upgrade to <a href="' . ma_el_fs()->get_upgrade_url() . '" target="_blank">Pro Version</a> for more Elements with Customization Options.</span>'
-				]
-			);
-
-			$this->end_controls_section();
-		}
 	}
 
 	protected function render()
@@ -455,10 +396,19 @@ class JLTMA_Progress_Bars extends Widget_Base
 		foreach ($settings['stats_bars'] as $stats_bar) :
 
 			$color_style = '';
-			$color = ($stats_bar['bar_color']) ? $stats_bar['bar_color'] : $settings['stats_bar_active_bar_bg_color'];
+			$color = '';
+			$bar_color = !empty($stats_bar['bar_color']) ? $stats_bar['bar_color'] : '';
+			$stats_bar_active_bar_bg_color = !empty($stats_bar['stats_bar_active_bar_bg_color']) ? $stats_bar['stats_bar_active_bar_bg_color'] : '';
 
-			if ($color)
+			if(!empty($bar_color)){
+				$color = $bar_color;
+			}else{
+				$color = $stats_bar_active_bar_bg_color;
+			}
+
+			if ($color){
 				$color_style = ' style="background:' . esc_attr($color) . ';"';
+			}
 
 			$child_output = '<div class="jltma-stats-bar elementor-repeater-item-'.$stats_bar['_id'].'">';
 

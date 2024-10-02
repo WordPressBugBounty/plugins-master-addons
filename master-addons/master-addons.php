@@ -5,13 +5,12 @@
  * Description: Master Addons is easy and must have Elementor Addons for WordPress Page Builder. Clean, Modern, Hand crafted designed Addons blocks.
  * Plugin URI: https://master-addons.com/all-widgets/
  * Author: Jewel Theme
- * Version: 2.0.6.5
+ * Version: 2.0.6.6
  * Author URI: https://master-addons.com
  * Text Domain: master-addons
  * Domain Path: /languages
- * Requires Plugins: elementor
- * Elementor tested up to: 3.23.4
- * Elementor Pro tested up to: 3.23.3
+ * Elementor tested up to: 3.24.4
+ * Elementor Pro tested up to: 3.24.2
  *  */
 // No, Direct access Sir !!!
 if ( !defined( 'ABSPATH' ) ) {
@@ -61,7 +60,7 @@ if ( function_exists( 'ma_el_fs' ) ) {
                         'first-path'  => 'admin.php?page=master-addons-settings',
                         'contact'     => false,
                         'affiliation' => false,
-                        'support'     => false,
+                        'support'     => true,
                         'pricing'     => true,
                     ),
                     'is_live'         => true,
@@ -80,9 +79,6 @@ if ( function_exists( 'ma_el_fs' ) ) {
 // Instantiate Master Addons Class
 if ( !class_exists( '\\MasterAddons\\Master_Elementor_Addons' ) ) {
     require_once dirname( __FILE__ ) . '/class-master-elementor-addons.php';
-}
-if ( ma_el_fs()->is_not_paying() ) {
-    require_once dirname( __FILE__ ) . '/inc/freemius-config.php';
 }
 // Activation and Deactivation hooks
 if ( class_exists( '\\MasterAddons\\Master_Elementor_Addons' ) ) {

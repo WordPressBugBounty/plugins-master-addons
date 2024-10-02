@@ -33,6 +33,7 @@ if (!defined('ABSPATH')) {
  */
 class JLTMA_Pricing_Table extends Widget_Base
 {
+	use \MasterAddons\Inc\Traits\Widget_Notice;
 
 	public function get_name()
 	{
@@ -93,6 +94,10 @@ class JLTMA_Pricing_Table extends Widget_Base
 		return 'https://master-addons.com/demos/pricing-table/';
 	}
 
+	protected function is_dynamic_content(): bool
+	{
+		return false;
+	}
 
 	protected function register_controls()
 	{
@@ -2121,36 +2126,8 @@ class JLTMA_Pricing_Table extends Widget_Base
 		);
 		$this->end_controls_section();
 
+		$this->upgrade_to_pro_message();
 
-
-		//Upgrade to Pro
-		if (ma_el_fs()->is_not_paying()) {
-
-			$this->start_controls_section(
-				'jltma_section_pro_style_section',
-				[
-					'label' => esc_html__('Upgrade to Pro for More Features', 'master-addons' ),
-				]
-			);
-
-			$this->add_control(
-				'jltma_control_get_pro_style_tab',
-				[
-					'label'   => esc_html__('Unlock more possibilities', 'master-addons' ),
-					'type'    => Controls_Manager::CHOOSE,
-					'options' => [
-						'1' => [
-							'title' => esc_html__('', 'master-addons' ),
-							'icon'  => 'fa fa-unlock-alt',
-						],
-					],
-					'default'     => '1',
-					'description' => '<span class="pro-feature"> Upgrade to  <a href="' . ma_el_fs()->get_upgrade_url() . '" target="_blank">Pro Version</a> for more Elements with Customization Options.</span>'
-				]
-			);
-
-			$this->end_controls_section();
-		}
 	}
 
 

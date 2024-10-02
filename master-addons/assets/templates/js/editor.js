@@ -184,7 +184,8 @@
                 }
             }), a.ModalHeaderInsertButton = Marionette.ItemView.extend({
                 template: "#views-ma-el-template-modal-insert-button",
-                id: "ma-el-template-modal-insert-button",
+                id: "jltma-template-modal-insert-wrapper",
+                className: "elementor-template-library-template-action jltma-modal-template-header-item",
                 behaviors: {
                     insertTemplate: {
                         behaviorClass: a.ModalInsertTemplateBehavior

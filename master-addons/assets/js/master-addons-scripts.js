@@ -82,7 +82,18 @@
         return $scope.data('id');
     };
 
-
+    // IntersectionObserver API integration
+    function jltMAObserveTarget(target, callback) {
+        var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+        var observer = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    callback(entry);
+                }
+            });
+        }, options);
+        observer.observe(target);
+    }
 
     var Master_Addons = {
 
@@ -2499,63 +2510,47 @@
             });
         },
 
-        MA_PiechartsHandlerOnScroll: function ($scope, $)
-        {
-
-            $scope.waypoint(function (direction)
-            {
-
-                Master_Addons.MA_PiechartsHandler($(this.element), $);
-
-            }, {
-                offset: (window.innerHeight || document.documentElement.clientHeight) - 100,
-                triggerOnce: true
+        MA_BarCharts: function BarChart($scope) {
+            jltMAObserveTarget($scope[0], function () {
+                var $container = $scope.find('.jltma-bar-chart-container'),
+                    $chart_canvas = $scope.find('#jltma-bar-chart'),
+                    settings = $container.data('settings');
+                if ($container.length) {
+                    new Chart($chart_canvas, settings);
+                }
             });
         },
 
-        MA_PiechartsHandler: function ($scope, $)
+        MA_PieCharts: function ($scope, $)
         {
+            jltMAObserveTarget($scope[0], function () {
+                $scope.find('.ma-el-piechart .ma-el-percentage').each(function () {
+                    var track_color = $(this).data('track-color');
+                    var bar_color = $(this).data('bar-color');
 
-            $scope.find('.ma-el-piechart .ma-el-percentage').each(function ()
-            {
-
-                var track_color = $(this).data('track-color');
-                var bar_color = $(this).data('bar-color');
-
-                $(this).easyPieChart({
-                    animate: 2000,
-                    lineWidth: 10,
-                    barColor: bar_color,
-                    trackColor: track_color,
-                    scaleColor: false,
-                    lineCap: 'square',
-                    size: 220
-
+                    $(this).easyPieChart({
+                        animate: 2000,
+                        lineWidth: 10,
+                        barColor: bar_color,
+                        trackColor: track_color,
+                        scaleColor: false,
+                        lineCap: 'square',
+                        size: 220
+                    });
                 });
-
             });
-
         },
 
-        StatsBarHandler: function ($scope, $)
+        ProgressBars: function ($scope, $)
         {
-            $scope.find('.jltma-stats-bar-content').each(function ()
-            {
-                var dataperc = $(this).data('perc');
-                $(this).animate({ "width": dataperc + "%" }, dataperc * 20);
+            jltMAObserveTarget($scope[0], function () {
+                $scope.find('.jltma-stats-bar-content').each(function () {
+                    var dataperc = $(this).data('perc');
+                    $(this).animate({ "width": dataperc + "%" }, dataperc * 20);
+                });
             });
         },
 
-        StatsBarHandlerOnScroll: function ($scope, $)
-        {
-            $scope.MasterAddonshWaypoint(function (direction)
-            {
-                Master_Addons.StatsBarHandler($(this.element), $);
-                this.destroy(); // Done with handle on scroll
-            }, {
-                offset: (window.innerHeight || document.documentElement.clientHeight) - 150
-            });
-        },
 
         // Toggle Content
         MA_Toggle_Content: function ($scope, $)
@@ -2723,13 +2718,16 @@
                 var revealId = '#reveal-' + $scope.data('id'),
                     revealistance = document.querySelector(revealId);
 
-                Master_Addons.MA_Reveal.revealAction();
+                if (!jQuery(revealId).hasClass('block-revealer')) {
+                    Master_Addons.MA_Reveal.revealAction();
+                }
 
                 Master_Addons.MA_Reveal.waypointOptions = {
                     offset: '100%',
                     triggerOnce: true
                 };
-                elementorFrontend.waypoint($(revealistance), Master_Addons.MA_Reveal.runReveal, Master_Addons.MA_Reveal.waypointOptions);
+
+                jltMAObserveTarget(revealistance, Master_Addons.MA_Reveal.runReveal, Master_Addons.MA_Reveal.waypointOptions);
             }
         },
 
@@ -3386,7 +3384,7 @@
             $('body').addClass('js');
             Master_Addons.initEvents($scope, $);
         }
-        
+
     };
 
     $(window).on('elementor/frontend/init', function ()
@@ -3418,7 +3416,7 @@
         elementorFrontend.hooks.addAction('frontend/element_ready/ma-news-ticker.default', Master_Addons.MA_NewsTicker);
         elementorFrontend.hooks.addAction('frontend/element_ready/ma-el-countdown-timer.default', Master_Addons.MA_CountdownTimer);
         elementorFrontend.hooks.addAction('frontend/element_ready/jltma-counter-up.default', Master_Addons.MA_Counter_Up);
-        elementorFrontend.hooks.addAction('frontend/element_ready/ma-piecharts.default', Master_Addons.MA_PiechartsHandler);
+        elementorFrontend.hooks.addAction('frontend/element_ready/ma-piecharts.default', Master_Addons.MA_PieCharts);
         elementorFrontend.hooks.addAction('frontend/element_ready/ma-timeline.default', Master_Addons.MA_Timeline);
         elementorFrontend.hooks.addAction('frontend/element_ready/ma-image-filter-gallery.default', Master_Addons.MA_Image_Filter_Gallery);
         elementorFrontend.hooks.addAction('frontend/element_ready/jltma-gallery-slider.default', Master_Addons.MA_Gallery_Slider);
@@ -3427,8 +3425,7 @@
         elementorFrontend.hooks.addAction('frontend/element_ready/jltma-restrict-content.default', Master_Addons.MA_Restrict_Content);
         // elementorFrontend.hooks.addAction('frontend/element_ready/ma-navmenu.default', Master_Addons.MA_Nav_Menu);
         elementorFrontend.hooks.addAction('frontend/element_ready/ma-search.default', Master_Addons.MA_Header_Search);
-        elementorFrontend.hooks.addAction('frontend/element_ready/ma-piecharts.default', Master_Addons.MA_PiechartsHandlerOnScroll);
-        elementorFrontend.hooks.addAction('frontend/element_ready/ma-progressbars.default', Master_Addons.StatsBarHandlerOnScroll);
+        elementorFrontend.hooks.addAction('frontend/element_ready/ma-progressbars.default', Master_Addons.ProgressBars);
         elementorFrontend.hooks.addAction('frontend/element_ready/jltma-instagram-feed.default', Master_Addons.MA_Instagram_Feed);
         elementorFrontend.hooks.addAction('frontend/element_ready/jltma-toggle-content.default', Master_Addons.MA_Toggle_Content);
         elementorFrontend.hooks.addAction('frontend/element_ready/jltma-comments.default', Master_Addons.MA_Comment_Form_reCaptcha);
@@ -3445,15 +3442,15 @@
         if (elementorFrontend.isEditMode())
         {
             elementorFrontend.hooks.addAction('frontend/element_ready/ma-headlines.default', Master_Addons.MA_Animated_Headlines);
-            elementorFrontend.hooks.addAction('frontend/element_ready/ma-piecharts.default', Master_Addons.MA_PiechartsHandler);
-            elementorFrontend.hooks.addAction('frontend/element_ready/ma-progressbars.default', Master_Addons.StatsBarHandler);
+            elementorFrontend.hooks.addAction('frontend/element_ready/ma-piecharts.default', Master_Addons.MA_PieCharts);
+            elementorFrontend.hooks.addAction('frontend/element_ready/ma-progressbars.default', Master_Addons.ProgressBars);
             elementorFrontend.hooks.addAction('frontend/element_ready/ma-news-ticker.default', Master_Addons.MA_NewsTicker);
             // elementorFrontend.hooks.addAction('frontend/element_ready/ma-image-filter-gallery.default', Master_Addons.MA_Image_Filter_Gallery);
             elementorFrontend.hooks.addAction('frontend/element_ready/jltma-gallery-slider.default', Master_Addons.MA_Gallery_Slider);
             elementorFrontend.hooks.addAction('frontend/element_ready/jltma-counter-up.default', Master_Addons.MA_Counter_Up);
             elementorFrontend.hooks.addAction('frontend/element_ready/ma-tooltip.default', Master_Addons.MA_Tooltip);
         }
-        
+
         $('.jltma-wrapper-link').each(function() {
             $(this).siblings().appendTo( $(this) );
             $(this).css({

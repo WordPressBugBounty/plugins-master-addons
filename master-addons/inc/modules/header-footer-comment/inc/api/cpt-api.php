@@ -16,8 +16,6 @@ class JLTMA_Header_Footer_CPT_API extends JLTMA_Header_Footer_Rest_API
             return;
         }
 
-        check_ajax_referer('wp_rest');
-
         $id = $this->request['id'];
 
         $open_editor = $this->request['open_editor'];

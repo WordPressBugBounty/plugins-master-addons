@@ -39,6 +39,7 @@ if (!defined('ABSPATH')) exit; // If this file is called directly, abort.
 class JLTMA_Image_Carousel extends Widget_Base
 {
 	use JLTMA_Swiper_Controls;
+	use \MasterAddons\Inc\Traits\Widget_Notice;
 
 	public function get_name()
 	{
@@ -78,6 +79,11 @@ class JLTMA_Image_Carousel extends Widget_Base
 	public function get_help_url()
 	{
 		return 'https://master-addons.com/demos/team-member/';
+	}
+
+	protected function is_dynamic_content(): bool
+	{
+		return false;
 	}
 
 	protected function jltma_image_carousel_images_controls()
@@ -686,35 +692,8 @@ class JLTMA_Image_Carousel extends Widget_Base
 		$this->end_controls_section();
 
 
+		$this->upgrade_to_pro_message();
 
-
-		if (ma_el_fs()->is_not_paying()) {
-
-			$this->start_controls_section(
-				'jltma_section_upgrade_pro',
-				[
-					'label' => __('Upgrade to Pro for More Features', 'master-addons' )
-				]
-			);
-
-			$this->add_control(
-				'maad_el_control_get_pro',
-				[
-					'label' => __('Unlock more possibilities', 'master-addons' ),
-					'type' => Controls_Manager::CHOOSE,
-					'options' => [
-						'1' => [
-							'title' => __('', 'master-addons' ),
-							'icon' => 'fa fa-unlock-alt',
-						],
-					],
-					'default' => '1',
-					'description' => '<span class="pro-feature"> Upgrade to  <a href="' . ma_el_fs()->get_upgrade_url() . '" target="_blank">Pro Version</a> for more Elements with Customization Options.</span>'
-				]
-			);
-
-			$this->end_controls_section();
-		}
 	}
 
 

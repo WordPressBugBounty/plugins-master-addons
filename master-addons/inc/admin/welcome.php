@@ -31,7 +31,7 @@ $jltma_hide_system_info 	  = jltma_check_options($jltma_white_label_setting['jlt
 					if ($image = wp_get_attachment_image_src($image_id)) {
 						$jltma_logo_image = $image[0];
 					} else {
-						$jltma_logo_image = JLTMA_IMAGE_DIR . 'icon.png';
+						$jltma_logo_image = JLTMA_IMAGE_DIR . 'logo.svg';
 					}
 					?>
 				<img src="<?php echo esc_url($jltma_logo_image ); ?>" />

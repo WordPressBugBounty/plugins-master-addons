@@ -1,10 +1,10 @@
-=== Master Addons - Free Widgets, Hover Effects, Toggle, Conditions, Animations for Elementor ===
+=== Master Addons - Elementor Addons with White Label, Free Widgets, Hover Effects, Conditions, & Animations ===
 Contributors: jwthemeltd, litonice13, masteraddons
-Tags: elementor, addons, widget, elements, templates
+Tags: elementor, elementor addon, elementor addons, elementor widget, widgets for elementor
 Requires at least: 4.0
-Tested up to: 6.5.5
+Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.0.6.5
+Stable tag: 2.0.6.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,11 +12,11 @@ Get Image Hover Effect, Hotspost, Slider, Gallery, Custom Breakpoints, Display c
 
 == Description ==
 
-With [Master Addons for Elementor](https://master-addons.com/), building a beautiful website is a piece of cake. It’s like having a magic box full of over 50 elements and 20 special extensions to make your site look amazing.
+With [Master Addons for Elementor](https://master-addons.com/), building a beautiful website is a piece of cake. It’s like having a magic box of 50+ premium elementor addons and 20+ elementor extensions to make your site look amazing.
 
-From intricate navigation menus to engaging carousels, informative blogs to professional team member showcases – every element is designed with customization in mind. Adjust margins, padding, typography, borders, and more to match your unique style. Plus, captivate your audience with interactive image hover effects and hotspots.
+From intricate navigation menus to engaging elementor media carousels, informative blogs to professional team member showcases – every element is designed with customization in mind. Adjust margins, padding, typography, borders, and more to match your unique style. Plus, captivate your audience with interactive image hover effects and hotspots.
 
-== But that’s not all – Master Addons goes beyond the basics with advanced extensions like Display Condition, Floating Effect, Custom CSS, Tooltip, and Positioning to give you complete control over your website’s look and feel. ==
+== But that’s not all – AS an Elementor addon plugin, Master Addons goes beyond the basics with advanced extensions like Display Condition, Floating Effect, Custom CSS, Tooltip, and Positioning to give you complete control over your website’s look and feel. ==
 
 Ready to transform your ideas into reality? Download the free version of Master Addons today and start building the website of your dreams! 🚀
 
@@ -24,41 +24,41 @@ Ready to transform your ideas into reality? Download the free version of Master 
 
 [Check the Demos](https://master-addons.com/all-widgets/)
 [Try Live Demo](https://demo.master-addons.com/)
-[Support](https://master-addons.com/support/)
+[Support](https://wordpress.org/support/plugin/master-addons/)
 [Upgrade Pro](https://master-addons.com/go/upgrade-pro/)
 [Documentation](https://master-addons.com/docs/)
 
 
-***Every Addons has Extensive Customization Options.***
+***Every Elementor Addon has Extensive Customization Options.***
 
 == Master Addons Overview: ==
 
 [youtube https://www.youtube.com/watch?v=t8Qa4pq7WLs]
 
 
-To use Master Addons you will have to activate Elementor plugin in your WordPress first.
+To use Master Addons you will have to activate the Elementor plugin in your WordPress first.
 
 Here is the Download link for [Elementor](https://wordpress.org/plugins/elementor/) WordPress Plugin.
 
-There are 10+ Pro Elements, 8 Pro Extensions & a lots of pro feature available to unlock 100% customization. **All Star marked Elements, Extensions & features are available in the pro version.** Without further delay let’s dive into the Master Addons Elements and Extensions list.
+The Pro versions contains 10+ Premium Elementor addons, 8 Premium Elementor Extensions with lots of other added features which lets you unlock 100% customization capabilities of Elementor. **All Star marked Elements, Extensions & features are available in the pro version.** Without further delay let’s dive into Master Addons' extensive list of Elements and Extensions.
 
 == ⭐ Master Addons White Label ==
 
-Master Addons White Label Branding allows you to customize your **Plugin name, plugin description, Plugin logo, Developer/Agency Name, Plugin Menu label, Plugin URL.** Also you can hide the **plugin option panel tab** that is not required for you. White label branding is necessary for maximum agency owners who love to remove the plugin branding. Try this feature from Master Addons for Elementor Agency plan.
+The Master Addons White Label Branding feature allows you to customize your **Plugin name, plugin description, Plugin logo, Developer/Agency Name, Plugin Menu label, Plugin URL.** You can even hide the **plugin option panel tab** to keep your dashboard less cluttered. White label Elementor branding is a must have feature for most agency owners as it allows them to establish their own branding. The White Label Elementor feature is only available on our Agency plan.
 
 
 ## Use These Elements to Design Pages ##
 
-Master Addons For Elementor plugin gives you access to the following widgets or elements
+Master Addons is an Elementor addons plugin that gives you access to the following elements and widgets for elementor.
 
 
-1. [**Animated Headlines**](https://master-addons.com/demos/animated-headline/): Make your text pop with cool animations and colors. Perfect for grabbing attention on your homepage.
+1. [**Animated Headline Elementor**](https://master-addons.com/demos/animated-headline/): Make your text pop with cool animations and colors. Perfect for grabbing attention on your homepage.
 
 2. [**Dual Heading**](https://master-addons.com/demos/dual-heading/): Spice up your titles with two colors, giving your content a fun, eye-catching look.
 
 3. [**Gradient Headline**](https://master-addons.com/demos/gradient-headline/): Gradient Headline: Create fancy text with color gradients that look great on any device, no coding needed.
 
-4. [**Advanced Accordion**](https://master-addons.com/demos/advanced-accordion/): Neatly tuck away your content in expandable sections, saving space and keeping things organized.
+4. [**Advanced Elementor Accordion**](https://master-addons.com/demos/advanced-accordion/): Neatly tuck away your content in expandable sections, saving space and keeping things organized.
 
 5. [**Advanced Tabs**](https://master-addons.com/demos/tabs/): Sort your content into tabs for an interactive experience. They’re easy to set up and work on all devices.
 
@@ -82,7 +82,7 @@ Master Addons For Elementor plugin gives you access to the following widgets or 
 
 15. [**Progress Bars**](https://master-addons.com/demos/multiple-progress-bars/): Display a set of colorful skill bars to represent various stats or skills in a creative way.
 
-== Special Content Element ==
+== Special Content Elements ==
 
 1. [**Table of Contents**](https://master-addons.com/wordpress-admin-dashboard-plugin/): Help readers navigate your blog posts with an easy-to-use table of contents that you can personalize.
 
@@ -101,7 +101,7 @@ Master Addons For Elementor plugin gives you access to the following widgets or 
 8. [**Current Time**](https://master-addons.com/demos/current-time/): Show the current time on your site, just like a newspaper. It’s easy to set up and you can choose how it looks.
 9. [⭐ **Domain Search**](https://master-addons.com/demos/domain-search/): Start your own domain hosting or affiliate service with a customizable search tool that fits right into your site.
 
-== Marketing Element ==
+== Marketing Elements ==
 
 
 1. [**Call to Action**](https://master-addons.com/demos/call-to-action/): Get more clicks and leads with eye-catching buttons that guide visitors to your offers or products.
@@ -112,7 +112,7 @@ Master Addons For Elementor plugin gives you access to the following widgets or 
 
 4. [**Countdown Timer**](https://master-addons.com/demos/countdown-timer/): Build excitement for events or sales with a countdown that’s easy to set up and style to match your site.
 
-5. [**Pricing Table**](https://master-addons.com/demos/pricing-table/): Create attractive pricing tables with easy switchers to display your product prices. Customize to your heart’s content with various layouts.
+5. [**Pricing Table Elementor**](https://master-addons.com/demos/pricing-table/): Create attractive Elementor pricing tables with easy switchers to display your product prices. Customize to your heart’s content with various layouts.
 
 6. [**Business Hours**](https://master-addons.com/demos/business-hours/): Let customers know when you’re open with a customizable business hours table that can be placed anywhere on your site.
 
@@ -124,7 +124,7 @@ Master Addons For Elementor plugin gives you access to the following widgets or 
 
 10. [**Mailchimp**](https://master-addons.com/docs/addons/mailchimp-element/): Easily integrate Mailchimp forms into your site and customize them without needing a pro version.
 
-==Best Image & Media Element for Elementor==
+==Best Image & Media Elements for Elementor==
 
 1. [**Image Hover Effects**](https://master-addons.com/demos/image-hover-effects/): Add cool titles and descriptions to your images with over 20 customizable effects. Get creative and make your images interactive.
 
@@ -138,10 +138,10 @@ Master Addons For Elementor plugin gives you access to the following widgets or 
 
 6. [**Filterable Image Gallery**](https://master-addons.com/demos/image-gallery/): Sort and display your images with custom labels and categories. You can even link images to other pages and control which labels show up.
 
-7. [**Image Carousel**](https://master-addons.com/demos/image-carousel/): Keep visitors engaged with a carousel that shows off your photos. Customize it with different navigation options and settings to fit your site perfectly.
+7. [**Elementor Media Carousel(Image Carousel)**](https://master-addons.com/demos/image-carousel/): Keep visitors engaged with a carousel that shows off your photos. Customize it with different navigation options and settings to fit your site perfectly.
 
 
-== Product Compare & Feature Elements ==
+== Product Comparison & Feature Elements ==
 
 1. [⭐ **Comparison Table**](https://master-addons.com/demos/comparison-table/): Compare products side-by-side with ease. Add titles, prices, features, and more to help customers make informed decisions.
 
@@ -209,6 +209,8 @@ Master Addons For Elementor plugin gives you access to the following widgets or 
 
 22. [⭐ **Tooltips**](https://master-addons.com/demos/ext-tooltips/): Add informative tooltips to any section, column, or element, with full customization of content, position, size, background, and text style.
 
+23. [**Pricing Table Elementor**](https://master-addons.com/demos/pricing-table/): Create easy to understand Elementor pricing tables with smooth switchers to display your product prices. Various layouts also available.
+
 
 ==5 Awesome Elementor Icon Library==
 
@@ -247,10 +249,10 @@ We know your website’s performance is crucial. That’s why Master Addons lets
 The plugin is customizable by providing every element with lots of option to control every possible thing. You have the power to customize the blocks as per your choice.
 
 = LIGHTWEIGHT & INSTANT LOADING =
-The plugin does not allow messy code or extra asset which slow down your internet speed. It offers deactivation of unnecessary widgets to keep your site work smoothly.
+The plugin does not allow messy code or extra assets which slow down your internet speed. It offers deactivation of unnecessary widgets for Elementor to keep your site work smoothly.
 
 = EXPERT SUPPORT =
-We have an excellent and friendly support team for your assistance. Put your question in the [Facebook Group](https://www.facebook.com/groups/2495256720521297/) or you can contact us directly via live chat and [Support Forum](https://master-addons.com/support/).
+We have an excellent and friendly support team for your assistance. Put your question in the [Facebook Group](https://www.facebook.com/groups/2495256720521297/) or you can contact us directly via live chat and [Support Forum](https://wordpress.org/support/plugin/master-addons/).
 
 
 ### Liked Master Addons Plugins?
@@ -284,7 +286,7 @@ Like on our [Facebook Fan Page](https://www.facebook.com/masteraddons/)
 
 If you like our Master Addons plugin then why not check some other plugins that developed by us:
 
-🚀 [WP Adminify:](https://wordpress.org/plugins/adminify) - The best WordPress Dashboard Customization plugin available in the market. With this plugin you will get 18+ modules like Dark Mode, Menu Editor, Folders, Dashboard Widget Manager, Login Customizer, Admin Columns, Activity Logs and many more.
+🚀 [WP Adminify:](https://wordpress.org/plugins/adminify) - The best WordPress Dashboard Customization plugin available in the market. With this plugin you will get 18+ modules like Dark Mode, Menu Editor, Folders, Dashboard Elementor Widget Manager, Login Customizer, Admin Columns, Activity Logs and many more.
 
 🚴🏻‍♂️ [Image Comparison for Elementor:](https://wordpress.org/plugins/image-comparison-elementor-addon/) - This plugin dedicatedly made for image comparison element. You will get a multiple variation for image comparison. Showcase your before after work easily with the help of this plugin.
 
@@ -303,13 +305,13 @@ Installation Process has been discussed on "Installation" Section. Video Tutoria
 Process. Learn from our Tutorials on [Youtube Channel](https://www.youtube.com/channel/UCAPfTXvzbNebKsB322Iz6HQ)
 
 = How to Configure this Plugin? =
-Basically, there's no configuration required for using "Master Addons" Plugin. You can Turn On/Off Add-ons you like on "Addons" Section. It will make your website faster loading.
+Basically, there's no configuration required for using the Master Addons for Elementor Plugin. You can Turn On/Off Add-ons you like on "Addons" Section. It will make your website faster loading.
 
 = How to add Master Addons on Page/Post? =
 Navigate to any post or page which you want to Create/Edit with Elementor. Scroll down or search for "Master Addons" Category. Click on that option and you will all Master Addons Elements. Just add the element you like and Customize it as like your own.
 
-= "Master Addons" Installed but Not Working !
-First, deactive Other "Addons" plugin and try again. If nothing works then post on our Support Form(Link Mentioned above).
+= How to fix "Master Addons" Installed but Not Working Issue?
+First, deactive Other "Addons" plugin and try again. If nothing works then reach out to us on our Support Form(Link Mentioned above) or post a ticket using the support button on the top right just below the download button.
 
 = Is it compatible with any Theme? =
 Yes, it's compatible with any WordPress Theme.
@@ -320,7 +322,7 @@ Features.
 
 = How can I get faster Support? =
 We've two ways to give Supports for "Master Addons" Plugin - 1. [WordPress Support Forum](https://wordpress
-.org/support/plugin/master-addons) and 2. [Support Forum](https://master-addons.com/support/). Since, this is a Free Plugin, Support reply may delay for answer
+.org/support/plugin/master-addons) and 2. [Support Forum](https://wordpress.org/support/plugin/master-addons/). Since, this is a Free Plugin, Support reply may delay for answer
 but we're Dedicated on our [FB Page](https://www.facebook.com/masteraddons/) for chatting.
 
 
@@ -328,14 +330,14 @@ We're adding new Features everyday. You'll get regular Updates also !
 
 
 == Screenshots ==
-1. Master Addons - Accordion, Call to Action, Tooltips, Team Carousel, Flipbox
+1. Master Addons - Elementor Accordion, Call to Action, Tooltips, Team Carousel, Flipbox
 2. Master Addons - Business Hour, Image Hover Effects, Blog List Cards, Dual Heading
 3. Master Addons control Panel
 4. Image Hover Effects Element
 5. before after Image Comparison
 6. Filterable Image Gallery
 7. Gradient Headline
-8. Gallery slider widget
+8. Gallery slider Elementor widget
 
 
 == Installation ==

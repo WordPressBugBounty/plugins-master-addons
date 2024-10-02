@@ -1680,22 +1680,21 @@ class JLTMA_Advanced_Image extends Widget_Base
 			'link'             => Master_Addons_Helper::jltma_get_array_value($settings['ma_el_adv_image_link'], 'url'),
 			'nofollow'         => Master_Addons_Helper::jltma_get_array_value($settings['ma_el_adv_image_link'], 'nofollow'),
 			'target'           => Master_Addons_Helper::jltma_get_array_value($settings['ma_el_adv_image_link'], 'is_external', false) ? '_blank' : '_self',
-			'align'            => $settings['ma_el_adv_image_settings_alignment'],
+			'align'            => !empty($settings['ma_el_adv_image_settings_alignment']) ? $settings['ma_el_adv_image_settings_alignment'] : '',
 
 			'attach_id_hover'  => Master_Addons_Helper::jltma_get_array_value($settings['ma_el_adv_image_hover_image'], 'id'),
 
 			'display_ribbon'   => esc_attr($settings['ma_el_adv_image_display_ribbon']),
 			'ribbon_text'      => $this->parse_text_editor($settings['ma_el_adv_image_ribbon_text']),
-			'ribbon_style'     => esc_attr($settings['ma_el_adv_image_ribbon_style']),
-			'ribbon_position'  => esc_attr($settings['ma_el_adv_image_ribbon_position']),
-			'colorized_shadow' => esc_attr($settings['ma_el_adv_image_colorized_shadow']),
-
-			'lightbox'         => esc_attr($settings['ma_el_adv_image_settings_lightbox']),
-			'icon'             => esc_attr($settings['ma_el_adv_image_settings_icon']),
-			'preloadable'      => esc_attr($settings['ma_el_adv_image_settings_preloadable']),
-			'preload_preview'  => esc_attr($settings['ma_el_adv_image_settings_preload_preview']),
-			'preload_bgcolor'  => esc_attr($settings['ma_el_adv_image_settings_preload_bgcolor']),
-			'tilt'             => esc_attr($settings['ma_el_adv_image_tilt'])
+			'ribbon_style'     => !empty($settings['ma_el_adv_image_ribbon_style']) ? esc_attr($settings['ma_el_adv_image_ribbon_style']) : 'simple',
+			'ribbon_position'  => !empty($settings['ma_el_adv_image_ribbon_position']) ? esc_attr($settings['ma_el_adv_image_ribbon_position']) : 'top-right',
+			'colorized_shadow' => !empty($settings['ma_el_adv_image_colorized_shadow']) ? esc_attr($settings['ma_el_adv_image_colorized_shadow']) : true,
+			'lightbox'         => !empty($settings['ma_el_adv_image_settings_lightbox']) ? esc_attr($settings['ma_el_adv_image_settings_lightbox']) : true,
+			'icon'             => !empty($settings['ma_el_adv_image_settings_icon']) ? esc_attr($settings['ma_el_adv_image_settings_icon']) : 'plus',
+			'preloadable'      => !empty($settings['ma_el_adv_image_settings_preloadable']) ? esc_attr($settings['ma_el_adv_image_settings_preloadable']) : false,
+			'preload_preview'  => !empty($settings['ma_el_adv_image_settings_preload_preview']) ? esc_attr($settings['ma_el_adv_image_settings_preload_preview']) : true,
+			'preload_bgcolor'  => !empty($settings['ma_el_adv_image_settings_preload_bgcolor']) ? esc_attr($settings['ma_el_adv_image_settings_preload_bgcolor']) : '',
+			'tilt'             => !empty($settings['ma_el_adv_image_tilt']) ? esc_attr($settings['ma_el_adv_image_tilt']) : false,
 		);
 		echo $this->jltma_adv_image_callback($args);
 	}

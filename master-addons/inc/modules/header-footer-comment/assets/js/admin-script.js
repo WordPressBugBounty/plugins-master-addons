@@ -111,6 +111,8 @@
                             open_editor = $(this).attr('data-open-editor'),
                             admin_url = $(this).attr('data-editor-url');
 
+                        console.log('form_data', form_data);
+
                         $.ajax({
                             url: window.masteraddons.resturl + 'ma-template/update/' + id,
                             data: form_data,
@@ -120,10 +122,11 @@
                                 "X-WP-Nonce": jltma_hfc_nonce
                             },
                             success: function (output) {
-                                console.log('submit ecicked');
+
                                 setTimeout(function () {
                                     modal.removeClass('loading');
                                 }, 1500);
+
 
                                 var row = $('#post-' + output.data.id);
 
@@ -138,6 +141,8 @@
                                         .html(output.data.title)
                                         .attr('aria-label', output.data.title);
                                 }
+
+                                modal.removeClass("show");
 
                                 if (open_editor == '1') {
                                     window.location.href = admin_url + '?post=' + output.data.id + '&action=elementor';
@@ -257,23 +262,19 @@
                         modal.addClass('show');
 
                         if (parent.length > 0) {
-                            id = parent.find('.hidden').attr('id').split('_')[1];
+                          id = parent.find(".hidden").attr("id").split("_")[1];
 
-                            $.get(window.masteraddons.resturl + 'ma-template/get/' + id, function (data) {
-                                Master_Header_Footer.JLTMA_Template_Editor( data );
-                                modal.removeClass('loading');
-                            });
-
-                            // $.ajax({
-                            //     url: window.masteraddons.resturl + "ma-template/get/" + id,
-                            //     type: "get",
-                            //     headers: { "X-WP-Nonce": jltma_hfc_nonce},
-                            //     dataType: "json",
-                            //     success: function (e) {
-                            //         Master_Header_Footer.JLTMA_Template_Editor( data );
-                            //         modal.removeClass("loading");
-                            //     }
-                            // });
+                          $.ajax({
+                              url: window.masteraddons.resturl + "ma-template/get/" + id,
+                              type: "get",
+                              headers: { "X-WP-Nonce": jltma_hfc_nonce},
+                              dataType: "json",
+                              success: function (data) {
+                                  console.log('GET Data', data);
+                                  Master_Header_Footer.JLTMA_Template_Editor( data );
+                                  modal.removeClass("loading");
+                              }
+                          });
 
                         } else {
                             var data = {
@@ -304,14 +305,8 @@
         "use strict";
 
         // Modals
-
-        $('.page-title-action').on('click', function (e) {
-            $('.jltma-modal').toggleClass("show");
-            e.preventDefault();
-        });
-
-        $('.jltma-pop-close').on('click', function (e) {
-            $('.jltma-modal').toggleClass("show");
+        $(".jltma-pop-close, .page-title-action").on("click", function (e) {
+            $(".jltma-modal").toggleClass("show");
             e.preventDefault();
         });
 

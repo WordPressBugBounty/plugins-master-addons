@@ -1,4 +1,16 @@
 == Changelog ==
+= 2.0.6.6 (02-10-2024) =
+* Fixed: Mega Menu Save issue fixed
+* Fixed: "MA Templates" not saving issue fixed
+* Updated: Modal Popup UI/UX improved
+* Updated: Freemius SDK Updated
+* Removed: Recommended Plugins Menu
+* Added: For faster support, Support Sub Menu Added
+* Updated: waypoints.js has been replaced by the native Intersection Observer API. All script with 'elementorFrontend.waypoint()' method updated
+* Updated: Mega Menu, Demo Importer UI/UX updated
+* Updated: Optimized Performance for Cached Static Contents for better TTFB on Google pagespeed
+* Updated: Flipbox Updated Icon & Image Selection
+
 = 2.0.6.5 (04-09-2024) =
 * Updated: Security Bugs fixed
 

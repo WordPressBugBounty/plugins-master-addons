@@ -92,13 +92,6 @@ class Master_Addons_Assets {
             true
         );
         wp_register_script(
-            'master-addons-waypoints',
-            JLTMA_URL . '/assets/vendor/jquery.waypoints.min.js',
-            ['jquery'],
-            JLTMA_VER,
-            true
-        );
-        wp_register_script(
             'jltma-owl-carousel',
             JLTMA_URL . '/assets/vendor/owlcarousel/owl.carousel.min.js',
             ['jquery'],
@@ -136,7 +129,7 @@ class Master_Addons_Assets {
         wp_register_script(
             'ma-counter-up',
             JLTMA_URL . '/assets/js/counterup.min.js',
-            ['jquery'],
+            ['jquery', 'master-addons-scripts'],
             JLTMA_VER,
             true
         );
@@ -161,16 +154,6 @@ class Master_Addons_Assets {
             JLTMA_VER,
             true
         );
-        if ( ma_el_fs()->can_use_premium_code() ) {
-            // GSAP TweenMax
-            wp_register_script(
-                'gsap-js',
-                '//cdnjs.cloudflare.com/ajax/libs/gsap/' . $this->gsap_version . '/TweenMax.min.js',
-                array(),
-                null,
-                true
-            );
-        }
         wp_register_script(
             'jltma-timeline',
             JLTMA_URL . '/assets/js/timeline.js',
@@ -185,23 +168,6 @@ class Master_Addons_Assets {
             JLTMA_VER,
             true
         );
-        if ( ma_el_fs()->can_use_premium_code() ) {
-            // Navmenu & Offcanvas Menu
-            wp_register_script(
-                'jltma-offcanvas-menu',
-                JLTMA_URL . '/assets/js/addons/offcanvas-menu.js',
-                ['jquery'],
-                JLTMA_VER,
-                true
-            );
-            wp_register_script(
-                'jltma-nav-menu',
-                JLTMA_URL . '/assets/js/addons/jltma-nav-menu.js',
-                ['jquery', 'elementor-frontend-modules'],
-                JLTMA_VER,
-                true
-            );
-        }
         // Tippy JS
         wp_register_style( 'jltma-tippy', $jltma_vendor_dir . 'tippyjs/css/tippy.css' );
         wp_register_script(
