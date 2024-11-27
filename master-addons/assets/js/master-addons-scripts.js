@@ -95,6 +95,17 @@
         observer.observe(target);
     }
 
+    function sanitizeTooltipText(text) {
+        const tempDiv = document.createElement('div');
+        tempDiv.textContent = text;
+        return tempDiv.innerHTML;
+    }
+
+    function stripTags(text) {
+        return text.replace(/<\/?[^>]+(>|$)/g, '');
+    }
+
+
     var Master_Addons = {
 
         animatedProgressbar: function (id, type, value, strokeColor, trailColor, strokeWidth, strokeTrailWidth)
@@ -571,10 +582,6 @@
         // Dynamic Data Tables
         JLTMA_Data_Table: function ($scope, $)
         {
-            console.log('jashljkfahsdljkf');
-            console.log('jltma_data_table_vars', jltma_data_table_vars);
-            console.log('a', a);
-
             var a = $scope.find(".jltma-data-table-container"),
                 n = a.data("source"),
                 r = a.data("sourcecsv");
@@ -699,7 +706,6 @@
         // Dropdown Button
         JLTMA_Dropdown_Button: function ($scope, $)
         {
-            console.log('sdfds');
 
             $scope.find(".jltma-dropdown").hover(
                 function ()
@@ -1652,7 +1658,7 @@
 
             Master_Addons.onElementRemove($scope, function ()
             {
-                $scope.find('.swiper-container').each(function ()
+                $scope.find('.swiper').each(function ()
                 {
                     if ($(this).data('swiper'))
                     {
@@ -1705,7 +1711,7 @@
                     return;
                 }
 
-                var $carouselContainer = $scope.find('.swiper-container'),
+                var $carouselContainer = $scope.find('.swiper'),
                     $settings = $carousel.data('settings'),
                     Swiper = elementorFrontend.utils.swiper;
 
@@ -1943,7 +1949,7 @@
                 return;
             }
 
-            var $carouselContainer = $scope.find('.swiper-container'),
+            var $carouselContainer = $scope.find('.swiper'),
                 $settings = $carousel.data('settings'),
                 Swiper = elementorFrontend.utils.swiper;
 
@@ -1978,7 +1984,7 @@
                 return;
             }
 
-            var $carouselContainer = $scope.find('.swiper-container'),
+            var $carouselContainer = $scope.find('.swiper'),
                 $settings = $carousel.data('settings'),
                 Swiper = elementorFrontend.utils.swiper;
 
@@ -2011,7 +2017,7 @@
                 return;
             }
 
-            var $carouselContainer = $scope.find('.swiper-container'),
+            var $carouselContainer = $scope.find('.swiper'),
                 $settings = $carousel.data('settings'),
                 Swiper = elementorFrontend.utils.swiper;
 
@@ -2070,7 +2076,7 @@
                         };
                     }
 
-                    console.log($tooltipSettings.arrow, $tooltipSettings.arrow_type);
+
                     var arrowType = false;
                     if ($tooltipSettings.arrow == 1)
                     {
@@ -2170,7 +2176,7 @@
                     return;
                 }
 
-                var $carouselContainer = $scope.find('.swiper-container'),
+                var $carouselContainer = $scope.find('.swiper'),
                     $settings = $carousel.data('settings'),
                     Swiper = elementorFrontend.utils.swiper;
 
@@ -2253,11 +2259,10 @@
         /* MA Tooltip */
         MA_Tooltip: function ($scope, $)
         {
-
             var elementSettings = getElementSettings($scope),
                 scopeId = $scope.data('id'),
                 $currentTooltip = '#jltma-tooltip-' + scopeId,
-                $ma_el_tooltip_text = elementSettings.ma_el_tooltip_text ? elementSettings.ma_el_tooltip_text : 'top',
+                $ma_el_tooltip_text = elementSettings.ma_el_tooltip_text ? stripTags(elementSettings.ma_el_tooltip_text) : 'top',
                 $ma_el_tooltip_direction = elementSettings.jltma_tooltip_follow_cursor ? elementSettings.jltma_tooltip_follow_cursor : elementSettings.ma_el_tooltip_direction,
                 $jltma_tooltip_animation = elementSettings.jltma_tooltip_animation ? elementSettings.jltma_tooltip_animation : '',
                 $jltma_tooltip_arrow = elementSettings.jltma_tooltip_arrow ? elementSettings.jltma_tooltip_arrow : true,
@@ -2274,7 +2279,6 @@
             {
                 return;
             }
-
             tippy($currentTooltip, {
                 content: $ma_el_tooltip_text,
                 placement: $ma_el_tooltip_direction,
@@ -2314,7 +2318,7 @@
                 return;
             }
 
-            var $carouselContainer = $scope.find('.swiper-container'),
+            var $carouselContainer = $scope.find('.swiper'),
                 $settings = $carousel.data('settings'),
                 Swiper = elementorFrontend.utils.swiper;
 
@@ -2838,8 +2842,6 @@
         // Wrapper Link
         MA_Wrapper_Link: function ($scope, $)
         {
-
-
             // $('[data-jltma-wrapper-link]').each(function() {
             //     var link = $(this).data('jltma-wrapper-link');
             //     $(this).on('click.jltmaElementOnClick', function() {
@@ -2850,7 +2852,6 @@
             //         }
             //     })
             // });
-
         },
 
         /**

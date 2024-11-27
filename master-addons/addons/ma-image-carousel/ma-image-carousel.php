@@ -714,7 +714,7 @@ class JLTMA_Image_Carousel extends Widget_Base
 					'jltma-carousel',
 					'jltma-swiper',
 					'jltma-swiper__container',
-					'swiper-container',
+					'swiper',
 					'elementor-jltma-element-' . esc_attr($unique_id)
 				],
 				'data-image-carousel-template-widget-id' => $unique_id

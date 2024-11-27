@@ -15,14 +15,23 @@ Happy Addons
     - Text Stroke
     - Column Order & Extension
     - Background Overlay
+    - Analytics - Unused Addons
+
 ElementsKit:
     - FB Messenger
     - Copy Paste Cross Domain
     - conditional-content
+    - Glassmorphism
+    - Mouse Cursor
+    - Masking
+    - Google Sheet
+    - Cross Domain Copy Paste
 
-Element Extras(https://shop.namogo.com/elementor-extras/widgets/random-image/):
+
+Element Extras (https://shop.namogo.com/elementor-extras/widgets/random-image/):
     - Random Image
     - Parallax
+    - Inline SVG
 
 Auxin:
     - 3d Text Box
@@ -38,6 +47,7 @@ Ai Hub:
 
 Exclusive Addons
     - Demo Previewer:
+    - Nested Sections
 
 WooCommerce:
     -

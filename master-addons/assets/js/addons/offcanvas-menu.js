@@ -150,7 +150,6 @@
 
                 // if( 'yes' === getElementSettings.esc_close ) {
                 //     // var is_esc_close = getElementSettings.esc_close ? getElementSettings.esc_close : '';
-                //     // console.log('is_esc_close',typeof is_esc_close);
 
                 //     // if ('yes' === is_esc_close) {
                 //         elements.$document.on('keydown', MA_Offcanvas_Menu.closeESC.bind(this));

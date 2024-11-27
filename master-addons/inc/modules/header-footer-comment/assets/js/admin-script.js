@@ -111,7 +111,6 @@
                             open_editor = $(this).attr('data-open-editor'),
                             admin_url = $(this).attr('data-editor-url');
 
-                        console.log('form_data', form_data);
 
                         $.ajax({
                             url: window.masteraddons.resturl + 'ma-template/update/' + id,
@@ -270,7 +269,6 @@
                               headers: { "X-WP-Nonce": jltma_hfc_nonce},
                               dataType: "json",
                               success: function (data) {
-                                  console.log('GET Data', data);
                                   Master_Header_Footer.JLTMA_Template_Editor( data );
                                   modal.removeClass("loading");
                               }

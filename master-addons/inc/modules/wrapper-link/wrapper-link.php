@@ -24,11 +24,12 @@ class JLTMA_Extension_Wrapper_Link
 
     private function __construct()
     {
-        add_action('elementor/element/container/section_layout/after_section_end', [$this, 'jltma_wrapper_link_add_controls_section'], 10, 3);
-        add_action('elementor/element/column/section_advanced/after_section_end', [$this, 'jltma_wrapper_link_add_controls_section'], 10, 3);
-        add_action('elementor/element/section/section_advanced/after_section_end', [$this, 'jltma_wrapper_link_add_controls_section'], 10, 1);
-        add_action('elementor/element/common/_section_style/after_section_end', [$this, 'jltma_wrapper_link_add_controls_section'], 10, 1);
-        add_action('elementor/widget/before_render_content', [$this, 'widget_before_render_content'], 10, 1);
+        add_action('elementor/element/container/section_layout/after_section_end', [$this, 'jltma_wrapper_link_add_controls_section'], 1);
+        add_action('elementor/element/column/section_advanced/after_section_end', [$this, 'jltma_wrapper_link_add_controls_section'], 1);
+        add_action('elementor/element/section/section_advanced/after_section_end', [$this, 'jltma_wrapper_link_add_controls_section'], 1);
+        add_action('elementor/element/common/_section_style/after_section_end', [$this, 'jltma_wrapper_link_add_controls_section'], 1);
+
+        add_action('elementor/frontend/before_render', [$this, 'widget_before_render_content'], 1);
     }
 
     public function jltma_wrapper_link_add_controls_section(Element_Base $element)
@@ -64,11 +65,9 @@ class JLTMA_Extension_Wrapper_Link
     }
 
     public function widget_before_render_content( Element_Base $element ) {
-
         $settings = $element->get_settings_for_display('jltma_section_element_link');
-
         if ( empty( $settings['url'] ) ) return;
-
+        $settings['url'] = esc_url($settings['url']);
         $element->add_link_attributes( 'jltma_wrapper_link', $settings );
 
         $element->add_render_attribute( 'jltma_wrapper_link', [

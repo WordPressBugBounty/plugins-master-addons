@@ -16,7 +16,6 @@
 
         //     // alert("Object Created.");
         //     // color = 'green';
-        //     console.log('construcst');
         // }
 
         getDefaultSettings() {
@@ -464,7 +463,7 @@
             if (!$parentItem.hasClass('active')) {
                 event.preventDefault();
             }
- 
+
             if( $parentItem.parent().hasClass('jltma-has-megamenu') && $parentItem.parent().hasClass('jltma-mobile-builder-content') ){
                 if ($parentItem.parent().children('.jltma-megamenu').is('ul') && !$parentItem.parent().children('.jltma-megamenu').is(':visible')) {
                     $parentItem.parent().children('.jltma-megamenu').slideToggle('normal');

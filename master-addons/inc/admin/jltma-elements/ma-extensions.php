@@ -212,7 +212,15 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                             'tuts_url' => 'https://www.youtube.com/watch?v=x-9tBsm6yCg',
                             'is_pro'   => true
                         ],
-
+                        // [
+                        //     'key'      => 'magic-copy',
+                        //     'title'    => esc_html__( 'Live Copy', 'master-addons' ),
+                        //     'class'    => 'MasterAddons\Modules\JLTMA_Extension_Magic_Copy',
+                        //     'demo_url' => '',
+                        //     'docs_url' => '',
+                        //     'tuts_url' => '',
+                        //     'is_pro'   => false
+                        // ],
                         // [
                         //     'key'      => 'ribbon',
                         //     'title'    => esc_html__('Ribbon', 'master-addons' ),
@@ -257,16 +265,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         //     'docs_url'      => '',
                         //     'tuts_url'      => '',
                         // 'is_pro'   => false
-                        // ]
-                        // [
-                        //     'key'           => 'magic-copy',
-                        //     'title'         => esc_html__( 'Live Copy', 'master-addons' ),
-                        //      'class'    => 'MasterAddons\Modules\JLTMA_Extension_Magic_Copy',
-                        //     'demo_url'      => '',
-                        //     'docs_url'      => '',
-                        //     'tuts_url'      => '',
-                        // 'is_pro'   => false
-                        // ]
+                        // ],
+
 
                     ]
                 ]

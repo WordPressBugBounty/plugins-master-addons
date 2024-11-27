@@ -1493,7 +1493,7 @@ class JLTMA_Timeline extends Widget_Base {
                         'jltma-swiper',
                         'jltma-swiper__container',
                         'jltma-timeline-slider',
-                        'swiper-container'
+                        'swiper'
                     ],
                     'data-jltma-template-widget-id' => $unique_id,
                 ],

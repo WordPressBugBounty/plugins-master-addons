@@ -40,7 +40,6 @@ class Master_Addons_Assets {
             JLTMA_VER,
             true
         );
-        // Editor Localize Data
     }
 
     // Enqueue Preview Scripts

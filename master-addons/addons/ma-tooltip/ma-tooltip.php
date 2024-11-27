@@ -28,7 +28,7 @@ class JLTMA_Tooltip extends Widget_Base
 
 	public function get_title()
 	{
-		return esc_html__('Tooltip', 'master-addons' );
+		return esc_html__('Tooltip', 'master-addons');
 	}
 
 	public function get_icon()
@@ -79,7 +79,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->start_controls_section(
 			'tooltip_button_content',
 			[
-				'label' => __('Content Settings', 'master-addons' ),
+				'label' => __('Content Settings', 'master-addons'),
 			]
 		);
 
@@ -87,20 +87,20 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_type',
 			[
-				'label'       => esc_html__('Content Type', 'master-addons' ),
+				'label'       => esc_html__('Content Type', 'master-addons'),
 				'type'        => Controls_Manager::CHOOSE,
 				'label_block' => true,
 				'options'     => [
 					'icon' => [
-						'title' => esc_html__('Icon', 'master-addons' ),
+						'title' => esc_html__('Icon', 'master-addons'),
 						'icon'  => 'fa fa-info',
 					],
 					'text' => [
-						'title' => esc_html__('Text', 'master-addons' ),
+						'title' => esc_html__('Text', 'master-addons'),
 						'icon'  => 'fa fa-text-width',
 					],
 					'image' => [
-						'title' => esc_html__('Image', 'master-addons' ),
+						'title' => esc_html__('Image', 'master-addons'),
 						'icon'  => 'fa fa-image',
 					],
 				],
@@ -111,10 +111,11 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_content',
 			[
-				'label'       => esc_html__('Content', 'master-addons' ),
+				'label'       => esc_html__('Content', 'master-addons'),
 				'type'        => Controls_Manager::TEXTAREA,
 				'label_block' => true,
-				'default'     => esc_html__('Hover Me!', 'master-addons' ),
+				'default'     => esc_html__('Hover Me!', 'master-addons'),
+				'sanitize_callback' => 'sanitize_textarea_field',
 				'condition'   => [
 					'ma_el_tooltip_type' => ['text']
 				]
@@ -124,8 +125,8 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_icon_content',
 			[
-				'label'            => esc_html__('Icon', 'master-addons' ),
-				'description'      => esc_html__('Please choose an icon from the list.', 'master-addons' ),
+				'label'            => esc_html__('Icon', 'master-addons'),
+				'description'      => esc_html__('Please choose an icon from the list.', 'master-addons'),
 				'type'             => Controls_Manager::ICONS,
 				'fa4compatibility' => 'icon',
 				'default'          => [
@@ -142,7 +143,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_img_content',
 			[
-				'label'   => esc_html__('Image', 'master-addons' ),
+				'label'   => esc_html__('Image', 'master-addons'),
 				'type'    => Controls_Manager::MEDIA,
 				'default' => [
 					'url' => Utils::get_placeholder_image_src(),
@@ -156,7 +157,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'tooltip_button_img',
 			[
-				'label'   => __('Image', 'master-addons' ),
+				'label'   => __('Image', 'master-addons'),
 				'type'    => Controls_Manager::MEDIA,
 				'dynamic' => [
 					'active' => true,
@@ -182,7 +183,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'tooltip_style_section_align',
 			[
-				'label'   => __('Alignment', 'master-addons' ),
+				'label'   => __('Alignment', 'master-addons'),
 				'type'    => Controls_Manager::CHOOSE,
 				'options' => Master_Addons_Helper::jltma_content_alignment(),
 				'default'      => 'center',
@@ -194,7 +195,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tootltip_tag',
 			[
-				'label'              => esc_html__('Placement', 'master-addons' ),
+				'label'              => esc_html__('Placement', 'master-addons'),
 				'type'               => Controls_Manager::SELECT,
 				'default'            => 'button',
 				'label_block'        => false,
@@ -220,9 +221,9 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_link',
 			[
-				'label'         => __('Link', 'master-addons' ),
+				'label'         => __('Link', 'master-addons'),
 				'type'          => Controls_Manager::URL,
-				'placeholder'   => __('https://your-link.com', 'master-addons' ),
+				'placeholder'   => __('https://your-link.com', 'master-addons'),
 				'show_external' => true,
 				'default'       => [
 					'url'         => '',
@@ -241,26 +242,27 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->start_controls_section(
 			'tooltip_options',
 			[
-				'label' => __('Tooltip Options', 'master-addons' ),
+				'label' => __('Tooltip Options', 'master-addons'),
 			]
 		);
 		$this->add_control(
 			'ma_el_tooltip_text',
 			[
-				'label'              => esc_html__('Tooltip Text', 'master-addons' ),
+				'label'              => esc_html__('Tooltip Text', 'master-addons'),
 				'type'               => Controls_Manager::TEXTAREA,
 				'label_block'        => true,
-				'default'            => esc_html__('Tooltip contents here.', 'master-addons' ),
+				'default'            => esc_html__('Tooltip contents here.', 'master-addons'),
 				'dynamic'            => ['active' => true],
 				'render_type'        => 'none',
 				'frontend_available' => true,
+				'sanitize_callback' => 'sanitize_textarea_field',
 			]
 		);
 
 		$this->add_control(
 			'jltma_tooltip_follow_cursor',
 			[
-				'label'              => esc_html__('Follow Cursor', 'master-addons' ),
+				'label'              => esc_html__('Follow Cursor', 'master-addons'),
 				'type'               => Controls_Manager::SWITCHER,
 				'render_type'        => 'none',
 				'frontend_available' => true
@@ -270,7 +272,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_direction',
 			[
-				'label'              => esc_html__('Placement', 'master-addons' ),
+				'label'              => esc_html__('Placement', 'master-addons'),
 				'type'               => Controls_Manager::SELECT,
 				'default'            => 'top',
 				'label_block'        => false,
@@ -286,7 +288,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_animation',
 			[
-				'label'              => esc_html__('Animation', 'master-addons' ),
+				'label'              => esc_html__('Animation', 'master-addons'),
 				'type'               => Controls_Manager::SELECT,
 				'default'            => 'shift-away',
 				'options'            => Master_Addons_Helper::jltma_tooltip_animations(),
@@ -298,12 +300,12 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_trigger',
 			[
-				'label'   => esc_html__('Trigger on', 'master-addons' ),
+				'label'   => esc_html__('Trigger on', 'master-addons'),
 				'type'    => Controls_Manager::SELECT,
 				'options' => [
-					''       => esc_html__('Hover', 'master-addons' ),
-					'click'  => esc_html__('Click', 'master-addons' ),
-					'manual' => esc_html__('Custom Trigger', 'master-addons' ),
+					''       => esc_html__('Hover', 'master-addons'),
+					'click'  => esc_html__('Click', 'master-addons'),
+					'manual' => esc_html__('Custom Trigger', 'master-addons'),
 
 				],
 				'default'            => '',
@@ -315,7 +317,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_custom_trigger',
 			[
-				'label'       => esc_html__('Custom Trigger', 'master-addons' ),
+				'label'       => esc_html__('Custom Trigger', 'master-addons'),
 				'placeholder' => '.class-name',
 				'type'        => Controls_Manager::TEXT,
 				'dynamic'     => ['active' => true],
@@ -330,7 +332,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_duration',
 			[
-				'label'              => __('Duration', 'master-addons' ),
+				'label'              => __('Duration', 'master-addons'),
 				'type'               => Controls_Manager::NUMBER,
 				'min'                => 100,
 				'max'                => 1000,
@@ -343,7 +345,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_delay',
 			[
-				'label'              => __('Delay out (s)', 'master-addons' ),
+				'label'              => __('Delay out (s)', 'master-addons'),
 				'type'               => Controls_Manager::NUMBER,
 				'min'                => 100,
 				'max'                => 1000,
@@ -374,7 +376,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_x_offset',
 			[
-				'label'              => esc_html__('X Offset', 'master-addons' ),
+				'label'              => esc_html__('X Offset', 'master-addons'),
 				'type'               => Controls_Manager::SLIDER,
 				'size_units'         => ['px'],
 				'range'              => [
@@ -392,7 +394,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_y_offset',
 			[
-				'label'              => esc_html__('Y Offset', 'master-addons' ),
+				'label'              => esc_html__('Y Offset', 'master-addons'),
 				'type'               => Controls_Manager::SLIDER,
 				'size_units'         => ['px'],
 				'range'              => [
@@ -410,7 +412,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_arrow',
 			[
-				'label'              => esc_html__('Arrow', 'master-addons' ),
+				'label'              => esc_html__('Arrow', 'master-addons'),
 				'type'               => Controls_Manager::SWITCHER,
 				'render_type'        => 'none',
 				'frontend_available' => true,
@@ -423,12 +425,12 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_arrow_type',
 			[
-				'label' => __('Arrow Type', 'master-addons' ),
+				'label' => __('Arrow Type', 'master-addons'),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'sharp',
 				'options' => [
-					'sharp' => __('Sharp', 'master-addons' ),
-					'round' => __('Round', 'master-addons' ),
+					'sharp' => __('Sharp', 'master-addons'),
+					'round' => __('Round', 'master-addons'),
 				],
 				'frontend_available' => true,
 				'condition' => [
@@ -449,7 +451,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->start_controls_section(
 			'jltma_section_help_docs',
 			[
-				'label' => esc_html__('Help Docs', 'master-addons' ),
+				'label' => esc_html__('Help Docs', 'master-addons'),
 			]
 		);
 
@@ -458,7 +460,7 @@ class JLTMA_Tooltip extends Widget_Base
 			'help_doc_1',
 			[
 				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => sprintf(esc_html__('%1$s Live Demo %2$s', 'master-addons' ), '<a href="https://master-addons.com/demos/tooltip/" target="_blank" rel="noopener">', '</a>'),
+				'raw'             => sprintf(esc_html__('%1$s Live Demo %2$s', 'master-addons'), '<a href="https://master-addons.com/demos/tooltip/" target="_blank" rel="noopener">', '</a>'),
 				'content_classes' => 'jltma-editor-doc-links',
 			]
 		);
@@ -467,7 +469,7 @@ class JLTMA_Tooltip extends Widget_Base
 			'help_doc_2',
 			[
 				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => sprintf(esc_html__('%1$s Documentation %2$s', 'master-addons' ), '<a href="https://master-addons.com/docs/addons/adding-tooltip-in-elementor-editor/?utm_source=widget&utm_medium=panel&utm_campaign=dashboard" target="_blank" rel="noopener">', '</a>'),
+				'raw'             => sprintf(esc_html__('%1$s Documentation %2$s', 'master-addons'), '<a href="https://master-addons.com/docs/addons/adding-tooltip-in-elementor-editor/?utm_source=widget&utm_medium=panel&utm_campaign=dashboard" target="_blank" rel="noopener">', '</a>'),
 				'content_classes' => 'jltma-editor-doc-links',
 			]
 		);
@@ -476,7 +478,7 @@ class JLTMA_Tooltip extends Widget_Base
 			'help_doc_3',
 			[
 				'type'            => Controls_Manager::RAW_HTML,
-				'raw'             => sprintf(esc_html__('%1$s Watch Video Tutorial %2$s', 'master-addons' ), '<a href="https://www.youtube.com/watch?v=Av3eTae9vaE" target="_blank" rel="noopener">', '</a>'),
+				'raw'             => sprintf(esc_html__('%1$s Watch Video Tutorial %2$s', 'master-addons'), '<a href="https://www.youtube.com/watch?v=Av3eTae9vaE" target="_blank" rel="noopener">', '</a>'),
 				'content_classes' => 'jltma-editor-doc-links',
 			]
 		);
@@ -491,7 +493,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->start_controls_section(
 			'tooltip_style_section',
 			[
-				'label' => __('General Styles', 'master-addons' ),
+				'label' => __('General Styles', 'master-addons'),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -500,7 +502,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_content_width',
 			[
-				'label' => __('Content Width', 'master-addons' ),
+				'label' => __('Content Width', 'master-addons'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -527,7 +529,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_icon_width',
 			[
-				'label' => __('Icon Width', 'master-addons' ),
+				'label' => __('Icon Width', 'master-addons'),
 				'type'  => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -545,7 +547,7 @@ class JLTMA_Tooltip extends Widget_Base
 					'unit' => 'px',
 					'size' => 30,
 				],
-                'condition'   => [
+				'condition'   => [
 					'ma_el_tooltip_type' => ['icon']
 				],
 				'selectors' => [
@@ -558,7 +560,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_content_padding',
 			[
-				'label'      => esc_html__('Padding', 'master-addons' ),
+				'label'      => esc_html__('Padding', 'master-addons'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'default'    => [
@@ -577,11 +579,11 @@ class JLTMA_Tooltip extends Widget_Base
 
 		$this->start_controls_tabs('ma_el_tooltip_content_style_tabs');
 		// Normal State Tab
-		$this->start_controls_tab('ma_el_tooltip_content_normal', ['label' => esc_html__('Normal', 'master-addons' )]);
+		$this->start_controls_tab('ma_el_tooltip_content_normal', ['label' => esc_html__('Normal', 'master-addons')]);
 		$this->add_control(
 			'ma_el_tooltip_content_bg_color',
 			[
-				'label'     => esc_html__('Background Color', 'master-addons' ),
+				'label'     => esc_html__('Background Color', 'master-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#f9f9f9',
 				'selectors' => [
@@ -592,7 +594,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_content_color',
 			[
-				'label'     => esc_html__('Text Color', 'master-addons' ),
+				'label'     => esc_html__('Text Color', 'master-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#826EFF',
 				'selectors' => [
@@ -613,11 +615,11 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->end_controls_tab();
 
 		// Hover State Tab
-		$this->start_controls_tab('ma_el_tooltip_content_hover', ['label' => esc_html__('Hover', 'master-addons' )]);
+		$this->start_controls_tab('ma_el_tooltip_content_hover', ['label' => esc_html__('Hover', 'master-addons')]);
 		$this->add_control(
 			'ma_el_tooltip_content_hover_bg_color',
 			[
-				'label'     => esc_html__('Background Color', 'master-addons' ),
+				'label'     => esc_html__('Background Color', 'master-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#f9f9f9',
 				'selectors' => [
@@ -628,7 +630,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_content_hover_color',
 			[
-				'label'     => esc_html__('Text Color', 'master-addons' ),
+				'label'     => esc_html__('Text Color', 'master-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#212121',
 				'selectors' => [
@@ -670,7 +672,7 @@ class JLTMA_Tooltip extends Widget_Base
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'ma_el_tooltip_hover_border',
-				'label' => esc_html__('Border', 'master-addons' ),
+				'label' => esc_html__('Border', 'master-addons'),
 				'selector' => '{{WRAPPER}} .jltma-tooltip',
 			]
 		);
@@ -679,7 +681,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_content_radius',
 			[
-				'label'      => esc_html__('Border Radius', 'master-addons' ),
+				'label'      => esc_html__('Border Radius', 'master-addons'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'default'    => [
@@ -702,7 +704,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->start_controls_section(
 			'ma_el_tooltip_style_section',
 			[
-				'label' => __('Tooltip Styles', 'master-addons' ),
+				'label' => __('Tooltip Styles', 'master-addons'),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -710,7 +712,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_text_width',
 			[
-				'label'      => __('Tooltip Width', 'master-addons' ),
+				'label'      => __('Tooltip Width', 'master-addons'),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => ['px', 'em'],
 				'range'      => [
@@ -740,7 +742,7 @@ class JLTMA_Tooltip extends Widget_Base
 			Group_Control_Background::get_type(),
 			[
 				'name'		=> 'ma_el_tooltip_bg_color',
-				'label'     => __('Background Color', 'master-addons' ),
+				'label'     => __('Background Color', 'master-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#826EFF',
 				// 'selectors' => [
@@ -761,7 +763,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_style_color',
 			[
-				'label'     => __('Text Color', 'master-addons' ),
+				'label'     => __('Text Color', 'master-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#ffffff',
 				'selectors' => [
@@ -785,7 +787,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_arrow_color',
 			[
-				'label'     => __('Arrow Color', 'master-addons' ),
+				'label'     => __('Arrow Color', 'master-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#826EFF',
 				'selectors' => [
@@ -809,7 +811,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'ma_el_tooltip_text_padding',
 			[
-				'label'      => __('Padding', 'master-addons' ),
+				'label'      => __('Padding', 'master-addons'),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%', 'em'],
 				'default'    => [
@@ -831,7 +833,7 @@ class JLTMA_Tooltip extends Widget_Base
 			Group_Control_Border::get_type(),
 			[
 				'name'        => 'jltma_tooltip_border',
-				'label'       => esc_html__('Border', 'master-addons' ),
+				'label'       => esc_html__('Border', 'master-addons'),
 				'placeholder' => '1px',
 				'default'     => '1px',
 				'selector'    => '{{WRAPPER}} .tippy-box',
@@ -842,7 +844,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_responsive_control(
 			'ma_el_tooltip_content_border_radius',
 			[
-				'label'   => esc_html__('Border Radius', 'master-addons' ),
+				'label'   => esc_html__('Border Radius', 'master-addons'),
 				'type'    => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors' => [
@@ -870,20 +872,20 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_text_align',
 			[
-				'label'     => esc_html__('Text Alignment', 'master-addons' ),
+				'label'     => esc_html__('Text Alignment', 'master-addons'),
 				'type'      => Controls_Manager::CHOOSE,
 				'default'   => 'center',
 				'options'   => [
 					'left'   => [
-						'title' => esc_html__('Left', 'master-addons' ),
+						'title' => esc_html__('Left', 'master-addons'),
 						'icon'  => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__('Center', 'master-addons' ),
+						'title' => esc_html__('Center', 'master-addons'),
 						'icon'  => 'eicon-text-align-center',
 					],
 					'right'  => [
-						'title' => esc_html__('Right', 'master-addons' ),
+						'title' => esc_html__('Right', 'master-addons'),
 						'icon'  => 'eicon-text-align-right',
 					],
 				],
@@ -903,7 +905,6 @@ class JLTMA_Tooltip extends Widget_Base
 		);
 
 		$this->end_controls_section();
-
 	}
 
 
@@ -941,19 +942,18 @@ class JLTMA_Tooltip extends Widget_Base
 		<<?php echo esc_attr($jltma_tootltip_tag); ?> <?php echo $this->get_render_attribute_string('jltma_tooltip_wrapper'); ?>>
 
 			<?php if ($settings['ma_el_tooltip_type'] === 'text') { ?>
-				<?php echo $this->parse_text_editor($settings['ma_el_tooltip_content']); ?>
-			<?php } elseif ($settings['ma_el_tooltip_type'] === 'icon') {
-                $migrated = isset($settings['__fa4_migrated']['ma_el_tooltip_icon_content']);
-                $is_new   = empty($settings['icon']) && Icons_Manager::is_migration_allowed();
-                if ($is_new || $migrated){
-                    Icons_Manager::render_icon($settings['ma_el_tooltip_icon_content'], ['aria-hidden' => 'true']);
-                } else { ?>
-                    <i class="<?php echo esc_attr($settings['icon']); ?>" aria-hidden="true"></i>
-                <?php }
+				<?php echo $this->parse_text_editor(wp_kses(strip_tags( $settings['ma_el_tooltip_content']), [])); ?>
+				<?php } elseif ($settings['ma_el_tooltip_type'] === 'icon') {
+				$migrated = isset($settings['__fa4_migrated']['ma_el_tooltip_icon_content']);
+				$is_new   = empty($settings['icon']) && Icons_Manager::is_migration_allowed();
+				if ($is_new || $migrated) {
+					Icons_Manager::render_icon($settings['ma_el_tooltip_icon_content'], ['aria-hidden' => 'true']);
+				} else { ?>
+					<i class="<?php echo esc_attr($settings['icon']); ?>" aria-hidden="true"></i>
+				<?php }
 			} elseif ($settings['ma_el_tooltip_type'] === 'image') { ?>
 				<img src="<?php echo esc_url($settings['ma_el_tooltip_img_content']['url']); ?>">
 			<?php } ?>
-
 		</<?php echo esc_attr($jltma_tootltip_tag); ?>>
 <?php
 

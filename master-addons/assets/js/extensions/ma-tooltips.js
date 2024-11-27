@@ -21,6 +21,7 @@
     };
 
     $window.on('elementor/frontend/init', function () {
+
         var ModuleHandler = elementorModules.frontend.handlers.Base,
             MA_Element_Tooltip;
 

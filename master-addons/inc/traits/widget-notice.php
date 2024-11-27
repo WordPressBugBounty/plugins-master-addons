@@ -26,7 +26,7 @@ trait Widget_Notice
             ],
             'default'     => '1',
             'toggle'      => false,
-            'description' => '<span class="ekit-widget-pro-feature"> Get the  <a href="https://master-addons.com/pricing/" target="_blank">Pro version</a> for more awesome elements and powerful modules.</span>',
+            'description' => '<span class="jltma-widget-pro-feature"> Get the  <a href="https://master-addons.com/pricing/" target="_blank">Pro version</a> for more awesome elements and powerful modules.</span>',
         ] );
         $this->end_controls_section();
     }

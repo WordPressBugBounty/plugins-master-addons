@@ -671,7 +671,7 @@ class JLTMA_Logo_Slider extends Widget_Base
 					'jltma-carousel',
 					'jltma-swiper',
 					'jltma-swiper__container',
-					'swiper-container',
+					'swiper',
 					'elementor-jltma-element-' . $unique_id,
 				],
 				'data-jltma-template-widget-id' => $unique_id,

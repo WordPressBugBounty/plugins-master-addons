@@ -1,4 +1,10 @@
 == Changelog ==
+= 2.0.6.7 (27-11-2024) =
+* Updated: Security Bugs fixed
+* Updated: Freemius Library Updated
+* Updated: Master Addon Wrapper link modeule has updated
+* Updated: Swiper slider updated as per elementor Updates
+
 = 2.0.6.6 (02-10-2024) =
 * Fixed: Mega Menu Save issue fixed
 * Fixed: "MA Templates" not saving issue fixed
