@@ -1,4 +1,11 @@
 == Changelog ==
+= 2.0.6.8 (21-12-2024) =
+* Fixed: Wrapper link effection only last link inside same container
+* Updated: Swiper Class updated, Team Slider not working issue fixed
+* Updated: Slider Addons - Team Slider, Logo Slider updated
+* Fixed: Tooltip Extension position issue fixed
+* Fixed: Text Domain warning issue fixed
+
 = 2.0.6.7 (27-11-2024) =
 * Updated: Security Bugs fixed
 * Updated: Freemius Library Updated

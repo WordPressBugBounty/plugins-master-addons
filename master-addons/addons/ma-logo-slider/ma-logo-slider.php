@@ -52,6 +52,7 @@ class JLTMA_Logo_Slider extends Widget_Base
 	public function get_style_depends()
 	{
 		return [
+			'ma-swiper',
 			'jltma-tippy',
 			'font-awesome-5-all',
 			'font-awesome-4-shim'
@@ -61,7 +62,7 @@ class JLTMA_Logo_Slider extends Widget_Base
 	public function get_script_depends()
 	{
 		return [
-			'swiper',
+			'ma-swiper',
 			'jltma-popper',
 			'jltma-tippy',
 			'master-addons-scripts'

@@ -44,7 +44,7 @@ class JLTMA_Extension_Wrapper_Link
         $element->start_controls_section(
             'jltma_section_wrapper_link',
             [
-                'label' => JLTMA_BADGE . esc_html__('Wrapper Link', 'master-addons' ),
+                'label' => JLTMA_BADGE . esc_html__('Wrapper Link', 'master-addons'),
                 'tab'   => $tabs,
             ]
         );
@@ -52,7 +52,7 @@ class JLTMA_Extension_Wrapper_Link
         $element->add_control(
             'jltma_section_element_link',
             [
-                'label'       => esc_html__('Link', 'master-addons' ),
+                'label'       => esc_html__('Link', 'master-addons'),
                 'type'        => Controls_Manager::URL,
                 'dynamic'     => [
                     'active' => true,
@@ -64,21 +64,23 @@ class JLTMA_Extension_Wrapper_Link
         $element->end_controls_section();
     }
 
-    public function widget_before_render_content( Element_Base $element ) {
-        $settings = $element->get_settings_for_display('jltma_section_element_link');
-        if ( empty( $settings['url'] ) ) return;
-        $settings['url'] = esc_url($settings['url']);
-        $element->add_link_attributes( 'jltma_wrapper_link', $settings );
 
-        $element->add_render_attribute( 'jltma_wrapper_link', [
+
+    public function widget_before_render_content(Element_Base $element)
+    {
+        $settings = $element->get_settings_for_display('jltma_section_element_link');
+        if (empty($settings['url'])) return;
+        $settings['url'] = esc_url($settings['url']);
+        $element->add_link_attributes('jltma_wrapper_link', $settings);
+        $element->add_render_attribute('jltma_wrapper_link', [
             'class' => 'jltma-wrapper-link',
-            'aria-label' => esc_html__( 'More Details', 'master-addons' ),
-            'style' => wp_strip_all_tags('position:absolute;width:100%;height:100%;top:0;left:0;z-index:99999')
+            'aria-label' => esc_html__('More Details', 'master-addons'),
+            'style' => wp_strip_all_tags('position:absolute;width:100%;height:100%;top:0;left:0;z-index:99999;')
         ]);
 
-        ?>
-        <a <?php $element->print_render_attribute_string( 'jltma_wrapper_link' ); ?>></a>
-        <?php
+    ?>
+        <a <?php $element->print_render_attribute_string('jltma_wrapper_link'); ?>></a>
+    <?php
     }
 
     public static function get_instance()

@@ -784,17 +784,17 @@ class JLTMA_Tooltip extends Widget_Base
 		// );
 
 		// Arrow Tab Start
-		$this->add_control(
-			'ma_el_tooltip_arrow_color',
-			[
-				'label'     => __('Arrow Color', 'master-addons'),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '#826EFF',
-				'selectors' => [
-					'{{WRAPPER}} .tippy-box .tippy-arrow' => 'color: {{VALUE}}',
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'ma_el_tooltip_arrow_color',
+		// 	[
+		// 		'label'     => __('Arrow Color', 'master-addons'),
+		// 		'type'      => Controls_Manager::COLOR,
+		// 		'default'   => '#826EFF',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .tippy-box .tippy-arrow' => 'color: {{VALUE}}',
+		// 		],
+		// 	]
+		// );
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),

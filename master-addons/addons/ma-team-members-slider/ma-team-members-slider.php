@@ -49,11 +49,16 @@ class JLTMA_Team_Slider extends Widget_Base {
     }
 
     public function get_script_depends() {
-        return ['swiper', 'gridder', 'master-addons-scripts'];
+        return ['ma-swiper', 'gridder', 'master-addons-scripts'];
     }
 
     public function get_style_depends() {
-        return ['gridder', 'font-awesome-5-all', 'font-awesome-4-shim'];
+        return [
+            'ma-swiper',
+            'gridder',
+            'font-awesome-5-all',
+            'font-awesome-4-shim'
+        ];
     }
 
     public function get_help_url() {

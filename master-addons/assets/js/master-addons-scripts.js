@@ -2166,8 +2166,7 @@
                 }
 
 
-            } else
-            {
+            } else {
 
                 var $carousel = $scope.find('.jltma-team-carousel-slider');
 
@@ -3453,7 +3452,8 @@
         }
 
         $('.jltma-wrapper-link').each(function() {
-            $(this).siblings().appendTo( $(this) );
+            // $(this).siblings().appendTo( $(this) );
+            $(this).next().add($(this).prev()).appendTo($(this));
             $(this).css({
                 'position': 'relative',
                 'display': 'block',

@@ -528,7 +528,12 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
 
         // Text Domains
         public function jltma_load_textdomain() {
-            load_plugin_textdomain( 'master-addons', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+            add_action( 'init', function () {
+                $domain = 'master-addons';
+                $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+                load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
+                load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+            } );
         }
 
         // Plugin URL

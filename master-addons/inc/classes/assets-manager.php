@@ -63,8 +63,8 @@ class Master_Addons_Assets {
         $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min' );
         $jltma_vendor_dir = JLTMA_URL . '/assets/vendor/';
         wp_register_script(
-            'swiper',
-            'https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.3.6/js/swiper.js',
+            'ma-swiper',
+            $jltma_vendor_dir . 'swiper/js/swiper-bundle.min.js',
             ['jquery'],
             JLTMA_VER,
             true
@@ -167,6 +167,8 @@ class Master_Addons_Assets {
             JLTMA_VER,
             true
         );
+        // Swiper
+        wp_register_style( 'ma-swiper', $jltma_vendor_dir . 'swiper/css/swiper.min.css' );
         // Tippy JS
         wp_register_style( 'jltma-tippy', $jltma_vendor_dir . 'tippyjs/css/tippy.css' );
         wp_register_script(
