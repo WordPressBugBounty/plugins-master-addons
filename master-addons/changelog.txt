@@ -1,4 +1,7 @@
 == Changelog ==
+= 2.0.6.9 (22-12-2024) =
+* Fixed: Fatal Error for Custom CSS and JS issue fixed. Thanks [@kazishiplu](https://wordpress.org/support/topic/getting-fatal-error-for-elementor-custom-css-js/) for informing about the issue
+
 = 2.0.6.8 (21-12-2024) =
 * Fixed: Wrapper link effection only last link inside same container
 * Updated: Swiper Class updated, Team Slider not working issue fixed

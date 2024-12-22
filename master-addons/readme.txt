@@ -4,7 +4,7 @@ Tags: elementor, elementor addon, elementor addons, elementor widget, widgets fo
 Requires at least: 4.0
 Tested up to: 6.7.1
 Requires PHP: 7.0
-Stable tag: 2.0.6.8
+Stable tag: 2.0.6.9
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ With [Master Addons for Elementor](https://master-addons.com/), building a beaut
 
 From intricate navigation menus to engaging elementor media carousels, informative blogs to professional team member showcases – every element is designed with customization in mind. Adjust margins, padding, typography, borders, and more to match your unique style. Plus, captivate your audience with interactive image hover effects and image hotspots.
 
-== But that's not all – AS an Elementor addon plugin, Master Addons goes beyond the basics with advanced extensions like Display Condition, Floating Effect, Custom CSS, Tooltip, and Positioning to give you complete control over your website's look and feel. ==
+== But that's not all – AS an Elementor addon plugin, Master Addons goes beyond the basics with advanced extensions like Display Condition, Floating Effect, Custom CSS, Tooltip, Icon Library for Elementor and Positioning to give you complete control over your website's look and feel. ==
 
 Ready to transform your ideas into reality? Download the free version of Master Addons today and start building the website of your dreams! 🚀
 
@@ -175,48 +175,54 @@ Master Addons is an Elementor addons plugin that gives you access to the followi
 
 5. [**Background Slider**](https://master-addons.com/demos/background-slider/): Enhance your backgrounds with a slider featuring transitions and the Ken Burns effect.
 
-6. [**Custom CSS and JS**](https://master-addons.com/docs/addons/custom-css-extension/): Write custom CSS and JavaScript directly in Elementor to personalize your site even further.
+6. [**Custom CSS Elementor**](https://master-addons.com/docs/addons/custom-css-extension/): Elementor custom CSS allows you to write CSS directly in Elementor to personalize your site even further.
 
-7. [**Positioning**](https://master-addons.com/demos/positioning/): Place elements anywhere on your page with different position types like static or absolute, and customize for various devices.
+7. [**Custom JS Elementor**](https://master-addons.com/docs/addons/custom-css-extension/): Elementor custom Javascript allows you to implement custom JavaScript directly within Elementor to add advanced functionality and interactivity to your website.
 
-8. **Container Extras**: Control the size of sections and columns beyond default settings, using units like pixels or percentages for precise design.
+8. [**Positioning**](https://master-addons.com/demos/positioning/): Place elements anywhere on your page with different position types like static or absolute, and customize for various devices.
 
-9. [**Mega Menu**](https://master-addons.com/docs/addons/navigation-menu/): Create detailed, attention-grabbing mega menus for your site, similar to those on popular e-commerce sites and blogs.
+9. **Container Extras**: Control the size of sections and columns beyond default settings, using units like pixels or percentages for precise design.
 
-10.  [⭐ **Entrance Animation**](https://master-addons.com/demos/entrance-animation/): Add eye-catching animations to your webpage elements with a variety of styles and customization options.
+10. [**Mega Menu**](https://master-addons.com/docs/addons/navigation-menu/): Create detailed, attention-grabbing mega menus for your site, similar to those on popular e-commerce sites and blogs.
 
-11. [⭐ **Transforms**](https://master-addons.com/demos/transforms-extension/): Animate elements with CSS transforms, allowing you to move, rotate, scale, and skew them on your pages.
+11.  [⭐ **Entrance Animation**](https://master-addons.com/demos/entrance-animation/): Add eye-catching animations to your webpage elements with a variety of styles and customization options.
 
-12. [⭐ **Rellax**](https://master-addons.com/demos/rellax/): Implement parallax scrolling effects to add depth and motion to your landing page, with controls for speed and layering.
+12. [⭐ **Transforms**](https://master-addons.com/demos/transforms-extension/): Animate elements with CSS transforms, allowing you to move, rotate, scale, and skew them on your pages.
 
-13. [⭐ **Reveal**](https://master-addons.com/demos/reveal/): Create cool reveal effects for your content with customizable directions, speeds, delays, and colors.
+13. [⭐ **Rellax**](https://master-addons.com/demos/rellax/): Implement parallax scrolling effects to add depth and motion to your landing page, with controls for speed and layering.
 
-14. [**Header,Footer,Comment Form**](https://master-addons.com/demos/header-footer-comment-builder/): Design your site’s header, footer, and comment forms with dynamic conditions for different pages or sections.
+14. [⭐ **Reveal**](https://master-addons.com/demos/reveal/): Create cool reveal effects for your content with customizable directions, speeds, delays, and colors.
 
-15. [⭐ **Display Conditions**](https://master-addons.com/demos/display-conditions/): Show content based on user behavior like browser type or operating system, perfect for targeting specific audiences.
+15. [**Header,Footer,Comment Form**](https://master-addons.com/demos/header-footer-comment-builder/): Design your site’s header, footer, and comment forms with dynamic conditions for different pages or sections.
 
-16. [**Dynamic Tags**](https://master-addons.com/demos/dynamic-tags/): Automatically display dynamic content like author bios or post details without manual updates.
+16. [⭐ **Display Conditions**](https://master-addons.com/demos/display-conditions/): Show content based on user behavior like browser type or operating system, perfect for targeting specific audiences.
 
-17. [⭐ **Floating Effects**](https://master-addons.com/demos/floating-effect/): Add eye-catching floating animations to elements on your page to make them stand out.
+17. [**Dynamic Tags**](https://master-addons.com/demos/dynamic-tags/): Automatically display dynamic content like author bios or post details without manual updates.
 
-18. [**Wrapper Link**](https://master-addons.com/docs/addons/wrapper-link/): Easily link entire sections or specific elements to keep visitors engaged and increase page views.
+18. [⭐ **Floating Effects**](https://master-addons.com/demos/floating-effect/): Add eye-catching floating animations to elements on your page to make them stand out.
 
-19. **Post/Page Duplicator**: Clone any post, page, or custom post type with a single click, including full support for WooCommerce products.
+19. [**Wrapper Link**](https://master-addons.com/docs/addons/wrapper-link/): Easily link entire sections or specific elements to keep visitors engaged and increase page views.
 
-20. [**Glassmorphism**](https://master-addons.com/demos/glassmorphism-extension/): Create a modern, frosted glass effect on your elements with a background blur, enhancing accessibility and design aesthetics.
+20. **Post/Page Duplicator**: Clone any post, page, or custom post type with a single click, including full support for WooCommerce products.
 
-21. [**Icons Extended**](https://master-addons.com/elementor-icons-and-4-font-library/): Access a rich library of icons beyond Font Awesome, including Simple Line Icons, Elementor Icons, Ionic Font, Linear Icons, and Material Icons.
+21. [**Glassmorphism**](https://master-addons.com/demos/glassmorphism-extension/): Create a modern, frosted glass effect on your elements with a background blur, enhancing accessibility and design aesthetics.
 
-22. [⭐ **Tooltips**](https://master-addons.com/demos/ext-tooltips/): Add informative tooltips to any section, column, or element, with full customization of content, position, size, background, and text style.
+22. [**Icons Extended**](https://master-addons.com/elementor-icons-and-4-font-library/): Access a rich library of icons beyond Font Awesome, including Simple Line Icons, Elementor custom Icons, Ionic Font, Linear Icons, and Material Icons.
 
-23. [**Pricing Table Elementor**](https://master-addons.com/demos/pricing-table/): Create easy to understand Elementor pricing tables with smooth switchers to display your product prices. Various layouts also available.
+23. [⭐ **Tooltips**](https://master-addons.com/demos/ext-tooltips/): Add informative tooltips to any section, column, or element, with full customization of content, position, size, background, and text style.
+
+24. [**Pricing Table Elementor**](https://master-addons.com/demos/pricing-table/): Create easy to understand Elementor pricing tables with smooth switchers to display your product prices. Various layouts also available.
+
+25. [**Header Footer Builder**](https://master-addons.com/demos/header-footer-comment-builder/): The header footer builder allows you to design and customize every aspect of your website's header and footer with intuitive drag-and-drop functionality.
+
+26. [**Comment Form Builder**](https://master-addons.com/demos/header-footer-comment-builder/): The comment builder, an exclusive master addons extension that allows you to create custom comment forms to enhance user engagement and tailor the commenting experience on your website.
 
 
-==5 Awesome Elementor Icon Library==
+==5 Awesome Custom Elementor Icon Library==
 
-👉 **Simple Line Icons:** Input any icon from this Simple Line Icons library to your webpage. This library provides a lot of minimal eye-catching icons.
-👉 **Elementor Icons:** I hope you are already familiar with the default Elementor Icons, enable this icon library and access to the default Elementor icons.
-👉 **Ionic Font:** Insert some coll Ionic Font icon inside your page and make an outstanding webpage.
+👉 **Simple Line Icons:** Input any icon from this Simple Line Icons library for elementor to your webpage. This library provides a lot of minimal eye-catching icons.
+👉 **Elementor Icons:** I hope you are already familiar with the default Elementor Icon list, enable this elementor icon library and access default Elementor icons.
+👉 **Iconic Font:** Insert some cool Iconic Font icons inside your page and make an outstanding webpage.
 👉 **Linear Icons:** This icon library comes with some bold handy icons that are highly recommended for any online professional.
 👉 **Material Icons:** These bold icons will attract your visitor's intention when they visit your Website. Just enable Material icons and insert them on any page.
 

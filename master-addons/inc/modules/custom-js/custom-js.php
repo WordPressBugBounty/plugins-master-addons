@@ -77,11 +77,11 @@ class JLTMA_Extension_Custom_JS
     public function jltma_page_custom_js()
     {
 
-        if (\Elementor\Plugin::instance()->editor->is_edit_mode() || \Elementor\Plugin::instance()->preview->is_preview_mode()) {
+        if (\Elementor\Plugin::$instance->editor->is_edit_mode() || \Elementor\Plugin::$instance->preview->is_preview_mode()) {
             return;
         }
 
-        $document = \Elementor\Plugin::instance()->documents->get(get_the_ID());
+        $document = \Elementor\Plugin::$instance->documents->get(get_the_ID());
 
         if (!$document) return;
 
