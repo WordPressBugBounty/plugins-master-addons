@@ -63,12 +63,20 @@ class JLTMA_Image_Carousel extends Widget_Base
 
 	public function get_script_depends()
 	{
-		return ['swiper', 'fancybox', 'master-addons-scripts'];
+		return [
+			'ma-swiper',
+			'fancybox',
+			'master-addons-scripts'
+		];
 	}
 
 	public function get_style_depends()
 	{
-		return ['fancybox', 'master-addons-main-style'];
+		return [
+			'ma-swiper',
+			'fancybox',
+			'master-addons-main-style'
+		];
 	}
 
 	public function get_keywords()
@@ -731,7 +739,7 @@ class JLTMA_Image_Carousel extends Widget_Base
 				'class' => [
 					'jltma-slider__item',
 					'jltma-swiper__slide',
-					'swiper-slide',
+					'swiper-slide'
 				],
 			],
 		]);

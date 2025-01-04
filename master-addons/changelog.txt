@@ -1,4 +1,7 @@
 == Changelog ==
+= 2.0.7.0 (04-01-2024) =
+* Update: Image Carousel not working issue fixed
+
 = 2.0.6.9 (22-12-2024) =
 * Fixed: Fatal Error for Custom CSS and JS issue fixed. Thanks [@kazishiplu](https://wordpress.org/support/topic/getting-fatal-error-for-elementor-custom-css-js/) for informing about the issue
 

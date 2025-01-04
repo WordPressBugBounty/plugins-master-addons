@@ -113,7 +113,7 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             // if (ma_el_fs()->is_premium()) {
             // 	$support_url = 'https://master-addons.com/support/';
             // } else {
-            $support_url = 'https://wordpress.org/support/plugin/master-addons/';
+            $support_url = 'https://wordpress.org/support/plugin/master-addons/#new-topic-0';
             // }
             return $support_url;
         }
