@@ -129,5 +129,12 @@ if ( isset( $jltma_hide_system_info ) && !$jltma_hide_system_info ) {
 
 	<?php 
 ?>
+		<a class="jltma-upgrade-pro" href="https://master-addons.com/pricing" target="_blank">
+			<?php 
+_e( 'Upgrade Pro', 'master-addons' );
+?>
+		</a>
+	<?php 
+?>
 
 </ul>

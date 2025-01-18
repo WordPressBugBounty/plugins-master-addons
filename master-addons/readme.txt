@@ -1,10 +1,10 @@
 === Master Addons - Elementor Addons with White Label, Free Widgets, Hover Effects, Conditions, & Animations ===
 Contributors: jwthemeltd, litonice13, masteraddons
-Tags: elementor, elementor addon, elementor addons, elementor widget, widgets for elementor
+Tags: elementor, elementor templates, elementor addons, widgets for elementor, elementor widgets
 Requires at least: 4.0
 Tested up to: 6.7.1
 Requires PHP: 7.0
-Stable tag: 2.0.7.0
+Stable tag: 2.0.7.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

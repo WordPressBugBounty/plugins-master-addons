@@ -171,6 +171,15 @@ echo esc_html__( 'Upgrade to Pro', 'master-addons' );
 
             <?php 
 ?>
+                <div class="jltma-master-addons-banner">
+                    <a href="https://master-addons.com/pricing" target="_blank">
+                        <img class="tab-banner" src="<?php 
+echo JLTMA_ADMIN_ASSETS;
+?>icons/upgrade-pro.png" alt="Upgrade to Pro Master Addons">
+                    </a>
+                </div><!-- /.master-addons-banner -->
+            <?php 
+?>
 
             <div class="jltma-master-addons-right-column-widget">
                 <img class="jltma-icon-image" src="<?php 

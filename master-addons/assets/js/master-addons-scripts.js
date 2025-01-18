@@ -2841,16 +2841,27 @@
         // Wrapper Link
         MA_Wrapper_Link: function ($scope, $)
         {
-            // $('[data-jltma-wrapper-link]').each(function() {
-            //     var link = $(this).data('jltma-wrapper-link');
-            //     $(this).on('click.jltmaElementOnClick', function() {
-            //         if (link.is_external) {
-            //             window.open(link.url);
-            //         } else {
-            //             location.href = link.url;
-            //         }
-            //     })
-            // });
+            $('body').on('click.onWrapperLink', '[data-jltma-wrapper-link]', function(e) {
+                var $wrapper = $(this),
+                  data = $wrapper.data("jltma-wrapper-link"),
+                  id = $wrapper.data("id"),
+                  anchor = document.createElement("a"),
+                  anchorReal,
+                  timeout = 100;
+                anchor.id = "master-addons-wrapper-link-" + id;
+                anchor.href = data.url;
+                anchor.target = data.is_external ? "_blank" : "_self";
+                anchor.rel = data.nofollow ? "nofollow noreferer" : "";
+                anchor.style.display = "none";
+                document.body.appendChild(anchor);
+                anchorReal = document.getElementById(anchor.id);
+                anchorReal.click();
+
+                timeout = setTimeout(function () {
+                    document.body.removeChild(anchorReal);
+                    clearTimeout(timeout);
+                });
+            });
         },
 
         /**
@@ -3402,7 +3413,7 @@
         elementorFrontend.hooks.addAction('frontend/element_ready/global', Master_Addons.MA_Reveal);
         elementorFrontend.hooks.addAction('frontend/element_ready/global', Master_Addons.MA_Rellax);
         // elementorFrontend.hooks.addAction('frontend/element_ready/global', Master_Addons.MA_Entrance_Animation);
-        // elementorFrontend.hooks.addAction('frontend/element_ready/global', Master_Addons.MA_Wrapper_Link);
+        elementorFrontend.hooks.addAction('frontend/element_ready/global', Master_Addons.MA_Wrapper_Link);
 
 
         //Element Scripts
@@ -3450,19 +3461,6 @@
             elementorFrontend.hooks.addAction('frontend/element_ready/jltma-counter-up.default', Master_Addons.MA_Counter_Up);
             elementorFrontend.hooks.addAction('frontend/element_ready/ma-tooltip.default', Master_Addons.MA_Tooltip);
         }
-
-        $('.jltma-wrapper-link').each(function() {
-            // $(this).siblings().appendTo( $(this) );
-            $(this).next().add($(this).prev()).appendTo($(this));
-            $(this).css({
-                'position': 'relative',
-                'display': 'block',
-                'width': '100%',
-                'height': '100%',
-                'z-index': 'initial',
-            })
-        });
-
     });
 
 })(jQuery);
