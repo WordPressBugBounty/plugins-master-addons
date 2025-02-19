@@ -1114,12 +1114,12 @@ class JLTMA_Image_Hover_Effects extends Widget_Base {
             ?>
 
 						<a data-fancybox data-src="#jltma-image-hover-<?php 
-            echo $this->get_id();
+            echo esc_attr( $this->get_id() );
             ?>" href="javascript:;" data-animation-duration="700" data-animation="fade" data-modal="false" class="jltma-fancybox elementor-clickable ma-image-hover-read-more" aria-label="Fancybox Popup">
 						</a>
 
 						<div style="display: none;" id="jltma-image-hover-<?php 
-            echo $this->get_id();
+            echo esc_attr( $this->get_id() );
             ?>">
 
 							<div class="card p-4">

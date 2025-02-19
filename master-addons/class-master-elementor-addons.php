@@ -40,6 +40,8 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
 
         private static $instance = null;
 
+        private $jltma_classes = array();
+
         public static function get_instance() {
             if ( !self::$instance ) {
                 self::$instance = new self();
@@ -330,6 +332,32 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             return $jltma_get_icons_library_settings;
         }
 
+        // public function jltma_add_actions_to_elementor()
+        // {
+        // 	$classes = glob(JLTMA_PATH . '/inc/classes/JLTMA_*.php');
+        // 	// include all classes
+        // 	foreach ($classes as $key => $value) {
+        // 		require_once $value;
+        // 	}
+        // 	// instance all classes
+        // 	foreach ($classes as $key => $value) {
+        // 		$name = pathinfo($value, PATHINFO_FILENAME);
+        // 		$class = self::$class_namespace . $name;
+        // 		$this->jltma_classes[strtolower($name)] = new $class();
+        // 	}
+        // }
+        /**
+         * Load all extension classes and instance them.
+         *
+         * This method will:
+         * 1. Get all PHP files inside the inc/classes directory.
+         * 2. Include all of them.
+         * 3. Create an instance of each class.
+         * 4. Store the instance in the $jltma_classes property.
+         *
+         * @since 1.1.0
+         * @return void
+         */
         public function jltma_add_actions_to_elementor() {
             $classes = glob( JLTMA_PATH . '/inc/classes/JLTMA_*.php' );
             // include all classes
@@ -340,6 +368,7 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             foreach ( $classes as $key => $value ) {
                 $name = pathinfo( $value, PATHINFO_FILENAME );
                 $class = self::$class_namespace . $name;
+                // Now this will no longer trigger a deprecated warning
                 $this->jltma_classes[strtolower( $name )] = new $class();
             }
         }

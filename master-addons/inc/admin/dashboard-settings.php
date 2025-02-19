@@ -42,6 +42,9 @@ class Master_Addons_Admin_Settings
 	private $jltma_third_party_plugins_settings;
 	private $jltma_get_third_party_plugins_settings;
 
+	// Master Addons Icons Library Property
+	private $jltma_default_icons_library_settings = array();
+
 
 	public function __construct()
 	{

@@ -565,7 +565,7 @@ class JLTMA_Tabs extends Widget_Base {
 						<li class="<?php 
             echo esc_attr( $tab['ma_el_tab_show_as_default'] );
             ?>" data-tab data-tab-id="jltma-tab-<?php 
-            echo $this->get_id() . $key;
+            echo esc_attr( $this->get_id() . $key );
             ?>">
 							<?php 
             if ( $settings['ma_el_tabs_icon_show'] === 'yes' ) {
@@ -629,7 +629,7 @@ class JLTMA_Tabs extends Widget_Base {
             $ma_el_find_default_tab[] = $tab['ma_el_tab_show_as_default'];
             ?>
 						<div id="jltma-tab-<?php 
-            echo $this->get_id() . $key;
+            echo esc_attr( $this->get_id() . $key );
             ?>" class="jltma--advance-tab-content tab-pane <?php 
             echo esc_attr( $tab['ma_el_tab_show_as_default'] );
             ?>">

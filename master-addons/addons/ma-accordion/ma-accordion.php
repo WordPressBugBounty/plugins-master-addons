@@ -92,7 +92,7 @@ class JLTMA_Advanced_Accordion extends Widget_Base {
             'type'             => Controls_Manager::ICONS,
             'fa4compatibility' => 'icon_title',
             'default'          => [
-                'value'   => 'fas fa-plus',
+                'value'   => 'elementor-icons eicon-plus-square-o',
                 'library' => 'solid',
             ],
             'render_type'      => 'template',
@@ -113,7 +113,7 @@ class JLTMA_Advanced_Accordion extends Widget_Base {
             'type'             => Controls_Manager::ICONS,
             'fa4compatibility' => 'icon_collapse',
             'default'          => [
-                'value'   => 'fas fa-minus',
+                'value'   => 'elementor-icons eicon-minus-square-o',
                 'library' => 'solid',
             ],
             'render_type'      => 'template',
@@ -829,7 +829,7 @@ class JLTMA_Advanced_Accordion extends Widget_Base {
         ?>>
 			<div <?php 
         echo $this->get_render_attribute_string( 'jltma-accordion-wrap' );
-        ?>>
+        ?>">
 
 				<?php 
         foreach ( $settings['tabs'] as $index => $tab ) {
@@ -872,6 +872,9 @@ class JLTMA_Advanced_Accordion extends Widget_Base {
 							<div class="jltma-accordion-title-icon">
 
 								<?php 
+            if ( $settings['toggle_icon_show'] === 'yes' && !isset( $settings['toggle_icon_position'] ) ) {
+                $settings['toggle_icon_position'] = 'right';
+            }
             if ( $settings['toggle_icon_show'] === 'yes' && $settings['toggle_icon_position'] == "left" ) {
                 if ( $tab['accordion_tab_icon_show'] === 'yes' ) {
                     ?>

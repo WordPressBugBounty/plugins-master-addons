@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-18 10:22+0000\n"
+"POT-Creation-Date: 2025-02-19 11:50+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "Custom Title & Description"
 msgstr ""
 
-#: ../addons/caldera-forms/caldera-forms.php:84, ../addons/caldera-forms/caldera-forms.php:822, ../addons/gravity-forms/gravity-forms.php:110, ../addons/gravity-forms/gravity-forms.php:201, ../addons/gravity-forms/gravity-forms.php:970, ../addons/ma-business-hours/ma-business-hours.php:125, ../addons/ma-business-hours/ma-business-hours.php:151, ../addons/ma-business-hours/ma-business-hours.php:210, ../addons/ma-business-hours/ma-business-hours.php:261, ../addons/ma-business-hours/ma-business-hours.php:415, ../addons/ma-business-hours/ma-business-hours.php:514, ../addons/ma-business-hours/ma-business-hours.php:553, ../addons/ma-business-hours/ma-business-hours.php:637, ../addons/ma-business-hours/ma-business-hours.php:670, ../addons/ma-business-hours/ma-business-hours.php:844, ../addons/ma-calendar/ma-calendar.php:369, ../addons/ma-calendar/ma-calendar.php:399, ../addons/ma-calendar/ma-calendar.php:421, ../addons/ma-calendar/ma-calendar.php:448, ../addons/ma-calendar/ma-calendar.php:463, ../addons/ma-calendar/ma-calendar.php:478, ../addons/ma-calendar/ma-calendar.php:572, ../addons/ma-data-table/ma-data-table.php:166, ../addons/ma-data-table/ma-data-table.php:395, ../addons/ma-data-table/ma-data-table.php:536, ../addons/ma-data-table/ma-data-table.php:557, ../addons/ma-data-table/ma-data-table.php:569, ../addons/ma-data-table/ma-data-table.php:581, ../addons/ma-data-table/ma-data-table.php:593, ../addons/ma-image-carousel/ma-image-carousel.php:150, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:437, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:502, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:518, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:550, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:618, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:739, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:775, ../addons/ma-navmenu/ma-navmenu.php:768, ../addons/ma-piechart/ma-piechart.php:89, ../addons/ma-piechart/ma-piechart.php:186, ../addons/ma-post-pagination/ma-post-pagination.php:1162, ../addons/ma-social-share/ma-social-share.php:247, ../addons/ma-table/ma-table.php:195, ../addons/ma-table/ma-table.php:315, ../addons/ma-table/ma-table.php:434, ../addons/ma-table-of-contents/ma-table-of-contents.php:207, ../addons/ma-table-of-contents/ma-table-of-contents.php:219, ../addons/ma-timeline/ma-timeline.php:177, ../addons/ma-timeline/ma-timeline.php:205, ../addons/ma-timeline/ma-timeline.php:219, ../addons/ma-timeline/ma-timeline.php:261, ../addons/ma-timeline/ma-timeline.php:682, ../addons/ma-timeline/ma-timeline.php:1147, ../addons/ma-timeline/ma-timeline.php:1606, ../addons/ma-wc-product-table/ma-wc-product-table.php:180, ../addons/ma-wc-product-table/ma-wc-product-table.php:209, ../addons/ma-wc-product-table/ma-wc-product-table.php:340, ../addons/ma-wc-product-table/ma-wc-product-table.php:361, ../addons/ma-wc-product-table/ma-wc-product-table.php:373, ../addons/ma-wc-product-table/ma-wc-product-table.php:385, ../addons/ma-wc-product-table/ma-wc-product-table.php:397, ../addons/ma-wc-single-product/ma-wc-single-product.php:165, ../addons/ninja-forms/ninja-forms.php:803, ../addons/wpforms/wpforms.php:86, ../addons/wpforms/wpforms.php:817, ../inc/admin/dashboard-settings.php:196, ../inc/traits/swiper-controls.php:30, ../inc/modules/bg-slider/bg-slider.php:135, ../inc/modules/content-protection/content-protection.php:504, ../inc/modules/morphing-effects/morphing-effects.php:68, ../inc/modules/particles/particles.php:52, ../inc/modules/reading-progress-bar/reading-progress-bar.php:53, ../inc/modules/ribbon/ribbon.php:59, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:233, ../premium/addons/ma-comparison-table/ma-comparison-table.php:176, ../premium/addons/ma-domain-checker/ma-domain-checker.php:113, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:486, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:530, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:548, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:640, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:712, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:725, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:738, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:790, ../premium/modules/animated-gradient/animated-gradient.php:39, ../premium/modules/display-conditions/display-conditions.php:205, ../premium/modules/display-conditions/display-conditions.php:220, ../premium/modules/floating-effects/floating-effects.php:36, ../premium/modules/rellax/rellax.php:48, ../premium/modules/reveal/reveal.php:82, ../premium/modules/tooltips/tooltips.php:52
+#: ../addons/caldera-forms/caldera-forms.php:84, ../addons/caldera-forms/caldera-forms.php:822, ../addons/gravity-forms/gravity-forms.php:110, ../addons/gravity-forms/gravity-forms.php:201, ../addons/gravity-forms/gravity-forms.php:970, ../addons/ma-business-hours/ma-business-hours.php:125, ../addons/ma-business-hours/ma-business-hours.php:151, ../addons/ma-business-hours/ma-business-hours.php:210, ../addons/ma-business-hours/ma-business-hours.php:261, ../addons/ma-business-hours/ma-business-hours.php:415, ../addons/ma-business-hours/ma-business-hours.php:514, ../addons/ma-business-hours/ma-business-hours.php:553, ../addons/ma-business-hours/ma-business-hours.php:637, ../addons/ma-business-hours/ma-business-hours.php:670, ../addons/ma-business-hours/ma-business-hours.php:844, ../addons/ma-calendar/ma-calendar.php:369, ../addons/ma-calendar/ma-calendar.php:399, ../addons/ma-calendar/ma-calendar.php:421, ../addons/ma-calendar/ma-calendar.php:448, ../addons/ma-calendar/ma-calendar.php:463, ../addons/ma-calendar/ma-calendar.php:478, ../addons/ma-calendar/ma-calendar.php:572, ../addons/ma-data-table/ma-data-table.php:166, ../addons/ma-data-table/ma-data-table.php:395, ../addons/ma-data-table/ma-data-table.php:536, ../addons/ma-data-table/ma-data-table.php:557, ../addons/ma-data-table/ma-data-table.php:569, ../addons/ma-data-table/ma-data-table.php:581, ../addons/ma-data-table/ma-data-table.php:593, ../addons/ma-image-carousel/ma-image-carousel.php:150, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:437, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:502, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:518, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:550, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:618, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:739, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:775, ../addons/ma-navmenu/ma-navmenu.php:768, ../addons/ma-piechart/ma-piechart.php:89, ../addons/ma-piechart/ma-piechart.php:186, ../addons/ma-post-pagination/ma-post-pagination.php:1162, ../addons/ma-social-share/ma-social-share.php:247, ../addons/ma-table/ma-table.php:195, ../addons/ma-table/ma-table.php:315, ../addons/ma-table/ma-table.php:434, ../addons/ma-table-of-contents/ma-table-of-contents.php:207, ../addons/ma-table-of-contents/ma-table-of-contents.php:219, ../addons/ma-timeline/ma-timeline.php:177, ../addons/ma-timeline/ma-timeline.php:205, ../addons/ma-timeline/ma-timeline.php:219, ../addons/ma-timeline/ma-timeline.php:261, ../addons/ma-timeline/ma-timeline.php:682, ../addons/ma-timeline/ma-timeline.php:1147, ../addons/ma-timeline/ma-timeline.php:1606, ../addons/ma-wc-product-table/ma-wc-product-table.php:180, ../addons/ma-wc-product-table/ma-wc-product-table.php:209, ../addons/ma-wc-product-table/ma-wc-product-table.php:340, ../addons/ma-wc-product-table/ma-wc-product-table.php:361, ../addons/ma-wc-product-table/ma-wc-product-table.php:373, ../addons/ma-wc-product-table/ma-wc-product-table.php:385, ../addons/ma-wc-product-table/ma-wc-product-table.php:397, ../addons/ma-wc-single-product/ma-wc-single-product.php:165, ../addons/ninja-forms/ninja-forms.php:803, ../addons/wpforms/wpforms.php:86, ../addons/wpforms/wpforms.php:817, ../inc/admin/dashboard-settings.php:199, ../inc/traits/swiper-controls.php:30, ../inc/modules/bg-slider/bg-slider.php:135, ../inc/modules/content-protection/content-protection.php:504, ../inc/modules/morphing-effects/morphing-effects.php:68, ../inc/modules/particles/particles.php:52, ../inc/modules/reading-progress-bar/reading-progress-bar.php:53, ../inc/modules/ribbon/ribbon.php:59, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:233, ../premium/addons/ma-comparison-table/ma-comparison-table.php:176, ../premium/addons/ma-domain-checker/ma-domain-checker.php:113, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:486, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:530, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:548, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:640, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:712, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:725, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:738, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:790, ../premium/modules/animated-gradient/animated-gradient.php:39, ../premium/modules/display-conditions/display-conditions.php:205, ../premium/modules/display-conditions/display-conditions.php:220, ../premium/modules/floating-effects/floating-effects.php:36, ../premium/modules/rellax/rellax.php:48, ../premium/modules/reveal/reveal.php:82, ../premium/modules/tooltips/tooltips.php:52
 msgid "Yes"
 msgstr ""
 
@@ -709,11 +709,11 @@ msgstr ""
 msgid "Icon Spacing"
 msgstr ""
 
-#: ../addons/ma-accordion/ma-accordion.php:1620, ../addons/ma-tabs/ma-tabs.php:1127, ../inc/classes/helper-class.php:438, ../inc/modules/dynamic-tags/inc/contact-url.php:44
+#: ../addons/ma-accordion/ma-accordion.php:1623, ../addons/ma-tabs/ma-tabs.php:1127, ../inc/classes/helper-class.php:438, ../inc/modules/dynamic-tags/inc/contact-url.php:44
 msgid "Select"
 msgstr ""
 
-#: ../addons/ma-accordion/ma-accordion.php:1627, ../addons/ma-tabs/ma-tabs.php:1134, ../inc/classes/helper-class.php:445
+#: ../addons/ma-accordion/ma-accordion.php:1630, ../addons/ma-tabs/ma-tabs.php:1134, ../inc/classes/helper-class.php:445
 msgid "No saved templates found!"
 msgstr ""
 
@@ -793,7 +793,7 @@ msgstr ""
 msgid "Ribbon Thickness"
 msgstr ""
 
-#: ../addons/ma-advanced-image/ma-advanced-image.php:247, ../addons/ma-data-table/ma-data-table.php:526, ../addons/ma-image-comparison/ma-image-comparison.php:182, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:373, ../addons/ma-image-scroll/ma-image-scroll.php:128, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:237, ../addons/ma-wc-product-table/ma-wc-product-table.php:330, ../class-master-elementor-addons.php:755, ../inc/traits/swiper-controls.php:39, ../inc/modules/mega-menu/inc/view/modal-body.php:15, ../premium/modules/tooltips/tooltips.php:62
+#: ../addons/ma-advanced-image/ma-advanced-image.php:247, ../addons/ma-data-table/ma-data-table.php:526, ../addons/ma-image-comparison/ma-image-comparison.php:182, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:373, ../addons/ma-image-scroll/ma-image-scroll.php:128, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:237, ../addons/ma-wc-product-table/ma-wc-product-table.php:330, ../class-master-elementor-addons.php:786, ../inc/traits/swiper-controls.php:39, ../inc/modules/mega-menu/inc/view/modal-body.php:15, ../premium/modules/tooltips/tooltips.php:62
 msgid "Settings"
 msgstr ""
 
@@ -941,7 +941,7 @@ msgstr ""
 msgid "First Heading"
 msgstr ""
 
-#: ../addons/ma-animated-headlines/ma-animated-headlines.php:134, ../class-master-elementor-addons.php:340, ../inc/admin/dashboard-settings.php:99, ../inc/admin/dashboard-settings.php:117, ../inc/classes/white-label.php:110, ../inc/classes/white-label.php:135, ../inc/classes/Notifications/Ask_For_Rating.php:25, ../inc/classes/Notifications/Subscribe.php:99, ../inc/classes/Notifications/What_We_Collect.php:69, ../inc/classes/Notifications/What_We_Collect.php:95, ../inc/templates/classes/config.php:29
+#: ../addons/ma-animated-headlines/ma-animated-headlines.php:134, ../class-master-elementor-addons.php:341, ../inc/admin/dashboard-settings.php:102, ../inc/admin/dashboard-settings.php:120, ../inc/classes/white-label.php:110, ../inc/classes/white-label.php:135, ../inc/classes/Notifications/Ask_For_Rating.php:25, ../inc/classes/Notifications/Subscribe.php:99, ../inc/classes/Notifications/What_We_Collect.php:69, ../inc/classes/Notifications/What_We_Collect.php:95, ../inc/templates/classes/config.php:29
 msgid "Master Addons"
 msgstr ""
 
@@ -4425,7 +4425,7 @@ msgstr ""
 msgid "Fancybox"
 msgstr ""
 
-#: ../addons/ma-image-carousel/ma-image-carousel.php:166, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:591, ../class-master-elementor-addons.php:939
+#: ../addons/ma-image-carousel/ma-image-carousel.php:166, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:591, ../class-master-elementor-addons.php:970
 msgid "Elementor"
 msgstr ""
 
@@ -9158,42 +9158,42 @@ msgstr ""
 msgid "WP Forms"
 msgstr ""
 
-#: ../class-master-elementor-addons.php:120
+#: ../class-master-elementor-addons.php:121
 msgid "Support"
 msgstr ""
 
 #. translators: 1: strong start tag, 2: strong end tag.
-#: ../class-master-elementor-addons.php:918
+#: ../class-master-elementor-addons.php:949
 msgid "<b>Master Addons</b> requires %1$s\"Elementor\"%2$s plugin to be installed and activated. Please install Elementor to continue."
 msgstr ""
 
-#: ../class-master-elementor-addons.php:919
+#: ../class-master-elementor-addons.php:950
 msgid "Install Elementor"
 msgstr ""
 
-#: ../class-master-elementor-addons.php:910
+#: ../class-master-elementor-addons.php:941
 msgid "<b>Master Addons</b> requires <strong>Elementor</strong> plugin to be active. Please activate Elementor to continue."
 msgstr ""
 
-#: ../class-master-elementor-addons.php:911
+#: ../class-master-elementor-addons.php:942
 msgid "Activate Elementor"
 msgstr ""
 
 #. translators: 1: Plugin name 2: Elementor 3: Required Elementor version
-#: ../class-master-elementor-addons.php:937
+#: ../class-master-elementor-addons.php:968
 msgid "\"%1$s\" requires \"%2$s\" version %3$s or greater. "
 msgstr ""
 
-#: ../class-master-elementor-addons.php:938, ../class-master-elementor-addons.php:954, ../inc/admin/dashboard-settings.php:116
+#: ../class-master-elementor-addons.php:969, ../class-master-elementor-addons.php:985, ../inc/admin/dashboard-settings.php:119
 msgid "Master Addons for Elementor"
 msgstr ""
 
 #. translators: 1: Plugin name 2: PHP 3: Required PHP version
-#: ../class-master-elementor-addons.php:953
+#: ../class-master-elementor-addons.php:984
 msgid "\"%1$s\" requires \"%2$s\" version %3$s or greater."
 msgstr ""
 
-#: ../class-master-elementor-addons.php:955, ../premium/addons/ma-source-code/ma-source-code.php:443
+#: ../class-master-elementor-addons.php:986, ../premium/addons/ma-source-code/ma-source-code.php:443
 msgid "PHP"
 msgstr ""
 
@@ -9202,15 +9202,15 @@ msgstr ""
 msgid "Hey %1$s,<br> Please help us improve %2$s! If you opt-in, some data about your usage of %2$s will be sent to %3$s. If you skip this, that's okay! %2$s will still work just fine."
 msgstr ""
 
-#: ../inc/admin/dashboard-settings.php:194
+#: ../inc/admin/dashboard-settings.php:197
 msgid "Are you sure you want to reinstall version ?"
 msgstr ""
 
-#: ../inc/admin/dashboard-settings.php:195, ../inc/classes/rollback.php:58, ../inc/admin/welcome/version-control.php:11
+#: ../inc/admin/dashboard-settings.php:198, ../inc/classes/rollback.php:58, ../inc/admin/welcome/version-control.php:11
 msgid "Rollback to Previous Version"
 msgstr ""
 
-#: ../inc/admin/dashboard-settings.php:197
+#: ../inc/admin/dashboard-settings.php:200
 msgid "Cancel"
 msgstr ""
 
@@ -9979,6 +9979,15 @@ msgstr ""
 msgid "Please enter a valid Domain name."
 msgstr ""
 
+#. translators: %s: Name of the addon or section
+#: ../inc/classes/JLTMA_Extension_Prototype.php:163
+msgid "%s"
+msgstr ""
+
+#: ../inc/classes/JLTMA_Extension_Prototype.php:164
+msgid "Default Name"
+msgstr ""
+
 #: ../inc/classes/Pro_Upgrade.php:65, ../inc/classes/utils.php:27, ../inc/classes/utils.php:71
 msgid "Master Addons News & Updates"
 msgstr ""
@@ -10318,11 +10327,12 @@ msgstr ""
 msgid "Scrollbar Offset"
 msgstr ""
 
-#: ../inc/traits/widget-notice.php:19
+#. translators: %s: icon for the "Pro" section
+#: ../inc/traits/widget-notice.php:21
 msgid "%s Unlock more possibilities"
 msgstr ""
 
-#: ../inc/traits/widget-notice.php:26
+#: ../inc/traits/widget-notice.php:30
 msgid "Unlock more possibilities"
 msgstr ""
 

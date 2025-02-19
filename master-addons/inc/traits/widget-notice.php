@@ -13,7 +13,11 @@ trait Widget_Notice
      */
     public function upgrade_to_pro_message() {
         $this->start_controls_section( 'jltma_pro_section', [
-            'label' => sprintf( __( '%s Unlock more possibilities', 'master-addons' ), '<i class="eicon-pro-icon"></i>' ),
+            'label' => sprintf( 
+                /* translators: %s: icon for the "Pro" section */
+                __( '%s Unlock more possibilities', 'master-addons' ),
+                '<i class="eicon-pro-icon"></i>'
+             ),
         ] );
         $this->add_control( 'jltma_get_pro_style_tab', [
             'label'       => __( 'Unlock more possibilities', 'master-addons' ),
