@@ -2413,7 +2413,7 @@ class JLTMA_Pricing_Table extends Widget_Base
 					}
 
 					if (!empty($item['ma_el_pricing_table_tooltip_text'])) {
-						$this->add_render_attribute('features', 'data-tippy', '', true);
+						$this->add_render_attribute('features', 'data-tippy', '1', true);
 						$this->add_render_attribute('features', 'data-tippy-content', $item['ma_el_pricing_table_tooltip_text'], true);
 					}
 

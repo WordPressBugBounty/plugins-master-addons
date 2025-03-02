@@ -64,7 +64,7 @@ class JLTMA_Image_Carousel extends Widget_Base
 	public function get_script_depends()
 	{
 		return [
-			'ma-swiper',
+			'swiper',
 			'fancybox',
 			'master-addons-scripts'
 		];
@@ -73,7 +73,7 @@ class JLTMA_Image_Carousel extends Widget_Base
 	public function get_style_depends()
 	{
 		return [
-			'ma-swiper',
+			'e-swiper',
 			'fancybox',
 			'master-addons-main-style'
 		];

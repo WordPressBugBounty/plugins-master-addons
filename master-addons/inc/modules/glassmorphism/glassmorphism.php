@@ -78,8 +78,8 @@ class JLTMA_Extension_Glassmorphism
                 'default' => 20,
                 'selectors' => [
                     '{{WRAPPER}}.jltma-glass-effect-yes.elementor-section'             => 'backdrop-filter: blur({{SIZE}}px); -webkit-backdrop-filter: blur({{SIZE}}px);',
-                    '{{WRAPPER}}.jltma-glass-effect-yes > .elementor-column-wrap'      => 'backdrop-filter: blur({{SIZE}}px); -webkit-backdrop-filter: blur({{SIZE}}px);',
-                    '{{WRAPPER}}.jltma-glass-effect-yes > .elementor-widget-container' => 'backdrop-filter: blur({{SIZE}}px); -webkit-backdrop-filter: blur({{SIZE}}px);',
+                    '{{WRAPPER}}.jltma-glass-effect-yes > .elementor-widget-wrap'      => 'backdrop-filter: blur({{SIZE}}px); -webkit-backdrop-filter: blur({{SIZE}}px);',
+                    '{{WRAPPER}}.jltma-glass-effect-yes > .elementor-widget' => 'backdrop-filter: blur({{SIZE}}px); -webkit-backdrop-filter: blur({{SIZE}}px);',
                 ],
                 'condition' => [
                     'jltma_enable_glassmorphism_effect' => 'yes'

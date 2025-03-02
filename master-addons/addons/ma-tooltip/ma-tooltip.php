@@ -409,18 +409,18 @@ class JLTMA_Tooltip extends Widget_Base
 			]
 		);
 
-		$this->add_control(
-			'jltma_tooltip_arrow',
-			[
-				'label'              => esc_html__('Arrow', 'master-addons'),
-				'type'               => Controls_Manager::SWITCHER,
-				'render_type'        => 'none',
-				'frontend_available' => true,
-				'condition'          => [
-					'jltma_tooltip_animation!' => 'fill'
-				],
-			]
-		);
+		// $this->add_control(
+		// 	'jltma_tooltip_arrow',
+		// 	[
+		// 		'label'              => esc_html__('Arrow', 'master-addons'),
+		// 		'type'               => Controls_Manager::SWITCHER,
+		// 		'render_type'        => 'none',
+		// 		'frontend_available' => true,
+		// 		'condition'          => [
+		// 			'jltma_tooltip_animation!' => 'fill'
+		// 		],
+		// 	]
+		// );
 
 		$this->add_control(
 			'jltma_tooltip_arrow_type',

@@ -49,12 +49,12 @@ class JLTMA_Team_Slider extends Widget_Base {
     }
 
     public function get_script_depends() {
-        return ['ma-swiper', 'gridder', 'master-addons-scripts'];
+        return ['swiper', 'gridder', 'master-addons-scripts'];
     }
 
     public function get_style_depends() {
         return [
-            'ma-swiper',
+            'e-swiper',
             'gridder',
             'font-awesome-5-all',
             'font-awesome-4-shim'
@@ -487,10 +487,10 @@ class JLTMA_Team_Slider extends Widget_Base {
 						{{WRAPPER}} .jltma-team-member-circle,
 						{{WRAPPER}} .jltma-team-member-social-left,
 						{{WRAPPER}} .jltma-team-carousel-wrapper,
-						{{WRAPPER}} .swiper-container-fade .swiper-slide,
+						{{WRAPPER}} .swiper-fade .swiper-slide,
 						{{WRAPPER}} .jltma-team-member-rounded' => 'background: {{VALUE}};',
-                '{{WRAPPER}} .gridder .gridder-show'                                                                                                                                                                                                                                                        => 'background-color: {{VALUE}};',
-                '{{WRAPPER}} #animation_svg_04 circle'                                                                                                                                                                                                                                                      => 'fill: {{VALUE}}',
+                '{{WRAPPER}} .gridder .gridder-show'                                                                                                                                                                                                                                              => 'background-color: {{VALUE}};',
+                '{{WRAPPER}} #animation_svg_04 circle'                                                                                                                                                                                                                                            => 'fill: {{VALUE}}',
             ],
         ] );
         $this->add_control( 'ma_el_team_carousel_content_align', [

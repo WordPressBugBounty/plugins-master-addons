@@ -62,13 +62,7 @@ class Master_Addons_Assets {
     public function jltma_register_frontend_scripts() {
         $suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min' );
         $jltma_vendor_dir = JLTMA_URL . '/assets/vendor/';
-        wp_register_script(
-            'ma-swiper',
-            $jltma_vendor_dir . 'swiper/js/swiper-bundle.min.js',
-            ['jquery'],
-            JLTMA_VER,
-            true
-        );
+        // wp_register_script('ma-swiper', $jltma_vendor_dir . 'swiper/js/swiper-bundle.min.js', ['jquery'], JLTMA_VER, true);
         wp_register_script(
             'ma-animated-headlines',
             JLTMA_URL . '/assets/js/animated-main.js',
@@ -168,7 +162,7 @@ class Master_Addons_Assets {
             true
         );
         // Swiper
-        wp_register_style( 'ma-swiper', $jltma_vendor_dir . 'swiper/css/swiper.min.css' );
+        // wp_register_style('ma-swiper', $jltma_vendor_dir . 'swiper/css/swiper.min.css');
         // Tippy JS
         wp_register_style( 'jltma-tippy', $jltma_vendor_dir . 'tippyjs/css/tippy.css' );
         wp_register_script(

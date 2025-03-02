@@ -546,7 +546,7 @@
             $tooltip.each(function (index)
             {
                 tippy(this, {
-                    allowHTML: true,
+                    allowHTML: false,
                     theme: 'jltma-tippy-' + widgetID
                 });
             });
@@ -570,8 +570,8 @@
             $tooltip.each(function (index)
             {
                 tippy(this, {
-                    allowHTML: true,
-                    theme: 'jltma-pricing-table-tippy-' + widgetID
+                    allowHTML: false,
+                    theme: 'jltma-pricing-table-tippy-' + widgetID,
                 });
             });
         },
@@ -1084,7 +1084,7 @@
                 $tooltip.each(function (index)
                 {
                     tippy(this, {
-                        allowHTML: true,
+                        allowHTML: false,
                         theme: 'jltma-image-filter-tippy-' + widgetID
                     });
                 });
@@ -1285,30 +1285,28 @@
                 {
                     if (settings.element.breakpoints.desktop.slidesPerView)
                     {
-                        swiperArgs.breakpoints[elementorBreakpoints.lg].slidesPerView = Math.min($slides.length, +settings.element.breakpoints.desktop.slidesPerView || 3);
+                        swiperArgs.breakpoints[elementorBreakpoints.lg].slidesPerView = settings.stretch ? Math.min($slides.length, +settings.element.breakpoints.desktop.slidesPerView || 3) : +settings.element.breakpoints.desktop.slidesPerView || 3;
                     }
 
                     if (settings.element.breakpoints.tablet.slidesPerView)
                     {
-                        swiperArgs.breakpoints[elementorBreakpoints.md].slidesPerView = Math.min($slides.length, +settings.element.breakpoints.tablet.slidesPerView || 2);
+                        swiperArgs.breakpoints[ elementorBreakpoints.md ].slidesPerView = settings.stretch ? Math.min( $slides.length, +settings.element.breakpoints.tablet.slidesPerView || 2 ) : +settings.element.breakpoints.tablet.slidesPerView || 2;
                     }
                 }
 
                 if (settings.element.slidesPerView)
                 {
-                    swiperArgs.slidesPerView = Math.min($slides.length, +settings.element.slidesPerView || 1);
+                    swiperArgs.slidesPerView = settings.stretch ? Math.min($slides.length, +settings.element.slidesPerView || 1) : +settings.element.slidesPerView || 1;
                 }
 
                 // Number of slides to scroll
                 if (swiperArgs.breakpoints)
                 {
-                    if (settings.element.breakpoints.desktop.slidesPerGroup)
-                    {
+                    if (settings.element.breakpoints.desktop.slidesPerGroup) {
                         swiperArgs.breakpoints[elementorBreakpoints.lg].slidesPerGroup = Math.min($slides.length, +settings.element.breakpoints.desktop.slidesPerGroup || 3);
                     }
 
-                    if (settings.element.breakpoints.tablet.slidesPerGroup)
-                    {
+                    if (settings.element.breakpoints.tablet.slidesPerGroup) {
                         swiperArgs.breakpoints[elementorBreakpoints.md].slidesPerGroup = Math.min($slides.length, +settings.element.breakpoints.tablet.slidesPerGroup || 2);
                     }
                 }
@@ -1321,13 +1319,11 @@
                 // Rows
                 if (swiperArgs.breakpoints)
                 {
-                    if (settings.element.breakpoints.desktop.slidesPerColumn)
-                    {
+                    if (settings.element.breakpoints.desktop.slidesPerColumn) {
                         swiperArgs.breakpoints[elementorBreakpoints.lg].slidesPerColumn = settings.element.breakpoints.desktop.slidesPerColumn;
                     }
 
-                    if (settings.element.breakpoints.tablet.slidesPerColumn)
-                    {
+                    if (settings.element.breakpoints.tablet.slidesPerColumn) {
                         swiperArgs.breakpoints[elementorBreakpoints.md].slidesPerColumn = settings.element.breakpoints.tablet.slidesPerColumn;
                     }
                 }
@@ -1345,13 +1341,11 @@
                     swiperArgs.breakpoints[elementorBreakpoints.md].spaceBetween = settings.element.breakpoints.tablet.spaceBetween || 0;
                 }
 
-                if (settings.element.spaceBetween)
-                {
+                if (settings.element.spaceBetween){
                     swiperArgs.spaceBetween = settings.element.spaceBetween || 0;
                 }
 
-                if (settings.element.slidesPerColumnFill)
-                {
+                if (settings.element.slidesPerColumnFill) {
                     swiperArgs.slidesPerColumnFill = settings.element.slidesPerColumnFill;
                 }
 
@@ -1395,22 +1389,18 @@
                     // swiperArgs.loopedSlides = $slides.length;
                 }
 
-                // Autplay
-                if (swiperArgs.autoplay && (settings.element.autoplaySpeed || settings.element.disableOnInteraction))
-                {
+                // Autoplay
+                if (swiperArgs.autoplay && (settings.element.autoplaySpeed || settings.element.disableOnInteraction)) {
                     swiperArgs.autoplay = {};
 
-                    if (settings.element.autoplaySpeed)
-                    {
+                    if (settings.element.autoplaySpeed) {
                         swiperArgs.autoplay.delay = settings.element.autoplaySpeed;
                     }
 
-                    if (settings.element.autoplaySpeed)
-                    {
+                    if (settings.element.autoplaySpeed) {
                         swiperArgs.autoplay.disableOnInteraction = settings.element.disableOnInteraction;
                     }
-                } else
-                {
+                } else {
 
                 }
 
@@ -1450,48 +1440,74 @@
                     }
                 }
 
+                return swiperArgs;
+
                 // Conditional asset loading of the Swiper library with backwards compatibility
                 // since Elementor 3.1
                 // @link https://developers.elementor.com/experiment-optimized-asset-loading/
-                var swiper;
-                if ('undefined' === typeof Swiper)
-                {
-                    const asyncSwiper = elementorFrontend.utils.swiper;
+                // var swiper;
+                // if ('undefined' === typeof Swiper)
+                // {
+                //     const asyncSwiper = elementorFrontend.utils.swiper;
 
-                    new asyncSwiper($swiper, swiperArgs).then(function (newSwiperInstance)
-                    {
-                        swiper = newSwiperInstance;
-                    });
-                } else
-                {
-                    swiper = new Swiper($swiper, swiperArgs);
+                //     new asyncSwiper($swiper, swiperArgs).then(function (newSwiperInstance)
+                //     {
+                //         swiper = newSwiperInstance;
+                //     });
+                // } else
+                // {
+                //     swiper = new Swiper($swiper, swiperArgs);
+                // }
+
+                // if (settings.element.stopOnHover)
+                // {
+                //     $swiper.on('mouseover', function ()
+                //     {
+                //         swiper.autoplay.stop();
+                //     });
+
+                //     $swiper.on('mouseout', function ()
+                //     {
+                //         swiper.autoplay.start();
+                //     });
+                // }
+
+                // if (settings.element.slideChangeTriggerResize)
+                // {
+                //     swiper.on('slideChange', function ()
+                //     {
+                //         $(window).trigger('resize');
+                //     });
+                // }
+
+                // $swiper.data('swiper', swiper);
+                // return swiper;
+            };
+
+            Master_Addons.MA_Carousel.onAfterInit = function ($swiper, swiper, settings) {
+                if ('undefined' == typeof settings || 'undefined' == typeof swiper) {
+                    return;
                 }
 
-                if (settings.element.stopOnHover)
-                {
-                    $swiper.on('mouseover', function ()
-                    {
+                if (settings.element.stopOnHover) {
+                    $swiper.on('mouseover', function () {
                         swiper.autoplay.stop();
                     });
 
-                    $swiper.on('mouseout', function ()
-                    {
+                    $swiper.on('mouseout', function () {
                         swiper.autoplay.start();
                     });
                 }
 
-                if (settings.element.slideChangeTriggerResize)
-                {
-                    swiper.on('slideChange', function ()
-                    {
+                if (settings.element.slideChangeTriggerResize) {
+                    swiper.on('slideChange', function () {
                         $(window).trigger('resize');
                     });
                 }
 
                 $swiper.data('swiper', swiper);
-
-                return swiper;
             };
+
 
             return Master_Addons.MA_Carousel.init();
         },
@@ -1499,55 +1515,75 @@
         // Gallery Slider
         MA_Gallery_Slider: function ($scope, $)
         {
+            // var swiper = new Swiper(".jltma-gallery-slider__gallery", {
+            //     loop: true,
+            //     spaceBetween: 10,
+            //     slidesPerView: 2,
+            //     freeMode: true,
+            //     watchSlidesProgress: true,
+            // });
+            // var swiper2 = new Swiper(".jltma-gallery-slider__slider", {
+            //     loop: true,
+            //     spaceBetween: 10,
+            //     navigation: {
+            //         nextEl: ".jltma-swiper__button--next",
+            //         prevEl: ".jltma-swiper__button--prev",
+            //     },
+            //     thumbs: {
+            //         swiper: swiper,
+            //     },
+            // });
+            // return;
 
-            var elementSettings = getElementSettings($scope),
-                $swiperSlider = $scope.find('.jltma-gallery-slider__slider'),
-                $swiperCarousel = $scope.find('.jltma-gallery-slider__carousel'),
-                uniqueId = getUniqueLoopScopeId($scope),
-                scopeId = $scope.data('id'),
-                $preview = $scope.find('.jltma-gallery-slider__preview'),
-                $thumbs = $scope.find('.jltma-swiper__wrapper .jltma-gallery__item'),
-                $thumbnailsSlider = $scope.find(".jltma-gallery-slider__gallery .jltma-gallery"),
-                $thumbtype = elementSettings.jltma_gallery_slider_thumb_type,
-                $thumbposition = elementSettings.jltma_gallery_slider_preview_position,
-                $thumbVertical = ($thumbposition == "top" || $thumbposition == "bottom") ? false : true,
+            var elementSettings   = getElementSettings($scope),
+                $swiperSlider     = $scope.find('.jltma-gallery-slider__slider'), // The main slider area
+                $swiperCarousel   = $scope.find('.jltma-gallery-slider__carousel'), // The main slider area when it is carousel
+                uniqueId          = getUniqueLoopScopeId($scope),
+                // console.log($scope);
+                scopeId           = $scope.data('id'),
+                $preview          = $scope.find('.jltma-gallery-slider__preview'),
+                $thumbs           = $scope.find('.jltma-swiper__wrapper .jltma-gallery__item'), // Thumbs will be there
+                $thumbnailsSlider = $scope.find(".jltma-gallery-slider__gallery .jltma-gallery"), // list all thumbs
+                $thumbtype        = elementSettings.jltma_gallery_slider_thumb_type,
+                $thumbposition    = elementSettings.jltma_gallery_slider_preview_position,
+                $thumbVertical    = ($thumbposition == "top" || $thumbposition == "bottom") ? false : true,
 
-                start = elementorFrontend.config.is_rtl ? 'right' : 'left',
-                end = elementorFrontend.config.is_rtl ? 'left' : 'right',
+                start       = elementorFrontend.config.is_rtl ? 'right' : 'left',
+                end         = elementorFrontend.config.is_rtl ? 'left' : 'right',
                 hasCarousel = $swiperCarousel.length,
 
-                swiperSlider = null,
+                swiperSlider   = null,
                 swiperCarousel = null,
 
                 sliderSettings = {
-                    key: 'slider',
-                    scope: $scope,
-                    id: uniqueId,
+                    key    : 'slider',
+                    scope  : $scope,
+                    id     : uniqueId,
                     element: {
-                        autoHeight: 'yes' === elementSettings.jltma_gallery_slider_adaptive_height ? true : false,
-                        autoplay: 'yes' === elementSettings.jltma_gallery_slider_autoplay ? true : false,
-                        autoplaySpeed: 'yes' === elementSettings.jltma_gallery_slider_autoplay && elementSettings.jltma_gallery_slider_autoplay_speed ? elementSettings.jltma_gallery_slider_autoplay_speed.size : false,
+                        autoHeight          : 'yes' === elementSettings.jltma_gallery_slider_adaptive_height ? true                                                                                                    : false,
+                        autoplay            : 'yes' === elementSettings.jltma_gallery_slider_autoplay ? true                                                                                                           : false,
+                        autoplaySpeed       : 'yes' === elementSettings.jltma_gallery_slider_autoplay && elementSettings.jltma_gallery_slider_autoplay_speed ? elementSettings.jltma_gallery_slider_autoplay_speed.size: false,
                         disableOnInteraction: '' !== elementSettings.autoplay_disable_on_interaction,
-                        stopOnHover: 'yes' === elementSettings.jltma_gallery_slider_pause_on_hover,
-                        loop: 'yes' === elementSettings.jltma_gallery_slider_infinite,
-                        arrows: '' !== elementSettings.jltma_gallery_slider_show_arrows,
-                        arrowPrev: '.jltma-arrow--prev',
-                        arrowNext: '.jltma-arrow--next',
-                        effect: elementSettings.jltma_gallery_slider_effect,
-                        speed: elementSettings.speed ? elementSettings.speed.size : 500,
-                        resistance: elementSettings.resistance ? elementSettings.resistance.size : 0.25,
-                        keyboard: {
+                        stopOnHover         : 'yes' === elementSettings.jltma_gallery_slider_pause_on_hover,
+                        loop                : 'yes' === elementSettings.jltma_gallery_slider_infinite,
+                        arrows              : '' !== elementSettings.jltma_gallery_slider_show_arrows,
+                        arrowPrev           : '.jltma-arrow--prev',
+                        arrowNext           : '.jltma-arrow--next',
+                        effect              : elementSettings.jltma_gallery_slider_effect,
+                        speed               : elementSettings.speed ? elementSettings.speed.size                                                                                                                       : 500,
+                        resistance          : elementSettings.resistance ? elementSettings.resistance.size                                                                                                             : 0.25,
+                        keyboard            : {
                             // enabled: "yes" === slider_data.jltma_slider_keyboard ? true : false
                             enabled: true
                         },
                     },
                     default: {
-                        effect: 'slide',
-                        direction: 'horizontal',
-                        slidesPerView: 1,
-                        slidesPerGroup: 1,
+                        effect         : 'slide',
+                        direction      : 'horizontal',
+                        slidesPerView  : 1,
+                        slidesPerGroup : 1,
                         slidesPerColumn: 1,
-                        spaceBetween: 0,
+                        spaceBetween   : 0,
                     }
                 };
 
@@ -1555,26 +1591,27 @@
             if (hasCarousel)
             {
                 var carouselSettings = {
-                    key: 'carousel',
-                    scope: $scope,
-                    id: uniqueId,
+                    key    : 'carousel',
+                    scope  : $scope,
+                    id     : uniqueId,
+                    // stretch: 'yes' === elementSettings.thumbnails_stretch,
                     element: {
-                        direction: elementSettings.carousel_orientation,
-                        arrows: '' !== elementSettings.jltma_gallery_slider_thumb_show_arrows,
-                        arrowPrev: '.jltma-arrow--prev',
-                        arrowNext: '.jltma-arrow--next',
-                        autoHeight: false,
-                        loop: 'yes' === elementSettings.jltma_gallery_slider_thumb_infinite ? true : false,
-                        autoplay: 'yes' === elementSettings.jltma_gallery_slider_thumb_autoplay ? true : false,
-                        autoplaySpeed: 'yes' === elementSettings.jltma_gallery_slider_thumb_autoplay && elementSettings.jltma_gallery_slider_thumb_autoplay_speed ? elementSettings.jltma_gallery_slider_thumb_autoplay_speed.size : false,
-                        stopOnHover: 'yes' === elementSettings.jltma_gallery_slider_thumb_pause_on_hover,
-                        speed: elementSettings.jltma_gallery_slider_thumb_speed ? elementSettings.jltma_gallery_slider_thumb_speed.size : 500,
-                        slidesPerView: elementSettings.jltma_gallery_slider_thumb_items_mobile,
+                        direction      : elementSettings.carousel_orientation,
+                        arrows         : '' !== elementSettings.jltma_gallery_slider_thumb_show_arrows,
+                        arrowPrev      : '.jltma-arrow--prev',
+                        arrowNext      : '.jltma-arrow--next',
+                        autoHeight     : false,
+                        loop           : 'yes' === elementSettings.jltma_gallery_slider_thumb_infinite ? true : false,
+                        autoplay       : 'yes' === elementSettings.jltma_gallery_slider_thumb_autoplay ? true : false,
+                        autoplaySpeed  : 'yes' === elementSettings.jltma_gallery_slider_thumb_autoplay && elementSettings.jltma_gallery_slider_thumb_autoplay_speed ? elementSettings.jltma_gallery_slider_thumb_autoplay_speed.size: false,
+                        stopOnHover    : 'yes' === elementSettings.jltma_gallery_slider_thumb_pause_on_hover,
+                        speed          : elementSettings.jltma_gallery_slider_thumb_speed ? elementSettings.jltma_gallery_slider_thumb_speed.size : 500,
+                        slidesPerView  : elementSettings.jltma_gallery_slider_thumb_items_mobile,
                         slidesPerColumn: 'vertical' === elementSettings.carousel_orientation ? 1 : elementSettings.carousel_slides_per_column_mobile,
-                        slidesPerGroup: elementSettings.carousel_slides_to_scroll_mobile,
-                        resistance: elementSettings.carousel_resistance ? elementSettings.carousel_resistance.size : 0.15,
-                        spaceBetween: elementSettings.carousel_spacing_mobile ? elementSettings.carousel_spacing_mobile.size : 0,
-                        breakpoints: {
+                        slidesPerGroup : elementSettings.carousel_slides_to_scroll_mobile,
+                        resistance     : elementSettings.carousel_resistance ? elementSettings.carousel_resistance.size : 0.15,
+                        spaceBetween   : elementSettings.carousel_spacing_mobile ? elementSettings.carousel_spacing_mobile.size : 0,
+                        breakpoints    : {
                             tablet: {
                                 slidesPerView: elementSettings.jltma_gallery_slider_thumb_items_tablet,
                                 slidesPerColumn: 'vertical' === elementSettings.carousel_orientation ? 1 : elementSettings.carousel_slides_per_column_tablet,
@@ -1616,52 +1653,133 @@
 
             Master_Addons.MA_Gallery_Slider.init = function ()
             {
+                var sliderArgs = Master_Addons.MA_Carousel( $swiperSlider, sliderSettings );
 
-                swiperSlider = Master_Addons.MA_Carousel($swiperSlider, sliderSettings);
-
-                if (hasCarousel)
-                {
-                    swiperCarousel = Master_Addons.MA_Carousel($swiperCarousel, carouselSettings);
+                if (hasCarousel) {
+                    var carouselArgs = Master_Addons.MA_Carousel($swiperCarousel, carouselSettings);
                 }
 
-                Master_Addons.MA_Gallery_Slider.onSlideChange();
-                Master_Addons.MA_Gallery_Slider.events();
+                // Master_Addons.MA_Gallery_Slider.onSlideChange();
+                // Master_Addons.MA_Gallery_Slider.events();
+
+
+                if ('undefined' === typeof Swiper) {
+                    const asyncSwiper = elementorFrontend.utils.swiper;
+
+                    new asyncSwiper($swiperSlider, sliderArgs).then(function (sliderSwiperInstance) {
+
+                        if (!hasCarousel) {
+                            Master_Addons.MA_Gallery_Slider.initSliders($scope, sliderSwiperInstance, false);
+
+                            Master_Addons.MA_Carousel.onAfterInit($swiperSlider, sliderSwiperInstance, sliderSettings);
+                        } else {
+                            new asyncSwiper($swiperCarousel, carouselArgs).then(function (carouselSwiperInstance) {
+                                Master_Addons.MA_Gallery_Slider.initSliders($scope, sliderSwiperInstance, carouselSwiperInstance);
+
+                                Master_Addons.MA_Carousel.onAfterInit($swiperSlider, sliderSwiperInstance, sliderSettings);
+                                Master_Addons.MA_Carousel.onAfterInit($swiperCarousel, carouselSwiperInstance, carouselSettings);
+                            });
+                        }
+                    });
+
+                } else {
+                    if (hasCarousel) {
+                        var swiper = new Swiper($swiperSlider[1], {
+                            ...carouselArgs,
+                        });
+                        var swiperSlider = new Swiper($swiperSlider[0], {
+                            ...sliderArgs,
+                            thumbs: {
+                                swiper: swiper,
+                            },
+                        });
+                    }else{
+                        var swiperSlider = new Swiper($swiperSlider[0], {
+                            ...sliderArgs
+                        });
+                    }
+                    // swiperSlider = new Swiper($swiperSlider, sliderArgs);
+
+                    if (hasCarousel) {
+                        swiperCarousel = new Swiper($swiperCarousel, carouselArgs);
+                    }
+
+                    Master_Addons.MA_Gallery_Slider.initSliders($scope, swiperSlider, swiperCarousel);
+
+                    Master_Addons.MA_Carousel.onAfterInit($swiperSlider, swiperSlider, sliderSettings);
+
+                    if (hasCarousel) {
+                        Master_Addons.MA_Carousel.onAfterInit($swiperCarousel, swiperCarousel, carouselSettings);
+                    }
+                }
 
             };
 
-            Master_Addons.MA_Gallery_Slider.events = function ()
-            {
-                swiperSlider.on('slideChange', Master_Addons.MA_Gallery_Slider.onSlideChange);
-                $thumbs.on('click', Master_Addons.MA_Gallery_Slider.onThumbClicked);
+            Master_Addons.MA_Gallery_Slider.getSlider = function () {
+                return $scope.find('.jltma-gallery-slider__slider');
             };
 
-            Master_Addons.MA_Gallery_Slider.onSlideChange = function ()
-            {
-                var activeIndex = sliderSettings.element.loop ? swiperSlider.realIndex : swiperSlider.activeIndex;
 
-                if (hasCarousel)
-                {
-                    swiperCarousel.slideTo(activeIndex);
+            Master_Addons.MA_Gallery_Slider.getCarousel = function () {
+                return $scope.find('.jltma-gallery-slider__carousel');
+            };
+
+
+            Master_Addons.MA_Gallery_Slider.initSliders = function ($scope, swiperSlider, swiperCarousel) {
+                var data = {
+                    scope: $scope,
+                    slider: swiperSlider,
+                    carousel: swiperCarousel,
+                };
+
+                Master_Addons.MA_Gallery_Slider.onSlideChange(data);
+                Master_Addons.MA_Gallery_Slider.events(data);
+            };
+
+
+            Master_Addons.MA_Gallery_Slider.events = function ( data )
+            {
+
+                var $thumbs = data.scope.find('.jltma-gallery__item');
+
+                data.slider.on('slideChange', function (instance) {
+                    Master_Addons.MA_Gallery_Slider.onSlideChange(data);
+                });
+
+                $thumbs.on('click', function () {
+                    var offset = sliderSettings.element.loop ? 1 : 0;
+
+                    event.preventDefault();
+                    data.slider.slideTo($(this).index() + offset);
+                });
+            };
+
+            Master_Addons.MA_Gallery_Slider.onSlideChange = function (data)
+            {
+                var activeIndex = sliderSettings.element.loop ? data.slider.realIndex : data.slider.activeIndex;
+
+                if (hasCarousel) {
+                    data.carousel.slideTo(activeIndex);
                 }
+
+                var $thumbs = data.scope.find('.jltma-gallery__item');
 
                 $thumbs.removeClass('is--active');
                 $thumbs.eq(activeIndex).addClass('is--active');
+
             };
 
             Master_Addons.MA_Gallery_Slider.onThumbClicked = function (event)
             {
                 var offset = sliderSettings.element.loop ? 1 : 0;
-
                 event.preventDefault();
-                swiperSlider.slideTo($(this).index() + offset);
+                swiperSlider.slideTo($(this).index() + offset, 500, true);
             };
 
             Master_Addons.onElementRemove($scope, function ()
             {
-                $scope.find('.swiper').each(function ()
-                {
-                    if ($(this).data('swiper'))
-                    {
+                $scope.find('.swiper-container').each(function () {
+                    if ($(this).data('swiper')) {
                         $(this).data('swiper').destroy();
                     }
                 });
@@ -1670,6 +1788,185 @@
 
             Master_Addons.MA_Gallery_Slider.init();
         },
+        // MA_Gallery_Slider: function ($scope, $) {
+        //     var elementSettings = getElementSettings($scope),
+        //         $swiperSlider = $scope.find('.jltma-gallery-slider__slider'),
+        //         $swiperCarousel = $scope.find('.jltma-gallery-slider__carousel'),
+        //         uniqueId = getUniqueLoopScopeId($scope),
+        //         scopeId = $scope.data('id'),
+        //         $preview = $scope.find('.jltma-gallery-slider__preview'),
+        //         $thumbs = $scope.find('.jltma-swiper__wrapper .jltma-gallery__item'),
+        //         $thumbnailsSlider = $scope.find(".jltma-gallery-slider__gallery .jltma-gallery"),
+        //         $thumbtype = elementSettings.jltma_gallery_slider_thumb_type,
+        //         $thumbposition = elementSettings.jltma_gallery_slider_preview_position,
+        //         $thumbVertical = ($thumbposition == "top" || $thumbposition == "bottom") ? false : true,
+        //         start = elementorFrontend.config.is_rtl ? 'right' : 'left',
+        //         end = elementorFrontend.config.is_rtl ? 'left' : 'right',
+        //         hasCarousel = $swiperCarousel.length,
+        //         swiperSlider = null,
+        //         swiperCarousel = null,
+        //         sliderSettings = {
+        //             key: 'slider',
+        //             scope: $scope,
+        //             id: uniqueId,
+        //             element: {
+        //                 autoHeight: 'yes' === elementSettings.jltma_gallery_slider_adaptive_height ? true : false,
+        //                 autoplay: 'yes' === elementSettings.jltma_gallery_slider_autoplay ? true : false,
+        //                 autoplaySpeed: 'yes' === elementSettings.jltma_gallery_slider_autoplay && elementSettings.jltma_gallery_slider_autoplay_speed ? elementSettings.jltma_gallery_slider_autoplay_speed.size : false,
+        //                 disableOnInteraction: '' !== elementSettings.autoplay_disable_on_interaction,
+        //                 stopOnHover: 'yes' === elementSettings.jltma_gallery_slider_pause_on_hover,
+        //                 loop: 'yes' === elementSettings.jltma_gallery_slider_infinite,
+        //                 arrows: '' !== elementSettings.jltma_gallery_slider_show_arrows,
+        //                 arrowPrev: '.jltma-arrow--prev',
+        //                 arrowNext: '.jltma-arrow--next',
+        //                 effect: elementSettings.jltma_gallery_slider_effect,
+        //                 speed: elementSettings.speed ? elementSettings.speed.size : 500,
+        //                 resistance: elementSettings.resistance ? elementSettings.resistance.size : 0.25,
+        //                 keyboard: {
+        //                     enabled: true
+        //                 },
+        //             },
+        //             default: {
+        //                 effect: 'slide',
+        //                 direction: 'horizontal',
+        //                 slidesPerView: 1,
+        //                 slidesPerGroup: 1,
+        //                 slidesPerColumn: 1,
+        //                 spaceBetween: 0,
+        //             }
+        //         };
+
+        //     if (hasCarousel) {
+        //         var carouselSettings = {
+        //             key: 'carousel',
+        //             scope: $scope,
+        //             id: uniqueId,
+        //             element: {
+        //                 direction: elementSettings.carousel_orientation,
+        //                 arrows: '' !== elementSettings.jltma_gallery_slider_thumb_show_arrows,
+        //                 arrowPrev: '.jltma-arrow--prev',
+        //                 arrowNext: '.jltma-arrow--next',
+        //                 autoHeight: false,
+        //                 loop: 'yes' === elementSettings.jltma_gallery_slider_thumb_infinite ? true : false,
+        //                 autoplay: 'yes' === elementSettings.jltma_gallery_slider_thumb_autoplay ? true : false,
+        //                 autoplaySpeed: 'yes' === elementSettings.jltma_gallery_slider_thumb_autoplay && elementSettings.jltma_gallery_slider_thumb_autoplay_speed ? elementSettings.jltma_gallery_slider_thumb_autoplay_speed.size : false,
+        //                 stopOnHover: 'yes' === elementSettings.jltma_gallery_slider_thumb_pause_on_hover,
+        //                 speed: elementSettings.jltma_gallery_slider_thumb_speed ? elementSettings.jltma_gallery_slider_thumb_speed.size : 500,
+        //                 slidesPerView: elementSettings.jltma_gallery_slider_thumb_items_mobile,
+        //                 slidesPerColumn: 'vertical' === elementSettings.carousel_orientation ? 1 : elementSettings.carousel_slides_per_column_mobile,
+        //                 slidesPerGroup: elementSettings.carousel_slides_to_scroll_mobile,
+        //                 resistance: elementSettings.carousel_resistance ? elementSettings.carousel_resistance.size : 0.15,
+        //                 spaceBetween: elementSettings.carousel_spacing_mobile ? elementSettings.carousel_spacing_mobile.size : 0,
+        //                 breakpoints: {
+        //                     tablet: {
+        //                         slidesPerView: elementSettings.jltma_gallery_slider_thumb_items_tablet,
+        //                         slidesPerColumn: 'vertical' === elementSettings.carousel_orientation ? 1 : elementSettings.carousel_slides_per_column_tablet,
+        //                         slidesPerGroup: elementSettings.carousel_slides_to_scroll_tablet,
+        //                         spaceBetween: elementSettings.carousel_spacing_tablet ? elementSettings.carousel_spacing_tablet.size : 0,
+        //                     },
+        //                     desktop: {
+        //                         slidesPerView: elementSettings.jltma_gallery_slider_thumb_items,
+        //                         slidesPerColumn: 'vertical' === elementSettings.carousel_orientation ? 1 : elementSettings.carousel_slides_per_column,
+        //                         slidesPerGroup: elementSettings.carousel_slides_to_scroll,
+        //                         spaceBetween: elementSettings.carousel_spacing ? elementSettings.carousel_spacing.size : 0,
+        //                     },
+        //                 },
+        //             },
+        //             default: {
+        //                 effect: 'slide',
+        //                 slidesPerView: 1,
+        //                 slidesPerGroup: 1,
+        //                 slidesPerColumn: 1,
+        //                 spaceBetween: 6,
+        //                 breakpoints: {
+        //                     tablet: {
+        //                         slidesPerView: 2,
+        //                         slidesPerGroup: 1,
+        //                         slidesPerColumn: 2,
+        //                         spaceBetween: 12,
+        //                     },
+        //                     desktop: {
+        //                         slidesPerView: 3,
+        //                         slidesPerGroup: 1,
+        //                         slidesPerColumn: 3,
+        //                         spaceBetween: 24,
+        //                     },
+        //                 },
+        //             },
+        //         };
+        //     }
+
+        //     Master_Addons.MA_Gallery_Slider.init = function () {
+        //         if ($swiperSlider.length) {
+        //             swiperSlider = Master_Addons.MA_Carousel($swiperSlider, sliderSettings);
+        //             console.log('Swiper Slider Initialized:', swiperSlider);
+        //         }
+        //         if (hasCarousel && $swiperCarousel.length) {
+        //             swiperCarousel = Master_Addons.MA_Carousel($swiperCarousel, carouselSettings);
+        //             console.log('Swiper Carousel Initialized:', swiperCarousel);
+        //         }
+        //         alert("slider ready");
+        //         Master_Addons.MA_Gallery_Slider.events();
+        //         Master_Addons.MA_Gallery_Slider.onSlideChange();
+        //     };
+
+        //     Master_Addons.MA_Gallery_Slider.events = function () {
+        //         alert("slider events");
+        //         if (swiperSlider) {
+        //             swiperSlider.on('slideChange', Master_Addons.MA_Gallery_Slider.onSlideChange);
+        //         }
+        //         if (hasCarousel && swiperCarousel) {
+        //             swiperCarousel.on('slideChange', Master_Addons.MA_Gallery_Slider.onSlideChange);
+        //         }
+        //         $thumbs.on('click', Master_Addons.MA_Gallery_Slider.onThumbClicked);
+        //     };
+
+        //     // Master_Addons.MA_Gallery_Slider.onSlideChange = function () {
+        //     //     if (hasCarousel && swiperCarousel) {
+        //     //         var activeIndex = sliderSettings.element.loop ? swiperCarousel.realIndex : swiperCarousel.activeIndex;
+        //     //         swiperCarousel.slideTo(activeIndex, 500, true);
+        //     //     } else if (swiperSlider) {
+        //     //         var activeIndex = sliderSettings.element.loop ? swiperSlider.realIndex : swiperSlider.activeIndex;
+        //     //         swiperSlider.slideTo(activeIndex, 500, false);
+        //     //     }
+
+        //     //     $thumbs.removeClass('is--active');
+        //     //     $thumbs.eq(activeIndex).addClass('is--active');
+        //     // };
+        //     Master_Addons.MA_Gallery_Slider.onSlideChange = function () {
+        //         alert("slider change");
+        //         if (hasCarousel && swiperCarousel) {
+        //             var activeIndex = sliderSettings.element.loop ? swiperCarousel.realIndex : swiperCarousel.activeIndex;
+        //             swiperCarousel.slideTo(activeIndex, 500, true);
+        //         } else if (swiperSlider) {
+        //             var activeIndex = sliderSettings.element.loop ? swiperSlider.realIndex : swiperSlider.activeIndex;
+        //             swiperSlider.slideTo(activeIndex, 500, false);
+        //         }
+
+        //         $thumbs.removeClass('is--active');
+        //         $thumbs.eq(activeIndex).addClass('is--active');
+        //     };
+
+        //     Master_Addons.MA_Gallery_Slider.onThumbClicked = function (event) {
+        //         event.preventDefault();
+        //         if (swiperSlider) {
+        //             var offset = sliderSettings.element.loop ? 1 : 0;
+        //             swiperSlider.slideTo($(this).index() + offset, 500, true);
+        //         }
+        //     };
+
+        //     Master_Addons.onElementRemove($scope, function () {
+        //         $scope.find('.swiper').each(function () {
+        //             if ($(this).data('swiper')) {
+        //                 $(this).data('swiper').destroy();
+        //             }
+        //         });
+        //     });
+
+        //     $(document).ready(function () {
+        //         Master_Addons.MA_Gallery_Slider.init();
+        //     });
+        // },
 
         // On Remove Event
         onElementRemove: function ($element, callback)
@@ -2101,7 +2398,7 @@
                         // interactive: true,
                         offset: [$tooltipSettings.x_offset, $tooltipSettings.y_offset],
                         zIndex: 999999,
-                        allowHTML: true,
+                        allowHTML: false,
                         theme: 'jltma-tippy-' + $dataId,
                         onShow(instance)
                         {
@@ -2261,48 +2558,56 @@
             var elementSettings = getElementSettings($scope),
                 scopeId = $scope.data('id'),
                 $currentTooltip = '#jltma-tooltip-' + scopeId,
-                $ma_el_tooltip_text = elementSettings.ma_el_tooltip_text ? stripTags(elementSettings.ma_el_tooltip_text) : 'top',
-                $ma_el_tooltip_direction = elementSettings.jltma_tooltip_follow_cursor ? elementSettings.jltma_tooltip_follow_cursor : elementSettings.ma_el_tooltip_direction,
+                $jltma_el_tooltip_text = elementSettings.ma_el_tooltip_text ? stripTags(elementSettings.ma_el_tooltip_text) : 'This is the tooltip text',
+                $jltma_el_tooltip_direction = elementSettings.jltma_tooltip_follow_cursor ? elementSettings.jltma_tooltip_follow_cursor : elementSettings.ma_el_tooltip_direction,
                 $jltma_tooltip_animation = elementSettings.jltma_tooltip_animation ? elementSettings.jltma_tooltip_animation : '',
                 $jltma_tooltip_arrow = elementSettings.jltma_tooltip_arrow ? elementSettings.jltma_tooltip_arrow : true,
                 $jltma_tooltip_duration = elementSettings.jltma_tooltip_duration ? elementSettings.jltma_tooltip_duration : 300,
                 $jltma_tooltip_delay = elementSettings.jltma_tooltip_delay ? elementSettings.jltma_tooltip_delay : 300,
-                $ma_el_tooltip_text_width = elementSettings.ma_el_tooltip_text_width ? elementSettings.ma_el_tooltip_text_width : '200px',
+                $jltma_el_tooltip_text_width = elementSettings.ma_el_tooltip_text_width ? elementSettings.ma_el_tooltip_text_width : '200px',
                 $jltma_tooltip_arrow_type = elementSettings.jltma_tooltip_arrow_type ? elementSettings.jltma_tooltip_arrow_type : 'sharp',
                 $jltma_tooltip_distance = elementSettings.jltma_tooltip_distance ? elementSettings.jltma_tooltip_distance : 10,
                 $jltma_tooltip_trigger = elementSettings.jltma_tooltip_trigger ? elementSettings.jltma_tooltip_trigger : 'mouseenter',
                 $animateFill = elementSettings.jltma_tooltip_animation == "fill" ? true : false;
 
             var $ma_tooltip = $scope.find('.jltma-tooltip');
+
             if (!$ma_tooltip.length)
             {
                 return;
             }
-            tippy($currentTooltip, {
-                content: $ma_el_tooltip_text,
-                placement: $ma_el_tooltip_direction,
+
+            var tooltipConfig = {
+                content: $jltma_el_tooltip_text,
                 animation: $jltma_tooltip_animation,
                 arrow: $jltma_tooltip_arrow,
                 arrowType: $jltma_tooltip_arrow_type,
                 duration: $jltma_tooltip_duration,
                 distance: $jltma_tooltip_distance,
                 delay: $jltma_tooltip_delay,
-                size: $ma_el_tooltip_text_width,
+                size: $jltma_el_tooltip_text_width,
                 trigger: $jltma_tooltip_trigger,
                 animateFill: $animateFill,
                 flipOnUpdate: true,
-                maxWidth: $ma_el_tooltip_text_width,
+                maxWidth: $jltma_el_tooltip_text_width,
                 zIndex: 999,
-                allowHTML: true,
+                allowHTML: false,
                 theme: 'jltma-image-filter-tippy-' + scopeId,
                 interactive: true,
                 appendTo: 'parent',
-                onShow(instance)
-                {
+                onShow(instance) {
                     var tippyPopper = instance.popper;
                     jQuery(tippyPopper).attr('data-tippy-popper-id', scopeId);
                 }
-            });
+            };
+            if ($jltma_el_tooltip_direction === "yes") {
+                tooltipConfig.followCursor = true;  // Use followCursor if "yes"
+            } else {
+                tooltipConfig.placement = $jltma_el_tooltip_direction;  // Use placement if it's not "yes"
+            }
+
+            // Initialize Tippy with the dynamic configuration
+            tippy($currentTooltip, tooltipConfig);
         },
 
         /**** MA Twitter Slider ****/
@@ -2344,14 +2649,12 @@
 
         MA_ParticlesBG: function ($scope, $)
         {
-
             if ($scope.hasClass('jltma-particle-yes'))
             {
                 let id = $scope.data('id');
                 let element_type = $scope.data('element_type');
                 let pdata = $scope.data('jltma-particle');
                 let pdata_wrapper = $scope.find('.jltma-particle-wrapper').data('ma-el-pdata');
-
                 if (typeof pdata != 'undefined' && pdata != '')
                 {
                     if ($scope.find('.ma-el-section-bs').length > 0)
@@ -2361,11 +2664,11 @@
                         particlesJS('jltma-particle-' + id, pdata);
                     } else
                     {
-
                         if (element_type == 'column')
                         {
+                            // $scope.prepend('<div class="jltma-particle-wrapper" id="jltma-particle-' + id + '"></div>');
 
-                            $scope.find('.elementor-column-wrap').prepend('<div class="jltma-particle-wrapper"' +
+                            $scope.find('.elementor-widget-wrap').prepend('<div class="jltma-particle-wrapper"' +
                                 ' id="jltma-particle-' + id + '"></div>');
                         } else
                         {
@@ -2378,12 +2681,11 @@
 
                 } else if (typeof pdata_wrapper != 'undefined' && pdata_wrapper != '')
                 {
-
-                    // $scope.prepend('<div class="jltma-particle-wrapper" id="jltma-particle-'+ id +'"></div>');
+                    $scope.prepend('<div class="jltma-particle-wrapper" id="jltma-particle-'+ id +'"></div>');
 
                     if (element_type == 'column')
                     {
-                        $scope.find('.elementor-column-wrap').prepend('<div class="jltma-particle-wrapper"' +
+                        $scope.find('.elementor-widget-wrap').prepend('<div class="jltma-particle-wrapper"' +
                             ' id="jltma-particle-' + id + '"></div>');
                     }
                     else
@@ -3335,18 +3637,9 @@
                             $(".jltma-nav-panel ").removeClass("offcanvas-overlay");
                         }
                     });
-
-
                 }
 
-
-
             }
-
-
-
-
-
 
         },
 

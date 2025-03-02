@@ -1146,7 +1146,7 @@ trait JLTMA_Swiper_Controls
                     'size' => 10
                 ],
                 'selectors'   => [
-                    '{{WRAPPER}} .swiper-container' => 'padding: {{SIZE}}{{UNIT}}; margin: 0 -{{SIZE}}{{UNIT}};'
+                    '{{WRAPPER}} .swiper' => 'padding: {{SIZE}}{{UNIT}}; margin: 0 -{{SIZE}}{{UNIT}};'
                 ]
             ]
         );
@@ -1974,7 +1974,7 @@ trait JLTMA_Swiper_Controls
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .swiper-scrollbar, {{WRAPPER}} .jltma-' . $name . '-wrapper .swiper-container-horizontal > .swiper-scrollbar' => 'height: {{SIZE}}px;',
+                    '{{WRAPPER}} .swiper-scrollbar, {{WRAPPER}} .jltma-' . $name . '-wrapper .swiper-horizontal > .swiper-scrollbar' => 'height: {{SIZE}}px;',
                 ],
                 'condition' => [
                     'show_scrollbar' => 'yes'
@@ -2547,7 +2547,7 @@ trait JLTMA_Swiper_Controls
                     ]
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .swiper-scrollbar, {{WRAPPER}} .jltma-' . $name . ' .swiper-container-horizontal > .swiper-scrollbar' => 'top: {{SIZE}}px;',
+                    '{{WRAPPER}} .swiper-scrollbar, {{WRAPPER}} .jltma-' . $name . ' .swiper-horizontal > .swiper-scrollbar' => 'top: {{SIZE}}px;',
                 ],
                 'condition' => [
                     'show_scrollbar' => 'yes'

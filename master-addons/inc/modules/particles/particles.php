@@ -33,7 +33,7 @@ class JLTMA_Extension_Particles
   public function register_controls($element, $section_id, $args)
   {
 
-    if (('section' === $element->get_name() && 'section_background' === $section_id) || ('column' === $element->get_name() && 'section_style' === $section_id)) {
+    if (('section' === $element->get_name() && 'section_background' === $section_id) || ('column' === $element->get_name() && 'section_style' === $section_id) || ('container' === $element->get_name() && 'section_background' === $section_id)) {
 
       $element->start_controls_section(
         'ma_el_particles',
@@ -214,7 +214,7 @@ class JLTMA_Extension_Particles
   public function _before_render($element)
   {
 
-    if ($element->get_name() != 'section' && $element->get_name() != 'column') {
+    if ($element->get_name() != 'section' && $element->get_name() != 'column' && $element->get_name() != 'container') {
       return;
     }
 
@@ -225,15 +225,16 @@ class JLTMA_Extension_Particles
     }
   }
 
+
   function _print_template($template, $widget)
   {
-    if ($widget->get_name() != 'section' && $widget->get_name() != 'column') {
+    if ($widget->get_name() != 'section' && $widget->get_name() != 'column' && $widget->get_name() != 'container') {
       return $template;
     }
 
     $old_template = $template;
     ob_start();
-?>
+  ?>
 
     <div class="jltma-particle-wrapper" id="jltma-particle-{{ view.getID() }}" data-ma-el-pdata=" {{ settings
             .ma_el_particle_json }}"></div>
@@ -252,7 +253,6 @@ class JLTMA_Extension_Particles
     $settings = $element->get_settings_for_display();
     $type     = $data['elType'];
     $zindex   = !empty($settings['ma_el_particle_area_zindex']) ? $settings['ma_el_particle_area_zindex'] : 0;
-
     if (('section' === $type) && ($element->get_settings('ma_el_enable_particles') === 'yes')) {
     ?>
       <style>
