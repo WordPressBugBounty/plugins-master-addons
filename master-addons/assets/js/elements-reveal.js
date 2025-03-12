@@ -26,9 +26,7 @@
 
 			var revealId = '#reveal-'+$scope.data('id');
 			var revealistance = document.querySelector(revealId);
-			//alert( revealId + revealistance );
-			//revealistance = $scope.find('.elementor-widget-container')[0];
-			//revealistance = $scope[0];
+			
 
 			revealAction();
 

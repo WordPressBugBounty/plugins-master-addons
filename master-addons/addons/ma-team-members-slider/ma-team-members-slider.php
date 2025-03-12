@@ -48,6 +48,10 @@ class JLTMA_Team_Slider extends Widget_Base {
         ];
     }
 
+    public function has_widget_inner_wrapper() : bool {
+        return false;
+    }
+
     public function get_script_depends() {
         return ['swiper', 'gridder', 'master-addons-scripts'];
     }

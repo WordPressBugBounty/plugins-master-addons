@@ -39,6 +39,16 @@ if (!class_exists('What_We_Collect')) {
 		{
 			check_ajax_referer('jltma_allow_collect_nonce');
 
+			$this->jltma_collect_ajax_data();
+
+		}
+
+		public function jltma_collect_ajax_data(){
+
+			if (!empty(get_option('jltma_what_we_collect'))) {
+				return;
+			}
+
 			$email = get_bloginfo('admin_email');
 
 			$author_obj = get_user_by('email', $email);
@@ -50,11 +60,8 @@ if (!class_exists('What_We_Collect')) {
 				'email'                   => $email,
 			));
 
-			if (!is_wp_error($response) && 200 === $response['response']['code'] && 'OK' === $response['response']['message']) {
-				wp_send_json_success('Thanks for Allow!');
-			} else {
-				wp_send_json_error("Couldn't Collect");
-			}
+			update_option('jltma_what_we_collect', 'yes');
+			return $response;
 		}
 
 		/**

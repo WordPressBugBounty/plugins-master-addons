@@ -4,7 +4,7 @@ Tags: elementor, elementor templates, elementor addons, widgets for elementor, e
 Requires at least: 4.0
 Tested up to: 6.7.2
 Requires PHP: 7.0
-Stable tag: 2.0.7.3
+Stable tag: 2.0.7.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,19 +14,13 @@ Get Image Hover Effects, Hotspots, Animated Headlines, Image Comparison, Gradien
 
 With [Master Addons for Elementor](https://master-addons.com/), building a beautiful website is now easier with animated headlines, image hover effects, and creative buttons. It's like having a magic box of 50+ premium elementor addons and 20+ elementor extensions to make your site look amazing.
 
+[Live Demo](https://demo.pixarlabs.com/?pl-product=master-addons) | [Docs](https://master-addons.com/docs/) | [All Widgets](https://master-addons.com/all-widgets/) | [Support Ticket](https://master-addons.com/contact-us/) | [Upgrade Pro](https://master-addons.com/pricing/)
+
 From intricate navigation menus to engaging elementor media carousels, informative blogs to professional team member showcases – every element is designed with customization in mind. Adjust margins, padding, typography, borders, and more to match your unique style. Plus, captivate your audience with interactive image hover effects and image hotspots.
 
 == But that's not all – AS an Elementor addon plugin, Master Addons goes beyond the basics with advanced extensions like Display Condition, Floating Effect, Custom CSS, Tooltip, Icon Library for Elementor and Positioning to give you complete control over your website's look and feel. ==
 
 Ready to transform your ideas into reality? Download the free version of Master Addons today and start building the website of your dreams! 🚀
-
-== USEFUL LINKS ==
-
-[Check the Demos](https://master-addons.com/all-widgets/)
-[Try Live Demo](https://demo.master-addons.com/)
-[Support](https://wordpress.org/support/plugin/master-addons/)
-[Upgrade Pro](https://master-addons.com/go/upgrade-pro/)
-[Documentation](https://master-addons.com/docs/)
 
 
 ***Every Elementor Addon has Extensive Customization Options.***

@@ -50,6 +50,7 @@ class Master_Addons_Admin_Settings
 	{
 		add_action('admin_menu', [$this, 'master_addons_admin_menu'],  '', 10);
 		add_action('network_admin_menu', [$this, 'master_addons_admin_menu'],  '', 10);
+		add_action('plugins_loaded', array($this, 'jltma_ajax_data_save'));
 		add_action('admin_enqueue_scripts', [$this, 'master_addons_el_admin_scripts'], 99);
 		add_action('admin_head', [$this, 'jltma_admin_head_script']);
 		add_action('admin_body_class', [$this, 'jltma_admin_body_class']);
@@ -281,6 +282,11 @@ class Master_Addons_Admin_Settings
 		$jltma_merged_addons = array_merge($jltma_new_merged_widgets1, $jltma_new_merged_widgets2, $jltma_new_merged_widgets3);
 
 		return $jltma_merged_addons;
+	}
+
+	public function jltma_ajax_data_save(){
+		$ajax_data_save = new \MasterAddons\Inc\Classes\Notifications\What_We_Collect();
+		$ajax_data_save->jltma_collect_ajax_data();
 	}
 
 

@@ -956,8 +956,8 @@ class JLTMA_Nav_Menu extends Widget_Base
                     ),
                 ),
                 'selectors' => array(
-                    '{{WRAPPER}}.jltma-dropdown-absolute-yes .elementor-widget-container ' . $widget_selector . '__dropdown' => 'width: {{SIZE}}{{UNIT}};',
-                    '{{WRAPPER}}:not(.jltma-dropdown-absolute-yes) .elementor-widget-container' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}}.jltma-dropdown-absolute-yes  ' . $widget_selector . '__dropdown' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}}:not(.jltma-dropdown-absolute-yes) ' => 'width: {{SIZE}}{{UNIT}};',
                 ),
                 'conditions' => array(
                     'relation' => 'or',
