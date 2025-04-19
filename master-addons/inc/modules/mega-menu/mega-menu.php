@@ -25,18 +25,8 @@ class Master_Menu
 
         $this->url = self::plugin_url() . '/mega-menu/';
 
-        // Include Files
-        $this->jltma_include_files();
 
-        jltma_megamenu_assets();
-        jltma_megamenu_options();
-
-        jltma_megamenu_api()->init();
-        jltma_megamenu_cpt_api()->init();
-
-        if (is_admin()) {
-            jltma_megamenu_cpt();
-        }
+        add_action('init', [$this, 'jltma_include_files']);
     }
 
 
@@ -49,6 +39,24 @@ class Master_Menu
         include $this->dir . '/inc/options.php';
         include $this->dir . '/inc/walker-nav-menu.php';
         include $this->dir . '/inc/cpt-api.php';
+
+        $this->jltma_megamenu_init();
+    }
+
+
+
+    public function jltma_megamenu_init(){
+
+
+        jltma_megamenu_assets();
+        jltma_megamenu_options();
+
+        jltma_megamenu_api()->init();
+        jltma_megamenu_cpt_api()->init();
+
+        if (is_admin()) {
+            jltma_megamenu_cpt();
+        }
     }
 
     public static function plugin_url()

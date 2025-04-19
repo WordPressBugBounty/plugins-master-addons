@@ -55,7 +55,6 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             $this->constants();
             $this->jltma_register_autoloader();
             $this->jltma_include_files();
-            $this->jltma_load_extensions();
             self::$plugin_slug = 'master-addons';
             self::$plugin_path = untrailingslashit( plugin_dir_path( '/', __FILE__ ) );
             self::$plugin_url = untrailingslashit( plugins_url( '/', __FILE__ ) );
@@ -63,10 +62,12 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             add_action( 'plugins_loaded', [$this, 'jltma_plugins_loaded'] );
             // $this->jltma_is_plugin_row_meta_and_actions_link();
             // add_filter('plugin_action_links', [$this, 'jltma_is_plugin_row_meta_and_actions_link'], 10, 2);
-            add_action( 'elementor/init', [$this, 'jltma_add_category_to_editor'] );
+            //Hook: elementor/elements/categories_registere
+            // add_action('elementor/init', [$this, 'jltma_add_category_to_editor']);
             add_action( 'elementor/init', [$this, 'jltma_add_actions_to_elementor'], 0 );
             // Add Elementor Widgets
             add_action( 'elementor/widgets/register', [$this, 'jltma_init_widgets'] );
+            add_action( 'elementor/elements/categories_registered', [$this, 'jltma_add_category_to_editor'] );
             //Register Controls
             add_action( 'elementor/controls/register', [$this, 'jltma_register_controls'] );
             //Body Class
@@ -94,7 +95,6 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
         }
 
         public function jltma_init() {
-            $this->jltma_load_textdomain();
             $this->jltma_image_size();
             //Redirect Hook
             add_action( 'admin_init', [$this, 'jltma_add_redirect_hook'] );
@@ -171,6 +171,7 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
 
         // Initialize
         public function jltma_plugins_loaded() {
+            $this->jltma_load_extensions();
             $this->set_plugin_activation_time();
             // Check if Elementor installed and activated
             if ( !did_action( 'elementor/loaded' ) ) {
@@ -264,9 +265,9 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             }
         }
 
-        function jltma_add_category_to_editor() {
-            \Elementor\Plugin::instance()->elements_manager->add_category( 'master-addons', [
-                'title' => esc_html__( 'Master Addons', 'master-addons' ),
+        function jltma_add_category_to_editor( $widgets_manager ) {
+            $widgets_manager->add_category( 'master-addons', [
+                'title' => esc_html__( 'Master Addonsss', 'master-addons' ),
                 'icon'  => 'font',
             ], 1 );
         }
@@ -553,16 +554,6 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
                     }
                 }
             }
-        }
-
-        // Text Domains
-        public function jltma_load_textdomain() {
-            add_action( 'init', function () {
-                $domain = 'master-addons';
-                $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-                load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-                load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-            } );
         }
 
         // Plugin URL

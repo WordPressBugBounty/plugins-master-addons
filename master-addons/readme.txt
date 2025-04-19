@@ -2,11 +2,12 @@
 Contributors: jwthemeltd, litonice13, masteraddons
 Tags: elementor, elementor templates, elementor addons, widgets for elementor, elementor widgets
 Requires at least: 4.0
-Tested up to: 6.7.2
+Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 2.0.7.4
+Stable tag: 2.0.7.5
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
 
 Get Image Hover Effects, Hotspots, Animated Headlines, Image Comparison, Gradient Headlines, Dual Heading, Tooltips, and more 50+ Elements & 20+ Extensions.
 
@@ -345,3 +346,27 @@ We're adding new Features everyday. You'll get regular Updates also !
 2. Or, UNZIP "master-addons.zip" folder and Upload master-addons on "wp-content/plugins/" folder via FTP or Copy and
 Paste on your Local Computer
 3. Activate the "Master Addons for Elementor" Plugin through the 'Plugins' menu in WordPress
+
+
+
+== Changelog ==
+= 2.0.7.5 (19-04-2025) =
+* Fixed: WordPress 6.8 critical error issue fixed
+
+
+= 2.0.7.4 (10-03-2025) =
+* Fixed: Mega Menu - Data Saving, Editor Close button position updated
+* Fixed: Security Update & Performance issue fixed
+* Fixed: Plugins iframe popup thickbox style issue updated
+* Fixed: MA Templates save issue fixed
+
+= 2.0.7.3 (02-03-2025) =
+* Update: Freemius SDK with security patch
+* Fixed: Particle extension for section.
+* Update: Swiper Library moved with the Elementor  swiper library.
+* Fixed: Interactive tooltip module follow cursor was not working.
+* Fixed: Removed deprecated classes according to the latest updates of Elementor
+* Fixed: Applied security patch for cross site scripting issue.
+
+
+Details [Changelogs here](https://master-addons.com/changelogs/)

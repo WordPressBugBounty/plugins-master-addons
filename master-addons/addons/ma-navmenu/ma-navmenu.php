@@ -5176,7 +5176,7 @@ class JLTMA_Nav_Menu extends Widget_Base
             'container'   => ''
         );
         if (isset($jltma_extensions_setting['mega-menu']) && ($jltma_extensions_setting['mega-menu'] === 1)) {
-            $args['walker'] = new JLTMA_Megamenu_Nav_Walker();
+            $args['walker'] = JLTMA_Megamenu_Nav_Walker::get_instance();
         }
 
         $args['menu_class'] .= ' jltma-nav-menu-dropdown';
@@ -5278,7 +5278,7 @@ class JLTMA_Nav_Menu extends Widget_Base
             'container' => ''
         );
         if (isset($jltma_extensions_setting['mega-menu']) && ($jltma_extensions_setting['mega-menu'] === 1)) {
-            $args['walker'] = new JLTMA_Megamenu_Nav_Walker();
+            $args['walker'] = JLTMA_Megamenu_Nav_Walker::get_instance();
         }
 
         add_filter('nav_menu_link_attributes', array($this, 'get_link_classes'), 10, 4);

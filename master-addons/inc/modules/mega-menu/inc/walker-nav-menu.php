@@ -319,12 +319,3 @@ class JLTMA_Megamenu_Nav_Walker extends \Walker_Nav_Menu
         return self::$_instance;
     }
 }
-
-
-if (!function_exists('jltma_megamenu_nav_walker')) {
-    function jltma_megamenu_nav_walker()
-    {
-        return JLTMA_Megamenu_Nav_Walker::get_instance();
-    }
-}
-jltma_megamenu_nav_walker();

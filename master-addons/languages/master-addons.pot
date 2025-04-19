@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-12 11:23+0000\n"
+"POT-Creation-Date: 2025-04-19 07:55+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: ../addons/caldera-forms/caldera-forms.php:118, ../addons/caldera-forms/caldera-forms.php:414, ../addons/contact-form-7/contact-form-7.php:460, ../addons/gravity-forms/gravity-forms.php:174, ../addons/gravity-forms/gravity-forms.php:380, ../addons/ma-data-table/ma-data-table.php:227, ../addons/ma-data-table/ma-data-table.php:454, ../addons/ninja-forms/ninja-forms.php:89, ../addons/ninja-forms/ninja-forms.php:376, ../addons/wpforms/wpforms.php:151, ../addons/wpforms/wpforms.php:414, ../premium/addons/ma-toggle-content/ma-toggle-content.php:681
+#: ../addons/caldera-forms/caldera-forms.php:118, ../addons/caldera-forms/caldera-forms.php:414, ../addons/contact-form-7/contact-form-7.php:460, ../addons/gravity-forms/gravity-forms.php:174, ../addons/gravity-forms/gravity-forms.php:380, ../addons/ma-chatgpt/ma-chatgpt.php:213, ../addons/ma-data-table/ma-data-table.php:227, ../addons/ma-data-table/ma-data-table.php:454, ../addons/ninja-forms/ninja-forms.php:89, ../addons/ninja-forms/ninja-forms.php:376, ../addons/wpforms/wpforms.php:151, ../addons/wpforms/wpforms.php:414, ../premium/addons/ma-toggle-content/ma-toggle-content.php:681
 msgid "Labels"
 msgstr ""
 
@@ -397,7 +397,7 @@ msgstr ""
 msgid "Border Type"
 msgstr ""
 
-#: ../addons/gravity-forms/gravity-forms.php:816, ../addons/ma-accordion/ma-accordion.php:964, ../addons/ma-advanced-image/ma-advanced-image.php:271, ../addons/ma-audio-playlist/ma-audio-playlist.php:1150, ../addons/ma-audio-playlist/ma-audio-playlist.php:1167, ../addons/ma-audio-playlist/ma-audio-playlist.php:2142, ../addons/ma-blog/ma-blog.php:191, ../addons/ma-blog/ma-blog.php:642, ../addons/ma-calendar/ma-calendar.php:964, ../addons/ma-calendar/ma-calendar.php:1027, ../addons/ma-calendar/ma-calendar.php:1379, ../addons/ma-calendar/ma-calendar.php:1518, ../addons/ma-calendar/ma-calendar.php:2267, ../addons/ma-counter-up/ma-counter-up.php:89, ../addons/ma-dropdown-button/ma-dropdown-button.php:48, ../addons/ma-dual-button/ma-dual-button.php:290, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:310, ../addons/ma-infobox/ma-infobox.php:168, ../addons/ma-logo-slider/ma-logo-slider.php:128, ../addons/ma-navmenu/ma-navmenu.php:604, ../addons/ma-navmenu/ma-navmenu.php:749, ../addons/ma-navmenu/ma-navmenu.php:1719, ../addons/ma-navmenu/ma-navmenu.php:3141, ../addons/ma-navmenu/ma-navmenu.php:4775, ../addons/ma-post-pagination/ma-post-pagination.php:1996, ../addons/ma-pricing-table/ma-pricing-table.php:262, ../addons/ma-slider/ma-slider.php:1338, ../addons/ma-slider/ma-slider.php:1925, ../addons/ma-slider/ma-slider.php:3386, ../addons/ma-slider/ma-slider.php:3645, ../addons/ma-slider/ma-slider.php:4172, ../addons/ma-slider/ma-slider.php:4431, ../addons/ma-slider/ma-slider.php:4691, ../addons/ma-table/ma-table.php:116, ../addons/ma-table/ma-table.php:255, ../addons/ma-table/ma-table.php:344, ../addons/ma-table/ma-table.php:491, ../addons/ma-tabs/ma-tabs.php:359, ../addons/ma-timeline/ma-timeline.php:337, ../addons/ma-timeline/ma-timeline.php:400, ../inc/classes/Animation.php:31, ../inc/classes/Animation.php:23, ../inc/classes/helper-class.php:796, ../inc/classes/helper-class.php:822, ../inc/classes/helper-class.php:1679, ../inc/traits/swiper-controls.php:110, ../inc/traits/swiper-controls.php:455, ../inc/controls/group/animation.php:234, ../inc/controls/group/outline.php:30, ../inc/modules/bg-slider/bg-slider.php:157, ../inc/modules/bg-slider/bg-slider.php:205, ../inc/modules/content-protection/content-protection.php:704, ../inc/modules/shape-devider/shape-devider.php:44, ../inc/modules/shape-devider/shape-devider.php:67, ../inc/modules/dynamic-tags/inc/comments-number.php:69, ../inc/modules/dynamic-tags/inc/current-date-time.php:45, ../inc/modules/dynamic-tags/inc/current-date-time.php:63, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:225, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:622, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:676, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1782, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:2922, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:185, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:681, ../premium/addons/ma-news-ticker/ma-news-ticker.php:466, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:288, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:1497, ../premium/addons/ma-product-listing/ma-product-listing.php:516, ../premium/addons/ma-restrict-content/ma-restrict-content.php:466, ../premium/addons/ma-toggle-content/ma-toggle-content.php:702, ../premium/modules/tooltips/tooltips.php:141
+#: ../addons/gravity-forms/gravity-forms.php:816, ../addons/ma-accordion/ma-accordion.php:964, ../addons/ma-advanced-image/ma-advanced-image.php:271, ../addons/ma-audio-playlist/ma-audio-playlist.php:1150, ../addons/ma-audio-playlist/ma-audio-playlist.php:1167, ../addons/ma-audio-playlist/ma-audio-playlist.php:2142, ../addons/ma-blog/ma-blog.php:191, ../addons/ma-blog/ma-blog.php:642, ../addons/ma-calendar/ma-calendar.php:964, ../addons/ma-calendar/ma-calendar.php:1027, ../addons/ma-calendar/ma-calendar.php:1379, ../addons/ma-calendar/ma-calendar.php:1518, ../addons/ma-calendar/ma-calendar.php:2267, ../addons/ma-chatgpt/ma-chatgpt.php:286, ../addons/ma-chatgpt/ma-chatgpt.php:300, ../addons/ma-counter-up/ma-counter-up.php:89, ../addons/ma-dropdown-button/ma-dropdown-button.php:48, ../addons/ma-dual-button/ma-dual-button.php:290, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:310, ../addons/ma-infobox/ma-infobox.php:168, ../addons/ma-logo-slider/ma-logo-slider.php:128, ../addons/ma-navmenu/ma-navmenu.php:604, ../addons/ma-navmenu/ma-navmenu.php:749, ../addons/ma-navmenu/ma-navmenu.php:1719, ../addons/ma-navmenu/ma-navmenu.php:3141, ../addons/ma-navmenu/ma-navmenu.php:4775, ../addons/ma-post-pagination/ma-post-pagination.php:1996, ../addons/ma-pricing-table/ma-pricing-table.php:262, ../addons/ma-slider/ma-slider.php:1338, ../addons/ma-slider/ma-slider.php:1925, ../addons/ma-slider/ma-slider.php:3386, ../addons/ma-slider/ma-slider.php:3645, ../addons/ma-slider/ma-slider.php:4172, ../addons/ma-slider/ma-slider.php:4431, ../addons/ma-slider/ma-slider.php:4691, ../addons/ma-table/ma-table.php:116, ../addons/ma-table/ma-table.php:255, ../addons/ma-table/ma-table.php:344, ../addons/ma-table/ma-table.php:491, ../addons/ma-tabs/ma-tabs.php:359, ../addons/ma-timeline/ma-timeline.php:337, ../addons/ma-timeline/ma-timeline.php:400, ../inc/classes/Animation.php:31, ../inc/classes/Animation.php:23, ../inc/classes/helper-class.php:796, ../inc/classes/helper-class.php:822, ../inc/classes/helper-class.php:1679, ../inc/traits/swiper-controls.php:110, ../inc/traits/swiper-controls.php:455, ../inc/controls/group/animation.php:234, ../inc/controls/group/outline.php:30, ../inc/modules/bg-slider/bg-slider.php:157, ../inc/modules/bg-slider/bg-slider.php:205, ../inc/modules/content-protection/content-protection.php:704, ../inc/modules/shape-devider/shape-devider.php:44, ../inc/modules/shape-devider/shape-devider.php:67, ../inc/modules/dynamic-tags/inc/comments-number.php:69, ../inc/modules/dynamic-tags/inc/current-date-time.php:45, ../inc/modules/dynamic-tags/inc/current-date-time.php:63, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:225, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:622, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:676, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1782, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:2922, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:185, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:681, ../premium/addons/ma-news-ticker/ma-news-ticker.php:466, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:288, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:1497, ../premium/addons/ma-product-listing/ma-product-listing.php:516, ../premium/addons/ma-restrict-content/ma-restrict-content.php:466, ../premium/addons/ma-toggle-content/ma-toggle-content.php:702, ../premium/modules/tooltips/tooltips.php:141
 msgid "None"
 msgstr ""
 
@@ -525,7 +525,7 @@ msgstr ""
 msgid "Expand Icon"
 msgstr ""
 
-#: ../addons/ma-accordion/ma-accordion.php:129, ../addons/ma-accordion/ma-accordion.php:159, ../addons/ma-audio-playlist/ma-audio-playlist.php:2143, ../addons/ma-audio-playlist/ma-audio-playlist.php:2168, ../addons/ma-call-to-action/ma-call-to-action.php:149, ../addons/ma-counter-up/ma-counter-up.php:93, ../addons/ma-counter-up/ma-counter-up.php:107, ../addons/ma-creative-buttons/ma-creative-buttons.php:249, ../addons/ma-creative-links/ma-creative-links.php:186, ../addons/ma-data-table/ma-data-table.php:115, ../addons/ma-data-table/ma-data-table.php:134, ../addons/ma-data-table/ma-data-table.php:295, ../addons/ma-data-table/ma-data-table.php:327, ../addons/ma-dropdown-button/ma-dropdown-button.php:239, ../addons/ma-dual-button/ma-dual-button.php:288, ../addons/ma-dual-heading/ma-dual-heading.php:184, ../addons/ma-flipbox/ma-flipbox.php:266, ../addons/ma-flipbox/ma-flipbox.php:392, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:1478, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:744, ../addons/ma-image-scroll/ma-image-scroll.php:364, ../addons/ma-image-scroll/ma-image-scroll.php:378, ../addons/ma-infobox/ma-infobox.php:172, ../addons/ma-infobox/ma-infobox.php:188, ../addons/ma-logo-slider/ma-logo-slider.php:480, ../addons/ma-navmenu/ma-navmenu.php:1181, ../addons/ma-navmenu/ma-navmenu.php:1248, ../addons/ma-navmenu/ma-navmenu.php:1273, ../addons/ma-navmenu/ma-navmenu.php:1893, ../addons/ma-navmenu/ma-navmenu.php:1960, ../addons/ma-pricing-table/ma-pricing-table.php:202, ../addons/ma-pricing-table/ma-pricing-table.php:383, ../addons/ma-pricing-table/ma-pricing-table.php:404, ../addons/ma-quick-contact/ma-quick-contact.php:91, ../addons/ma-quick-contact/ma-quick-contact.php:565, ../addons/ma-search/ma-search.php:112, ../addons/ma-search/ma-search.php:139, ../addons/ma-search/ma-search.php:249, ../addons/ma-social-share/ma-social-share.php:235, ../addons/ma-social-share/ma-social-share.php:470, ../addons/ma-table/ma-table.php:120, ../addons/ma-table/ma-table.php:135, ../addons/ma-table/ma-table.php:348, ../addons/ma-table/ma-table.php:363, ../addons/ma-tabs/ma-tabs.php:363, ../addons/ma-tabs/ma-tabs.php:378, ../addons/ma-team-members/ma-team-members.php:229, ../addons/ma-timeline/ma-timeline.php:697, ../addons/ma-timeline/ma-timeline.php:2045, ../addons/ma-tooltip/ma-tooltip.php:95, ../addons/ma-tooltip/ma-tooltip.php:128, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:507, ../inc/modules/mega-menu/inc/view/modal-body.php:21, ../premium/addons/ma-comparison-table/ma-comparison-table.php:184, ../premium/addons/ma-comparison-table/ma-comparison-table.php:211, ../premium/addons/ma-domain-checker/ma-domain-checker.php:88, ../premium/addons/ma-domain-checker/ma-domain-checker.php:139, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:193, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:223, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:737, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:808, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:839, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:1016, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:1081, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:87, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:153, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:245, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:413, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:562, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:918, ../premium/addons/ma-toggle-content/ma-toggle-content.php:143
+#: ../addons/ma-accordion/ma-accordion.php:129, ../addons/ma-accordion/ma-accordion.php:159, ../addons/ma-audio-playlist/ma-audio-playlist.php:2143, ../addons/ma-audio-playlist/ma-audio-playlist.php:2168, ../addons/ma-call-to-action/ma-call-to-action.php:149, ../addons/ma-chatgpt/ma-chatgpt.php:142, ../addons/ma-counter-up/ma-counter-up.php:93, ../addons/ma-counter-up/ma-counter-up.php:107, ../addons/ma-creative-buttons/ma-creative-buttons.php:249, ../addons/ma-creative-links/ma-creative-links.php:186, ../addons/ma-data-table/ma-data-table.php:115, ../addons/ma-data-table/ma-data-table.php:134, ../addons/ma-data-table/ma-data-table.php:295, ../addons/ma-data-table/ma-data-table.php:327, ../addons/ma-dropdown-button/ma-dropdown-button.php:239, ../addons/ma-dual-button/ma-dual-button.php:288, ../addons/ma-dual-heading/ma-dual-heading.php:184, ../addons/ma-flipbox/ma-flipbox.php:266, ../addons/ma-flipbox/ma-flipbox.php:392, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:1478, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:744, ../addons/ma-image-scroll/ma-image-scroll.php:364, ../addons/ma-image-scroll/ma-image-scroll.php:378, ../addons/ma-infobox/ma-infobox.php:172, ../addons/ma-infobox/ma-infobox.php:188, ../addons/ma-logo-slider/ma-logo-slider.php:480, ../addons/ma-navmenu/ma-navmenu.php:1181, ../addons/ma-navmenu/ma-navmenu.php:1248, ../addons/ma-navmenu/ma-navmenu.php:1273, ../addons/ma-navmenu/ma-navmenu.php:1893, ../addons/ma-navmenu/ma-navmenu.php:1960, ../addons/ma-pricing-table/ma-pricing-table.php:202, ../addons/ma-pricing-table/ma-pricing-table.php:383, ../addons/ma-pricing-table/ma-pricing-table.php:404, ../addons/ma-quick-contact/ma-quick-contact.php:91, ../addons/ma-quick-contact/ma-quick-contact.php:565, ../addons/ma-search/ma-search.php:112, ../addons/ma-search/ma-search.php:139, ../addons/ma-search/ma-search.php:249, ../addons/ma-social-share/ma-social-share.php:235, ../addons/ma-social-share/ma-social-share.php:470, ../addons/ma-table/ma-table.php:120, ../addons/ma-table/ma-table.php:135, ../addons/ma-table/ma-table.php:348, ../addons/ma-table/ma-table.php:363, ../addons/ma-tabs/ma-tabs.php:363, ../addons/ma-tabs/ma-tabs.php:378, ../addons/ma-team-members/ma-team-members.php:229, ../addons/ma-timeline/ma-timeline.php:697, ../addons/ma-timeline/ma-timeline.php:2045, ../addons/ma-tooltip/ma-tooltip.php:95, ../addons/ma-tooltip/ma-tooltip.php:128, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:507, ../inc/modules/mega-menu/inc/view/modal-body.php:21, ../premium/addons/ma-comparison-table/ma-comparison-table.php:184, ../premium/addons/ma-comparison-table/ma-comparison-table.php:211, ../premium/addons/ma-domain-checker/ma-domain-checker.php:88, ../premium/addons/ma-domain-checker/ma-domain-checker.php:139, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:193, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:223, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:737, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:808, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:839, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:1016, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:1081, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:87, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:153, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:245, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:413, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:562, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:918, ../premium/addons/ma-toggle-content/ma-toggle-content.php:143
 msgid "Icon"
 msgstr ""
 
@@ -733,11 +733,11 @@ msgstr ""
 msgid "Display Hover Image"
 msgstr ""
 
-#: ../addons/ma-advanced-image/ma-advanced-image.php:121, ../addons/ma-advanced-image/ma-advanced-image.php:156, ../addons/ma-advanced-image/ma-advanced-image.php:257, ../addons/ma-advanced-image/ma-advanced-image.php:304, ../addons/ma-advanced-image/ma-advanced-image.php:346, ../addons/ma-advanced-image/ma-advanced-image.php:361, ../addons/ma-blockquote/ma-blockquote.php:189, ../addons/ma-countdown-timer/ma-countdown-timer.php:114, ../addons/ma-countdown-timer/ma-countdown-timer.php:126, ../addons/ma-countdown-timer/ma-countdown-timer.php:138, ../addons/ma-countdown-timer/ma-countdown-timer.php:150, ../addons/ma-countdown-timer/ma-countdown-timer.php:162, ../addons/ma-countdown-timer/ma-countdown-timer.php:174, ../addons/ma-dual-button/ma-dual-button.php:82, ../addons/ma-dual-button/ma-dual-button.php:195, ../addons/ma-dual-button/ma-dual-button.php:702, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:359, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:298, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:367, ../inc/modules/sticky-elements/sticky-elements.php:205
+#: ../addons/ma-advanced-image/ma-advanced-image.php:121, ../addons/ma-advanced-image/ma-advanced-image.php:156, ../addons/ma-advanced-image/ma-advanced-image.php:257, ../addons/ma-advanced-image/ma-advanced-image.php:304, ../addons/ma-advanced-image/ma-advanced-image.php:346, ../addons/ma-advanced-image/ma-advanced-image.php:361, ../addons/ma-blockquote/ma-blockquote.php:189, ../addons/ma-chatgpt/ma-chatgpt.php:108, ../addons/ma-countdown-timer/ma-countdown-timer.php:114, ../addons/ma-countdown-timer/ma-countdown-timer.php:126, ../addons/ma-countdown-timer/ma-countdown-timer.php:138, ../addons/ma-countdown-timer/ma-countdown-timer.php:150, ../addons/ma-countdown-timer/ma-countdown-timer.php:162, ../addons/ma-countdown-timer/ma-countdown-timer.php:174, ../addons/ma-dual-button/ma-dual-button.php:82, ../addons/ma-dual-button/ma-dual-button.php:195, ../addons/ma-dual-button/ma-dual-button.php:702, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:359, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:298, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:367, ../inc/modules/sticky-elements/sticky-elements.php:205
 msgid "On"
 msgstr ""
 
-#: ../addons/ma-advanced-image/ma-advanced-image.php:122, ../addons/ma-advanced-image/ma-advanced-image.php:157, ../addons/ma-advanced-image/ma-advanced-image.php:258, ../addons/ma-advanced-image/ma-advanced-image.php:305, ../addons/ma-advanced-image/ma-advanced-image.php:347, ../addons/ma-advanced-image/ma-advanced-image.php:362, ../addons/ma-blockquote/ma-blockquote.php:190, ../addons/ma-countdown-timer/ma-countdown-timer.php:115, ../addons/ma-countdown-timer/ma-countdown-timer.php:127, ../addons/ma-countdown-timer/ma-countdown-timer.php:139, ../addons/ma-countdown-timer/ma-countdown-timer.php:151, ../addons/ma-countdown-timer/ma-countdown-timer.php:163, ../addons/ma-countdown-timer/ma-countdown-timer.php:175, ../addons/ma-dual-button/ma-dual-button.php:81, ../addons/ma-dual-button/ma-dual-button.php:194, ../addons/ma-dual-button/ma-dual-button.php:701, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:360, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:299, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:368, ../inc/modules/sticky-elements/sticky-elements.php:206
+#: ../addons/ma-advanced-image/ma-advanced-image.php:122, ../addons/ma-advanced-image/ma-advanced-image.php:157, ../addons/ma-advanced-image/ma-advanced-image.php:258, ../addons/ma-advanced-image/ma-advanced-image.php:305, ../addons/ma-advanced-image/ma-advanced-image.php:347, ../addons/ma-advanced-image/ma-advanced-image.php:362, ../addons/ma-blockquote/ma-blockquote.php:190, ../addons/ma-chatgpt/ma-chatgpt.php:109, ../addons/ma-countdown-timer/ma-countdown-timer.php:115, ../addons/ma-countdown-timer/ma-countdown-timer.php:127, ../addons/ma-countdown-timer/ma-countdown-timer.php:139, ../addons/ma-countdown-timer/ma-countdown-timer.php:151, ../addons/ma-countdown-timer/ma-countdown-timer.php:163, ../addons/ma-countdown-timer/ma-countdown-timer.php:175, ../addons/ma-dual-button/ma-dual-button.php:81, ../addons/ma-dual-button/ma-dual-button.php:194, ../addons/ma-dual-button/ma-dual-button.php:701, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:360, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:299, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:368, ../inc/modules/sticky-elements/sticky-elements.php:206
 msgid "Off"
 msgstr ""
 
@@ -793,7 +793,7 @@ msgstr ""
 msgid "Ribbon Thickness"
 msgstr ""
 
-#: ../addons/ma-advanced-image/ma-advanced-image.php:247, ../addons/ma-data-table/ma-data-table.php:526, ../addons/ma-image-comparison/ma-image-comparison.php:182, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:373, ../addons/ma-image-scroll/ma-image-scroll.php:128, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:237, ../addons/ma-wc-product-table/ma-wc-product-table.php:330, ../class-master-elementor-addons.php:786, ../inc/traits/swiper-controls.php:39, ../inc/modules/mega-menu/inc/view/modal-body.php:15, ../premium/modules/tooltips/tooltips.php:62
+#: ../addons/ma-advanced-image/ma-advanced-image.php:247, ../addons/ma-data-table/ma-data-table.php:526, ../addons/ma-image-comparison/ma-image-comparison.php:182, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:373, ../addons/ma-image-scroll/ma-image-scroll.php:128, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:237, ../addons/ma-wc-product-table/ma-wc-product-table.php:330, ../class-master-elementor-addons.php:775, ../inc/traits/swiper-controls.php:39, ../inc/modules/mega-menu/inc/view/modal-body.php:15, ../premium/modules/tooltips/tooltips.php:62
 msgid "Settings"
 msgstr ""
 
@@ -913,7 +913,7 @@ msgstr ""
 msgid "Push (Pro)"
 msgstr ""
 
-#: ../addons/ma-animated-headlines/ma-animated-headlines.php:86
+#: ../addons/ma-animated-headlines/ma-animated-headlines.php:86, ../addons/ma-chatgpt/ma-chatgpt.php:260, ../addons/ma-chatgpt/ma-chatgpt.php:690
 msgid "Typing"
 msgstr ""
 
@@ -941,7 +941,7 @@ msgstr ""
 msgid "First Heading"
 msgstr ""
 
-#: ../addons/ma-animated-headlines/ma-animated-headlines.php:134, ../class-master-elementor-addons.php:341, ../inc/admin/dashboard-settings.php:103, ../inc/admin/dashboard-settings.php:121, ../inc/classes/white-label.php:110, ../inc/classes/white-label.php:135, ../inc/classes/Notifications/Ask_For_Rating.php:25, ../inc/classes/Notifications/Subscribe.php:99, ../inc/classes/Notifications/What_We_Collect.php:76, ../inc/classes/Notifications/What_We_Collect.php:102, ../inc/templates/classes/config.php:29
+#: ../addons/ma-animated-headlines/ma-animated-headlines.php:134, ../inc/admin/dashboard-settings.php:103, ../inc/admin/dashboard-settings.php:121, ../inc/classes/white-label.php:110, ../inc/classes/white-label.php:135, ../inc/classes/Notifications/Ask_For_Rating.php:25, ../inc/classes/Notifications/Subscribe.php:99, ../inc/classes/Notifications/What_We_Collect.php:76, ../inc/classes/Notifications/What_We_Collect.php:102, ../inc/templates/classes/config.php:29
 msgid "Master Addons"
 msgstr ""
 
@@ -1169,7 +1169,7 @@ msgstr ""
 msgid "With Title"
 msgstr ""
 
-#: ../addons/ma-audio-playlist/ma-audio-playlist.php:495, ../addons/ma-audio-playlist/ma-audio-playlist.php:893, ../addons/ma-audio-playlist/ma-audio-playlist.php:1628, ../addons/ma-counter-up/ma-counter-up.php:256, ../addons/ma-dropdown-button/ma-dropdown-button.php:761, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:512, ../addons/ma-navmenu/ma-navmenu.php:3201, ../addons/ma-piechart/ma-piechart.php:122, ../addons/ma-piechart/ma-piechart.php:431, ../addons/ma-pricing-table/ma-pricing-table.php:493, ../addons/ma-pricing-table/ma-pricing-table.php:943, ../addons/ma-pricing-table/ma-pricing-table.php:1003, ../addons/ma-pricing-table/ma-pricing-table.php:1077, ../addons/ma-quick-contact/ma-quick-contact.php:720, ../addons/ma-slider/ma-slider.php:1457, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:210, ../inc/classes/Animation.php:162, ../inc/classes/Animation.php:201, ../inc/classes/Animation.php:233, ../inc/traits/swiper-controls.php:562, ../inc/traits/swiper-controls.php:1737, ../inc/modules/positioning/positioning.php:82, ../inc/modules/reading-progress-bar/reading-progress-bar.php:68, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:444, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1045, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1080, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1576, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:2152, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:470, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:571, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:978, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:737
+#: ../addons/ma-audio-playlist/ma-audio-playlist.php:495, ../addons/ma-audio-playlist/ma-audio-playlist.php:893, ../addons/ma-audio-playlist/ma-audio-playlist.php:1628, ../addons/ma-chatgpt/ma-chatgpt.php:192, ../addons/ma-counter-up/ma-counter-up.php:256, ../addons/ma-dropdown-button/ma-dropdown-button.php:761, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:512, ../addons/ma-navmenu/ma-navmenu.php:3201, ../addons/ma-piechart/ma-piechart.php:122, ../addons/ma-piechart/ma-piechart.php:431, ../addons/ma-pricing-table/ma-pricing-table.php:493, ../addons/ma-pricing-table/ma-pricing-table.php:943, ../addons/ma-pricing-table/ma-pricing-table.php:1003, ../addons/ma-pricing-table/ma-pricing-table.php:1077, ../addons/ma-quick-contact/ma-quick-contact.php:720, ../addons/ma-slider/ma-slider.php:1457, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:210, ../inc/classes/Animation.php:162, ../inc/classes/Animation.php:201, ../inc/classes/Animation.php:233, ../inc/traits/swiper-controls.php:562, ../inc/traits/swiper-controls.php:1737, ../inc/modules/positioning/positioning.php:82, ../inc/modules/reading-progress-bar/reading-progress-bar.php:68, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:444, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1045, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1080, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1576, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:2152, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:470, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:571, ../premium/addons/ma-offcanvas-menu/ma-offcanvas-menu.php:978, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:737
 msgid "Top"
 msgstr ""
 
@@ -1226,7 +1226,7 @@ msgstr ""
 msgid "Middle"
 msgstr ""
 
-#: ../addons/ma-audio-playlist/ma-audio-playlist.php:901, ../addons/ma-audio-playlist/ma-audio-playlist.php:1634, ../addons/ma-dropdown-button/ma-dropdown-button.php:760, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:514, ../addons/ma-navmenu/ma-navmenu.php:3209, ../addons/ma-piechart/ma-piechart.php:126, ../addons/ma-piechart/ma-piechart.php:434, ../addons/ma-pricing-table/ma-pricing-table.php:494, ../addons/ma-pricing-table/ma-pricing-table.php:951, ../addons/ma-pricing-table/ma-pricing-table.php:1011, ../addons/ma-pricing-table/ma-pricing-table.php:1085, ../addons/ma-quick-contact/ma-quick-contact.php:721, ../addons/ma-slider/ma-slider.php:1459, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:209, ../inc/classes/Animation.php:166, ../inc/classes/Animation.php:202, ../inc/classes/Animation.php:235, ../inc/classes/helper-class.php:1662, ../inc/traits/swiper-controls.php:74, ../inc/traits/swiper-controls.php:561, ../inc/traits/swiper-controls.php:1745, ../inc/modules/positioning/positioning.php:147, ../inc/modules/reading-progress-bar/reading-progress-bar.php:69, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:446, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1047, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1082, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1584, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:2160, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:468, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:569, ../premium/modules/tooltips/tooltips.php:99
+#: ../addons/ma-audio-playlist/ma-audio-playlist.php:901, ../addons/ma-audio-playlist/ma-audio-playlist.php:1634, ../addons/ma-chatgpt/ma-chatgpt.php:196, ../addons/ma-dropdown-button/ma-dropdown-button.php:760, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:514, ../addons/ma-navmenu/ma-navmenu.php:3209, ../addons/ma-piechart/ma-piechart.php:126, ../addons/ma-piechart/ma-piechart.php:434, ../addons/ma-pricing-table/ma-pricing-table.php:494, ../addons/ma-pricing-table/ma-pricing-table.php:951, ../addons/ma-pricing-table/ma-pricing-table.php:1011, ../addons/ma-pricing-table/ma-pricing-table.php:1085, ../addons/ma-quick-contact/ma-quick-contact.php:721, ../addons/ma-slider/ma-slider.php:1459, ../addons/ma-wc-add-to-cart/ma-wc-add-to-cart.php:209, ../inc/classes/Animation.php:166, ../inc/classes/Animation.php:202, ../inc/classes/Animation.php:235, ../inc/classes/helper-class.php:1662, ../inc/traits/swiper-controls.php:74, ../inc/traits/swiper-controls.php:561, ../inc/traits/swiper-controls.php:1745, ../inc/modules/positioning/positioning.php:147, ../inc/modules/reading-progress-bar/reading-progress-bar.php:69, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:446, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1047, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1082, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1584, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:2160, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:468, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:569, ../premium/modules/tooltips/tooltips.php:99
 msgid "Bottom"
 msgstr ""
 
@@ -2160,7 +2160,7 @@ msgstr ""
 msgid "Day Icon"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:240, ../addons/ma-business-hours/ma-business-hours.php:502, ../addons/ma-business-hours/ma-business-hours.php:1092, ../premium/modules/display-conditions/display-conditions.php:521
+#: ../addons/ma-business-hours/ma-business-hours.php:240, ../addons/ma-business-hours/ma-business-hours.php:502, ../addons/ma-business-hours/ma-business-hours.php:1092, ../addons/ma-chatgpt/ma-chatgpt.php:122, ../premium/modules/display-conditions/display-conditions.php:521
 msgid "Day"
 msgstr ""
 
@@ -2855,12 +2855,132 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: ../addons/ma-changelog/ma-changelog.php:93, ../addons/ma-changelog/ma-changelog.php:115, ../inc/admin/welcome/system-info.php:126
+#: ../addons/ma-changelog/ma-changelog.php:93, ../addons/ma-changelog/ma-changelog.php:115, ../addons/ma-code-highlighter/ma-code-highlighter.php:107, ../inc/admin/welcome/system-info.php:126
 msgid "Language"
 msgstr ""
 
 #: ../addons/ma-changelog/ma-changelog.php:126
 msgid "Changelog Contents. If you want to link them, enable option below."
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:44
+msgid "Liquid ChatGPT"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:72, ../inc/modules/dynamic-tags/inc/featured-image-data.php:92
+msgid "Data"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:85
+msgid "Go to the <strong><u>Elementor Site Settings > Liquid AI</u></strong> to add your API Key."
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:95
+msgid "Limitation"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:105
+msgid "Enable Login required?"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:106
+msgid "Disable usage for non-login users."
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:117
+msgid "Request by"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:121
+msgid "Hour"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:130
+msgid "Message limit"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:153
+msgid "Icon order"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:171
+msgid "Container Max Height"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:188
+msgid "Input position"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:221
+msgid "Input placeholder"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:223
+msgid "How can I assist today?"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:234
+msgid "Login alert"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:236
+msgid "You should login first!"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:247
+msgid "Reached limit"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:249
+msgid "You have reached your request limit. Please try again 1 hour later."
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:262
+msgid "Typing..."
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:275
+msgid "Effects <span style=\"font-size: 1.5em; vertical-align:middle; margin-inline-start:0.35em;\">⚡️<span>"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:283
+msgid "Form glow effect style"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:287, ../addons/ma-chatgpt/ma-chatgpt.php:301
+msgid "Effect 1"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:288, ../addons/ma-chatgpt/ma-chatgpt.php:302
+msgid "Effect 2"
+msgstr ""
+
+#: ../addons/ma-chatgpt/ma-chatgpt.php:297
+msgid "Input glow effect style"
+msgstr ""
+
+#: ../addons/ma-code-highlighter/ma-code-highlighter.php:35
+msgid "Code Highlighter"
+msgstr ""
+
+#: ../addons/ma-code-highlighter/ma-code-highlighter.php:63, ../addons/ma-current-time/ma-current-time.php:65, ../addons/ma-flipbox/ma-flipbox.php:503, ../addons/ma-morphing-blob/ma-morphing-blob.php:58, ../addons/ma-navmenu/ma-navmenu.php:159, ../premium/addons/ma-comparison-table/ma-comparison-table.php:63, ../premium/addons/ma-comparison-table/ma-comparison-table.php:634, ../premium/addons/ma-domain-checker/ma-domain-checker.php:67, ../premium/addons/ma-featured-product/ma-featured-product.php:66, ../premium/addons/ma-product-listing/ma-product-listing.php:71, ../premium/addons/ma-product-listing/ma-product-listing.php:398, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:66
+msgid "General"
+msgstr ""
+
+#: ../addons/ma-code-highlighter/ma-code-highlighter.php:118, ../premium/addons/ma-source-code/ma-source-code.php:169
+msgid "Code"
+msgstr ""
+
+#: ../addons/ma-code-highlighter/ma-code-highlighter.php:130, ../addons/ma-table/ma-table.php:558, ../premium/addons/ma-source-code/ma-source-code.php:179
+msgid "Theme"
+msgstr ""
+
+#: ../addons/ma-code-highlighter/ma-code-highlighter.php:145
+msgid "Line Numbers"
+msgstr ""
+
+#: ../addons/ma-code-highlighter/ma-code-highlighter.php:155
+msgid "Line Highlight"
 msgstr ""
 
 #: ../addons/ma-countdown-timer/ma-countdown-timer.php:34, ../inc/admin/jltma-elements/ma-elements.php:316
@@ -3425,10 +3545,6 @@ msgstr ""
 
 #: ../addons/ma-creative-links/ma-creative-links.php:551
 msgid "Text Fill Color"
-msgstr ""
-
-#: ../addons/ma-current-time/ma-current-time.php:65, ../addons/ma-flipbox/ma-flipbox.php:503, ../addons/ma-morphing-blob/ma-morphing-blob.php:58, ../addons/ma-navmenu/ma-navmenu.php:159, ../premium/addons/ma-comparison-table/ma-comparison-table.php:63, ../premium/addons/ma-comparison-table/ma-comparison-table.php:634, ../premium/addons/ma-domain-checker/ma-domain-checker.php:67, ../premium/addons/ma-featured-product/ma-featured-product.php:66, ../premium/addons/ma-product-listing/ma-product-listing.php:71, ../premium/addons/ma-product-listing/ma-product-listing.php:398, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:66
-msgid "General"
 msgstr ""
 
 #: ../addons/ma-current-time/ma-current-time.php:72
@@ -4425,7 +4541,7 @@ msgstr ""
 msgid "Fancybox"
 msgstr ""
 
-#: ../addons/ma-image-carousel/ma-image-carousel.php:166, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:591, ../class-master-elementor-addons.php:970
+#: ../addons/ma-image-carousel/ma-image-carousel.php:166, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:591, ../class-master-elementor-addons.php:959
 msgid "Elementor"
 msgstr ""
 
@@ -7393,10 +7509,6 @@ msgstr ""
 msgid "Jewel"
 msgstr ""
 
-#: ../addons/ma-table/ma-table.php:558, ../premium/addons/ma-source-code/ma-source-code.php:179
-msgid "Theme"
-msgstr ""
-
 #: ../addons/ma-table/ma-table.php:561, ../inc/modules/dynamic-tags/inc/author-info.php:65, ../inc/modules/dynamic-tags/inc/user-info.php:92, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:548, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:585, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:587, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:1977
 msgid "Website"
 msgstr ""
@@ -9162,38 +9274,42 @@ msgstr ""
 msgid "Support"
 msgstr ""
 
+#: ../class-master-elementor-addons.php:342
+msgid "Master Addonsss"
+msgstr ""
+
 #. translators: 1: strong start tag, 2: strong end tag.
-#: ../class-master-elementor-addons.php:949
+#: ../class-master-elementor-addons.php:938
 msgid "<b>Master Addons</b> requires %1$s\"Elementor\"%2$s plugin to be installed and activated. Please install Elementor to continue."
 msgstr ""
 
-#: ../class-master-elementor-addons.php:950
+#: ../class-master-elementor-addons.php:939
 msgid "Install Elementor"
 msgstr ""
 
-#: ../class-master-elementor-addons.php:941
+#: ../class-master-elementor-addons.php:930
 msgid "<b>Master Addons</b> requires <strong>Elementor</strong> plugin to be active. Please activate Elementor to continue."
 msgstr ""
 
-#: ../class-master-elementor-addons.php:942
+#: ../class-master-elementor-addons.php:931
 msgid "Activate Elementor"
 msgstr ""
 
 #. translators: 1: Plugin name 2: Elementor 3: Required Elementor version
-#: ../class-master-elementor-addons.php:968
+#: ../class-master-elementor-addons.php:957
 msgid "\"%1$s\" requires \"%2$s\" version %3$s or greater. "
 msgstr ""
 
-#: ../class-master-elementor-addons.php:969, ../class-master-elementor-addons.php:985, ../inc/admin/dashboard-settings.php:120
+#: ../class-master-elementor-addons.php:958, ../class-master-elementor-addons.php:974, ../inc/admin/dashboard-settings.php:120
 msgid "Master Addons for Elementor"
 msgstr ""
 
 #. translators: 1: Plugin name 2: PHP 3: Required PHP version
-#: ../class-master-elementor-addons.php:984
+#: ../class-master-elementor-addons.php:973
 msgid "\"%1$s\" requires \"%2$s\" version %3$s or greater."
 msgstr ""
 
-#: ../class-master-elementor-addons.php:986, ../premium/addons/ma-source-code/ma-source-code.php:443
+#: ../class-master-elementor-addons.php:975, ../premium/addons/ma-source-code/ma-source-code.php:443
 msgid "PHP"
 msgstr ""
 
@@ -12400,10 +12516,6 @@ msgstr ""
 msgid "Featured Image Data"
 msgstr ""
 
-#: ../inc/modules/dynamic-tags/inc/featured-image-data.php:92
-msgid "Data"
-msgstr ""
-
 #: ../inc/modules/dynamic-tags/inc/featured-image-data.php:97
 msgid "Alt"
 msgstr ""
@@ -14566,10 +14678,6 @@ msgstr ""
 
 #: ../premium/addons/ma-restrict-content/ma-restrict-content.php:1809
 msgid "Ops, You entered wrong password!"
-msgstr ""
-
-#: ../premium/addons/ma-source-code/ma-source-code.php:169
-msgid "Code"
 msgstr ""
 
 #: ../premium/addons/ma-source-code/ma-source-code.php:184
