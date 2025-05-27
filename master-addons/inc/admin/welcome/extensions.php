@@ -80,7 +80,7 @@ foreach ( JLTMA_Addon_Extensions::$jltma_extensions['jltma-extensions']['extensi
 											<div class="jltma-master-addons-content-inner">
 												<div class="jltma-master-addons-features-title">
 													<?php 
-    echo esc_html( $extension['title'] );
+    echo esc_html__( $extension['title'] );
     ?>
 												</div> <!-- jltma_master_addons-features-title -->
 												<div class="jltma-addons-tooltip inline-block">

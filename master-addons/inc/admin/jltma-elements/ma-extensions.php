@@ -12,11 +12,13 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
         {
             self::$jltma_extensions = [
                 'jltma-extensions'         => [
-                    'title'     => esc_html__('Extensions', 'master-addons' ),
+                    // 'title'     => esc_html__('Extensions', 'master-addons' ),
+                    'title'     => 'Extensions',
                     'extension' => [
                         [
                             'key'      => 'particles',
-                            'title'    => esc_html__('Particles', 'master-addons' ),
+                            // 'title'    => esc_html__('Particles', 'master-addons' ),
+                            'title'    => 'Particles',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Particles',
                             'demo_url' => 'https://master-addons.com/demos/particles-background/',
                             'docs_url' => 'https://master-addons.com/docs/addons/particles-extension/',
@@ -25,7 +27,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'animated-gradient',
-                            'title'    => esc_html__('Animated Gradient BG', 'master-addons' ),
+                            // 'title'    => esc_html__('Animated Gradient BG', 'master-addons' ),
+                            'title'    => 'Animated Gradient BG',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Animated_Gradient_Backgrounds',
                             'demo_url' => 'https://master-addons.com/demos/gradient-background/',
                             'docs_url' => 'https://master-addons.com/docs/addons/animated-gradient-background-extension/',
@@ -34,7 +37,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'reading-progress-bar',
-                            'title'    => esc_html__('Reading Progress Bar', 'master-addons' ),
+                            // 'title'    => esc_html__('Reading Progress Bar', 'master-addons' ),
+                            'title'    => 'Reading Progress Bar',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Reading_Progress_Bar',
                             'demo_url' => 'https://master-addons.com/100-best-elementor-addons/',
                             'docs_url' => '',
@@ -43,7 +47,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'bg-slider',
-                            'title'    => esc_html__('Background Slider', 'master-addons' ),
+                            // 'title'    => esc_html__('Background Slider', 'master-addons' ),
+                            'title'    => 'Background Slider',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Background_Slider',
                             'demo_url' => 'https://master-addons.com/demos/background-slider/',
                             'docs_url' => 'https://master-addons.com/docs/addons/background-slider-extension/',
@@ -52,7 +57,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'custom-css',
-                            'title'    => esc_html__('Custom CSS', 'master-addons' ),
+                            // 'title'    => esc_html__('Custom CSS', 'master-addons' ),
+                            'title'    => 'Custom CSS',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Custom_CSS',
                             'demo_url' => 'https://master-addons.com/docs/addons/custom-css-extension/',
                             'docs_url' => 'https://master-addons.com/docs/addons/custom-css-extension/',
@@ -61,7 +67,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'custom-js',
-                            'title'    => esc_html__('Custom JS', 'master-addons' ),
+                            // 'title'    => esc_html__('Custom JS', 'master-addons' ),
+                            'title'    => 'Custom JS',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Custom_JS',
                             'demo_url' => 'https://master-addons.com/docs/addons/custom-js-extension/',
                             'docs_url' => 'https://master-addons.com/docs/addons/custom-js-extension/',
@@ -70,7 +77,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'positioning',
-                            'title'    => esc_html__('Positioning', 'master-addons' ),
+                            // 'title'    => esc_html__('Positioning', 'master-addons' ),
+                            'title'    => 'Positioning',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Positioning',
                             'demo_url' => 'https://master-addons.com/demos/positioning/',
                             'docs_url' => 'https://master-addons.com/docs/addons/positioning-extension/',
@@ -79,7 +87,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'extras',
-                            'title'    => esc_html__('Container Extras', 'master-addons' ),
+                            // 'title'    => esc_html__('Container Extras', 'master-addons' ),
+                            'title'    => 'Container Extras',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Container_Extras',
                             'demo_url' => '',
                             'docs_url' => '',
@@ -88,7 +97,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'mega-menu',
-                            'title'    => esc_html__('Mega Menu', 'master-addons' ),
+                            // 'title'    => esc_html__('Mega Menu', 'master-addons' ),
+                            'title'    => 'Mega Menu',
                             'class'    => 'MasterAddons\Modules\MegaMenu\Master_Menu',
                             'demo_url' => 'https://master-addons.com/elementor-mega-menu/',
                             'docs_url' => 'https://master-addons.com/docs/addons/navigation-menu/',
@@ -97,7 +107,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'transition',
-                            'title'    => esc_html__('Entrance Animation', 'master-addons' ),
+                            // 'title'    => esc_html__('Entrance Animation', 'master-addons' ),
+                            'title'    => 'Entrance Animation',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Entrance_Animation',
                             'demo_url' => 'https://master-addons.com/demos/entrance-animation/',
                             'docs_url' => 'https://master-addons.com/docs/addons/entrance-animation/',
@@ -106,7 +117,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'transforms',
-                            'title'    => esc_html__('Transforms', 'master-addons' ),
+                            // 'title'    => esc_html__('Transforms', 'master-addons' ),
+                            'title'    => 'Transforms',
                             'class'    => 'MasterAddons\Modules\JLTMA_Transform_Extension',
                             'demo_url' => 'https://master-addons.com/demos/transforms-extension/',
                             'docs_url' => 'https://master-addons.com/docs/addons/transforms-extension/',
@@ -115,7 +127,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'rellax',
-                            'title'    => esc_html__('Rellax', 'master-addons' ),
+                            // 'title'    => esc_html__('Rellax', 'master-addons' ),
+                            'title'    => 'Rellax',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Rellax',
                             'demo_url' => 'https://master-addons.com/demos/rellax/',
                             'docs_url' => 'https://master-addons.com/docs/addons/rellax-extension/',
@@ -124,7 +137,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'reveal',
-                            'title'    => esc_html__('Reveal', 'master-addons' ),
+                            // 'title'    => esc_html__('Reveal', 'master-addons' ),
+                            'title'    => 'Reveal',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Reveal',
                             'demo_url' => 'https://master-addons.com/demos/reveal/',
                             'docs_url' => 'https://master-addons.com/docs/addons/reveal-extension/',
@@ -133,7 +147,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'header-footer-comment',
-                            'title'    => esc_html__('Header,Footer,Comment Form', 'master-addons' ),
+                            // 'title'    => esc_html__('Header,Footer,Comment Form', 'master-addons' ),
+                            'title'    => 'Header,Footer,Comment Form',
                             'class'    => 'MasterHeaderFooter\Master_Header_Footer',
                             'demo_url' => 'https://master-addons.com/demos/header-footer-comment-builder/',
                             'docs_url' => 'https://master-addons.com/docs/addons/header-footer-comment-builder/',
@@ -142,7 +157,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'display-conditions',
-                            'title'    => esc_html__('Display Conditions', 'master-addons' ),
+                            // 'title'    => esc_html__('Display Conditions', 'master-addons' ),
+                            'title'    => 'Display Conditions',
                             'class'    => 'MasterAddons\Modules\JLTMA_Display_Conditions',
                             'demo_url' => 'https://master-addons.com/demos/display-conditions/',
                             'docs_url' => 'https://master-addons.com/docs/addons/display-conditions/',
@@ -151,7 +167,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'dynamic-tags',
-                            'title'    => esc_html__('Dynamic Tags', 'master-addons' ),
+                            // 'title'    => esc_html__('Dynamic Tags', 'master-addons' ),
+                            'title'    => 'Dynamic Tags',
                             'class'    => 'MasterAddons\Modules\DynamicTags\JLTMA_Extension_Dynamic_Tags',
                             'demo_url' => 'https://master-addons.com/demos/dynamic-tags/',
                             'docs_url' => 'https://master-addons.com/docs/addons/dynamic-tags/',
@@ -160,7 +177,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'floating-effects',
-                            'title'    => esc_html__('Floating Effects', 'master-addons' ),
+                            // 'title'    => esc_html__('Floating Effects', 'master-addons' ),
+                            'title'    => 'Floating Effects',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Floating_Effects',
                             'demo_url' => 'https://master-addons.com/demos/floating-effect/',
                             'docs_url' => 'https://master-addons.com/floating-effect-elementor/',
@@ -169,7 +187,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'wrapper-link',
-                            'title'    => esc_html__('Wrapper Link', 'master-addons' ),
+                            // 'title'    => esc_html__('Wrapper Link', 'master-addons' ),
+                            'title'    => 'Wrapper Link',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Wrapper_Link',
                             'demo_url' => '',
                             'docs_url' => 'https://master-addons.com/docs/addons/wrapper-link/',
@@ -178,7 +197,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'duplicator',
-                            'title'    => esc_html__('Post/Page Duplicator', 'master-addons' ),
+                            // 'title'    => esc_html__('Post/Page Duplicator', 'master-addons' ),
+                            'title'    => 'Post/Page Duplicator',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Post_Page_Duplicator',
                             'demo_url' => '',
                             'docs_url' => '',
@@ -187,7 +207,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'glassmorphism',
-                            'title'    => esc_html__('Glassmorphism', 'master-addons' ),
+                            // 'title'    => esc_html__('Glassmorphism', 'master-addons' ),
+                            'title'    => 'Glassmorphism',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Glassmorphism',
                             'demo_url' => '',
                             'docs_url' => '',
@@ -196,7 +217,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'icons-extended',
-                            'title'    => esc_html__('Icons Extended', 'master-addons' ),
+                            // 'title'    => esc_html__('Icons Extended', 'master-addons' ),
+                            'title'    => 'Icons Extended',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Icons_Extended',
                             'demo_url' => 'https://master-addons.com/elementor-icons-and-4-font-library/',
                             'docs_url' => 'https://master-addons.com/elementor-icons-and-4-font-library/',
@@ -205,7 +227,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         [
                             'key'      => 'tooltips',
-                            'title'    => esc_html__('Tooltips', 'master-addons' ),
+                            // 'title'    => esc_html__('Tooltips', 'master-addons' ),
+                            'title'    => 'Tooltips',
                             'class'    => 'MasterAddons\Modules\JLTMA_Extension_Tooltip',
                             'demo_url' => 'https://master-addons.com/demos/ext-tooltips/',
                             'docs_url' => 'https://master-addons.com/docs/addons/tooltip-extension-for-elementor/',
@@ -214,7 +237,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         ],
                         // [
                         //     'key'      => 'magic-copy',
-                        //     'title'    => esc_html__( 'Live Copy', 'master-addons' ),
+                        //     // 'title'    => esc_html__( 'Live Copy', 'master-addons' ),
+                        //     'title'    => 'Live Copy',
                         //     'class'    => 'MasterAddons\Modules\JLTMA_Extension_Magic_Copy',
                         //     'demo_url' => '',
                         //     'docs_url' => '',
@@ -223,7 +247,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         // ],
                         // [
                         //     'key'      => 'ribbon',
-                        //     'title'    => esc_html__('Ribbon', 'master-addons' ),
+                        //     // 'title'    => esc_html__('Ribbon', 'master-addons' ),
+                        //     'title'    => 'Ribbon',
                         //     'class'    => 'MasterAddons\Modules\JLTMA_Ribbon',
                         //     'demo_url' => '',
                         //     'docs_url' => '',
@@ -232,7 +257,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         // ],
                         // [
                         //     'key'           => 'nested-sections',
-                        //     'title'         => esc_html__('Nested Sections', 'master-addons' ),
+                        //     // 'title'         => esc_html__('Nested Sections', 'master-addons' ),
+                        //     'title'         => 'Nested Sections',
                         //     'class'    => 'MasterAddons\Modules\JLTMA_Extension_Nested_Sections',
                         //     'demo_url'      => '',
                         //     'docs_url'      => '',
@@ -241,7 +267,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         // ],
                         // [
                         //     'key'           => 'sticky',
-                        //     'title'         => esc_html__('Sticky', 'master-addons' ),
+                        //     // 'title'         => esc_html__('Sticky', 'master-addons' ),
+                        //     'title'         => 'Sticky',
                         //      'class'    => 'MasterAddons\Modules\JLTMA_Extension_Sticky',
                         //     'demo_url'      => '',
                         //     'docs_url'      => '',
@@ -250,7 +277,8 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         // ],
                         // [
                         //     'key'           => 'content-protection',
-                        //     'title'         => esc_html__('Content Protection', 'master-addons' ),
+                        //     // 'title'         => esc_html__('Content Protection', 'master-addons' ),
+                        //     'title'         => 'Content Protection',
                         //      'class'    => 'MasterAddons\Modules\JLTMA_Extension_Content_Protection',
                         //     'demo_url'      => '',
                         //     'docs_url'      => '',
@@ -259,15 +287,14 @@ if (!class_exists('JLTMA_Addon_Extensions')) {
                         // ],
                         // [
                         //     'key'           => 'morphing-effects',
-                        //     'title'         => esc_html__( 'Morphing Effects', 'master-addons' ),
+                        //     // 'title'         => esc_html__( 'Morphing Effects', 'master-addons' ),
+                        //     'title'         => 'Morphing Effects',
                         //      'class'    => 'MasterAddons\Modules\JLTMA_Extension_Morphing_Effects',
                         //     'demo_url'      => '',
                         //     'docs_url'      => '',
                         //     'tuts_url'      => '',
                         // 'is_pro'   => false
                         // ],
-
-
                     ]
                 ]
             ];

@@ -2,9 +2,9 @@
 Contributors: jwthemeltd, litonice13, masteraddons
 Tags: elementor, elementor templates, elementor addons, widgets for elementor, elementor widgets
 Requires at least: 4.0
-Tested up to: 6.8
+Tested up to: 6.8.1
 Requires PHP: 7.0
-Stable tag: 2.0.7.5
+Stable tag: 2.0.7.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -350,6 +350,15 @@ Paste on your Local Computer
 
 
 == Changelog ==
+= 2.0.7.6 (26-05-2025) =
+* Fixed: Image hover effect has deprecated code. 
+* Fixed: Template importer has issue with image loading. 
+* Fixed: MA Timeline updated and fixed js error. 
+* Fixed: Textdomain loading too early issue. 
+* Fixed: Elementor editor not loading issue. 
+* Update: Security patch added. 
+* Update: Freemius SDK with better security.
+
 = 2.0.7.5 (19-04-2025) =
 * Fixed: WordPress 6.8 critical error issue fixed
 
@@ -370,3 +379,4 @@ Paste on your Local Computer
 
 
 Details [Changelogs here](https://master-addons.com/changelogs/)
+

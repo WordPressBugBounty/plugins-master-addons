@@ -12,11 +12,13 @@ if (!class_exists('JLTMA_Addon_Forms')) {
         {
             self::$jltma_forms = [
                 'jltma-forms'      => [
-                    'title'     => esc_html__('Form Elements', 'master-addons' ),
+                    // 'title'     => esc_html__('Form Elements', 'master-addons' ),
+                    'title'     => 'Form Elements',
                     'elements'      => [
                         [
                             'key'      => 'contact-form-7',
-                            'title'    => esc_html__('Contact Form 7', 'master-addons' ),
+                            // 'title'    => esc_html__('Contact Form 7', 'master-addons' ),
+                            'title'    => 'Contact Form 7',
                             'class'    => 'MasterAddons\Addons\JLTMA_Contact_Form_7',
                             'demo_url' => 'https://master-addons.com/demos/contact-form-7/',
                             'docs_url' => 'https://master-addons.com/docs/addons/how-to-edit-contact-form-7/',
@@ -25,7 +27,8 @@ if (!class_exists('JLTMA_Addon_Forms')) {
                         ],
                         [
                             'key'      => 'ninja-forms',
-                            'title'    => esc_html__('Ninja Form', 'master-addons' ),
+                            // 'title'    => esc_html__('Ninja Form', 'master-addons' ),
+                            'title'    => 'Ninja Form',
                             'class'    => 'MasterAddons\Addons\JLTMA_Ninja_Form',
                             'demo_url' => 'https://master-addons.com/demos/ninja-form/',
                             'docs_url' => 'https://master-addons.com/docs/addons/how-to-edit-contact-form-7/',
@@ -34,7 +37,8 @@ if (!class_exists('JLTMA_Addon_Forms')) {
                         ],
                         [
                             'key'      => 'wpforms',
-                            'title'    => esc_html__('WP Forms', 'master-addons' ),
+                            // 'title'    => esc_html__('WP Forms', 'master-addons' ),
+                            'title'    => 'WP Forms',
                             'class'    => 'MasterAddons\Addons\JLTMA_WP_Forms',
                             'demo_url' => 'https://master-addons.com/demos/wp-forms/',
                             'docs_url' => 'https://master-addons.com/docs/addons/how-to-edit-contact-form-7/',
@@ -43,7 +47,8 @@ if (!class_exists('JLTMA_Addon_Forms')) {
                         ],
                         [
                             'key'      => 'gravity-forms',
-                            'title'    => esc_html__('Gravity Forms', 'master-addons' ),
+                            // 'title'    => esc_html__('Gravity Forms', 'master-addons' ),
+                            'title'    => 'Gravity Forms',
                             'class'    => 'MasterAddons\Addons\JLTMA_Gravity_Forms',
                             'demo_url' => 'https://master-addons.com/demos/wp-forms/',
                             'docs_url' => 'https://master-addons.com/docs/addons/how-to-edit-contact-form-7/',
@@ -52,7 +57,8 @@ if (!class_exists('JLTMA_Addon_Forms')) {
                         ],
                         [
                             'key'      => 'caldera-forms',
-                            'title'    => esc_html__('Caldera Forms', 'master-addons' ),
+                            // 'title'    => esc_html__('Caldera Forms', 'master-addons' ),
+                            'title'    => 'Caldera Forms',
                             'class'    => 'MasterAddons\Addons\JLTMA_Caldera_Forms',
                             'demo_url' => 'https://master-addons.com/demos/wp-forms/',
                             'docs_url' => 'https://master-addons.com/docs/addons/how-to-edit-contact-form-7/',
@@ -61,7 +67,8 @@ if (!class_exists('JLTMA_Addon_Forms')) {
                         ],
                         [
                             'key'      => 'weforms',
-                            'title'    => esc_html__('weForms', 'master-addons' ),
+                            // 'title'    => esc_html__('weForms', 'master-addons' ),
+                            'title'    => 'weForms',
                             'class'    => 'MasterAddons\Addons\JLTMA_Weforms',
                             'demo_url' => 'https://master-addons.com/demos/wp-forms/',
                             'docs_url' => 'https://master-addons.com/docs/addons/how-to-edit-contact-form-7/',
@@ -70,7 +77,8 @@ if (!class_exists('JLTMA_Addon_Forms')) {
                         ],
                         // [
                         //     'key'      => 'fluent-form',
-                        //     'title'    => esc_html__('Fluent Form', 'master-addons' ),
+                        //     // 'title'    => esc_html__('Fluent Form', 'master-addons' ),
+                        //     'title'    => 'Fluent Form',
                         //     'class'    => 'MasterAddons\Addons\JLTM_Fluent_Form',
                         //     'demo_url' => '',
                         //     'docs_url' => '',

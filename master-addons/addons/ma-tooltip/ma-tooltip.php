@@ -942,7 +942,7 @@ class JLTMA_Tooltip extends Widget_Base
 		<<?php echo esc_attr($jltma_tootltip_tag); ?> <?php echo $this->get_render_attribute_string('jltma_tooltip_wrapper'); ?>>
 
 			<?php if ($settings['ma_el_tooltip_type'] === 'text') { ?>
-				<?php echo $this->parse_text_editor(wp_kses(strip_tags( $settings['ma_el_tooltip_content']), [])); ?>
+				<?php echo $this->print_render_attribute_string( $settings['ma_el_tooltip_content'] ); ?>
 				<?php } elseif ($settings['ma_el_tooltip_type'] === 'icon') {
 				$migrated = isset($settings['__fa4_migrated']['ma_el_tooltip_icon_content']);
 				$is_new   = empty($settings['icon']) && Icons_Manager::is_migration_allowed();

@@ -58,7 +58,7 @@ foreach ( JLTMA_Addon_Elements::$jltma_elements['jltma-addons']['elements'] as $
 					<div class="jltma-master-addons-content-inner">
 						<div class="jltma-master-addons-features-title">
 							<?php 
-    echo esc_html( $widget['title'] );
+    echo esc_html__( $widget['title'] );
     ?>
 						</div> <!-- jltma_master_addons-features-title -->
 

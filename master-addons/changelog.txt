@@ -1,4 +1,13 @@
 == Changelog ==
+= 2.0.7.6 (26-05-2025) =
+* Fixed: Image hover effect has deprecated code. 
+* Fixed: Template importer has issue with image loading. 
+* Fixed: MA Timeline updated and fixed js error. 
+* Fixed: Textdomain loading too early issue. 
+* Fixed: Elementor editor not loading issue. 
+* Update: Security patch added. 
+* Update: Freemius SDK with better security.
+
 = 2.0.7.5 (19-04-2025) =
 * Fixed: WordPress 6.8 critical error issue fixed
 

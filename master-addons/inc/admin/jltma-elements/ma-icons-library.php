@@ -12,27 +12,31 @@ if (!class_exists('JLTMA_Icons_Library')) {
         {
             self::$jltma_icons_library = [
                 'jltma-icons-library'      => [
-                    'title'             => esc_html__('Icons Library', 'master-addons' ),
+                    // 'title'             => esc_html__('Icons Library', 'master-addons' ),
+                    'title'             => 'Icons Library',
                     'libraries'          => [
                         [
+                            // 'title'    => esc_html__('Simple Line Icons', 'master-addons' ),
+                            'title'    => 'Simple Line Icons',
                             'key'      => 'simple-line-icons',
-                            'title'    => esc_html__('Simple Line Icons', 'master-addons' ),
                             'demo_url' => '',
                             'docs_url' => '',
                             'tuts_url' => '',
                             'is_pro'   => false
                         ],
                         [
+                            // 'title'    => esc_html__('Elementor Icons', 'master-addons' ),
+                            'title'    => 'Elementor Icons',
                             'key'      => 'elementor-icon',
-                            'title'    => esc_html__('Elementor Icons', 'master-addons' ),
                             'demo_url' => '',
                             'docs_url' => '',
                             'tuts_url' => '',
                             'is_pro'   => false
                         ],
                         [
+                            // 'title'    => esc_html__('Ionic Font', 'master-addons' ),
+                            'title'    => 'Ionic Font',
                             'key'      => 'iconic-fonts',
-                            'title'    => esc_html__('Ionic Font', 'master-addons' ),
                             'class'    => '',
                             'demo_url' => '',
                             'docs_url' => '',
@@ -40,8 +44,9 @@ if (!class_exists('JLTMA_Icons_Library')) {
                             'is_pro'   => false
                         ],
                         [
+                            // 'title'    => esc_html__('Linear Icons', 'master-addons' ),
+                            'title'    => 'Linear Icons',
                             'key'      => 'linear-icons',
-                            'title'    => esc_html__('Linear Icons', 'master-addons' ),
                             'class'    => '',
                             'demo_url' => '',
                             'docs_url' => '',
@@ -49,16 +54,15 @@ if (!class_exists('JLTMA_Icons_Library')) {
                             'is_pro'   => false
                         ],
                         [
+                            // 'title'    => esc_html__('Material Icons', 'master-addons' ),
+                            'title'    => 'Material Icons',
                             'key'      => 'material-icons',
-                            'title'    => esc_html__('Material Icons', 'master-addons' ),
                             'class'    => '',
                             'demo_url' => '',
                             'docs_url' => '',
                             'tuts_url' => '',
                             'is_pro'   => false
                         ],
-
-
                     ]
                 ]
             ];

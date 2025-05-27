@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-19 07:55+0000\n"
+"POT-Creation-Date: 2025-05-27 06:04+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../addons/caldera-forms/caldera-forms.php:31, ../addons/caldera-forms/caldera-forms.php:64, ../addons/caldera-forms/caldera-forms.php:1377, ../inc/admin/jltma-elements/ma-forms.php:55
+#: ../addons/caldera-forms/caldera-forms.php:31, ../addons/caldera-forms/caldera-forms.php:64, ../addons/caldera-forms/caldera-forms.php:1377
 msgid "Caldera Forms"
 msgstr ""
 
@@ -26,11 +26,11 @@ msgstr ""
 msgid "Custom Title & Description"
 msgstr ""
 
-#: ../addons/caldera-forms/caldera-forms.php:84, ../addons/caldera-forms/caldera-forms.php:822, ../addons/gravity-forms/gravity-forms.php:110, ../addons/gravity-forms/gravity-forms.php:201, ../addons/gravity-forms/gravity-forms.php:970, ../addons/ma-business-hours/ma-business-hours.php:125, ../addons/ma-business-hours/ma-business-hours.php:151, ../addons/ma-business-hours/ma-business-hours.php:210, ../addons/ma-business-hours/ma-business-hours.php:261, ../addons/ma-business-hours/ma-business-hours.php:415, ../addons/ma-business-hours/ma-business-hours.php:514, ../addons/ma-business-hours/ma-business-hours.php:553, ../addons/ma-business-hours/ma-business-hours.php:637, ../addons/ma-business-hours/ma-business-hours.php:670, ../addons/ma-business-hours/ma-business-hours.php:844, ../addons/ma-calendar/ma-calendar.php:369, ../addons/ma-calendar/ma-calendar.php:399, ../addons/ma-calendar/ma-calendar.php:421, ../addons/ma-calendar/ma-calendar.php:448, ../addons/ma-calendar/ma-calendar.php:463, ../addons/ma-calendar/ma-calendar.php:478, ../addons/ma-calendar/ma-calendar.php:572, ../addons/ma-data-table/ma-data-table.php:166, ../addons/ma-data-table/ma-data-table.php:395, ../addons/ma-data-table/ma-data-table.php:536, ../addons/ma-data-table/ma-data-table.php:557, ../addons/ma-data-table/ma-data-table.php:569, ../addons/ma-data-table/ma-data-table.php:581, ../addons/ma-data-table/ma-data-table.php:593, ../addons/ma-image-carousel/ma-image-carousel.php:150, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:437, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:502, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:518, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:550, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:618, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:739, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:775, ../addons/ma-navmenu/ma-navmenu.php:768, ../addons/ma-piechart/ma-piechart.php:89, ../addons/ma-piechart/ma-piechart.php:186, ../addons/ma-post-pagination/ma-post-pagination.php:1162, ../addons/ma-social-share/ma-social-share.php:247, ../addons/ma-table/ma-table.php:195, ../addons/ma-table/ma-table.php:315, ../addons/ma-table/ma-table.php:434, ../addons/ma-table-of-contents/ma-table-of-contents.php:207, ../addons/ma-table-of-contents/ma-table-of-contents.php:219, ../addons/ma-timeline/ma-timeline.php:177, ../addons/ma-timeline/ma-timeline.php:205, ../addons/ma-timeline/ma-timeline.php:219, ../addons/ma-timeline/ma-timeline.php:261, ../addons/ma-timeline/ma-timeline.php:682, ../addons/ma-timeline/ma-timeline.php:1147, ../addons/ma-timeline/ma-timeline.php:1606, ../addons/ma-wc-product-table/ma-wc-product-table.php:180, ../addons/ma-wc-product-table/ma-wc-product-table.php:209, ../addons/ma-wc-product-table/ma-wc-product-table.php:340, ../addons/ma-wc-product-table/ma-wc-product-table.php:361, ../addons/ma-wc-product-table/ma-wc-product-table.php:373, ../addons/ma-wc-product-table/ma-wc-product-table.php:385, ../addons/ma-wc-product-table/ma-wc-product-table.php:397, ../addons/ma-wc-single-product/ma-wc-single-product.php:165, ../addons/ninja-forms/ninja-forms.php:803, ../addons/wpforms/wpforms.php:86, ../addons/wpforms/wpforms.php:817, ../inc/admin/dashboard-settings.php:200, ../inc/traits/swiper-controls.php:30, ../inc/modules/bg-slider/bg-slider.php:135, ../inc/modules/content-protection/content-protection.php:504, ../inc/modules/morphing-effects/morphing-effects.php:68, ../inc/modules/particles/particles.php:52, ../inc/modules/reading-progress-bar/reading-progress-bar.php:53, ../inc/modules/ribbon/ribbon.php:59, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:233, ../premium/addons/ma-comparison-table/ma-comparison-table.php:176, ../premium/addons/ma-domain-checker/ma-domain-checker.php:113, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:491, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:535, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:553, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:648, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:720, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:733, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:746, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:798, ../premium/modules/animated-gradient/animated-gradient.php:39, ../premium/modules/display-conditions/display-conditions.php:205, ../premium/modules/display-conditions/display-conditions.php:220, ../premium/modules/floating-effects/floating-effects.php:36, ../premium/modules/rellax/rellax.php:48, ../premium/modules/reveal/reveal.php:82, ../premium/modules/tooltips/tooltips.php:52
+#: ../addons/caldera-forms/caldera-forms.php:84, ../addons/caldera-forms/caldera-forms.php:822, ../addons/gravity-forms/gravity-forms.php:110, ../addons/gravity-forms/gravity-forms.php:201, ../addons/gravity-forms/gravity-forms.php:970, ../addons/ma-business-hours/ma-business-hours.php:125, ../addons/ma-business-hours/ma-business-hours.php:151, ../addons/ma-business-hours/ma-business-hours.php:210, ../addons/ma-business-hours/ma-business-hours.php:261, ../addons/ma-business-hours/ma-business-hours.php:415, ../addons/ma-business-hours/ma-business-hours.php:514, ../addons/ma-business-hours/ma-business-hours.php:553, ../addons/ma-business-hours/ma-business-hours.php:637, ../addons/ma-business-hours/ma-business-hours.php:670, ../addons/ma-business-hours/ma-business-hours.php:844, ../addons/ma-calendar/ma-calendar.php:369, ../addons/ma-calendar/ma-calendar.php:399, ../addons/ma-calendar/ma-calendar.php:421, ../addons/ma-calendar/ma-calendar.php:448, ../addons/ma-calendar/ma-calendar.php:463, ../addons/ma-calendar/ma-calendar.php:478, ../addons/ma-calendar/ma-calendar.php:572, ../addons/ma-data-table/ma-data-table.php:166, ../addons/ma-data-table/ma-data-table.php:395, ../addons/ma-data-table/ma-data-table.php:536, ../addons/ma-data-table/ma-data-table.php:557, ../addons/ma-data-table/ma-data-table.php:569, ../addons/ma-data-table/ma-data-table.php:581, ../addons/ma-data-table/ma-data-table.php:593, ../addons/ma-image-carousel/ma-image-carousel.php:150, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:437, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:502, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:518, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:550, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:618, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:739, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:775, ../addons/ma-navmenu/ma-navmenu.php:768, ../addons/ma-piechart/ma-piechart.php:89, ../addons/ma-piechart/ma-piechart.php:186, ../addons/ma-post-pagination/ma-post-pagination.php:1162, ../addons/ma-social-share/ma-social-share.php:247, ../addons/ma-table/ma-table.php:195, ../addons/ma-table/ma-table.php:315, ../addons/ma-table/ma-table.php:434, ../addons/ma-table-of-contents/ma-table-of-contents.php:207, ../addons/ma-table-of-contents/ma-table-of-contents.php:219, ../addons/ma-timeline/ma-timeline.php:177, ../addons/ma-timeline/ma-timeline.php:205, ../addons/ma-timeline/ma-timeline.php:219, ../addons/ma-timeline/ma-timeline.php:261, ../addons/ma-timeline/ma-timeline.php:682, ../addons/ma-timeline/ma-timeline.php:1147, ../addons/ma-timeline/ma-timeline.php:1606, ../addons/ma-wc-product-table/ma-wc-product-table.php:180, ../addons/ma-wc-product-table/ma-wc-product-table.php:209, ../addons/ma-wc-product-table/ma-wc-product-table.php:340, ../addons/ma-wc-product-table/ma-wc-product-table.php:361, ../addons/ma-wc-product-table/ma-wc-product-table.php:373, ../addons/ma-wc-product-table/ma-wc-product-table.php:385, ../addons/ma-wc-product-table/ma-wc-product-table.php:397, ../addons/ma-wc-single-product/ma-wc-single-product.php:165, ../addons/ninja-forms/ninja-forms.php:803, ../addons/wpforms/wpforms.php:86, ../addons/wpforms/wpforms.php:817, ../inc/admin/dashboard-settings.php:221, ../inc/traits/swiper-controls.php:30, ../inc/modules/bg-slider/bg-slider.php:135, ../inc/modules/content-protection/content-protection.php:504, ../inc/modules/morphing-effects/morphing-effects.php:68, ../inc/modules/particles/particles.php:52, ../inc/modules/reading-progress-bar/reading-progress-bar.php:53, ../inc/modules/ribbon/ribbon.php:59, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:233, ../premium/addons/ma-comparison-table/ma-comparison-table.php:176, ../premium/addons/ma-domain-checker/ma-domain-checker.php:113, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:491, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:535, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:553, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:648, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:720, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:733, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:746, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:798, ../premium/modules/animated-gradient/animated-gradient.php:39, ../premium/modules/display-conditions/display-conditions.php:207, ../premium/modules/display-conditions/display-conditions.php:222, ../premium/modules/floating-effects/floating-effects.php:36, ../premium/modules/rellax/rellax.php:48, ../premium/modules/reveal/reveal.php:82, ../premium/modules/tooltips/tooltips.php:52
 msgid "Yes"
 msgstr ""
 
-#: ../addons/caldera-forms/caldera-forms.php:85, ../addons/caldera-forms/caldera-forms.php:823, ../addons/gravity-forms/gravity-forms.php:111, ../addons/gravity-forms/gravity-forms.php:202, ../addons/gravity-forms/gravity-forms.php:971, ../addons/ma-business-hours/ma-business-hours.php:126, ../addons/ma-business-hours/ma-business-hours.php:152, ../addons/ma-business-hours/ma-business-hours.php:211, ../addons/ma-business-hours/ma-business-hours.php:262, ../addons/ma-business-hours/ma-business-hours.php:416, ../addons/ma-business-hours/ma-business-hours.php:515, ../addons/ma-business-hours/ma-business-hours.php:554, ../addons/ma-business-hours/ma-business-hours.php:638, ../addons/ma-business-hours/ma-business-hours.php:671, ../addons/ma-business-hours/ma-business-hours.php:845, ../addons/ma-calendar/ma-calendar.php:370, ../addons/ma-calendar/ma-calendar.php:400, ../addons/ma-calendar/ma-calendar.php:422, ../addons/ma-calendar/ma-calendar.php:449, ../addons/ma-calendar/ma-calendar.php:464, ../addons/ma-calendar/ma-calendar.php:479, ../addons/ma-calendar/ma-calendar.php:573, ../addons/ma-data-table/ma-data-table.php:167, ../addons/ma-data-table/ma-data-table.php:396, ../addons/ma-data-table/ma-data-table.php:537, ../addons/ma-data-table/ma-data-table.php:558, ../addons/ma-data-table/ma-data-table.php:570, ../addons/ma-data-table/ma-data-table.php:582, ../addons/ma-data-table/ma-data-table.php:594, ../addons/ma-image-carousel/ma-image-carousel.php:149, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:438, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:503, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:519, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:551, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:619, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:740, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:776, ../addons/ma-navmenu/ma-navmenu.php:769, ../addons/ma-piechart/ma-piechart.php:90, ../addons/ma-piechart/ma-piechart.php:187, ../addons/ma-post-pagination/ma-post-pagination.php:1163, ../addons/ma-social-share/ma-social-share.php:248, ../addons/ma-table/ma-table.php:194, ../addons/ma-table/ma-table.php:314, ../addons/ma-table/ma-table.php:433, ../addons/ma-table-of-contents/ma-table-of-contents.php:208, ../addons/ma-table-of-contents/ma-table-of-contents.php:220, ../addons/ma-timeline/ma-timeline.php:178, ../addons/ma-timeline/ma-timeline.php:206, ../addons/ma-timeline/ma-timeline.php:220, ../addons/ma-timeline/ma-timeline.php:262, ../addons/ma-timeline/ma-timeline.php:683, ../addons/ma-timeline/ma-timeline.php:1148, ../addons/ma-timeline/ma-timeline.php:1607, ../addons/ma-wc-product-table/ma-wc-product-table.php:181, ../addons/ma-wc-product-table/ma-wc-product-table.php:210, ../addons/ma-wc-product-table/ma-wc-product-table.php:341, ../addons/ma-wc-product-table/ma-wc-product-table.php:362, ../addons/ma-wc-product-table/ma-wc-product-table.php:374, ../addons/ma-wc-product-table/ma-wc-product-table.php:386, ../addons/ma-wc-product-table/ma-wc-product-table.php:398, ../addons/ma-wc-single-product/ma-wc-single-product.php:164, ../addons/ninja-forms/ninja-forms.php:804, ../addons/wpforms/wpforms.php:87, ../addons/wpforms/wpforms.php:818, ../inc/traits/swiper-controls.php:31, ../inc/modules/bg-slider/bg-slider.php:136, ../inc/modules/content-protection/content-protection.php:505, ../inc/modules/morphing-effects/morphing-effects.php:69, ../inc/modules/particles/particles.php:53, ../inc/modules/reading-progress-bar/reading-progress-bar.php:54, ../inc/modules/ribbon/ribbon.php:58, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:234, ../premium/addons/ma-comparison-table/ma-comparison-table.php:180, ../premium/addons/ma-domain-checker/ma-domain-checker.php:114, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:492, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:536, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:554, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:649, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:721, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:734, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:747, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:799, ../premium/modules/animated-gradient/animated-gradient.php:40, ../premium/modules/display-conditions/display-conditions.php:206, ../premium/modules/display-conditions/display-conditions.php:221, ../premium/modules/floating-effects/floating-effects.php:37, ../premium/modules/rellax/rellax.php:49, ../premium/modules/reveal/reveal.php:83, ../premium/modules/tooltips/tooltips.php:53
+#: ../addons/caldera-forms/caldera-forms.php:85, ../addons/caldera-forms/caldera-forms.php:823, ../addons/gravity-forms/gravity-forms.php:111, ../addons/gravity-forms/gravity-forms.php:202, ../addons/gravity-forms/gravity-forms.php:971, ../addons/ma-business-hours/ma-business-hours.php:126, ../addons/ma-business-hours/ma-business-hours.php:152, ../addons/ma-business-hours/ma-business-hours.php:211, ../addons/ma-business-hours/ma-business-hours.php:262, ../addons/ma-business-hours/ma-business-hours.php:416, ../addons/ma-business-hours/ma-business-hours.php:515, ../addons/ma-business-hours/ma-business-hours.php:554, ../addons/ma-business-hours/ma-business-hours.php:638, ../addons/ma-business-hours/ma-business-hours.php:671, ../addons/ma-business-hours/ma-business-hours.php:845, ../addons/ma-calendar/ma-calendar.php:370, ../addons/ma-calendar/ma-calendar.php:400, ../addons/ma-calendar/ma-calendar.php:422, ../addons/ma-calendar/ma-calendar.php:449, ../addons/ma-calendar/ma-calendar.php:464, ../addons/ma-calendar/ma-calendar.php:479, ../addons/ma-calendar/ma-calendar.php:573, ../addons/ma-data-table/ma-data-table.php:167, ../addons/ma-data-table/ma-data-table.php:396, ../addons/ma-data-table/ma-data-table.php:537, ../addons/ma-data-table/ma-data-table.php:558, ../addons/ma-data-table/ma-data-table.php:570, ../addons/ma-data-table/ma-data-table.php:582, ../addons/ma-data-table/ma-data-table.php:594, ../addons/ma-image-carousel/ma-image-carousel.php:149, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:438, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:503, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:519, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:551, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:619, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:740, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:776, ../addons/ma-navmenu/ma-navmenu.php:769, ../addons/ma-piechart/ma-piechart.php:90, ../addons/ma-piechart/ma-piechart.php:187, ../addons/ma-post-pagination/ma-post-pagination.php:1163, ../addons/ma-social-share/ma-social-share.php:248, ../addons/ma-table/ma-table.php:194, ../addons/ma-table/ma-table.php:314, ../addons/ma-table/ma-table.php:433, ../addons/ma-table-of-contents/ma-table-of-contents.php:208, ../addons/ma-table-of-contents/ma-table-of-contents.php:220, ../addons/ma-timeline/ma-timeline.php:178, ../addons/ma-timeline/ma-timeline.php:206, ../addons/ma-timeline/ma-timeline.php:220, ../addons/ma-timeline/ma-timeline.php:262, ../addons/ma-timeline/ma-timeline.php:683, ../addons/ma-timeline/ma-timeline.php:1148, ../addons/ma-timeline/ma-timeline.php:1607, ../addons/ma-wc-product-table/ma-wc-product-table.php:181, ../addons/ma-wc-product-table/ma-wc-product-table.php:210, ../addons/ma-wc-product-table/ma-wc-product-table.php:341, ../addons/ma-wc-product-table/ma-wc-product-table.php:362, ../addons/ma-wc-product-table/ma-wc-product-table.php:374, ../addons/ma-wc-product-table/ma-wc-product-table.php:386, ../addons/ma-wc-product-table/ma-wc-product-table.php:398, ../addons/ma-wc-single-product/ma-wc-single-product.php:164, ../addons/ninja-forms/ninja-forms.php:804, ../addons/wpforms/wpforms.php:87, ../addons/wpforms/wpforms.php:818, ../inc/traits/swiper-controls.php:31, ../inc/modules/bg-slider/bg-slider.php:136, ../inc/modules/content-protection/content-protection.php:505, ../inc/modules/morphing-effects/morphing-effects.php:69, ../inc/modules/particles/particles.php:53, ../inc/modules/reading-progress-bar/reading-progress-bar.php:54, ../inc/modules/ribbon/ribbon.php:58, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:234, ../premium/addons/ma-comparison-table/ma-comparison-table.php:180, ../premium/addons/ma-domain-checker/ma-domain-checker.php:114, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:492, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:536, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:554, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:649, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:721, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:734, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:747, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:799, ../premium/modules/animated-gradient/animated-gradient.php:40, ../premium/modules/display-conditions/display-conditions.php:208, ../premium/modules/display-conditions/display-conditions.php:223, ../premium/modules/floating-effects/floating-effects.php:37, ../premium/modules/rellax/rellax.php:49, ../premium/modules/reveal/reveal.php:83, ../premium/modules/tooltips/tooltips.php:53
 msgid "No"
 msgstr ""
 
@@ -314,7 +314,7 @@ msgstr ""
 msgid "Input Border"
 msgstr ""
 
-#: ../addons/contact-form-7/contact-form-7.php:29, ../addons/contact-form-7/contact-form-7.php:65, ../addons/contact-form-7/contact-form-7.php:882, ../inc/admin/jltma-elements/ma-forms.php:19
+#: ../addons/contact-form-7/contact-form-7.php:29, ../addons/contact-form-7/contact-form-7.php:65, ../addons/contact-form-7/contact-form-7.php:882
 msgid "Contact Form 7"
 msgstr ""
 
@@ -377,7 +377,7 @@ msgstr ""
 msgid "%1$s Watch Video Tutorial %2$s"
 msgstr ""
 
-#: ../addons/gravity-forms/gravity-forms.php:34, ../addons/gravity-forms/gravity-forms.php:66, ../inc/admin/jltma-elements/ma-forms.php:46
+#: ../addons/gravity-forms/gravity-forms.php:34, ../addons/gravity-forms/gravity-forms.php:66
 msgid "Gravity Forms"
 msgstr ""
 
@@ -441,7 +441,7 @@ msgstr ""
 msgid "Pagination"
 msgstr ""
 
-#: ../addons/gravity-forms/gravity-forms.php:1618, ../addons/ma-progressbar/ma-progressbar.php:69, ../inc/admin/jltma-elements/ma-elements.php:73
+#: ../addons/gravity-forms/gravity-forms.php:1618, ../addons/ma-progressbar/ma-progressbar.php:69
 msgid "Progress Bar"
 msgstr ""
 
@@ -493,7 +493,7 @@ msgstr ""
 msgid "Gravity Form"
 msgstr ""
 
-#: ../addons/ma-accordion/ma-accordion.php:31, ../inc/admin/jltma-elements/ma-elements.php:46
+#: ../addons/ma-accordion/ma-accordion.php:31
 msgid "Advanced Accordion"
 msgstr ""
 
@@ -717,7 +717,7 @@ msgstr ""
 msgid "No saved templates found!"
 msgstr ""
 
-#: ../addons/ma-advanced-image/ma-advanced-image.php:36, ../inc/admin/jltma-elements/ma-elements.php:352
+#: ../addons/ma-advanced-image/ma-advanced-image.php:36
 msgid "Advanced Image"
 msgstr ""
 
@@ -793,7 +793,7 @@ msgstr ""
 msgid "Ribbon Thickness"
 msgstr ""
 
-#: ../addons/ma-advanced-image/ma-advanced-image.php:247, ../addons/ma-data-table/ma-data-table.php:526, ../addons/ma-image-comparison/ma-image-comparison.php:182, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:373, ../addons/ma-image-scroll/ma-image-scroll.php:128, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:237, ../addons/ma-wc-product-table/ma-wc-product-table.php:330, ../class-master-elementor-addons.php:775, ../inc/traits/swiper-controls.php:39, ../inc/modules/mega-menu/inc/view/modal-body.php:15, ../premium/modules/tooltips/tooltips.php:62
+#: ../addons/ma-advanced-image/ma-advanced-image.php:247, ../addons/ma-data-table/ma-data-table.php:526, ../addons/ma-image-comparison/ma-image-comparison.php:182, ../addons/ma-image-filter-gallery/ma-image-filter-gallery.php:373, ../addons/ma-image-scroll/ma-image-scroll.php:128, ../addons/ma-wc-product-carousel/ma-wc-product-carousel.php:237, ../addons/ma-wc-product-table/ma-wc-product-table.php:330, ../class-master-elementor-addons.php:778, ../inc/traits/swiper-controls.php:39, ../inc/modules/mega-menu/inc/view/modal-body.php:15, ../premium/modules/tooltips/tooltips.php:62
 msgid "Settings"
 msgstr ""
 
@@ -865,7 +865,7 @@ msgstr ""
 msgid "Box Shadow"
 msgstr ""
 
-#: ../addons/ma-animated-headlines/ma-animated-headlines.php:29, ../inc/admin/jltma-elements/ma-elements.php:19
+#: ../addons/ma-animated-headlines/ma-animated-headlines.php:29
 msgid "Animated Headlines"
 msgstr ""
 
@@ -941,7 +941,7 @@ msgstr ""
 msgid "First Heading"
 msgstr ""
 
-#: ../addons/ma-animated-headlines/ma-animated-headlines.php:134, ../inc/admin/dashboard-settings.php:103, ../inc/admin/dashboard-settings.php:121, ../inc/classes/white-label.php:110, ../inc/classes/white-label.php:135, ../inc/classes/Notifications/Ask_For_Rating.php:25, ../inc/classes/Notifications/Subscribe.php:99, ../inc/classes/Notifications/What_We_Collect.php:76, ../inc/classes/Notifications/What_We_Collect.php:102, ../inc/templates/classes/config.php:29
+#: ../addons/ma-animated-headlines/ma-animated-headlines.php:134, ../inc/admin/dashboard-settings.php:103, ../inc/admin/dashboard-settings.php:121, ../inc/classes/white-label.php:110, ../inc/classes/Notifications/Ask_For_Rating.php:25, ../inc/classes/Notifications/Subscribe.php:99, ../inc/classes/Notifications/What_We_Collect.php:76, ../inc/classes/Notifications/What_We_Collect.php:102, ../inc/templates/classes/config.php:29
 msgid "Master Addons"
 msgstr ""
 
@@ -1416,7 +1416,7 @@ msgstr ""
 msgid "Icons"
 msgstr ""
 
-#: ../addons/ma-audio-playlist/ma-audio-playlist.php:2553, ../addons/ma-current-time/ma-current-time.php:33, ../inc/admin/jltma-elements/ma-elements.php:253
+#: ../addons/ma-audio-playlist/ma-audio-playlist.php:2553, ../addons/ma-current-time/ma-current-time.php:33
 msgid "Current Time"
 msgstr ""
 
@@ -1432,7 +1432,7 @@ msgstr ""
 msgid "Speed:"
 msgstr ""
 
-#: ../addons/ma-blockquote/ma-blockquote.php:26, ../addons/ma-blockquote/ma-blockquote.php:62, ../inc/admin/jltma-elements/ma-elements.php:298
+#: ../addons/ma-blockquote/ma-blockquote.php:26, ../addons/ma-blockquote/ma-blockquote.php:62
 msgid "Blockquote"
 msgstr ""
 
@@ -1580,7 +1580,7 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: ../addons/ma-blog/ma-blog.php:193, ../addons/ma-timeline/ma-timeline.php:402, ../addons/ma-timeline/ma-timeline.php:454, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:996, ../premium/addons/ma-news-ticker/ma-news-ticker.php:468, ../premium/modules/display-conditions/display-conditions.php:170
+#: ../addons/ma-blog/ma-blog.php:193, ../addons/ma-timeline/ma-timeline.php:402, ../addons/ma-timeline/ma-timeline.php:454, ../inc/modules/header-footer-comment/inc/comments/jltma-comments-addon.php:996, ../premium/addons/ma-news-ticker/ma-news-ticker.php:468, ../premium/modules/display-conditions/display-conditions.php:172
 msgid "Author"
 msgstr ""
 
@@ -1588,7 +1588,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: ../addons/ma-blog/ma-blog.php:196, ../addons/ma-timeline/ma-timeline.php:301, ../addons/ma-timeline/ma-timeline.php:405, ../addons/ma-timeline/ma-timeline.php:547, ../addons/ma-timeline/ma-timeline.php:557, ../addons/ma-timeline/ma-timeline.php:1464, ../addons/ma-wc-product-table/ma-wc-product-table.php:69, ../premium/addons/ma-news-ticker/ma-news-ticker.php:471, ../premium/modules/display-conditions/display-conditions.php:169
+#: ../addons/ma-blog/ma-blog.php:196, ../addons/ma-timeline/ma-timeline.php:301, ../addons/ma-timeline/ma-timeline.php:405, ../addons/ma-timeline/ma-timeline.php:547, ../addons/ma-timeline/ma-timeline.php:557, ../addons/ma-timeline/ma-timeline.php:1464, ../addons/ma-wc-product-table/ma-wc-product-table.php:69, ../premium/addons/ma-news-ticker/ma-news-ticker.php:471, ../premium/modules/display-conditions/display-conditions.php:171
 msgid "Date"
 msgstr ""
 
@@ -1628,7 +1628,7 @@ msgstr ""
 msgid "Post Meta Separator"
 msgstr ""
 
-#: ../addons/ma-blog/ma-blog.php:252, ../addons/ma-calendar/ma-calendar.php:190, ../premium/addons/ma-news-ticker/ma-news-ticker.php:404, ../premium/modules/display-conditions/display-conditions.php:160, ../premium/modules/display-conditions/display-conditions.php:168
+#: ../addons/ma-blog/ma-blog.php:252, ../addons/ma-calendar/ma-calendar.php:190, ../premium/addons/ma-news-ticker/ma-news-ticker.php:404, ../premium/modules/display-conditions/display-conditions.php:162, ../premium/modules/display-conditions/display-conditions.php:170
 msgid "Post Type"
 msgstr ""
 
@@ -2092,7 +2092,7 @@ msgstr ""
 msgid "Item Spacing"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:37, ../addons/ma-business-hours/ma-business-hours.php:1075, ../inc/admin/jltma-elements/ma-elements.php:190
+#: ../addons/ma-business-hours/ma-business-hours.php:37, ../addons/ma-business-hours/ma-business-hours.php:1075
 msgid "Business Hours"
 msgstr ""
 
@@ -2160,35 +2160,35 @@ msgstr ""
 msgid "Day Icon"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:240, ../addons/ma-business-hours/ma-business-hours.php:502, ../addons/ma-business-hours/ma-business-hours.php:1092, ../addons/ma-chatgpt/ma-chatgpt.php:122, ../premium/modules/display-conditions/display-conditions.php:521
+#: ../addons/ma-business-hours/ma-business-hours.php:240, ../addons/ma-business-hours/ma-business-hours.php:502, ../addons/ma-business-hours/ma-business-hours.php:1092, ../addons/ma-chatgpt/ma-chatgpt.php:122, ../premium/modules/display-conditions/display-conditions.php:523
 msgid "Day"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:244, ../addons/ma-business-hours/ma-business-hours.php:458, ../addons/ma-business-hours/ma-business-hours.php:598, ../addons/ma-calendar/ma-calendar.php:321, ../addons/ma-calendar/ma-calendar.php:559, ../inc/modules/content-protection/content-protection.php:1379, ../premium/modules/display-conditions/display-conditions.php:353
+#: ../addons/ma-business-hours/ma-business-hours.php:244, ../addons/ma-business-hours/ma-business-hours.php:458, ../addons/ma-business-hours/ma-business-hours.php:598, ../addons/ma-calendar/ma-calendar.php:321, ../addons/ma-calendar/ma-calendar.php:559, ../inc/modules/content-protection/content-protection.php:1379, ../premium/modules/display-conditions/display-conditions.php:355
 msgid "Sunday"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:245, ../addons/ma-business-hours/ma-business-hours.php:464, ../addons/ma-business-hours/ma-business-hours.php:604, ../addons/ma-calendar/ma-calendar.php:322, ../addons/ma-calendar/ma-calendar.php:499, ../inc/modules/content-protection/content-protection.php:1380, ../premium/modules/display-conditions/display-conditions.php:347
+#: ../addons/ma-business-hours/ma-business-hours.php:245, ../addons/ma-business-hours/ma-business-hours.php:464, ../addons/ma-business-hours/ma-business-hours.php:604, ../addons/ma-calendar/ma-calendar.php:322, ../addons/ma-calendar/ma-calendar.php:499, ../inc/modules/content-protection/content-protection.php:1380, ../premium/modules/display-conditions/display-conditions.php:349
 msgid "Monday"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:246, ../addons/ma-business-hours/ma-business-hours.php:467, ../addons/ma-business-hours/ma-business-hours.php:607, ../addons/ma-calendar/ma-calendar.php:323, ../addons/ma-calendar/ma-calendar.php:509, ../inc/modules/content-protection/content-protection.php:1381, ../premium/modules/display-conditions/display-conditions.php:348
+#: ../addons/ma-business-hours/ma-business-hours.php:246, ../addons/ma-business-hours/ma-business-hours.php:467, ../addons/ma-business-hours/ma-business-hours.php:607, ../addons/ma-calendar/ma-calendar.php:323, ../addons/ma-calendar/ma-calendar.php:509, ../inc/modules/content-protection/content-protection.php:1381, ../premium/modules/display-conditions/display-conditions.php:350
 msgid "Tuesday"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:247, ../addons/ma-business-hours/ma-business-hours.php:470, ../addons/ma-business-hours/ma-business-hours.php:610, ../addons/ma-calendar/ma-calendar.php:324, ../addons/ma-calendar/ma-calendar.php:519, ../inc/modules/content-protection/content-protection.php:1382, ../premium/modules/display-conditions/display-conditions.php:349
+#: ../addons/ma-business-hours/ma-business-hours.php:247, ../addons/ma-business-hours/ma-business-hours.php:470, ../addons/ma-business-hours/ma-business-hours.php:610, ../addons/ma-calendar/ma-calendar.php:324, ../addons/ma-calendar/ma-calendar.php:519, ../inc/modules/content-protection/content-protection.php:1382, ../premium/modules/display-conditions/display-conditions.php:351
 msgid "Wednesday"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:248, ../addons/ma-business-hours/ma-business-hours.php:473, ../addons/ma-business-hours/ma-business-hours.php:613, ../addons/ma-calendar/ma-calendar.php:325, ../addons/ma-calendar/ma-calendar.php:529, ../inc/modules/content-protection/content-protection.php:1383, ../premium/modules/display-conditions/display-conditions.php:350
+#: ../addons/ma-business-hours/ma-business-hours.php:248, ../addons/ma-business-hours/ma-business-hours.php:473, ../addons/ma-business-hours/ma-business-hours.php:613, ../addons/ma-calendar/ma-calendar.php:325, ../addons/ma-calendar/ma-calendar.php:529, ../inc/modules/content-protection/content-protection.php:1383, ../premium/modules/display-conditions/display-conditions.php:352
 msgid "Thursday"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:249, ../addons/ma-business-hours/ma-business-hours.php:476, ../addons/ma-business-hours/ma-business-hours.php:616, ../addons/ma-calendar/ma-calendar.php:326, ../addons/ma-calendar/ma-calendar.php:539, ../inc/modules/content-protection/content-protection.php:1384, ../premium/modules/display-conditions/display-conditions.php:351
+#: ../addons/ma-business-hours/ma-business-hours.php:249, ../addons/ma-business-hours/ma-business-hours.php:476, ../addons/ma-business-hours/ma-business-hours.php:616, ../addons/ma-calendar/ma-calendar.php:326, ../addons/ma-calendar/ma-calendar.php:539, ../inc/modules/content-protection/content-protection.php:1384, ../premium/modules/display-conditions/display-conditions.php:353
 msgid "Friday"
 msgstr ""
 
-#: ../addons/ma-business-hours/ma-business-hours.php:250, ../addons/ma-business-hours/ma-business-hours.php:479, ../addons/ma-business-hours/ma-business-hours.php:619, ../addons/ma-calendar/ma-calendar.php:327, ../addons/ma-calendar/ma-calendar.php:549, ../inc/modules/content-protection/content-protection.php:1378, ../premium/modules/display-conditions/display-conditions.php:352
+#: ../addons/ma-business-hours/ma-business-hours.php:250, ../addons/ma-business-hours/ma-business-hours.php:479, ../addons/ma-business-hours/ma-business-hours.php:619, ../addons/ma-calendar/ma-calendar.php:327, ../addons/ma-calendar/ma-calendar.php:549, ../inc/modules/content-protection/content-protection.php:1378, ../premium/modules/display-conditions/display-conditions.php:354
 msgid "Saturday"
 msgstr ""
 
@@ -2695,7 +2695,7 @@ msgstr ""
 msgid "You have no events in your calendar. Check the settings and make sure the source fields for the dates of the events are setup correctly."
 msgstr ""
 
-#: ../addons/ma-call-to-action/ma-call-to-action.php:34, ../inc/admin/jltma-elements/ma-elements.php:28
+#: ../addons/ma-call-to-action/ma-call-to-action.php:34
 msgid "Call to Action"
 msgstr ""
 
@@ -2983,7 +2983,7 @@ msgstr ""
 msgid "Line Highlight"
 msgstr ""
 
-#: ../addons/ma-countdown-timer/ma-countdown-timer.php:34, ../inc/admin/jltma-elements/ma-elements.php:316
+#: ../addons/ma-countdown-timer/ma-countdown-timer.php:34
 msgid "Countdown Timer"
 msgstr ""
 
@@ -3067,7 +3067,7 @@ msgstr ""
 msgid "0"
 msgstr ""
 
-#: ../addons/ma-counter-up/ma-counter-up.php:35, ../inc/admin/jltma-elements/ma-elements.php:307
+#: ../addons/ma-counter-up/ma-counter-up.php:35
 msgid "Counter Up"
 msgstr ""
 
@@ -3323,7 +3323,7 @@ msgstr ""
 msgid "Icon Position"
 msgstr ""
 
-#: ../addons/ma-creative-buttons/ma-creative-buttons.php:270, ../addons/ma-dropdown-button/ma-dropdown-button.php:203, ../addons/ma-dropdown-button/ma-dropdown-button.php:252, ../addons/ma-image-comparison/ma-image-comparison.php:98, ../addons/ma-image-comparison/ma-image-comparison.php:117, ../addons/ma-image-comparison/ma-image-comparison.php:708, ../addons/ma-post-pagination/ma-post-pagination.php:320, ../premium/addons/ma-toggle-content/ma-toggle-content.php:163, ../premium/addons/ma-toggle-content/ma-toggle-content.php:320, ../premium/modules/display-conditions/display-conditions.php:324, ../premium/modules/display-conditions/display-conditions.php:342
+#: ../addons/ma-creative-buttons/ma-creative-buttons.php:270, ../addons/ma-dropdown-button/ma-dropdown-button.php:203, ../addons/ma-dropdown-button/ma-dropdown-button.php:252, ../addons/ma-image-comparison/ma-image-comparison.php:98, ../addons/ma-image-comparison/ma-image-comparison.php:117, ../addons/ma-image-comparison/ma-image-comparison.php:708, ../addons/ma-post-pagination/ma-post-pagination.php:320, ../premium/addons/ma-toggle-content/ma-toggle-content.php:163, ../premium/addons/ma-toggle-content/ma-toggle-content.php:320, ../premium/modules/display-conditions/display-conditions.php:326, ../premium/modules/display-conditions/display-conditions.php:344
 msgid "Before"
 msgstr ""
 
@@ -3351,7 +3351,7 @@ msgstr ""
 msgid "Before Border Color"
 msgstr ""
 
-#: ../addons/ma-creative-links/ma-creative-links.php:33, ../inc/admin/jltma-elements/ma-elements.php:145
+#: ../addons/ma-creative-links/ma-creative-links.php:33
 msgid "Creative Links"
 msgstr ""
 
@@ -4035,7 +4035,7 @@ msgstr ""
 msgid "Divider Text Color"
 msgstr ""
 
-#: ../addons/ma-dual-heading/ma-dual-heading.php:29, ../inc/admin/jltma-elements/ma-elements.php:37
+#: ../addons/ma-dual-heading/ma-dual-heading.php:29
 msgid "Dual Heading"
 msgstr ""
 
@@ -4079,7 +4079,7 @@ msgstr ""
 msgid "Heading Tag"
 msgstr ""
 
-#: ../addons/ma-flipbox/ma-flipbox.php:38, ../inc/admin/jltma-elements/ma-elements.php:136
+#: ../addons/ma-flipbox/ma-flipbox.php:38
 msgid "Flipbox"
 msgstr ""
 
@@ -4367,7 +4367,7 @@ msgstr ""
 msgid "Back Box Background"
 msgstr ""
 
-#: ../addons/ma-gradient-headline/ma-gradient-headline.php:26, ../inc/admin/jltma-elements/ma-elements.php:343
+#: ../addons/ma-gradient-headline/ma-gradient-headline.php:26
 msgid "Gradient Headline"
 msgstr ""
 
@@ -4517,7 +4517,7 @@ msgstr ""
 msgid "Luminosity"
 msgstr ""
 
-#: ../addons/ma-image-carousel/ma-image-carousel.php:51, ../inc/admin/jltma-elements/ma-elements.php:370
+#: ../addons/ma-image-carousel/ma-image-carousel.php:51
 msgid "Image Carousel"
 msgstr ""
 
@@ -4541,7 +4541,7 @@ msgstr ""
 msgid "Fancybox"
 msgstr ""
 
-#: ../addons/ma-image-carousel/ma-image-carousel.php:166, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:591, ../class-master-elementor-addons.php:959
+#: ../addons/ma-image-carousel/ma-image-carousel.php:166, ../addons/ma-image-hover-effects/ma-image-hover-effects.php:591, ../class-master-elementor-addons.php:957
 msgid "Elementor"
 msgstr ""
 
@@ -4589,7 +4589,7 @@ msgstr ""
 msgid "Caption Subtitle"
 msgstr ""
 
-#: ../addons/ma-image-comparison/ma-image-comparison.php:37, ../inc/admin/jltma-elements/ma-elements.php:235
+#: ../addons/ma-image-comparison/ma-image-comparison.php:37
 msgid "Image Comparison"
 msgstr ""
 
@@ -4965,7 +4965,7 @@ msgstr ""
 msgid "Button Two Style"
 msgstr ""
 
-#: ../addons/ma-image-hover-effects/ma-image-hover-effects.php:44, ../inc/admin/jltma-elements/ma-elements.php:154
+#: ../addons/ma-image-hover-effects/ma-image-hover-effects.php:44
 msgid "Image Hover Effects"
 msgstr ""
 
@@ -5497,7 +5497,7 @@ msgstr ""
 msgid "Icon Hover Color"
 msgstr ""
 
-#: ../addons/ma-logo-slider/ma-logo-slider.php:39, ../inc/admin/jltma-elements/ma-elements.php:379
+#: ../addons/ma-logo-slider/ma-logo-slider.php:39
 msgid "Logo Slider"
 msgstr ""
 
@@ -5585,7 +5585,7 @@ msgstr ""
 msgid "Font Size"
 msgstr ""
 
-#: ../addons/ma-mailchimp/ma-mailchimp.php:30, ../inc/admin/jltma-elements/ma-marketing.php:22
+#: ../addons/ma-mailchimp/ma-mailchimp.php:30
 msgid "Mailchimp"
 msgstr ""
 
@@ -6252,7 +6252,7 @@ msgstr ""
 msgid "Pagination: Numbers"
 msgstr ""
 
-#: ../addons/ma-pricing-table/ma-pricing-table.php:45, ../inc/admin/jltma-elements/ma-elements.php:226
+#: ../addons/ma-pricing-table/ma-pricing-table.php:45
 msgid "Pricing Table"
 msgstr ""
 
@@ -6433,7 +6433,7 @@ msgstr ""
 msgid "Show Icon"
 msgstr ""
 
-#: ../addons/ma-pricing-table/ma-pricing-table.php:474, ../addons/ma-quick-contact/ma-quick-contact.php:956, ../addons/ma-tooltip/ma-tooltip.php:31, ../inc/traits/swiper-controls.php:28, ../inc/admin/jltma-elements/ma-elements.php:64, ../premium/modules/tooltips/tooltips.php:50
+#: ../addons/ma-pricing-table/ma-pricing-table.php:474, ../addons/ma-quick-contact/ma-quick-contact.php:956, ../addons/ma-tooltip/ma-tooltip.php:31, ../inc/traits/swiper-controls.php:28, ../premium/modules/tooltips/tooltips.php:50
 msgid "Tooltip"
 msgstr ""
 
@@ -6781,7 +6781,7 @@ msgstr ""
 msgid "small"
 msgstr ""
 
-#: ../addons/ma-search/ma-search.php:39, ../addons/ma-search/ma-search.php:806, ../inc/admin/jltma-elements/ma-elements.php:289, ../premium/modules/display-conditions/display-conditions.php:171
+#: ../addons/ma-search/ma-search.php:39, ../addons/ma-search/ma-search.php:806, ../premium/modules/display-conditions/display-conditions.php:173
 msgid "Search"
 msgstr ""
 
@@ -7397,7 +7397,7 @@ msgstr ""
 msgid "Minimum Width"
 msgstr ""
 
-#: ../addons/ma-table/ma-table.php:46, ../inc/admin/jltma-elements/ma-elements.php:271
+#: ../addons/ma-table/ma-table.php:46
 msgid "Dynamic Table"
 msgstr ""
 
@@ -7537,7 +7537,7 @@ msgstr ""
 msgid "Table Header Style"
 msgstr ""
 
-#: ../addons/ma-table-of-contents/ma-table-of-contents.php:41, ../addons/ma-table-of-contents/ma-table-of-contents.php:85, ../addons/ma-table-of-contents/ma-table-of-contents.php:93, ../inc/admin/jltma-elements/ma-elements.php:199
+#: ../addons/ma-table-of-contents/ma-table-of-contents.php:41, ../addons/ma-table-of-contents/ma-table-of-contents.php:85, ../addons/ma-table-of-contents/ma-table-of-contents.php:93
 msgid "Table of Contents"
 msgstr ""
 
@@ -7826,7 +7826,7 @@ msgstr ""
 msgid "Tab Effect"
 msgstr ""
 
-#: ../addons/ma-tabs/ma-tabs.php:566, ../inc/admin/jltma-elements/ma-elements.php:55
+#: ../addons/ma-tabs/ma-tabs.php:566
 msgid "Tabs"
 msgstr ""
 
@@ -7842,7 +7842,7 @@ msgstr ""
 msgid "Content Typography"
 msgstr ""
 
-#: ../addons/ma-team-members/ma-team-members.php:30, ../inc/admin/jltma-elements/ma-elements.php:91
+#: ../addons/ma-team-members/ma-team-members.php:30
 msgid "Team Member"
 msgstr ""
 
@@ -7966,7 +7966,7 @@ msgstr ""
 msgid "Hover BG Color 2"
 msgstr ""
 
-#: ../addons/ma-team-members-slider/ma-team-members-slider.php:31, ../inc/admin/jltma-elements/ma-elements.php:100
+#: ../addons/ma-team-members-slider/ma-team-members-slider.php:31
 msgid "Team Slider"
 msgstr ""
 
@@ -8122,7 +8122,7 @@ msgstr ""
 msgid "Member Image Position(Top)"
 msgstr ""
 
-#: ../addons/ma-timeline/ma-timeline.php:51, ../addons/ma-timeline/ma-timeline.php:104, ../inc/admin/jltma-elements/ma-elements.php:181
+#: ../addons/ma-timeline/ma-timeline.php:51, ../addons/ma-timeline/ma-timeline.php:104
 msgid "Timeline"
 msgstr ""
 
@@ -9186,7 +9186,7 @@ msgstr ""
 msgid "Required Fields Notice"
 msgstr ""
 
-#: ../addons/weforms/weforms.php:36, ../inc/admin/jltma-elements/ma-forms.php:64
+#: ../addons/weforms/weforms.php:36
 msgid "weForms"
 msgstr ""
 
@@ -9266,50 +9266,50 @@ msgstr ""
 msgid "Floating Label"
 msgstr ""
 
-#: ../addons/wpforms/wpforms.php:1358, ../inc/admin/jltma-elements/ma-forms.php:37
+#: ../addons/wpforms/wpforms.php:1358
 msgid "WP Forms"
 msgstr ""
 
-#: ../class-master-elementor-addons.php:121
+#: ../class-master-elementor-addons.php:122
 msgid "Support"
 msgstr ""
 
-#: ../class-master-elementor-addons.php:342
+#: ../class-master-elementor-addons.php:345
 msgid "Master Addonsss"
 msgstr ""
 
 #. translators: 1: strong start tag, 2: strong end tag.
-#: ../class-master-elementor-addons.php:938
+#: ../class-master-elementor-addons.php:936
 msgid "<b>Master Addons</b> requires %1$s\"Elementor\"%2$s plugin to be installed and activated. Please install Elementor to continue."
 msgstr ""
 
-#: ../class-master-elementor-addons.php:939
+#: ../class-master-elementor-addons.php:937
 msgid "Install Elementor"
 msgstr ""
 
-#: ../class-master-elementor-addons.php:930
+#: ../class-master-elementor-addons.php:928
 msgid "<b>Master Addons</b> requires <strong>Elementor</strong> plugin to be active. Please activate Elementor to continue."
 msgstr ""
 
-#: ../class-master-elementor-addons.php:931
+#: ../class-master-elementor-addons.php:929
 msgid "Activate Elementor"
 msgstr ""
 
 #. translators: 1: Plugin name 2: Elementor 3: Required Elementor version
-#: ../class-master-elementor-addons.php:957
+#: ../class-master-elementor-addons.php:955
 msgid "\"%1$s\" requires \"%2$s\" version %3$s or greater. "
 msgstr ""
 
-#: ../class-master-elementor-addons.php:958, ../class-master-elementor-addons.php:974, ../inc/admin/dashboard-settings.php:120
+#: ../class-master-elementor-addons.php:956, ../class-master-elementor-addons.php:972, ../inc/admin/dashboard-settings.php:120
 msgid "Master Addons for Elementor"
 msgstr ""
 
 #. translators: 1: Plugin name 2: PHP 3: Required PHP version
-#: ../class-master-elementor-addons.php:973
+#: ../class-master-elementor-addons.php:971
 msgid "\"%1$s\" requires \"%2$s\" version %3$s or greater."
 msgstr ""
 
-#: ../class-master-elementor-addons.php:975, ../premium/addons/ma-source-code/ma-source-code.php:443
+#: ../class-master-elementor-addons.php:973, ../premium/addons/ma-source-code/ma-source-code.php:443
 msgid "PHP"
 msgstr ""
 
@@ -9318,15 +9318,15 @@ msgstr ""
 msgid "Hey %1$s,<br> Please help us improve %2$s! If you opt-in, some data about your usage of %2$s will be sent to %3$s. If you skip this, that's okay! %2$s will still work just fine."
 msgstr ""
 
-#: ../inc/admin/dashboard-settings.php:198
+#: ../inc/admin/dashboard-settings.php:219
 msgid "Are you sure you want to reinstall version ?"
 msgstr ""
 
-#: ../inc/admin/dashboard-settings.php:199, ../inc/classes/rollback.php:58, ../inc/admin/welcome/version-control.php:11
+#: ../inc/admin/dashboard-settings.php:220, ../inc/classes/rollback.php:58, ../inc/admin/welcome/version-control.php:11
 msgid "Rollback to Previous Version"
 msgstr ""
 
-#: ../inc/admin/dashboard-settings.php:201
+#: ../inc/admin/dashboard-settings.php:222
 msgid "Cancel"
 msgstr ""
 
@@ -9873,7 +9873,7 @@ msgstr ""
 msgid "No taxonomies found"
 msgstr ""
 
-#: ../inc/classes/helper-class.php:1369, ../premium/modules/display-conditions/display-conditions.php:158
+#: ../inc/classes/helper-class.php:1369, ../premium/modules/display-conditions/display-conditions.php:160
 msgid "Post"
 msgstr ""
 
@@ -10157,7 +10157,7 @@ msgstr ""
 msgid "Section"
 msgstr ""
 
-#: ../inc/classes/template-controls.php:84, ../premium/modules/display-conditions/display-conditions.php:157
+#: ../inc/classes/template-controls.php:84, ../premium/modules/display-conditions/display-conditions.php:159
 msgid "Page"
 msgstr ""
 
@@ -10179,7 +10179,7 @@ msgstr ""
 msgid "No template selected."
 msgstr ""
 
-#: ../inc/classes/utils.php:37, ../inc/admin/jltma-elements/ma-elements.php:163
+#: ../inc/classes/utils.php:37
 msgid "Blog"
 msgstr ""
 
@@ -10452,206 +10452,6 @@ msgstr ""
 msgid "Unlock more possibilities"
 msgstr ""
 
-#: ../inc/admin/jltma-elements/ma-elements.php:15, ../inc/admin/welcome/addons-elements.php:32
-msgid "Content Elements"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:82
-msgid "Progress Bars"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:109
-msgid "Creative Button"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:118
-msgid "Changelogs"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:127
-msgid "Infobox"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:172, ../premium/addons/ma-news-ticker/ma-news-ticker.php:39
-msgid "News Ticker"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:208, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:45
-msgid "Image Hotspot"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:217
-msgid "Filterable Image Gallery"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:244, ../premium/addons/ma-restrict-content/ma-restrict-content.php:38, ../premium/addons/ma-restrict-content/ma-restrict-content.php:279, ../premium/addons/ma-restrict-content/ma-restrict-content.php:675
-msgid "Restrict Content"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:262
-msgid "Domain Search"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:280
-msgid "Nav Menu"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:325, ../premium/addons/ma-toggle-content/ma-toggle-content.php:45, ../premium/addons/ma-toggle-content/ma-toggle-content.php:102
-msgid "Toggle Content"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:334, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:41
-msgid "Gallery Slider"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-elements.php:361, ../premium/addons/ma-source-code/ma-source-code.php:25, ../premium/addons/ma-source-code/ma-source-code.php:162, ../premium/addons/ma-source-code/ma-source-code.php:199
-msgid "Source Code"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:15, ../inc/admin/jltma-elements/ma-third-party-plugins.php:15, ../inc/admin/welcome/extensions.php:53, ../inc/admin/welcome/navigation.php:23
-msgid "Extensions"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:19
-msgid "Particles"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:28
-msgid "Animated Gradient BG"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:37
-msgid "Reading Progress Bar"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:46
-msgid "Background Slider"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:55, ../inc/modules/custom-css/custom-css.php:60
-msgid "Custom CSS"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:64
-msgid "Custom JS"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:73
-msgid "Positioning"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:82
-msgid "Container Extras"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:91
-msgid "Mega Menu"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:100
-msgid "Entrance Animation"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:109
-msgid "Transforms"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:118
-msgid "Rellax"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:127
-msgid "Reveal"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:136
-msgid "Header,Footer,Comment Form"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:145, ../inc/modules/header-footer-comment/inc/view/modal-body.php:52, ../premium/modules/display-conditions/display-conditions.php:202
-msgid "Display Conditions"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:154
-msgid "Dynamic Tags"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:163, ../premium/modules/floating-effects/floating-effects.php:33
-msgid "Floating Effects"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:172, ../inc/modules/wrapper-link/wrapper-link.php:47
-msgid "Wrapper Link"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:181
-msgid "Post/Page Duplicator"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:190
-msgid "Glassmorphism"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:199
-msgid "Icons Extended"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-extensions.php:208, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:455, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:555, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:1050
-msgid "Tooltips"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-forms.php:15
-msgid "Form Elements"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-forms.php:28
-msgid "Ninja Form"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-icons-library.php:15, ../inc/admin/welcome/icons-library.php:53, ../inc/admin/welcome/navigation.php:31
-msgid "Icons Library"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-icons-library.php:19, ../inc/modules/icons-extended/icons-extended.php:49
-msgid "Simple Line Icons"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-icons-library.php:27, ../inc/modules/icons-extended/icons-extended.php:38
-msgid "Elementor Icons"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-icons-library.php:35
-msgid "Ionic Font"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-icons-library.php:44, ../inc/modules/icons-extended/icons-extended.php:75
-msgid "Linear Icons"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-icons-library.php:53, ../inc/modules/icons-extended/icons-extended.php:88
-msgid "Material Icons"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-marketing.php:17
-msgid "Marketing Elements"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-marketing.php:31, ../premium/addons/ma-comparison-table/ma-comparison-table.php:33
-msgid "Comparison Table"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-marketing.php:40, ../premium/addons/ma-featured-product/ma-featured-product.php:34
-msgid "Featured Product"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-third-party-plugins.php:20
-msgid "Custom Breakpoints"
-msgstr ""
-
-#: ../inc/admin/jltma-elements/ma-third-party-plugins.php:28
-msgid "WP Adminify"
-msgstr ""
-
 #: ../inc/admin/welcome/addons-elements.php:16, ../inc/admin/welcome/extensions.php:36, ../inc/admin/welcome/icons-library.php:35
 msgid "Enable All"
 msgstr ""
@@ -10662,6 +10462,10 @@ msgstr ""
 
 #: ../inc/admin/welcome/addons-elements.php:25, ../inc/admin/welcome/api-keys.php:6, ../inc/admin/welcome/extensions.php:45, ../inc/admin/welcome/icons-library.php:44, ../inc/admin/welcome/white-label.php:17, ../inc/modules/header-footer-comment/inc/view/modal-body.php:138
 msgid "Save Settings"
+msgstr ""
+
+#: ../inc/admin/welcome/addons-elements.php:32
+msgid "Content Elements"
 msgstr ""
 
 #: ../inc/admin/welcome/addons-forms.php:14
@@ -10716,6 +10520,14 @@ msgstr ""
 #. translators: %s: Twitter Url
 #: ../inc/admin/welcome/api-keys.php:90
 msgid "Go to <a href=\"%1$s\" target=\"_blank\"> https://developer.twitter.com/en/apps/create</a> for creating your Consumer key and Access Token."
+msgstr ""
+
+#: ../inc/admin/welcome/extensions.php:53, ../inc/admin/welcome/navigation.php:23
+msgid "Extensions"
+msgstr ""
+
+#: ../inc/admin/welcome/icons-library.php:53, ../inc/admin/welcome/navigation.php:31
+msgid "Icons Library"
 msgstr ""
 
 #: ../inc/admin/welcome/navigation.php:7
@@ -11827,6 +11639,10 @@ msgstr ""
 msgid " Custom CSS"
 msgstr ""
 
+#: ../inc/modules/custom-css/custom-css.php:60
+msgid "Custom CSS"
+msgstr ""
+
 #: ../inc/modules/custom-css/custom-css.php:78
 msgid "Use \"selector\" keyword to target wrapper element."
 msgstr ""
@@ -11907,8 +11723,24 @@ msgstr ""
 msgid "Z-index"
 msgstr ""
 
+#: ../inc/modules/icons-extended/icons-extended.php:38
+msgid "Elementor Icons"
+msgstr ""
+
+#: ../inc/modules/icons-extended/icons-extended.php:49
+msgid "Simple Line Icons"
+msgstr ""
+
 #: ../inc/modules/icons-extended/icons-extended.php:62
 msgid "Iconic Font Icons"
+msgstr ""
+
+#: ../inc/modules/icons-extended/icons-extended.php:75
+msgid "Linear Icons"
+msgstr ""
+
+#: ../inc/modules/icons-extended/icons-extended.php:88
+msgid "Material Icons"
 msgstr ""
 
 #: ../inc/modules/magic-copy/ajax.php:40
@@ -12308,6 +12140,10 @@ msgstr ""
 msgid "Hide block when parent is sticky."
 msgstr ""
 
+#: ../inc/modules/wrapper-link/wrapper-link.php:47
+msgid "Wrapper Link"
+msgstr ""
+
 #: ../inc/templates/classes/config.php:114
 msgid "Activate License"
 msgstr ""
@@ -12592,7 +12428,7 @@ msgstr ""
 msgid "Post Terms"
 msgstr ""
 
-#: ../inc/modules/dynamic-tags/inc/post-terms.php:70, ../premium/modules/display-conditions/display-conditions.php:166
+#: ../inc/modules/dynamic-tags/inc/post-terms.php:70, ../premium/modules/display-conditions/display-conditions.php:168
 msgid "Taxonomy"
 msgstr ""
 
@@ -12648,7 +12484,7 @@ msgstr ""
 msgid "User Meta"
 msgstr ""
 
-#: ../inc/modules/header-footer-comment/inc/cpt-hooks.php:38, ../premium/modules/display-conditions/display-conditions.php:581
+#: ../inc/modules/header-footer-comment/inc/cpt-hooks.php:38, ../premium/modules/display-conditions/display-conditions.php:583
 msgid "Conditions"
 msgstr ""
 
@@ -13253,6 +13089,10 @@ msgstr ""
 msgid "Template Title here"
 msgstr ""
 
+#: ../inc/modules/header-footer-comment/inc/view/modal-body.php:52, ../premium/modules/display-conditions/display-conditions.php:204
+msgid "Display Conditions"
+msgstr ""
+
 #: ../inc/modules/header-footer-comment/inc/view/modal-body.php:59
 msgid "Entire Site"
 msgstr ""
@@ -13269,7 +13109,7 @@ msgstr ""
 msgid "Singular"
 msgstr ""
 
-#: ../inc/modules/header-footer-comment/inc/view/modal-body.php:67, ../premium/modules/display-conditions/display-conditions.php:164
+#: ../inc/modules/header-footer-comment/inc/view/modal-body.php:67, ../premium/modules/display-conditions/display-conditions.php:166
 msgid "Archive"
 msgstr ""
 
@@ -13293,7 +13133,7 @@ msgstr ""
 msgid "Selective Singular"
 msgstr ""
 
-#: ../inc/modules/header-footer-comment/inc/view/modal-body.php:91, ../premium/modules/display-conditions/display-conditions.php:437
+#: ../inc/modules/header-footer-comment/inc/view/modal-body.php:91, ../premium/modules/display-conditions/display-conditions.php:439
 msgid "404 Page"
 msgstr ""
 
@@ -13431,6 +13271,10 @@ msgstr ""
 
 #: ../lib/Recommended.php:434
 msgid "Install success"
+msgstr ""
+
+#: ../premium/addons/ma-comparison-table/ma-comparison-table.php:33
+msgid "Comparison Table"
 msgstr ""
 
 #: ../premium/addons/ma-comparison-table/ma-comparison-table.php:70, ../premium/addons/ma-featured-product/ma-featured-product.php:73, ../premium/addons/ma-product-listing/ma-product-listing.php:78, ../premium/addons/ma-pros-and-cons/ma-pros-and-cons.php:73
@@ -13606,6 +13450,10 @@ msgstr ""
 msgid "Loader"
 msgstr ""
 
+#: ../premium/addons/ma-featured-product/ma-featured-product.php:34
+msgid "Featured Product"
+msgstr ""
+
 #: ../premium/addons/ma-featured-product/ma-featured-product.php:76, ../premium/addons/ma-product-listing/ma-product-listing.php:81
 msgid "Design 1"
 msgstr ""
@@ -13684,6 +13532,10 @@ msgstr ""
 
 #: ../premium/addons/ma-featured-product/ma-featured-product.php:990
 msgid "Ribbon Size"
+msgstr ""
+
+#: ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:41
+msgid "Gallery Slider"
 msgstr ""
 
 #: ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:130, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:139, ../premium/addons/ma-gallery-slider/ma-gallery-slider.php:1990
@@ -13915,6 +13767,10 @@ msgstr ""
 msgid "Please check blend mode support for your browser %1$s here %2$s"
 msgstr ""
 
+#: ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:45
+msgid "Image Hotspot"
+msgstr ""
+
 #: ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:164, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:484, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:782
 msgid "Hotspots"
 msgstr ""
@@ -13943,6 +13799,10 @@ msgstr ""
 msgid "Vertical position (%)"
 msgstr ""
 
+#: ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:455, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:555, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:1050
+msgid "Tooltips"
+msgstr ""
+
 #: ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:463
 msgid "Show to"
 msgstr ""
@@ -13965,6 +13825,10 @@ msgstr ""
 
 #: ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:925, ../premium/addons/ma-image-hotspot/ma-image-hotspot.php:1020
 msgid "Text Border"
+msgstr ""
+
+#: ../premium/addons/ma-news-ticker/ma-news-ticker.php:39
+msgid "News Ticker"
 msgstr ""
 
 #: ../premium/addons/ma-news-ticker/ma-news-ticker.php:77
@@ -14460,6 +14324,10 @@ msgstr ""
 msgid "Arrow Size"
 msgstr ""
 
+#: ../premium/addons/ma-restrict-content/ma-restrict-content.php:38, ../premium/addons/ma-restrict-content/ma-restrict-content.php:279, ../premium/addons/ma-restrict-content/ma-restrict-content.php:675
+msgid "Restrict Content"
+msgstr ""
+
 #: ../premium/addons/ma-restrict-content/ma-restrict-content.php:94, ../premium/addons/ma-restrict-content/ma-restrict-content.php:102, ../premium/addons/ma-restrict-content/ma-restrict-content.php:118
 msgid "Restrict Type"
 msgstr ""
@@ -14678,6 +14546,10 @@ msgstr ""
 
 #: ../premium/addons/ma-restrict-content/ma-restrict-content.php:1809
 msgid "Ops, You entered wrong password!"
+msgstr ""
+
+#: ../premium/addons/ma-source-code/ma-source-code.php:25, ../premium/addons/ma-source-code/ma-source-code.php:162, ../premium/addons/ma-source-code/ma-source-code.php:199
+msgid "Source Code"
 msgstr ""
 
 #: ../premium/addons/ma-source-code/ma-source-code.php:184
@@ -15048,6 +14920,10 @@ msgstr ""
 msgid "YAML"
 msgstr ""
 
+#: ../premium/addons/ma-toggle-content/ma-toggle-content.php:45, ../premium/addons/ma-toggle-content/ma-toggle-content.php:102
+msgid "Toggle Content"
+msgstr ""
+
 #: ../premium/addons/ma-toggle-content/ma-toggle-content.php:200
 msgid "Template"
 msgstr ""
@@ -15148,197 +15024,201 @@ msgstr ""
 msgid "Add Color"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:112
+#: ../premium/modules/display-conditions/display-conditions.php:114
 msgid "This widget is displayed conditionally."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:123
+#: ../premium/modules/display-conditions/display-conditions.php:125
 msgid " Display Conditions"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:138
+#: ../premium/modules/display-conditions/display-conditions.php:140
 msgid "Visitor"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:140
+#: ../premium/modules/display-conditions/display-conditions.php:142
 msgid "Login Status"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:141
+#: ../premium/modules/display-conditions/display-conditions.php:143
 msgid "User Role"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:142
+#: ../premium/modules/display-conditions/display-conditions.php:144
 msgid "Operating System"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:143
+#: ../premium/modules/display-conditions/display-conditions.php:145
 msgid "Browser"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:147
+#: ../premium/modules/display-conditions/display-conditions.php:149
 msgid "Date & Time"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:149
+#: ../premium/modules/display-conditions/display-conditions.php:151
 msgid "Date Range"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:150
+#: ../premium/modules/display-conditions/display-conditions.php:152
 msgid "Time of Day"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:151
+#: ../premium/modules/display-conditions/display-conditions.php:153
 msgid "Day of Week"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:155
+#: ../premium/modules/display-conditions/display-conditions.php:157
 msgid "Single"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:159
+#: ../premium/modules/display-conditions/display-conditions.php:161
 msgid "Static Page"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:167
+#: ../premium/modules/display-conditions/display-conditions.php:169
 msgid "Term"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:179
+#: ../premium/modules/display-conditions/display-conditions.php:181
 msgid "Easy Digital Downloads"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:181
+#: ../premium/modules/display-conditions/display-conditions.php:183
 msgid "Cart"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:216
+#: ../premium/modules/display-conditions/display-conditions.php:218
 msgid "Output HTML"
 msgstr ""
 
 #. translators: %s: Element Type.
-#: ../premium/modules/display-conditions/display-conditions.php:217
+#: ../premium/modules/display-conditions/display-conditions.php:219
 msgid "If enabled, the HTML code will exist on the page but the %s will be hidden using CSS."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:235
+#: ../premium/modules/display-conditions/display-conditions.php:237
 msgid "Display on"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:239
+#: ../premium/modules/display-conditions/display-conditions.php:241
 msgid "All conditions met"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:240
+#: ../premium/modules/display-conditions/display-conditions.php:242
 msgid "Any condition met"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:269
+#: ../premium/modules/display-conditions/display-conditions.php:271
 msgid "Is"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:270
+#: ../premium/modules/display-conditions/display-conditions.php:272
 msgid "Is not"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:282
+#: ../premium/modules/display-conditions/display-conditions.php:284
 msgid "Logged in"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:294
+#: ../premium/modules/display-conditions/display-conditions.php:296
 msgid "Warning: This condition applies only to logged in visitors."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:307
+#: ../premium/modules/display-conditions/display-conditions.php:309
 msgid "In interval"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:344, ../premium/modules/display-conditions/display-conditions.php:398, ../premium/modules/display-conditions/display-conditions.php:415, ../premium/modules/display-conditions/display-conditions.php:450, ../premium/modules/display-conditions/display-conditions.php:466, ../premium/modules/display-conditions/display-conditions.php:500, ../premium/modules/display-conditions/display-conditions.php:516, ../premium/modules/display-conditions/display-conditions.php:536
+#: ../premium/modules/display-conditions/display-conditions.php:346, ../premium/modules/display-conditions/display-conditions.php:400, ../premium/modules/display-conditions/display-conditions.php:417, ../premium/modules/display-conditions/display-conditions.php:452, ../premium/modules/display-conditions/display-conditions.php:468, ../premium/modules/display-conditions/display-conditions.php:502, ../premium/modules/display-conditions/display-conditions.php:518, ../premium/modules/display-conditions/display-conditions.php:538
 msgid "Any"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:399
+#: ../premium/modules/display-conditions/display-conditions.php:401
 msgid "Leave blank for any page."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:416
+#: ../premium/modules/display-conditions/display-conditions.php:418
 msgid "Leave blank for any post."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:434
+#: ../premium/modules/display-conditions/display-conditions.php:436
 msgid "Default Homepage"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:435
+#: ../premium/modules/display-conditions/display-conditions.php:437
 msgid "Static Homepage"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:436
+#: ../premium/modules/display-conditions/display-conditions.php:438
 msgid "Blog Page"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:451, ../premium/modules/display-conditions/display-conditions.php:501
+#: ../premium/modules/display-conditions/display-conditions.php:453, ../premium/modules/display-conditions/display-conditions.php:503
 msgid "Leave blank or select all for any post type."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:467
+#: ../premium/modules/display-conditions/display-conditions.php:469
 msgid "Leave blank or select all for any taxonomy archive."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:481
+#: ../premium/modules/display-conditions/display-conditions.php:483
 msgid "Leave blank or select all for any term archive."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:517
+#: ../premium/modules/display-conditions/display-conditions.php:519
 msgid "Leave blank or select all for any date based archive."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:522
+#: ../premium/modules/display-conditions/display-conditions.php:524
 msgid "Month"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:523
+#: ../premium/modules/display-conditions/display-conditions.php:525
 msgid "Year"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:537
+#: ../premium/modules/display-conditions/display-conditions.php:539
 msgid "Leave blank for all authors."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:552
+#: ../premium/modules/display-conditions/display-conditions.php:554
 msgid "Keywords"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:553
+#: ../premium/modules/display-conditions/display-conditions.php:555
 msgid "Enter keywords, separated by commas, to condition the display on specific keywords and leave blank for any."
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:569
+#: ../premium/modules/display-conditions/display-conditions.php:571
 msgid "Empty"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:623
+#: ../premium/modules/display-conditions/display-conditions.php:625
 msgid "Internet Explorer"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:624
+#: ../premium/modules/display-conditions/display-conditions.php:626
 msgid "Mozilla Firefox"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:625
+#: ../premium/modules/display-conditions/display-conditions.php:627
 msgid "Google Chrome"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:626
+#: ../premium/modules/display-conditions/display-conditions.php:628
 msgid "Opera Mini"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:627
+#: ../premium/modules/display-conditions/display-conditions.php:629
 msgid "Opera"
 msgstr ""
 
-#: ../premium/modules/display-conditions/display-conditions.php:628
+#: ../premium/modules/display-conditions/display-conditions.php:630
 msgid "Safari"
+msgstr ""
+
+#: ../premium/modules/floating-effects/floating-effects.php:33
+msgid "Floating Effects"
 msgstr ""
 
 #: ../premium/modules/floating-effects/floating-effects.php:47, ../premium/modules/transforms/transforms.php:61, ../premium/modules/transforms/transforms.php:347

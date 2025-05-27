@@ -389,7 +389,7 @@ class JLTMA_Progress_Bars extends Widget_Base
 
 		$settings = $this->get_settings_for_display();
 
-		$settings = apply_filters('ma_el_stats_bars_' . $this->get_id() . '_settings', $settings);
+		$settings = apply_filters('ma_el_stats_bars_' . esc_attr( $this->get_id() ) . '_settings', $settings);
 
 		$output = '<div class="jltma-stats-bars">';
 
@@ -410,7 +410,7 @@ class JLTMA_Progress_Bars extends Widget_Base
 				$color_style = ' style="background:' . esc_attr($color) . ';"';
 			}
 
-			$child_output = '<div class="jltma-stats-bar elementor-repeater-item-'.$stats_bar['_id'].'">';
+			$child_output = '<div class="jltma-stats-bar elementor-repeater-item-' . esc_attr( $stats_bar['_id'] ) .'">';
 
 			$child_output .= '<div class="jltma-stats-title">';
 

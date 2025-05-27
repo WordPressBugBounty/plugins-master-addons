@@ -12,12 +12,14 @@ if (!class_exists('JLTMA_Third_Party_Extensions')) {
         {
             self::$jltma_third_party_plugins = [
                 'jltma-plugins'         => [
-                    'title'                => esc_html__('Extensions', 'master-addons' ),
+                    // 'title'                => esc_html__('Extensions', 'master-addons' ),
+                    'title'                => 'Extensions',
                     'plugin'             => [
                         [
                             'key'           => 'custom-breakpoints',
                             'class'         => 'MasterCustomBreakPoint\JLTMA_Master_Custom_Breakpoint',
-                            'title'         => esc_html__('Custom Breakpoints', 'master-addons' ),
+                            // 'title'         => esc_html__('Custom Breakpoints', 'master-addons' ),
+                            'title'         => 'Custom Breakpoints',
                             'wp_slug'       => 'custom-breakpoints-for-elementor',
                             'download_url'  => '',
                             'plugin_file'   => 'custom-breakpoints-for-elementor/custom-breakpoints-for-elementor.php'
@@ -25,7 +27,8 @@ if (!class_exists('JLTMA_Third_Party_Extensions')) {
                         [
                             'key'           => 'adminify',
                             'class'         => 'WPAdminify\WP_Adminify',
-                            'title'         => esc_html__('WP Adminify', 'master-addons' ),
+                            // 'title'         => esc_html__('WP Adminify', 'master-addons' ),
+                            'title'         => 'WP Adminify',
                             'wp_slug'       => 'adminify',
                             'download_url'  => '',
                             'plugin_file'   => 'adminify/adminify.php'

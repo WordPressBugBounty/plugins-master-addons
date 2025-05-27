@@ -33,7 +33,7 @@ foreach ( JLTMA_Addon_Forms::$jltma_forms['jltma-forms']['elements'] as $key => 
 					<div class="jltma-master-addons-content-inner">
 						<div class="jltma-master-addons-features-title">
 							<?php 
-    echo esc_html( $widget['title'] );
+    echo esc_html__( $widget['title'] );
     ?>
 						</div> <!-- master-addons-el-title-content -->
 

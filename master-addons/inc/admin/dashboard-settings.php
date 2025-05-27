@@ -128,6 +128,27 @@ class Master_Addons_Admin_Settings
 			$jltma_logo_image,
 			57
 		);
+		if($jltma_white_label_setting['jltma_wl_plugin_tab_white_label'] !== 0) {
+			remove_submenu_page('master-addons-settings', 'master-addons-settings-account');
+			remove_submenu_page('master-addons-settings', 'https://wordpress.org/support/plugin/master-addons/#new-topic-0');
+			add_action('admin_head', function () {
+					if (is_admin() ) {
+							?>
+							<style>
+								#toplevel_page_master-addons-settings .wp-submenu li a[href="admin.php?page=master-addons-settings-account"] {
+										display: none !important;
+								}
+								#toplevel_page_master-addons-settings .wp-submenu li a[href="https://wordpress.org/support/plugin/master-addons/#new-topic-0"] {
+										display: none !important;
+								}
+								#toplevel_page_master-addons-settings .wp-submenu-head {
+										display: none !important;
+								}
+							</style>
+							<?php
+					}
+			});
+		}
 	}
 
 	public function jltma_admin_head_script()

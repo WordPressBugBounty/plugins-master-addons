@@ -58,6 +58,8 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             self::$plugin_slug = 'master-addons';
             self::$plugin_path = untrailingslashit( plugin_dir_path( '/', __FILE__ ) );
             self::$plugin_url = untrailingslashit( plugins_url( '/', __FILE__ ) );
+            // Load textdomain for translations
+            add_action( 'init', [$this, 'load_textdomain'] );
             // Initialize Plugin
             add_action( 'plugins_loaded', [$this, 'jltma_plugins_loaded'] );
             // $this->jltma_is_plugin_row_meta_and_actions_link();
@@ -75,7 +77,6 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             // Override Freemius Filters
             ma_el_fs()->add_filter( 'support_forum_submenu', [$this, 'jltma_override_support_menu_text'] );
             ma_el_fs()->add_filter( 'support_forum_url', [$this, 'jltma_support_forum_url'] );
-            ma_el_fs()->add_filter( 'freemius_pricing_js_path', [$this, 'jltma_new_freemius_pricing_js'] );
             ma_el_fs()->add_filter( 'plugin_icon', [$this, 'jltma_freemius_logo_icon'] );
             // Disable deactivation feedback form
             ma_el_fs()->add_filter( 'show_deactivation_feedback_form', '__return_false' );
@@ -131,14 +132,15 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
 
         // Activation Hook
         public static function jltma_plugin_activation_hook() {
-            if ( empty( jltma_get_options( 'jltma_white_label_settings' ) ) ) {
-                $jltma_white_label_default_options = Master_Addons_White_Label::jltma_white_label_default_options();
-                update_option( 'jltma_white_label_settings', $jltma_white_label_default_options );
-            }
             self::activated_widgets();
             self::activated_extensions();
             self::activated_third_party_plugins();
             self::activated_icons_library();
+            $jltma_white_label_setting = jltma_get_options( 'jltma_white_label_settings' ) ?? [];
+            if ( !empty( $jltma_white_label_setting ) && isset( $jltma_white_label_setting['jltma_wl_plugin_tab_white_label'] ) ) {
+                $jltma_white_label_setting['jltma_wl_plugin_tab_white_label'] = 0;
+                update_option( 'jltma_white_label_settings', $jltma_white_label_setting );
+            }
             ma_el_fs()->add_action( 'after_premium_version_activation', array('\\MasterAddons\\Master_Elementor_Addons', 'jltma_network_activate') );
         }
 
@@ -672,10 +674,6 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             return $classes;
         }
 
-        public function jltma_new_freemius_pricing_js( $default_pricing_js_path ) {
-            return $this->jltma_plugin_path() . '/lib/freemius-pricing/freemius-pricing.js';
-        }
-
         public function get_localize_settings() {
             return $this->_localize_settings;
         }
@@ -737,6 +735,11 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
                 self::MINIMUM_PHP_VERSION
             );
             printf( '<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message );
+        }
+
+        // Add this method to load the textdomain properly
+        public function load_textdomain() {
+            load_plugin_textdomain( 'master-addons', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         }
 
     }

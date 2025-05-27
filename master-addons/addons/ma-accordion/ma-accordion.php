@@ -860,7 +860,7 @@ class JLTMA_Advanced_Accordion extends Widget_Base {
             ?>
 
 					<div class="jltma-accordion-item elementor-repeater-item-<?php 
-            echo $tab['_id'];
+            echo esc_attr( $tab['_id'] );
             ?> <?php 
             echo ( isset( $single_item_class ) ? $single_item_class : '' );
             ?>">
