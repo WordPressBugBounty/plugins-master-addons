@@ -4,7 +4,7 @@ Tags: elementor, elementor templates, elementor addons, widgets for elementor, e
 Requires at least: 4.0
 Tested up to: 6.8.1
 Requires PHP: 7.0
-Stable tag: 2.0.7.6
+Stable tag: 2.0.8.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -350,6 +350,14 @@ Paste on your Local Computer
 
 
 == Changelog ==
+= 2.0.8.1 (18-06-2025) =
+* Updated: Enhanced security validation.
+* Updated: Removed deprecated classes for Elementor.
+
+= 2.0.8 (13-06-2025) =
+* Fixed: Insufficient capability check in Custom JS module causing stored XSS vulnerability (CVE-2025-5284).
+* Updated: Enhanced security validation for Custom JS inputs to prevent Contributor+ level script injection.
+
 = 2.0.7.6 (26-05-2025) =
 * Fixed: Image hover effect has deprecated code. 
 * Fixed: Template importer has issue with image loading. 

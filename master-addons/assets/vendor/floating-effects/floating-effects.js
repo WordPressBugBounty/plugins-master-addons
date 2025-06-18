@@ -31,7 +31,6 @@
 				{
 					onInit: function () {
 						elementorModules.frontend.handlers.Base.prototype.onInit.apply( this, arguments );
-						// this.widgetContainer = this.$element.find( '.elementor-widget-container' )[0];
 						this.widgetContainer = this.$element[0];
 						this.initFloatingEffects();
 					},
