@@ -940,9 +940,8 @@ class JLTMA_Tooltip extends Widget_Base
 		$jltma_tootltip_tag = !empty($settings['jltma_tootltip_tag']) ? $settings['jltma_tootltip_tag'] : 'button';
 ?>
 		<<?php echo esc_attr($jltma_tootltip_tag); ?> <?php echo $this->get_render_attribute_string('jltma_tooltip_wrapper'); ?>>
-
 			<?php if ($settings['ma_el_tooltip_type'] === 'text') { ?>
-				<?php echo $this->print_render_attribute_string( $settings['ma_el_tooltip_content'] ); ?>
+				<?php echo $this->parse_text_editor(Master_Addons_Helper::wp_kses_custom($settings['ma_el_tooltip_content'])) ?>
 				<?php } elseif ($settings['ma_el_tooltip_type'] === 'icon') {
 				$migrated = isset($settings['__fa4_migrated']['ma_el_tooltip_icon_content']);
 				$is_new   = empty($settings['icon']) && Icons_Manager::is_migration_allowed();

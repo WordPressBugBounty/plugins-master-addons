@@ -4,7 +4,7 @@ Tags: elementor, elementor templates, elementor addons, widgets for elementor, e
 Requires at least: 4.0
 Tested up to: 6.8.1
 Requires PHP: 7.0
-Stable tag: 2.0.8.1
+Stable tag: 2.0.8.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -350,6 +350,10 @@ Paste on your Local Computer
 
 
 == Changelog ==
+= 2.0.8.2 (30-06-2025) =
+* Update: Added security patch for css scripts.
+* Fix: Tooltip extension missing text issue fixed.
+
 = 2.0.8.1 (18-06-2025) =
 * Updated: Enhanced security validation.
 * Updated: Removed deprecated classes for Elementor.

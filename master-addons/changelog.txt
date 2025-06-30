@@ -1,4 +1,8 @@
 == Changelog ==
+= 2.0.8.2 (30-06-2025) =
+* Update: Added security patch for css scripts.
+* Fix: Tooltip extension missing text issue fixed.
+
 = 2.0.8.1 (18-06-2025) =
 * Updated: Enhanced security validation.
 * Updated: Removed deprecated classes for Elementor.

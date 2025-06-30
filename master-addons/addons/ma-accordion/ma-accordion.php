@@ -956,7 +956,7 @@ class JLTMA_Advanced_Accordion extends Widget_Base {
 
 								<div class="jltma-accordion-title-text">
 									<?php 
-            echo $this->parse_text_editor( $tab['tab_title'] );
+            echo $this->parse_text_editor( Master_Addons_Helper::wp_kses_custom( $tab['tab_title'] ) );
             ?>
 								</div>
 							</div>
