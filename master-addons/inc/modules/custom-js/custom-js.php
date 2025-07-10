@@ -27,46 +27,49 @@ class JLTMA_Extension_Custom_JS
 
     public function jltma_add_section_custom_js_controls($controls)
     {
+        if (!current_user_can('unfiltered_html')) {
+            return;
+        }
         $controls->start_controls_section(
             'jtlma_section_custom_js',
             [
-                'label'         => JLTMA_BADGE . esc_html__(' Custom JS', 'master-addons' ),
-                'tab'           => Controls_Manager::TAB_ADVANCED,
+                'label' => JLTMA_BADGE . esc_html__(' Custom JS', 'master-addons'),
+                'tab' => Controls_Manager::TAB_ADVANCED,
             ]
         );
 
         $controls->add_control(
             'jtlma_custom_js_label',
             [
-                'type'          => Controls_Manager::RAW_HTML,
-                'raw'           => esc_html__('Add your own custom JS here', 'master-addons' ),
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => esc_html__('Add your own custom JS here', 'master-addons'),
             ]
         );
 
         $controls->add_control(
             'jtlma_custom_js',
             [
-                'type'          => Controls_Manager::CODE,
-                'show_label'    => false,
-                'language'      => 'javascript',
+                'type' => Controls_Manager::CODE,
+                'show_label' => false,
+                'language' => 'javascript',
             ]
         );
 
         $controls->add_control(
             'jtlma_custom_js_usage',
             [
-                'type'              => Controls_Manager::RAW_HTML,
-                'raw'               => __('No need to write `$( document ).ready()`, write direct code. <br> You may use both jQuery selector e.g. $(‘.selector’) or Vanilla JS selector e.g. document.queryselector(‘.selector’)', 'master-addons' ),
-                'content_classes'   => 'elementor-descriptor',
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => __('No need to write `$( document ).ready()`, write direct code. <br> You may use both jQuery selector e.g. $(‘.selector’) or Vanilla JS selector e.g. document.queryselector(‘.selector’)', 'master-addons'),
+                'content_classes' => 'elementor-descriptor',
             ]
         );
 
         $controls->add_control(
             'jtlma_custom_js_docs',
             [
-                'type'              => Controls_Manager::RAW_HTML,
-                'raw'               => __('For more information, <a href="https://master-addons.com/docs/addons/custom-js-extension/" target="_blank">click here</a>', 'master-addons' ),
-                'content_classes'   => 'elementor-descriptor',
+                'type' => Controls_Manager::RAW_HTML,
+                'raw' => __('For more information, <a href="https://master-addons.com/docs/addons/custom-js-extension/" target="_blank">click here</a>', 'master-addons'),
+                'content_classes' => 'elementor-descriptor',
             ]
         );
 
@@ -76,6 +79,10 @@ class JLTMA_Extension_Custom_JS
 
     public function jltma_page_custom_js()
     {
+        if (!current_user_can('edit_posts')) {
+            return;
+        }
+
 
         if (\Elementor\Plugin::$instance->editor->is_edit_mode() || \Elementor\Plugin::$instance->preview->is_preview_mode()) {
             return;
@@ -83,15 +90,17 @@ class JLTMA_Extension_Custom_JS
 
         $document = \Elementor\Plugin::$instance->documents->get(get_the_ID());
 
-        if (!$document) return;
+        if (!$document)
+            return;
 
         $custom_js = $document->get_settings('jtlma_custom_js');
 
-        if (empty($custom_js)) return;
+        if (empty($custom_js))
+            return;
 
         echo "<script type='text/javascript'>(function($){
             'use strict';
-            {$custom_js}
+            " . esc_js($custom_js) . "
         })(jQuery);</script>";
     }
 

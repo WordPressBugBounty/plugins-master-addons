@@ -1,4 +1,10 @@
 == Changelog ==
+= 2.0.8.3 (09-07-2025) =
+* Fix: Master accordion widget title alignment issue.
+* Update: Added tags separator option for blog posts widget.
+* Patch: Added Security patch for Stored XSS vulnerability.
+* Patch: Added Security patch for unauthorize style update issue.
+
 = 2.0.8.2 (30-06-2025) =
 * Update: Added security patch for css scripts.
 * Fix: Tooltip extension missing text issue fixed.

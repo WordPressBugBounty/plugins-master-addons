@@ -48,37 +48,38 @@ class JLTMA_Extension_Custom_CSS
 			$widget->start_controls_section(
 				'jltma_custom_css_section',
 				array(
-					'label'     => JLTMA_BADGE . __(' Custom CSS', 'master-addons' ),
-					'tab'       => Controls_Manager::TAB_ADVANCED
+					'label' => JLTMA_BADGE . __(' Custom CSS', 'master-addons'),
+					'tab' => Controls_Manager::TAB_ADVANCED
 				)
 			);
 
 			$widget->add_control(
 				'custom_css',
 				array(
-					'type'        => Controls_Manager::CODE,
-					'label'       => __('Custom CSS', 'master-addons' ),
+					'type' => Controls_Manager::CODE,
+					'label' => __('Custom CSS', 'master-addons'),
 					'label_block' => true,
-					'language'    => 'css'
+					'language' => 'css'
 				)
 			);
 			ob_start(); ?>
 			<pre>
-Examples:
-// To target main element
-selector { color: red; }
-// For child element
-selector .child-element{ margin: 10px; }
-</pre><?php
+																																																															Examples:
+																																																															// To target main element
+																																																															selector { color: red; }
+																																																															// For child element
+																																																															selector .child-element{ margin: 10px; }
+																																																															</pre>
+			<?php
 			$output = ob_get_clean();
 
 			$widget->add_control(
 				'custom_css_description',
 				array(
-					'raw'             => __('Use "selector" keyword to target wrapper element.', 'master-addons' ) . $output,
-					'type'            => Controls_Manager::RAW_HTML,
+					'raw' => __('Use "selector" keyword to target wrapper element.', 'master-addons') . $output,
+					'type' => Controls_Manager::RAW_HTML,
 					'content_classes' => 'elementor-descriptor',
-					'separator'       => 'none'
+					'separator' => 'none'
 				)
 			);
 
@@ -90,6 +91,10 @@ selector .child-element{ margin: 10px; }
 
 	public function jltma_add_post_css($post_css, $element)
 	{
+		if (!current_user_can('edit_posts')) {
+			return;
+		}
+
 		$element_settings = $element->get_settings();
 
 		if (empty($element_settings['custom_css'])) {
@@ -101,10 +106,18 @@ selector .child-element{ margin: 10px; }
 		if (empty($css)) {
 			return;
 		}
-		$css = str_replace('selector', $post_css->get_element_unique_selector($element), $css);
+
+		// $css = str_replace('selector', $post_css->get_element_unique_selector($element), $css);
+
+		// $selector = esc_attr($post_css->get_element_unique_selector($element));
+		// $css = str_replace('selector', $selector, $css);
 
 		// Add a css comment
-		$css = sprintf('/* Start custom CSS for %s, class: %s */', $element->get_name(), $element->get_unique_selector()) . $css . '/* End custom CSS */';
+		$css = sprintf(
+			'/* Start custom CSS for %s, class: %s */',
+			$element->get_name(),
+			$element->get_unique_selector()
+		) . esc_html($css) . '/* End custom CSS */';
 
 		$post_css->get_stylesheet()->add_raw_css($css);
 	}
