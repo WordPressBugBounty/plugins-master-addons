@@ -2144,7 +2144,6 @@ class JLTMA_Blog extends Widget_Base
 
 		$settings = $this->get_settings_for_display();
 
-		pretty_log('$settings', $settings);
 
 		$this->add_render_attribute('title', 'class', 'jltma-entry-title');
 

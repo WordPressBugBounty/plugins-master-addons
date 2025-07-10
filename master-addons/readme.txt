@@ -4,7 +4,7 @@ Tags: elementor, elementor templates, elementor addons, widgets for elementor, e
 Requires at least: 4.0
 Tested up to: 6.8.1
 Requires PHP: 7.0
-Stable tag: 2.0.8.3
+Stable tag: 2.0.8.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -350,6 +350,10 @@ Paste on your Local Computer
 
 
 == Changelog ==
+= 2.0.8.4 (10-07-2025) =
+* Fix: blog component getting warning issue.
+* update: UI updated.
+
 = 2.0.8.3 (09-07-2025) =
 * Fix: Master accordion widget title alignment issue.
 * Update: Added tags separator option for blog posts widget.
