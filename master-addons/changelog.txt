@@ -1,4 +1,15 @@
 == Changelog ==
+= 2.0.8.6 (14-07-2025) =
+* Fixed: "Master Addons" typo fixed on Category Panel
+* Removed: Call to Action - Line Height, Default Uppercase, Font weight removed so it can grab Theme styles
+* Removed: "Button" Option for HTML Tag removed from Dual Heading
+
+= 2.0.8.5 (13-07-2025) =
+* Fix: Save template was not working issue.
+* Fix: Import template was not working.
+* Update: Elementor Cloud store template option applied.
+* Patch: Security patch added for xss script.
+
 = 2.0.8.4 (10-07-2025) =
 * Fix: blog component getting warning issue .
 * update: UI updated.
@@ -22,12 +33,12 @@
 * Updated: Enhanced security validation for Custom JS inputs to prevent Contributor+ level script injection.
 
 = 2.0.7.6 (26-05-2025) =
-* Fixed: Image hover effect has deprecated code. 
-* Fixed: Template importer has issue with image loading. 
-* Fixed: MA Timeline updated and fixed js error. 
-* Fixed: Textdomain loading too early issue. 
-* Fixed: Elementor editor not loading issue. 
-* Update: Security patch added. 
+* Fixed: Image hover effect has deprecated code.
+* Fixed: Template importer has issue with image loading.
+* Fixed: MA Timeline updated and fixed js error.
+* Fixed: Textdomain loading too early issue.
+* Fixed: Elementor editor not loading issue.
+* Update: Security patch added.
 * Update: Freemius SDK with better security.
 
 = 2.0.7.5 (19-04-2025) =

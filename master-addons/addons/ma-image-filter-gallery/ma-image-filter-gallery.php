@@ -1957,7 +1957,12 @@ class JLTMA_Filterable_Image_Gallery extends Widget_Base
 					'jltma-image-filter-gallery-items',
 				]
 			);
+			$this->add_render_attribute( 'link', [
+				'class' => 'elementor-clickable',
+			] );
 		}
+
+		// if($item['ma_el_image_gallery_buttons'] == "popup")
 
 		if (isset($animation) && $animation) {
 			$animation = 'jltma-animated ' . esc_attr($animation);
@@ -2079,9 +2084,9 @@ class JLTMA_Filterable_Image_Gallery extends Widget_Base
 						$images_setting_key => [
 							'class' => [
 								'jltma-fancybox',
-								'elementor-clickable'
+								// 'elementor-clickable'
 							],
-							'data-caption'  => $settings['ma_el_image_gallery_title'],
+							'data-caption'  => esc_html($settings['ma_el_image_gallery_title']),
 							'data-fancybox' => "images"
 						]
 					]);

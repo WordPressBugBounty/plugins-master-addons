@@ -269,7 +269,7 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
 
         function jltma_add_category_to_editor( $widgets_manager ) {
             $widgets_manager->add_category( 'master-addons', [
-                'title' => esc_html__( 'Master Addonsss', 'master-addons' ),
+                'title' => esc_html__( 'Master Addons', 'master-addons' ),
                 'icon'  => 'font',
             ], 1 );
         }

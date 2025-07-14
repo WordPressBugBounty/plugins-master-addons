@@ -231,6 +231,12 @@
 #views-ma-el-template-modal-tabs-items .elementor-template-library-menu-item span {
     display: block;
     padding: 20px 19px 16px 19px;
+    color: #000;
+}
+@media (prefers-color-scheme: dark) {
+  #views-ma-el-template-modal-tabs-items .elementor-template-library-menu-item span {
+    color: #FFF;
+  }
 }
 #ma-el-template-modal-header-tabs {
     display: flex;

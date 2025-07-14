@@ -230,8 +230,8 @@ if (!class_exists('Master_Addons_Templates_Manager')) {
 			$actions     = (array) json_decode(stripslashes(sanitize_text_field($_REQUEST['actions'])), true);
 			$data        = false;
 
-			foreach ($actions as $id => $action_data) {
-				if (!isset($action_data['get_template_data'])) {
+			foreach ($actions as $action_data) {
+				if( in_array('get_template_data',  $action_data) || in_array('save_template',  $action_data) ){
 					$data = $action_data;
 				}
 			}
@@ -248,16 +248,37 @@ if (!class_exists('Master_Addons_Templates_Manager')) {
 				return;
 			}
 
-			$source = $data['data']['source'];
+			foreach( $data['data']['source'] as $source ){
+				if (!isset($this->sources[$source])) {
+					continue;
+				}else{
+					$ajax_manager->register_ajax_action('get_template_data', function($data){
+						return $this->get_template_data_array($data);
+					});
 
-			if (!isset($this->sources[$source])) {
-				return;
+					$ajax_manager->register_ajax_action('save_template', function($data){
+						return $this->save_template_data_array($data);
+					});
+				}
 			}
-
-			$ajax_manager->register_ajax_action('get_template_data', function ($data) {
-				return $this->get_template_data_array($data);
-			});
+			
 		}
+
+
+		public function save_template_data_array($data) {
+				$post_id = sanitize_text_field($data['template_id'] ?? '');
+				$template_data = wp_unslash($data['template_data'] ?? '');
+
+				if ($post_id && $template_data) {
+						return \Elementor\Plugin::$instance->templates_manager->save_template(
+								$post_id,
+								$template_data
+						);
+				}
+
+				return new \WP_Error('invalid_data', 'Missing template ID or data');
+		}
+
 
 		public function get_template_data_array($data)
 		{

@@ -4,7 +4,7 @@ Tags: elementor, elementor templates, elementor addons, widgets for elementor, e
 Requires at least: 4.0
 Tested up to: 6.8.1
 Requires PHP: 7.0
-Stable tag: 2.0.8.4
+Stable tag: 2.0.8.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -326,6 +326,9 @@ We've two ways to give Supports for "Master Addons" Plugin - 1. [WordPress Suppo
 .org/support/plugin/master-addons) and 2. [Support Forum](https://wordpress.org/support/plugin/master-addons/). Since, this is a Free Plugin, Support reply may delay for answer
 but we're Dedicated on our [FB Page](https://www.facebook.com/masteraddons/) for chatting.
 
+= How can I report security bugs? =
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/wordpress/plugin/master-addons/vdp)
+
 
 We're adding new Features everyday. You'll get regular Updates also !
 
@@ -350,6 +353,17 @@ Paste on your Local Computer
 
 
 == Changelog ==
+= 2.0.8.6 (14-07-2025) =
+* Fixed: "Master Addons" typo fixed on Category Panel
+* Removed: Call to Action - Line Height, Default Uppercase, Font weight removed so it can grab Theme styles
+* Removed: "Button" Option for HTML Tag removed from Dual Heading
+
+= 2.0.8.5 (13-07-2025) =
+* Fix: Save template was not working issue.
+* Fix: Import template was not working.
+* Update: Elementor Cloud store template option applied.
+* Patch: Security patch added for xss script.
+
 = 2.0.8.4 (10-07-2025) =
 * Fix: blog component getting warning issue.
 * update: UI updated.
@@ -383,7 +397,6 @@ Paste on your Local Computer
 
 = 2.0.7.5 (19-04-2025) =
 * Fixed: WordPress 6.8 critical error issue fixed
-
 
 = 2.0.7.4 (10-03-2025) =
 * Fixed: Mega Menu - Data Saving, Editor Close button position updated

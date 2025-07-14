@@ -1191,9 +1191,9 @@
                     return false;
                 }
             });
-
-            $(".jltma-fancybox").fancybox({
-                // protect: false,
+            // $("jltma-fancybox").fancybox({
+            $(".elementor-widget.elementor-widget-ma-image-filter-gallery .jltma-fancybox").fancybox({
+                protect: true,
                 animationDuration: 366,
                 transitionDuration: 366,
                 transitionEffect: "fade", // Transition effect between slides
