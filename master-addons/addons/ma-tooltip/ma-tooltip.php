@@ -186,7 +186,7 @@ class JLTMA_Tooltip extends Widget_Base
 				'label'   => __('Alignment', 'master-addons'),
 				'type'    => Controls_Manager::CHOOSE,
 				'options' => Master_Addons_Helper::jltma_content_alignment(),
-				'default'      => 'center',
+				'default'      => 'left',
 				'prefix_class' => 'jltma-align-',
 			]
 		);
@@ -274,7 +274,7 @@ class JLTMA_Tooltip extends Widget_Base
 			[
 				'label'              => esc_html__('Placement', 'master-addons'),
 				'type'               => Controls_Manager::SELECT,
-				'default'            => 'top',
+				'default'            => '',
 				'label_block'        => false,
 				'render_type'        => 'none',
 				'frontend_available' => true,
@@ -858,7 +858,7 @@ class JLTMA_Tooltip extends Widget_Base
 		$this->add_control(
 			'jltma_tooltip_distance',
 			[
-				'label'              => __('Distance', 'essential-addons-elementor'),
+				'label'              => __('Distance', 'master-addons'),
 				'type'               => Controls_Manager::NUMBER,
 				'min'                => 05,
 				'max'                => 50,
@@ -911,10 +911,12 @@ class JLTMA_Tooltip extends Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
+
+    $align = $settings['tooltip_style_section_align'];
 		$this->add_render_attribute(
 			'jltma_tooltip_wrapper',
 			[
-				'class' => ['jltma-tooltip'],
+				'class' => ['jltma-tooltip', 'jltma-align-' . esc_attr( $align ) ],
 				'id' => 'jltma-tooltip-' . $this->get_id(),
 			]
 		);

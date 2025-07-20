@@ -135,7 +135,7 @@ class JLTMA_Team_Member extends Widget_Base {
             'type'             => Controls_Manager::ICONS,
             'fa4compatibility' => 'icon',
             'default'          => [
-                'value'   => 'fab fa-wordpress',
+                'value'   => 'eicon-wordpress',
                 'library' => 'brand',
             ],
         ] );
@@ -156,19 +156,19 @@ class JLTMA_Team_Member extends Widget_Base {
             ],
             'default'     => [
                 [
-                    'social' => 'fa fa-facebook',
+                    'social' => 'eicon-facebook',
                     'link'   => '',
                 ],
                 [
-                    'social' => 'fa fa-twitter',
+                    'social' => 'icon-twitter',
                     'link'   => '',
                 ],
                 [
-                    'social' => 'fa fa-google-plus',
+                    'social' => 'eicon-yoast',
                     'link'   => '',
                 ],
                 [
-                    'social' => 'fa fa-linkedin',
+                    'social' => 'eicon-e-youtube',
                     'link'   => '',
                 ]
             ],
@@ -517,6 +517,10 @@ class JLTMA_Team_Member extends Widget_Base {
                     'step' => 1,
                 ],
             ],
+            'default'    => [
+                'unit' => 'px',
+                'size' => 8,
+            ],
             'selectors'  => [
                 '{{WRAPPER}} .jltma-team-member-social li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
             ],
@@ -644,6 +648,10 @@ class JLTMA_Team_Member extends Widget_Base {
                     'step' => 1,
                 ],
             ],
+            'default'    => [
+                'unit' => 'px',
+                'size' => 8,
+            ],
             'selectors'  => [
                 '{{WRAPPER}} .jltma-team-member-social li a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
             ],
@@ -734,10 +742,10 @@ class JLTMA_Team_Member extends Widget_Base {
                         ] );
                     } else {
                         ?>
-                                                <i class="<?php 
+														<i class="<?php 
                         echo esc_attr( $item['icon'] );
                         ?>" aria-hidden="true"></i>
-                                            <?php 
+												<?php 
                     }
                     ?>
 										</a>
@@ -758,10 +766,6 @@ class JLTMA_Team_Member extends Widget_Base {
 		<?php 
         } else {
             ?>
-
-
-
-
 			<div id="jltma-team-member-<?php 
             echo esc_attr( $this->get_id() );
             ?>" class="jltma-team-item
@@ -850,10 +854,10 @@ class JLTMA_Team_Member extends Widget_Base {
                         ] );
                     } else {
                         ?>
-                                                <i class="<?php 
+															<i class="<?php 
                         echo esc_attr( $item['icon'] );
                         ?>" aria-hidden="true"></i>
-                                            <?php 
+													<?php 
                     }
                     ?>
 										</a>

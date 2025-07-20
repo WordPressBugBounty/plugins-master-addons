@@ -459,6 +459,31 @@ class JLTMA_Tabs extends Widget_Base {
             'label'    => esc_html__( 'Content Typography', 'master-addons' ),
             'selector' => '{{WRAPPER}} .jltma--advance-tab .jltma--advance-tab-content',
         ] );
+        $this->add_control( 'jltma_content_alignment', [
+            'label'     => esc_html__( 'Content Alignment', 'master-addons' ),
+            'type'      => Controls_Manager::CHOOSE,
+            'default'   => 'flex-start',
+            'options'   => [
+                'flex-start' => [
+                    'title' => esc_html__( 'Top', 'master-addons' ),
+                    'icon'  => 'eicon-v-align-top',
+                ],
+                'center'     => [
+                    'title' => esc_html__( 'Center', 'master-addons' ),
+                    'icon'  => 'eicon-v-align-middle',
+                ],
+                'flex-end'   => [
+                    'title' => esc_html__( 'Bottom', 'master-addons' ),
+                    'icon'  => 'eicon-v-align-bottom',
+                ],
+            ],
+            'selectors' => [
+                '{{WRAPPER}} .jltma--advance-tab .jltma--advance-tab-content' => 'flex-direction: column; justify-content: {{VALUE}};',
+            ],
+            "condition" => [
+                'ma_el_tabs_preset!' => 'two',
+            ],
+        ] );
         $this->add_responsive_control( 'ma_el_tabs_content_border_radius', array(
             'label'      => esc_html__( 'Border Radius', 'master-addons' ),
             'type'       => Controls_Manager::DIMENSIONS,

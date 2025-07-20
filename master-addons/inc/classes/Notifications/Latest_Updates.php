@@ -40,16 +40,15 @@ if (!class_exists('Latest_Updates')) {
                  */
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> "Master Addons" typo fixed on Category Panel </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">  Removed Call to Action - Line Height, Default Uppercase, Font weight removed so it can grab Theme styles </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">  Removed "Button" Option for HTML Tag removed from Dual Heading </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Security patch added for xss script</span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Improved UI  </span><br>', 'master-addons')
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Progress bar s title alignment, percentages color & typography. </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">  Fixed: Team Member fixed default icon issue. </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">  Fixed: Blog Post Read More button style option </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Tooltip content alignment</span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Advanced Tab fixed vertical tabs height, width & add content alignment- top, center, bottom.  </span><br>', 'master-addons')
             );
             
             printf(wp_kses_post($jltma_changelog_message));
         }
-        
         /**
          * Intervals
          *

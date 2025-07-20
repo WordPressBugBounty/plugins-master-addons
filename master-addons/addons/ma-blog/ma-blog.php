@@ -2144,7 +2144,6 @@ class JLTMA_Blog extends Widget_Base
 
 		$settings = $this->get_settings_for_display();
 
-
 		$this->add_render_attribute('title', 'class', 'jltma-entry-title');
 
 		if ($settings['ma_el_post_grid_post_title'] == 'yes') { ?>

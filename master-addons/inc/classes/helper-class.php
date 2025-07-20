@@ -1103,11 +1103,11 @@ class Master_Addons_Helper
 					if ($excerpt_icon_align == "left") {
 						array_push($words, '<br> <a href="' . get_permalink(
 							$post_id
-						) . '" class="ma-el-post-btn"> <i class="' . esc_attr($excerpt_icon) . '"></i>' . esc_html($exceprt_text) . '</a>');
+						) . '" class="jltma-post-btn"> <i class="' . esc_attr($excerpt_icon) . '"></i>' . esc_html($exceprt_text) . '</a>');
 					} elseif ($excerpt_icon_align == "right") {
-						array_push($words, '<br> <a href="' . get_permalink($post_id) . '" class="ma-el-post-btn">' . esc_html($exceprt_text) . ' <i class="' . esc_attr($excerpt_icon) . '"></i></a>');
+						array_push($words, '<br> <a href="' . get_permalink($post_id) . '" class="jltma-post-btn">' . esc_html($exceprt_text) . ' <i class="' . esc_attr($excerpt_icon) . '"></i></a>');
 					} else {
-						array_push($words, '<br> <a href="' . get_permalink($post_id) . '" class="ma-el-post-btn">' . esc_html($exceprt_text) . '</a>');
+						array_push($words, '<br> <a href="' . get_permalink($post_id) . '" class="jltma-post-btn">' . esc_html($exceprt_text) . '</a>');
 					}
 				}
 			}
@@ -2075,7 +2075,7 @@ class Master_Addons_Helper
 		else :
 			$return = substr(get_the_excerpt(), 0, $excerpt);
 			if ($readmore == 'on') :
-				$return .= '<a class="article-read-more" href="' . get_permalink($post->ID) . '" ' . $css_link . '>' . esc_html__('Read More', 'elementorwidgetsmegapack') . '</a>';
+				$return .= '<a class="article-read-more" href="' . get_permalink($post->ID) . '" ' . $css_link . '>' . esc_html__('Read More', 'master-addons') . '</a>';
 			else :
 				$return .= '...';
 			endif;
@@ -2089,9 +2089,9 @@ class Master_Addons_Helper
 	{
 
 		$return = '<div class="container-social">
-			<a target="_blank" href="http://www.facebook.com/sharer.php?u=' . get_the_permalink() . '&amp;t=' . get_the_title() . '" title="' . esc_html__('Click to share this post on Facebook', 'elementorwidgetsmegapack') . '" ' . $css_link . '><i class="fa fa-facebook"></i></a>
-			<a target="_blank" href="http://twitter.com/home?status=' . get_the_permalink() . '" title="' . esc_html__('Click to share this post on Twitter', 'elementorwidgetsmegapack') . '"><i class="fa fa-twitter" ' . $css_link . '></i></a>
-			<a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=' . get_the_permalink() . '" title="' . esc_html__('Click to share this post on Linkedin', 'elementorwidgetsmegapack') . '"><i class="fa fa-linkedin" ' . $css_link . '></i></a></div>';
+			<a target="_blank" href="http://www.facebook.com/sharer.php?u=' . get_the_permalink() . '&amp;t=' . get_the_title() . '" title="' . esc_html__('Click to share this post on Facebook', 'master-addons') . '" ' . $css_link . '><i class="fa fa-facebook"></i></a>
+			<a target="_blank" href="http://twitter.com/home?status=' . get_the_permalink() . '" title="' . esc_html__('Click to share this post on Twitter', 'master-addons') . '"><i class="fa fa-twitter" ' . $css_link . '></i></a>
+			<a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=' . get_the_permalink() . '" title="' . esc_html__('Click to share this post on Linkedin', 'master-addons') . '"><i class="fa fa-linkedin" ' . $css_link . '></i></a></div>';
 
 		return $return;
 	}

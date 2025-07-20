@@ -219,7 +219,6 @@ if (!class_exists('Master_Addons_Templates_Manager')) {
 			wp_send_json_success();
 		}
 
-
 		public function jltma_register_ajax_actions($ajax_manager)
 		{
 

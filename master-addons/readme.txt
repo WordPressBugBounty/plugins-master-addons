@@ -2,9 +2,9 @@
 Contributors: jwthemeltd, litonice13, masteraddons
 Tags: elementor, elementor templates, elementor addons, widgets for elementor, elementor widgets
 Requires at least: 4.0
-Tested up to: 6.8.1
+Tested up to: 6.8.2
 Requires PHP: 7.0
-Stable tag: 2.0.8.6
+Stable tag: 2.0.8.7
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -353,6 +353,13 @@ Paste on your Local Computer
 
 
 == Changelog ==
+= 2.0.8.7 (20-07-2025) =
+* Fixed: Progress bar's title alignment, percentages color & typography.
+* Fixed: Team Member fixed default icon issue. 
+* Fixed: Blog Post 'Read More' button style option
+* Fixed: Tooltip content alignment
+* Fixed: Advanced Tab fixed vertical tabs height, width & add content alignment- top, center, bottom. 
+
 = 2.0.8.6 (14-07-2025) =
 * Fixed: "Master Addons" typo fixed on Category Panel
 * Removed: Call to Action - Line Height, Default Uppercase, Font weight removed so it can grab Theme styles
