@@ -4,7 +4,7 @@ Tags: elementor, elementor templates, elementor addons, widgets for elementor, e
 Requires at least: 4.0
 Tested up to: 6.8.2
 Requires PHP: 7.0
-Stable tag: 2.0.8.7
+Stable tag: 2.0.8.8
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -355,10 +355,10 @@ Paste on your Local Computer
 == Changelog ==
 = 2.0.8.7 (20-07-2025) =
 * Fixed: Progress bar's title alignment, percentages color & typography.
-* Fixed: Team Member fixed default icon issue. 
+* Fixed: Team Member fixed default icon issue.
 * Fixed: Blog Post 'Read More' button style option
 * Fixed: Tooltip content alignment
-* Fixed: Advanced Tab fixed vertical tabs height, width & add content alignment- top, center, bottom. 
+* Fixed: Advanced Tab fixed vertical tabs height, width & add content alignment- top, center, bottom.
 
 = 2.0.8.6 (14-07-2025) =
 * Fixed: "Master Addons" typo fixed on Category Panel
@@ -394,12 +394,12 @@ Paste on your Local Computer
 * Updated: Enhanced security validation for Custom JS inputs to prevent Contributor+ level script injection.
 
 = 2.0.7.6 (26-05-2025) =
-* Fixed: Image hover effect has deprecated code. 
-* Fixed: Template importer has issue with image loading. 
-* Fixed: MA Timeline updated and fixed js error. 
-* Fixed: Textdomain loading too early issue. 
-* Fixed: Elementor editor not loading issue. 
-* Update: Security patch added. 
+* Fixed: Image hover effect has deprecated code.
+* Fixed: Template importer has issue with image loading.
+* Fixed: MA Timeline updated and fixed js error.
+* Fixed: Textdomain loading too early issue.
+* Fixed: Elementor editor not loading issue.
+* Update: Security patch added.
 * Update: Freemius SDK with better security.
 
 = 2.0.7.5 (19-04-2025) =
@@ -421,4 +421,3 @@ Paste on your Local Computer
 
 
 Details [Changelogs here](https://master-addons.com/changelogs/)
-

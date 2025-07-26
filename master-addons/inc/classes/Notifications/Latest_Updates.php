@@ -40,13 +40,13 @@ if (!class_exists('Latest_Updates')) {
                  */
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Progress bar s title alignment, percentages color & typography. </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">  Fixed: Team Member fixed default icon issue. </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">  Fixed: Blog Post Read More button style option </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Tooltip content alignment</span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Advanced Tab fixed vertical tabs height, width & add content alignment- top, center, bottom.  </span><br>', 'master-addons')
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Updated: Counter Up Prefix Placeholder value updated. </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Image Hotspots tooltip tag, Image Alignment issue </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Image Comparison default image preview issue </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Added: Restrict Content popup button alignment, Slider to make gap between Description to age restriction </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Font Awesome Icon Color issue fixed for Domain Checker  </span><br>', 'master-addons')
             );
-            
+
             printf(wp_kses_post($jltma_changelog_message));
         }
         /**
