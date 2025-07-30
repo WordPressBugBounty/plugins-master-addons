@@ -96,16 +96,15 @@ class JLTMA_Infobox extends Widget_Base {
             'default'     => 'icon',
         ] );
         $this->add_control( 'ma_el_infobox_icon', [
-            'label'            => esc_html__( 'Icon', 'master-addons' ),
-            'description'      => esc_html__( 'Please choose an icon from the list.', 'master-addons' ),
-            'type'             => Controls_Manager::ICONS,
-            'fa4compatibility' => 'icon',
-            'default'          => [
-                'value'   => 'fas fa-tag',
-                'library' => 'solid',
+            'label'       => esc_html__( 'Icon', 'master-addons' ),
+            'description' => esc_html__( 'Please choose an icon from the list.', 'master-addons' ),
+            'type'        => Controls_Manager::ICONS,
+            'default'     => [
+                'value'   => 'eicon-tags',
+                'library' => 'eicon',
             ],
-            'render_type'      => 'template',
-            'condition'        => [
+            'render_type' => 'template',
+            'condition'   => [
                 'ma_el_infobox_img_or_icon' => 'icon',
             ],
         ] );

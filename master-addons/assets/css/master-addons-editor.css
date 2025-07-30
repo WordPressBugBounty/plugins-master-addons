@@ -30,13 +30,17 @@
   color        : #fff;
   background   : rgb(74, 77, 236);
   border-radius: 15px;
-  margin-left  : -1em;
   position     : absolute;
   top          : 15px;
-  right        : 15px;
+  right        : 30px;
   font-size    : 18px;
   opacity      : .6;
   font-family  : 'Master-Addons' !important;
+}
+
+.elementor-icons-manager__tab-link {
+  display: flex;
+  align-items: center
 }
 
 .jltma-icon {

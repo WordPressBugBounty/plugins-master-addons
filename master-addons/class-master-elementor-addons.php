@@ -136,6 +136,11 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             self::activated_extensions();
             self::activated_third_party_plugins();
             self::activated_icons_library();
+            // Current Master Addons Version
+            $current_version = get_option( '_master_addons_version', null );
+            if ( is_null( $current_version ) ) {
+                update_option( '_master_addons_version', JLTMA_VER );
+            }
             $jltma_white_label_setting = jltma_get_options( 'jltma_white_label_settings' ) ?? [];
             if ( !empty( $jltma_white_label_setting ) && isset( $jltma_white_label_setting['jltma_wl_plugin_tab_white_label'] ) ) {
                 $jltma_white_label_setting['jltma_wl_plugin_tab_white_label'] = 0;
