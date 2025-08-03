@@ -1,4 +1,9 @@
 == Changelog ==
+= 2.0.9.0 (3-08-2025) =
+* Security Patch: Security path applied for xss script on filtrable gallery widget
+* Security Patch: Security path applied for xss script on image carousel widget
+* Security Patch: Security path applied for xss script on image hover widget
+
 = 2.0.8.9 (30-07-2025) =
 * Added: Icons Library - Teeny Icons, Remix Icons, Feather Icons
 * Updated: Icons Library - Options Data settings updated with Icons Library

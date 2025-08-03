@@ -40,13 +40,13 @@ if (!class_exists('Latest_Updates')) {
                  */
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Added: Icons Library - Teeny Icons, Remix Icons, Feather Icons </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Font Awesome, SVG icon color and active color issues fixed for Advanced Tabs </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Margin and line-height issues fixed for Countdown Timer </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Security path applied for xss script on filtrable gallery widget </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Security path applied for xss script on image carousel widget </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> FSecurity path applied for xss script on image hover widget </span><br>', 'master-addons'),
                 __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Image Hover effect title issue </span><br>', 'master-addons'),
                 __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed:  Feature Product content alighment for docs, list. Set default icon width in creative links  </span><br>', 'master-addons')
             );
-
+            
             printf(wp_kses_post($jltma_changelog_message));
         }
         /**

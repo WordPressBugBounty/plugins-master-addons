@@ -4,7 +4,7 @@ Tags: elementor, elementor templates, elementor addons, widgets for elementor, e
 Requires at least: 4.0
 Tested up to: 6.8.2
 Requires PHP: 7.0
-Stable tag: 2.0.8.9
+Stable tag: 2.0.9.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -353,6 +353,36 @@ Paste on your Local Computer
 
 
 == Changelog ==
+= 2.0.9.0 (3-08-2025) =
+* Security Patch: Security path applied for xss script on filtrable gallery widget
+* Security Patch: Security path applied for xss script on image carousel widget
+* Security Patch: Security path applied for xss script on image hover widget
+
+= 2.0.8.9 (30-07-2025) =
+* Added: Icons Library - Teeny Icons, Remix Icons, Feather Icons
+* Updated: Icons Library - Options Data settings updated with Icons Library
+* Fixed: Font Awesome, SVG icon color and active color issues fixed for Advanced Tabs
+* Added: Gap and alignment controls for Advanced Tabs
+* Fixed: Margin and line-height issues fixed for Countdown Timer
+* Changed: Updated control labels and moved alignment controls to style tab in Countdown Timer for better clarity
+* Added: Styling controls for Countdown Timer items:
+	- Width, height and box shadow controls
+	- Separate background options Countdown items
+	- Countdown items text controls for labels
+* Fixed: Image Hover effect title issue
+* Fixed: Removed elementor inline texteditor from table of content
+* Fixed: Set default icon and chosen icon issue, preset 5, 8 hover effect & preset 9 content disable issue in Infobox.
+* Fixed: Set default icon,fixed tooltip issue, Set Style section- height option, vertical position option for layout 5 in Pricing table
+* Added: Feature Product content alighment for docs, list
+* Fixed: Set default icon width in creative links
+
+= 2.0.8.8 (26-07-2025) =
+* Updated: Counter Up Prefix Placeholder value updated
+* Fixed: Image Hotspots tooltip tag, Image Alignment issue
+* Fixed: Image Comparison default image preview issue
+* Added: Restrict Content popup button alignment, Slider to make gap between Description to age restriction
+* Fixed: Font Awesome Icon Color issue fixed for Domain Checker
+
 = 2.0.8.7 (20-07-2025) =
 * Fixed: Progress bar's title alignment, percentages color & typography.
 * Fixed: Team Member fixed default icon issue.

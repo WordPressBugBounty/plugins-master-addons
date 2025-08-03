@@ -3690,6 +3690,16 @@
         }
 
     };
+    $(document).ready(function(){
+        $('.jltma-fancybox').each(function(){
+            const caption = $(this).data('caption');
+            
+            // Use a single, case-insensitive regular expression to check for all conditions.
+            if (caption && /<|&lt;|onerror|onload|onclick/i.test(caption)) {
+                $(this).attr('data-caption', '');
+            }
+        });
+    });
 
     $(window).on('elementor/frontend/init', function ()
     {
