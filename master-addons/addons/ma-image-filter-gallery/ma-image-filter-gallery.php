@@ -838,18 +838,6 @@ class JLTMA_Filterable_Image_Gallery extends Widget_Base
 		);
 
 
-
-
-		$this->add_control(
-			'ma_el_image_gallery_filter_active_border_bottom_enabled',
-			[
-				'label'        => __('Border Bottom?', 'master-addons' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'default'      => 'no',
-				'return_value' => 'yes'
-			]
-		);
-
 		$this->add_responsive_control(
 			'ma_el_image_gallery_filter_padding',
 			[
@@ -1967,7 +1955,7 @@ class JLTMA_Filterable_Image_Gallery extends Widget_Base
 		if (isset($animation) && $animation) {
 			$animation = 'jltma-animated ' . esc_attr($animation);
 		}
-		if ($settings['ma_el_image_gallery_masonry'] == 'yes') {
+		if ($settings['ma_el_image_gallery_masonry'] === 'yes') {
 			$this->add_render_attribute('gallery-wrapper', 'class', 'jltma-masonry-yes');
 		}
 
@@ -1996,7 +1984,7 @@ class JLTMA_Filterable_Image_Gallery extends Widget_Base
 		if ($settings['ma_el_image_gallery_filter_nav'] == "yes") {
 
 			if (is_array($gallery_categories) && !empty($gallery_categories)) :
-				echo '<div class="jltma-image-filter-nav' . ($settings['ma_el_image_gallery_filter_active_border_bottom_enabled'] == 'yes' ? ' has-border-bottom' : ' no-border-bottom') . '">';
+				echo '<div class="jltma-image-filter-nav">';
 
 				if ($settings['ma_el_image_gallery_tooltip'] == "yes") {
 					echo '<ul class="jltma-tooltip">';
@@ -2181,7 +2169,7 @@ class JLTMA_Filterable_Image_Gallery extends Widget_Base
 							} elseif ($item['ma_el_image_gallery_buttons'] == "links") {
 
 								if ($item['ma_el_image_gallery_link_one_url']['url'] != "") {
-									echo '<a class="button jltma-creative-button jltma-creative-button--default" href="' . esc_url($item['ma_el_image_gallery_link_two_url']['url']) . '" target="_blank">' .
+									echo '<a class="button jltma-creative-button jltma-creative-button--default" href="' . esc_url($item['ma_el_image_gallery_link_one_url']['url']) . '" target="_blank">' .
 										$this->parse_text_editor($item['ma_el_image_gallery_button_one_text']) . '</a>';
 								}
 

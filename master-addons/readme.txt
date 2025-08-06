@@ -4,7 +4,7 @@ Tags: elementor, elementor templates, elementor addons, widgets for elementor, e
 Requires at least: 4.0
 Tested up to: 6.8.2
 Requires PHP: 7.0
-Stable tag: 2.0.9.0
+Stable tag: 2.0.9.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -353,6 +353,13 @@ Paste on your Local Computer
 
 
 == Changelog ==
+= 2.0.9.1 (06-08-2025) =
+* Fixed: Creative button icon after position issue
+* Fixed: Toggle content change the default icon, fixed icon width & undefined value issue
+* Fixed: Business Hours- Change default icon, fixed preset 3 background image & present 4 text overlapping content Issue
+* Fixed: Filterable gallery- fixed masonry option & removed style section - border bottom option
+* Added: Blockquote- add border radius option
+
 = 2.0.9.0 (3-08-2025) =
 * Security Patch: Security path applied for xss script on filtrable gallery widget
 * Security Patch: Security path applied for xss script on image carousel widget

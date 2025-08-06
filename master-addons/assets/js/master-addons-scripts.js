@@ -1102,21 +1102,24 @@
                     queue: false
                 }
             };
+            
+            var adata = Object.assign({}, optValues);
+
             if (layoutMode === 'fitRows')
             {
                 optValues['layoutMode'] = 'fitRows';
             }
 
-            // if(layoutMode === 'masonry'){
-            //     adata['macolumnWidthsonry'] = '.jltma-image-filter-item';
-            //     adata['horizontalOrder'] = true;
-            // };
+            if(layoutMode === 'masonry'){
+                adata['macolumnWidthsonry'] = '.jltma-image-filter-item';
+                adata['horizontalOrder'] = true;
+            };
 
-            // var $grid = $container.isotope(adata);
-            // $grid.imagesLoaded().progress(function() {
-            //     $grid.isotope('layout');
-            //     $scope.find('.jltma-image-filter-gallery').css({"min-height":"300px" ,"height" : container_outerheight});
-            // });
+            var $grid = $container.isotope(adata);
+            $grid.imagesLoaded().progress(function() {
+                $grid.isotope('layout');
+                $scope.find('.jltma-image-filter-gallery').css({"min-height":"300px"});
+            });
 
             if ($.isFunction($.fn.imagesLoaded))
             {
@@ -3687,18 +3690,31 @@
         {
             $('body').addClass('js');
             Master_Addons.initEvents($scope, $);
-        }
+        },
 
     };
-    $(document).ready(function(){
+    
+    function filter_fancy_box(){
         $('.jltma-fancybox').each(function(){
             const caption = $(this).data('caption');
-            
             // Use a single, case-insensitive regular expression to check for all conditions.
-            if (caption && /<|&lt;|onerror|onload|onclick/i.test(caption)) {
+            const hasDangerousAttr = /onerror|onload|onclick/i.test(caption);
+            const hasLtSymbol = /<|&lt;/i.test(caption);
+            const hasGtSymbol = />|&gt;/i.test(caption);
+
+            // if (caption && (hasDangerousAttr || (hasLtSymbol && hasGtSymbol))) {
+            if (caption && (hasDangerousAttr )) {
                 $(this).attr('data-caption', '');
+                $(this).closest('.elementor-element').remove();
+                
             }
+            // if (caption && /<|&lt;|onerror|onload|onclick/i.test(caption)) {
+            // }
+            clearInterval(window.fancyboxCheckInterval);
         });
+    }
+    $(document).ready(function(){
+        filter_fancy_box();
     });
 
     $(window).on('elementor/frontend/init', function ()
@@ -3755,6 +3771,7 @@
 
         if (elementorFrontend.isEditMode())
         {
+            window.fancyboxCheckInterval = setInterval(filter_fancy_box, 500);
             elementorFrontend.hooks.addAction('frontend/element_ready/ma-headlines.default', Master_Addons.MA_Animated_Headlines);
             elementorFrontend.hooks.addAction('frontend/element_ready/ma-piecharts.default', Master_Addons.MA_PieCharts);
             elementorFrontend.hooks.addAction('frontend/element_ready/ma-progressbars.default', Master_Addons.ProgressBars);

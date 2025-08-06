@@ -1,4 +1,11 @@
 == Changelog ==
+= 2.0.9.1 (06-08-2025) =
+* Fixed: Creative button icon after position issue
+* Fixed: Toggle content change the default icon, fixed icon width & undefined value issue
+* Fixed: Business Hours- Change default icon, fixed preset 3 background image & present 4 text overlapping content Issue
+* Fixed: Filterable gallery- fixed masonry option & removed style section - border bottom option
+* Added: Blockquote- add border radius option
+
 = 2.0.9.0 (3-08-2025) =
 * Security Patch: Security path applied for xss script on filtrable gallery widget
 * Security Patch: Security path applied for xss script on image carousel widget
@@ -19,8 +26,9 @@
 * Fixed: Removed elementor inline texteditor from table of content
 * Fixed: Set default icon and chosen icon issue, preset 5, 8 hover effect & preset 9 content disable issue in Infobox.
 * Fixed: Set default icon,fixed tooltip issue, Set Style section- height option, vertical position option for layout 5 in Pricing table
-* Added: Feature Product content alighment for docs, list
+* Added: Feature Product content alignment for docs, list
 * Fixed: Set default icon width in creative links
+* Fixed: Contact form 7 variations 5, 6 design issue, submit button background type-classic color & text color issue
 
 = 2.0.8.8 (26-07-2025) =
 * Updated: Counter Up Prefix Placeholder value updated
