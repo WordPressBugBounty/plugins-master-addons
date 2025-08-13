@@ -340,20 +340,6 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             return $jltma_get_icons_library_settings;
         }
 
-        // public function jltma_add_actions_to_elementor()
-        // {
-        // 	$classes = glob(JLTMA_PATH . '/inc/classes/JLTMA_*.php');
-        // 	// include all classes
-        // 	foreach ($classes as $key => $value) {
-        // 		require_once $value;
-        // 	}
-        // 	// instance all classes
-        // 	foreach ($classes as $key => $value) {
-        // 		$name = pathinfo($value, PATHINFO_FILENAME);
-        // 		$class = self::$class_namespace . $name;
-        // 		$this->jltma_classes[strtolower($name)] = new $class();
-        // 	}
-        // }
         /**
          * Load all extension classes and instance them.
          *
@@ -621,6 +607,8 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
 
         // Include Files
         public function jltma_include_files() {
+            // Base Class
+            // include_once JLTMA_PATH . '/inc/classes/Base/Base.php';
             // Helper Class
             include_once JLTMA_PATH . '/inc/classes/helper-class.php';
             // Assets Manager

@@ -350,7 +350,8 @@ class JLTMA_Infobox extends Widget_Base {
             'type'       => Controls_Manager::DIMENSIONS,
             'size_units' => ['px', 'em', '%'],
             'selectors'  => [
-                '{{WRAPPER}} .jltma-infobox .jltma-infobox-icon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                '{{WRAPPER}} .jltma-infobox .jltma-infobox-icon i'   => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                '{{WRAPPER}} .jltma-infobox .jltma-infobox-icon svg' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
             ],
         ] );
         $this->add_responsive_control( 'ma_el_infobox_bg_fade_icon_margin', [

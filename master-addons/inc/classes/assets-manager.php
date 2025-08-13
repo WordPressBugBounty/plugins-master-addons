@@ -209,11 +209,21 @@ class Master_Addons_Assets {
             JLTMA_VER,
             true
         );
+        // Advanced Animations
+        // wp_register_script('jltma-floating-effects', JLTMA_URL . '/assets/vendor/floating-effects/floating-effects.js', array('ma-el-anime-lib', 'jquery'), JLTMA_VER);
         // Data Tables
         wp_register_script(
             'jltma-data-table',
             $jltma_vendor_dir . 'datatable/table.min.js',
             ['jquery'],
+            JLTMA_VER,
+            true
+        );
+        // iPhone Inline Video
+        wp_register_script(
+            'iphone-inline-video',
+            JLTMA_URL . $suffix . '.js',
+            [],
             JLTMA_VER,
             true
         );

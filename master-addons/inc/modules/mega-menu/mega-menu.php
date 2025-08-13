@@ -25,7 +25,6 @@ class Master_Menu
 
         $this->url = self::plugin_url() . '/mega-menu/';
 
-
         add_action('init', [$this, 'jltma_include_files']);
     }
 

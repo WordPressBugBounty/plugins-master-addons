@@ -32,7 +32,7 @@ if (!class_exists('Latest_Updates')) {
         public function notice_content()
         {
             $jltma_changelog_message = sprintf(
-                __('%3$s %4$s %5$s %6$s %7$s %8$s <br> <strong>Check Changelogs for </strong> <a href="%1$s" target="__blank">%2$s</a>', 'master-addons'),
+                __('%3$s %4$s %5$s %6$s %7$s %8$s %9$s %10$s <br> <strong>Check Changelogs for </strong> <a href="%1$s" target="__blank">%2$s</a>', 'master-addons'),
                 esc_url_raw('https://master-addons.com/changelogs'),
                 __('More Details', 'master-addons'),
                 /** Changelog Items
@@ -40,11 +40,13 @@ if (!class_exists('Latest_Updates')) {
                  */
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Creative button icon after position issue </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Toggle content change the default icon, fixed icon width & undefined value issue </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Business Hours- Change default icon, fixed preset 3 background image & present 4 text overlapping content Issue </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Filterable gallery- fixed Masonry option & removed style section - border bottom option </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Added: Blockquote- add border radius option  </span><br>', 'master-addons')
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Updated: Template Importer - Labels hover on pointer </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Updated: MA Templates - Added Templates, Popup options </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Animated headlines- rotate 3 background color animated Issue </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Gradient Headline- add normal and hover color section for classic & gradient mode </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Infobox- preset 8 icon padding issue  </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Gallery slider- Preview image border radius & thumbnail hover effect- hover background color, border color option </span><br>', 'master-addons'),
+                 __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Gravity Form- fixed function not defined fatal error </span><br>', 'master-addons')
             );
             printf(wp_kses_post($jltma_changelog_message));
         }

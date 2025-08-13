@@ -476,6 +476,7 @@ trait JLTMA_Swiper_Controls
             [
                 'label' => __('Show Scrollbar?', 'master-addons' ),
                 'type'  => Controls_Manager::SWITCHER,
+                'frontend_available' => true
             ]
         );
 

@@ -247,20 +247,27 @@ if (!class_exists('Master_Addons_Templates_Manager')) {
 				return;
 			}
 
-			foreach( $data['data']['source'] as $source ){
-				if (!isset($this->sources[$source])) {
-					continue;
-				}else{
-					$ajax_manager->register_ajax_action('get_template_data', function($data){
-						return $this->get_template_data_array($data);
+			// Handle both single source string and array of sources
+			$sources = $data['data']['source'];
+			if (!is_array($sources)) {
+				$sources = [$sources];
+			}
+
+			foreach ( $sources as $source ) {
+				if ( isset( $this->sources[ $source ] ) ) {
+					// Register AJAX actions only once
+					$ajax_manager->register_ajax_action( 'get_template_data', function( $data ) {
+						return $this->get_template_data_array( $data );
 					});
 
-					$ajax_manager->register_ajax_action('save_template', function($data){
-						return $this->save_template_data_array($data);
+					$ajax_manager->register_ajax_action( 'save_template', function( $data ) {
+						return $this->save_template_data_array( $data );
 					});
+
+					break; // Exit loop after registering once
 				}
 			}
-			
+
 		}
 
 
@@ -290,8 +297,14 @@ if (!class_exists('Master_Addons_Templates_Manager')) {
 				return false;
 			}
 
-			$source_name = isset($data['source']) ? esc_attr($data['source']) : '';
+			$source_name = isset($data['source']) ? $data['source'] : '';
 
+			// Handle both single source string and array of sources
+			if (is_array($source_name)) {
+				$source_name = !empty($source_name) ? esc_attr($source_name[0]) : '';
+			} else {
+				$source_name = esc_attr($source_name);
+			}
 
 			if (!$source_name) {
 				return false;
