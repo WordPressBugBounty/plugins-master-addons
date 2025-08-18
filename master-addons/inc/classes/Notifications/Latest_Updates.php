@@ -40,9 +40,9 @@ if (!class_exists('Latest_Updates')) {
                  */
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Updated: Template Importer - Labels hover on pointer </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Updated: MA Templates - Added Templates, Popup options </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Animated headlines- rotate 3 background color animated Issue </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Updated: Team Slider Updated for Mobile Devices </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Custom CSS for Elementor not working on frontend issue fixed </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Custom JS for Elementor not showing on Editor and appying on frontend issue fixed </span><br>', 'master-addons'),
                 __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Gradient Headline- add normal and hover color section for classic & gradient mode </span><br>', 'master-addons'),
                 __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Infobox- preset 8 icon padding issue  </span><br>', 'master-addons'),
                 __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Gallery slider- Preview image border radius & thumbnail hover effect- hover background color, border color option </span><br>', 'master-addons'),

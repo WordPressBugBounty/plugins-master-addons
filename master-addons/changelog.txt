@@ -1,4 +1,9 @@
 == Changelog ==
+= 2.0.9.3 (18-08-2025) =
+* Updated: Team Slider Controls updated for Mobile Devices
+* Fixed: Custom CSS for Elementor not working on frontend issue fixed
+* Fixed: Custom JS for Elementor not showing on Editor and appying on frontend issue fixed
+
 = 2.0.9.2 (13-08-2025) =
 * Updated: Template Importer - Labels hover on pointer
 * Updated: Template Importer - Style issues fixed

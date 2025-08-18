@@ -43,7 +43,7 @@ class JLTMA_Extension_Custom_CSS
 		if ('section_custom_css_pro' !== $section_id) {
 			return;
 		}
-		if (!defined('ELEMENTOR_PRO_VERSION')) {
+		// if (!defined('ELEMENTOR_PRO_VERSION')) { return; }
 
 			$widget->start_controls_section(
 				'jltma_custom_css_section',
@@ -84,7 +84,7 @@ class JLTMA_Extension_Custom_CSS
 			);
 
 			$widget->end_controls_section();
-		}
+
 	}
 
 
@@ -107,17 +107,16 @@ class JLTMA_Extension_Custom_CSS
 			return;
 		}
 
-		// $css = str_replace('selector', $post_css->get_element_unique_selector($element), $css);
+		// Replace 'selector' keyword with the element's unique selector
+		$css = str_replace('selector', $post_css->get_element_unique_selector($element), $css);
 
-		// $selector = esc_attr($post_css->get_element_unique_selector($element));
-		// $css = str_replace('selector', $selector, $css);
-
-		// Add a css comment
+		// Add a css comment for debugging
 		$css = sprintf(
-			'/* Start custom CSS for %s, class: %s */',
+			'/* Start custom CSS for %s, class: %s */ %s /* End custom CSS */',
 			$element->get_name(),
-			$element->get_unique_selector()
-		) . esc_html($css) . '/* End custom CSS */';
+			$element->get_unique_selector(),
+			$css
+		);
 
 		$post_css->get_stylesheet()->add_raw_css($css);
 	}
