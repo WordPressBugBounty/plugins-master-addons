@@ -1,4 +1,10 @@
 == Changelog ==
+= 2.0.9.5 (19-08-2025) =
+* Updated: Minor Bugs fixed
+
+= 2.0.9.4 (18-08-2025) =
+* Updated: Minor Bugs fixed
+
 = 2.0.9.3 (18-08-2025) =
 * Updated: Team Slider Controls updated for Mobile Devices
 * Fixed: Custom CSS for Elementor not working on frontend issue fixed
