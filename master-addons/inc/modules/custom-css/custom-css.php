@@ -48,7 +48,7 @@ class JLTMA_Extension_Custom_CSS
 			$widget->start_controls_section(
 				'jltma_custom_css_section',
 				array(
-					'label' => JLTMA_BADGE . __(' Custom CSS', 'master-addons'),
+					'label' => __(' Custom CSS', 'master-addons') . JLTMA_EXTENSION_BADGE,
 					'tab' => Controls_Manager::TAB_ADVANCED
 				)
 			);

@@ -1,10 +1,10 @@
 === Master Addons - Elementor Addons with White Label, Free Widgets, Hover Effects, Conditions, & Animations ===
-Contributors: jwthemeltd, litonice13, masteraddons
+Contributors: jwthemeltd, litonice13, masteraddons, nisan92
 Tags: elementor, elementor templates, elementor addons, widgets for elementor, elementor widgets
 Requires at least: 4.0
 Tested up to: 6.8.2
 Requires PHP: 7.0
-Stable tag: 2.0.9.5
+Stable tag: 2.0.9.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -353,6 +353,38 @@ Paste on your Local Computer
 
 
 == Changelog ==
+= 2.0.9.6 (31-08-2025) =
+* Added: Dynamic Tags added on Image Hover Effects
+* Update: Master Addons Mega menu feature updated 
+* Fixed: Animated Gradient Background extension not working issue fixed
+* Fixed: Particles background not working issue fixed, also working on Editor Mode
+* Fixed: Background Slider not working issue fixed, working on both editor and frontend
+* Fixed: Extensions not showing on Advanced/Style tabs, Container supports for Particles, Animated Background etc
+
+= 2.0.9.5 (19-08-2025) =
+* Updated: Minor Bugs fixed
+
+= 2.0.9.4 (18-08-2025) =
+* Updated: Minor Bugs fixed
+
+= 2.0.9.3 (18-08-2025) =
+* Updated: Team Slider Controls updated for Mobile Devices
+* Fixed: Custom CSS for Elementor not working on frontend issue fixed
+* Fixed: Custom JS for Elementor not showing on Editor and appying on frontend issue fixed
+
+= 2.0.9.2 (13-08-2025) =
+* Updated: Template Importer - Labels hover on pointer
+* Updated: Template Importer - Style issues fixed
+* Updated: MA Templates - Added Templates, Popup options
+* Updated: MA Templates - data not saving issue fixed
+* Fixed: Animated headlines- rotate 3 background color animated Issue
+* Added: Gradient Headline- add normal and hover color section for classic & gradient mode
+* Fixed: Infobox- preset 8 icon padding issue
+* Fixed: Dual Heading remove default extra margin
+* Fixed: Gallery slider- Preview image border radius & thumbnail hover effect- hover background color, border color option
+* Fixed: Gallery slider-> rlt arrow position, remove- slides per view, slides per column, slides to scroll, spacing, resistance, Speed controler from Thumbnails section
+* Fixed: Gravity Form- fixed function not defined fatal error
+
 = 2.0.9.1 (06-08-2025) =
 * Fixed: Creative button icon after position issue
 * Fixed: Toggle content change the default icon, fixed icon width & undefined value issue

@@ -166,6 +166,9 @@ class JLTMA_Image_Hover_Effects extends Widget_Base {
             'label'       => __( 'Upload Image', 'master-addons' ),
             'description' => __( 'Select an Image', 'master-addons' ),
             'type'        => Controls_Manager::MEDIA,
+            'dynamic'     => [
+                'active' => true,
+            ],
             'default'     => [
                 'url' => Utils::get_placeholder_image_src(),
             ],

@@ -171,11 +171,8 @@ class JLTMA_Extension_Prototype
             $section_name,
             [
                 'tab' => Controls_Manager::TAB_ADVANCED,
-                'label' => JLTMA_BADGE . ' ' . (
-                    !empty($this->name)
-                    ? $section_title
-                    : __('Default Name', 'master-addons')  // Provide a fallback name if $this->name is empty
-                ),
+                'label' => ( !empty($this->name) ? $section_title : __('Master Addons', 'master-addons')  ) . ' ' . JLTMA_EXTENSION_BADGE,
+                // Provide a fallback name if $this->name is empty
             ]
         );
         $element->end_controls_section();

@@ -60,6 +60,9 @@ class Master_Addons_Helper
 		return $svg;
 	}
 
+	public static function get_plugin_name($full = false) {
+		return class_exists('\MasterAddons\Inc\Classes\Master_Addons_White_Label') ? \MasterAddons\Inc\Classes\Master_Addons_White_Label::get_plugin_name($full) : __('Master Addons', 'master-addons');
+	}
 
 	/**
 	 * API Endpoint

@@ -41,7 +41,7 @@ class JLTMA_Extension_Custom_JS
         $widget->start_controls_section(
             'jltma_custom_js_section',
             [
-                'label' => JLTMA_BADGE . esc_html__(' Custom JS', 'master-addons'),
+                'label' => esc_html__('Custom JS ', 'master-addons') . JLTMA_EXTENSION_BADGE,
                 'tab' => Controls_Manager::TAB_ADVANCED
             ]
         );

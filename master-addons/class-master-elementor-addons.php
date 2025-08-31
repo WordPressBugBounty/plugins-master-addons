@@ -203,6 +203,9 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
             if ( !defined( 'JLTMA_BADGE' ) ) {
                 define( 'JLTMA_BADGE', '<span class="jltma-badge"></span>' );
             }
+            if ( !defined( 'JLTMA_EXTENSION_BADGE' ) ) {
+                define( 'JLTMA_EXTENSION_BADGE', '<span class="jltma-icon-ma"></span>' );
+            }
             if ( !defined( 'JLTMA_NEW_FEATURE' ) ) {
                 define( 'JLTMA_NEW_FEATURE', '<span class="jltma-new-feature"></span>' );
             }
@@ -304,6 +307,7 @@ if ( !class_exists( 'Master_Elementor_Addons' ) ) {
         // Extensions
         public static function activated_extensions() {
             $jltma_default_extensions_settings = array_fill_keys( Master_Addons_Admin_Settings::jltma_addons_extensions_array(), true );
+            $jltma_default_extensions_settings['mega-menu'] = 0;
             $jltma_get_extension_settings = get_option( 'ma_el_extensions_save_settings', $jltma_default_extensions_settings );
             $jltma_new_extension_settings = array_diff_key( $jltma_default_extensions_settings, $jltma_get_extension_settings );
             $jltma_updated_extension_settings = array_merge( $jltma_get_extension_settings, $jltma_new_extension_settings );

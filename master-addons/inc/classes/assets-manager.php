@@ -186,6 +186,28 @@ class Master_Addons_Assets {
             JLTMA_VER,
             true
         );
+        // Particles
+        wp_register_script(
+            'master-addons-particles',
+            JLTMA_URL . '/assets/js/particles.min.js',
+            ['jquery'],
+            JLTMA_VER,
+            true
+        );
+        // Vegas Background Slider
+        wp_register_style(
+            'master-addons-vegas',
+            JLTMA_URL . '/assets/vendor/vegas/vegas.min.css',
+            [],
+            JLTMA_VER
+        );
+        wp_register_script(
+            'master-addons-vegas',
+            JLTMA_URL . '/assets/vendor/vegas/vegas.min.js',
+            ['jquery'],
+            JLTMA_VER,
+            true
+        );
         // Image Comparison
         wp_register_script(
             'jquery-event-move',

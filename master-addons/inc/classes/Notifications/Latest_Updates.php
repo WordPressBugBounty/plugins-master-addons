@@ -40,15 +40,16 @@ if (!class_exists('Latest_Updates')) {
                  */
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Updated: Team Slider Updated for Mobile Devices </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Custom CSS for Elementor not working on frontend issue fixed </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Custom JS for Elementor not showing on Editor and appying on frontend issue fixed </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Gradient Headline- add normal and hover color section for classic & gradient mode </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Infobox- preset 8 icon padding issue  </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Gallery slider- Preview image border radius & thumbnail hover effect- hover background color, border color option </span><br>', 'master-addons'),
-                 __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Gravity Form- fixed function not defined fatal error </span><br>', 'master-addons')
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Added: Dynamic Tags added on Image Hover Effects </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Update: Master Addons Mega menu feature updated </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Animated Gradient Background extension not working issue fixed </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Particles background not working issue fixed, also working on Editor Mode </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Background Slider not working issue fixed, working on both editor and frontend  </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Extensions not showing on Advanced/Style tabs, Container supports for Particles, Animated Background etc </span><br>', 'master-addons'),
+                 __('<span class="jltma-changes-list"> <a href="https://master-addons.com/master-addons-2-0-9-6-mega-menu-particles-slider-fixes/" target="_blank" >View All Fixing </a></span><br>', 'master-addons')
             );
             printf(wp_kses_post($jltma_changelog_message));
+
         }
         /**
          * Intervals

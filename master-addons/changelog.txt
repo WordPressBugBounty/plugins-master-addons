@@ -1,4 +1,12 @@
 == Changelog ==
+= 2.0.9.6 (31-08-2025) =
+* Added: Dynamic Tags added on Image Hover Effects
+* Update: Master Addons Mega menu feature updated 
+* Fixed: Animated Gradient Background extension not working issue fixed
+* Fixed: Particles background not working issue fixed, also working on Editor Mode
+* Fixed: Background Slider not working issue fixed, working on both editor and frontend
+* Fixed: Extensions not showing on Advanced/Style tabs, Container supports for Particles, Animated Background etc
+
 = 2.0.9.5 (19-08-2025) =
 * Updated: Minor Bugs fixed
 

@@ -950,14 +950,12 @@ class JLTMA_Team_Member extends Widget_Base {
 									<path fill-rule="evenodd" opacity=".659" d="M61.922 0C95.654 0 123 27.29 123 60.953c0 33.664-27.346 60.953-61.078 60.953-33.733 0-61.078-27.289-61.078-60.953C.844 27.29 28.189 0 61.922 0z" />
 								</svg>
 								<# } #>
-									<img src="{{ settings.ma_el_team_member_image.url }}" class="circled" alt="{{ settings
-                                .ma_el_team_member_name }}">
+									<img src="{{ settings.ma_el_team_member_image.url }}" class="circled" alt="{{ settings.ma_el_team_member_name }}">
 
 						</div>
 						<div class="jltma-team-member-content">
 							<h2 class="jltma-team-member-name">{{{ settings.ma_el_team_member_name }}}</h2>
-							<span class="jltma-team-member-designation">{{{ settings.ma_el_team_member_designation
-                                    }}}</span>
+							<span class="jltma-team-member-designation">{{{ settings.ma_el_team_member_designation }}}</span>
 							<p class="jltma-team-member-about">{{{ settings.ma_el_team_member_description }}}</p>
 							<# if ( 'yes'==settings.ma_el_team_member_enable_social_profiles ) { #>
 								<ul class="list-inline jltma-team-member-social">
