@@ -4,13 +4,17 @@ namespace MasterAddons\Modules\DynamicTags;
 
 use MasterAddons\Inc\Helper\Master_Addons_Helper;
 
+if (!class_exists('MasterAddons\Modules\DynamicTags\JLTMA_Extension_Dynamic_Tags')) {
 class JLTMA_Extension_Dynamic_Tags
 {
 	private static $_instance = null;
 
 	public function __construct()
 	{
+		// Don't load if Elementor Pro is active as it already has dynamic tags
 		add_action('elementor/dynamic_tags/register', [$this, 'jltma_register_dynamic_tags']);
+		// if (!defined('ELEMENTOR_PRO_VERSION')) {
+		// }
 	}
 
 	/**
@@ -176,6 +180,12 @@ class JLTMA_Extension_Dynamic_Tags
 				'group' => 'post',
 				'title' => 'Post',
 			),
+			'jltma-post-content' => array(
+				'file'  => JLTMA_DYNAMIC_TAGS_PATH_INC . 'post-content.php',
+				'class' => 'Tags\JLTMA_Post_Content',
+				'group' => 'post',
+				'title' => 'Post',
+			),
 			'jltma-post-url' => array(
 				'file'  => JLTMA_DYNAMIC_TAGS_PATH_INC . 'post-url.php',
 				'class' => 'Tags\JLTMA_Post_URL',
@@ -247,7 +257,6 @@ class JLTMA_Extension_Dynamic_Tags
 		}
 	}
 
-
 	public static function get_instance()
 	{
 		if (is_null(self::$_instance)) {
@@ -256,5 +265,8 @@ class JLTMA_Extension_Dynamic_Tags
 		return self::$_instance;
 	}
 }
+}
 
-JLTMA_Extension_Dynamic_Tags::get_instance();
+if (class_exists('MasterAddons\Modules\DynamicTags\JLTMA_Extension_Dynamic_Tags')) {
+	JLTMA_Extension_Dynamic_Tags::get_instance();
+}

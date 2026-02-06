@@ -1103,7 +1103,7 @@ class JLTMA_Blog extends Widget_Base
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'ma_el_blog_title_typo',
-				'selector' => '{{WRAPPER}} .jltma-entry-title',
+				'selector' => '{{WRAPPER}} .jltma-entry-title, {{WRAPPER}} .jltma-entry-title a',
 			]
 		);
 
@@ -2144,13 +2144,19 @@ class JLTMA_Blog extends Widget_Base
 
 		$settings = $this->get_settings_for_display();
 
+		// Whitelist allowed HTML tags to prevent XSS
+		$allowed_tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+		$title_html_tag = in_array($settings['title_html_tag'], $allowed_tags, true)
+			? $settings['title_html_tag']
+			: 'h2';
+
 		$this->add_render_attribute('title', 'class', 'jltma-entry-title');
 
 		if ($settings['ma_el_post_grid_post_title'] == 'yes') { ?>
 
-			<<?php echo tag_escape($settings['title_html_tag']) . ' ' . $this->get_render_attribute_string('title'); ?>>
+			<<?php echo esc_html($title_html_tag) . ' ' . $this->get_render_attribute_string('title'); ?>>
 				<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr($link_target); ?>"><?php the_title(); ?></a>
-			</<?php echo tag_escape($settings['title_html_tag']); ?>>
+			</<?php echo esc_html($title_html_tag); ?>>
 
 		<?php }
 	}

@@ -39,7 +39,7 @@ class JLTMA_Post_Terms extends Tag
 	{
 		$taxonomy_filter_args = [
 			'show_in_nav_menus' => true,
-			'object_type' => [get_post_type()],
+			'public' => true,
 		];
 
 		/**

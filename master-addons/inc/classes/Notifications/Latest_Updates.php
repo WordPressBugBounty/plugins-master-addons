@@ -6,7 +6,7 @@ use MasterAddons\Inc\Classes\Notifications\Model\Notice;
 
 if (!class_exists('Latest_Updates')) {
     /**
-     * Latest Pugin Updates Notice Class
+     * Latest Plugin Updates Notice Class
      *
      * Jewel Theme <support@jeweltheme.com>
      */
@@ -32,20 +32,19 @@ if (!class_exists('Latest_Updates')) {
         public function notice_content()
         {
             $jltma_changelog_message = sprintf(
-                __('%3$s %4$s %5$s <br> <strong>Check Changelogs for </strong> <a href="%1$s" target="__blank">%2$s</a>', 'master-addons'),
-                esc_url_raw('https://master-addons.com/changelogs'),
+                __('%3$s %4$s <br> <strong>Check Changelogs for </strong> <a href="%1$s" target="__blank">%2$s</a>', 'master-addons'),
+                esc_url_raw('https://master-addons.com/master-addons-updates-v2-1-0'),
                 __('More Details', 'master-addons'),
                 /** Changelog Items
                  * Starts from: %3$s
                  */
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Mobile nav menu toggle is not working properly in free version. </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Freemius SDK updated for better security. </span><br>', 'master-addons')
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Timeline icon not showing issue fixed.</span><br>', 'master-addons')
             );
             printf(wp_kses_post($jltma_changelog_message));
-
         }
+
         /**
          * Intervals
          *

@@ -16,8 +16,9 @@ if (!defined('ABSPATH')) {
  *
  * Jewel Theme <support@jeweltheme.com>
  */
-class Pro_Upgrade
-{
+if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
+	class Pro_Upgrade
+	{
 
 	use Date;
 
@@ -41,11 +42,6 @@ class Pro_Upgrade
 	 */
 	public function __construct()
 	{
-		// Check if Pro is already activated
-		// pretty_log( 'Data Looking for ',  $this->get_content('show_for_premiun'));
-		// if (wp_validate_boolean($this->get_content('show_for_premiun'))) {
-		// 	return;
-		// }
 
 		$this->slug = Master_Addons_Helper::jltma_slug_cleanup();
 
@@ -54,6 +50,9 @@ class Pro_Upgrade
 		$this->set_data();
 
 		add_action('admin_footer', array($this, 'display_popup'));
+
+		// Add popup to Elementor editor (runs in iframe, needs separate hook)
+		add_action('elementor/editor/footer', array($this, 'display_popup'));
 
 		add_action('wp_dashboard_setup', array($this, 'dashboard_widget'));
 	}
@@ -259,6 +258,7 @@ class Pro_Upgrade
 	public static function get_data()
 	{
 		return get_option('jltma_sheet_promo_data');
+
 	}
 
 	/**
@@ -401,12 +401,44 @@ class Pro_Upgrade
 			return false;
 		}
 
-		$data = array_map('str_getcsv', explode("\n", $response));
+		$data = array_map(function($line) {
+			return str_getcsv($line, ',', '"', '\\');
+		}, explode("\n", $response));
+
+		// Remove empty rows that can occur from trailing newlines
+		$data = array_filter($data, function($row) {
+			return !empty($row) && !empty(array_filter($row));
+		});
 
 		$header = array_shift($data);
 
+		// Validate header exists
+		if (empty($header)) {
+			return false;
+		}
+
 		$data = array_map(function (array $row) use ($header) {
-			return array_combine($header, $row);
+			// Ensure row has same number of elements as header to prevent array_combine errors
+			$header_count = count($header);
+			$row_count = count($row);
+
+			if ($row_count < $header_count) {
+				// Pad row with empty strings if it has fewer elements than header
+				$row = array_pad($row, $header_count, '');
+			} elseif ($row_count > $header_count) {
+				// Truncate row if it has more elements than header
+				$row = array_slice($row, 0, $header_count);
+			}
+
+			$result = array_combine($header, $row);
+
+			// Extra safety check
+			// if ($result === false) {
+			// 	error_log('Master Addons: array_combine failed. Header count: ' . count($header) . ', Row count: ' . count($row));
+			// 	return array();
+			// }
+
+			return $result;
 		}, $data);
 
 		// filter plugin is not empty .
@@ -433,7 +465,23 @@ class Pro_Upgrade
 	 */
 	public function display_popup()
 	{
-		$image_url = $this->get_content('image_url');
+		if(Master_Addons_Helper::jltma_premium()){
+			if( !$this->get_content('show_for_premium') ){
+				return;
+			}
+		}
+		
+		if( 'FALSE' === $this->get_content('is_campaign')){
+			$image_url = JLTMA_IMAGE_DIR . 'ma-fallback.png';
+			$notice = 'Use "SPECIAL40" to Get Flat 40% OFF';
+			$btn_url = 'https://master-addons.com/pricing/';
+			$btn_text = 'GET THE DEAL';
+		}else{
+			$image_url = $this->get_content('image_url');
+			$notice = $this->get_content('notice');
+			$btn_url = $this->get_content('button_url');
+			$btn_text = $this->get_content('button_text');
+		}
 
 	?>
 
@@ -451,9 +499,9 @@ class Pro_Upgrade
 
 					<!-- countdown  -->
 					<div class="jltma-popup-countdown" style="display: none;">
-						<?php if (!empty($this->get_content('notice'))) { ?>
+						<?php if (!empty($notice)) { ?>
 							<span data-counter="notice" style="color:#F4B740; font-size:14px; padding-bottom:20px; font-style:italic;">
-								<?php echo esc_html__('Notice:', 'master-addons'); ?> <?php echo $this->get_content('notice'); ?>
+								<?php echo esc_html__('Notice:', 'master-addons'); ?> <?php echo $notice; ?>
 							</span>
 						<?php } ?>
 						<span class="jltma-popup-countdown-text"><?php echo esc_html__('Offer Ends In', 'master-addons'); ?></span>
@@ -481,7 +529,7 @@ class Pro_Upgrade
 					</div>
 
 					<!-- button  -->
-					<a class="jltma-popup-button" target="_blank" href="<?php echo esc_url($this->get_content('button_url')); ?>"><?php echo esc_html($this->get_content('button_text')); ?></a>
+					<a class="jltma-popup-button" target="_blank" href="<?php echo esc_url($btn_url); ?>"><?php echo esc_html($btn_text ); ?></a>
 				</div>
 			</div>
 		</div>
@@ -594,4 +642,5 @@ class Pro_Upgrade
 
 		return $this->date_increment($this->current_time(), 3);
 	}
-}
+	} // End class Pro_Upgrade
+} // End class_exists check
