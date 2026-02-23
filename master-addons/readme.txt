@@ -4,7 +4,7 @@ Tags: elementor, elementor templates, elementor addons, widgets for elementor, e
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -346,6 +346,9 @@ Paste on your Local Computer
 3. Activate the "Master Addons for Elementor" Plugin through the 'Plugins' menu in WordPress 
 
 == Changelog ==
+= 2.1.3 (23-02-2026) =
+* Fixed: Rollback feature hide.
+
 = 2.1.2 (15-02-2026) =
 * Security: Stored Cross-Site Scripting (XSS) vulnerability in 15 widget settings across 10 widgets
 * Security: Business Hours widget - unescaped `ma_el_bh_table_btn_text` output

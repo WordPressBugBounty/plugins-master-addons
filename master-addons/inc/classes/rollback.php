@@ -21,7 +21,13 @@ class Master_Addons_Rollback
 
 	public function __construct($args = [])
 	{
-		$this->plugin_name = Master_Addons_Helper::jltma_premium() ?  JLTMA_PRO : JLTMA ;
+		// Rollback is only available for the free version from WordPress.org
+		// Pro users should use Freemius account for version management
+		if (Master_Addons_Helper::jltma_premium()) {
+			return;
+		}
+
+		$this->plugin_name = JLTMA;
 		add_action('admin_post_master_addons_rollback', [$this, 'jltma_post_addons_rollback']);
 
 		foreach ($args as $key => $value) {

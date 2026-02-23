@@ -50,13 +50,13 @@
 		</li>
 	<?php } ?>
 
-	<?php if (isset($jltma_hide_version) && !$jltma_hide_version) { ?>
-		<li>
+	<?php // if (isset($jltma_hide_version) && !$jltma_hide_version) { ?>
+		<!-- <li>
 			<a href="#jltma-master-addons-version">
-				<?php _e('Version', 'master-addons' ); ?>
+				<?php //  _e('Version', 'master-addons' ); ?>
 			</a>
-		</li>
-	<?php } ?>
+		</li> -->
+	<?php // } ?>
 
 	<?php //if (isset($jltma_hide_changelogs) && !$jltma_hide_changelogs) { ?>
 		<!-- <li>
