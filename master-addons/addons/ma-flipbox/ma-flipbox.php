@@ -1168,7 +1168,7 @@ class JLTMA_Flipbox extends Widget_Base
 						<?php if ($settings['ma_flipbox_layout_style'] == "two") { ?>
 
 							<?php if (isset($flip_box_url) && $flip_box_url != "") { ?>
-								<img src="<?php echo esc_url($flip_box_url); ?>" alt="<?php echo get_post_meta($flip_box['id'], '_wp_attachment_image_alt', true); ?>">
+								<img src="<?php echo esc_url($flip_box_url); ?>" alt="<?php echo esc_attr(get_post_meta($flip_box['id'], '_wp_attachment_image_alt', true)); ?>">
 							<?php } ?>
 
 						<?php } else if (($settings['ma_flipbox_layout_style'] == "one") || ($settings['ma_flipbox_layout_style'] == "three")) { ?>

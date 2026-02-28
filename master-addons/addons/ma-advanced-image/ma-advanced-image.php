@@ -1719,7 +1719,7 @@ class JLTMA_Advanced_Image extends Widget_Base
 			if (!empty($image_primary_meta['height'])) {
 				$lightbox_attrs .= 'data-original-height="' . esc_attr($image_primary_meta['height']) . '" ';
 			}
-			$lightbox_attrs     .= 'data-description="' . $this->ma_el_attachment_caption($attach_id) . '"';
+			$lightbox_attrs     .= 'data-description="' . esc_attr($this->ma_el_attachment_caption($attach_id)) . '"';
 		} elseif (!empty($image_html)) {
 			$image_primary = $image_html;
 		}

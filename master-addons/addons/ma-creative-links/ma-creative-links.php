@@ -755,7 +755,7 @@ class JLTMA_Creative_Links extends Widget_Base
 					// Alternative text for effect 9
 					if ($effect === 'jltma-cl-effect-9') {
 						$alt_text = !empty($settings['creative_alternative_link_text']) ? $settings['creative_alternative_link_text'] : $settings['creative_link_text'];
-						echo '<span>' . $this->parse_text_editor($alt_text) . '</span>';
+						echo '<span>' . esc_html($this->parse_text_editor($alt_text)) . '</span>';
 					}
 
 					// Icon After Text

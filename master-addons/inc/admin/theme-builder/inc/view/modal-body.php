@@ -3,7 +3,7 @@
     <div class="jltma-spinner"></div>
 
     <div class="jltma-pop-contents-padding">
-        <form action="" mathod="get" id="jltma_hf_modal_form" data-open-editor="0" data-editor-url="<?php echo get_admin_url(); ?>" data-nonce="<?php echo wp_create_nonce('wp_rest'); ?>">
+        <form action="" mathod="get" id="jltma_hf_modal_form" data-open-editor="0" data-editor-url="<?php echo esc_url(get_admin_url()); ?>" data-nonce="<?php echo esc_attr(wp_create_nonce('wp_rest')); ?>">
         <!-- Tab Contents Container -->
         <div class="jltma-modal-content-area">
             <!-- General Tab Content -->

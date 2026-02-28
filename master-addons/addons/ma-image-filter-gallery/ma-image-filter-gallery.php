@@ -2121,9 +2121,9 @@ class JLTMA_Filterable_Image_Gallery extends Widget_Base
 								$ma_el_image_gallery_discount = array("discount", "sale");
 
 								if (in_array($item['ma_el_image_gallery_ribbon'], $ma_el_image_gallery_discount)) {
-									echo '<div class="jltma-label jltma-new">' . $this->parse_text_editor($item['ma_el_image_gallery_discount']) . '</div>';
+									echo '<div class="jltma-label jltma-new">' . esc_html($this->parse_text_editor($item['ma_el_image_gallery_discount'])) . '</div>';
 								} else {
-									echo '<div class="jltma-label jltma-' . esc_attr($item['ma_el_image_gallery_ribbon']) . '">' . $this->parse_text_editor($item['ma_el_image_gallery_ribbon']) . '</div>';
+									echo '<div class="jltma-label jltma-' . esc_attr($item['ma_el_image_gallery_ribbon']) . '">' . esc_html($this->parse_text_editor($item['ma_el_image_gallery_ribbon'])) . '</div>';
 								}
 							}
 

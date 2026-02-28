@@ -285,7 +285,7 @@ class JLTMA_Header_Footer_CPT_API extends JLTMA_Header_Footer_Rest_API
             }
 
             // Add edit icon to condition text for admin display
-            $cond_with_edit = $cond . '<br><a href="#" class="jltma-theme-builder-edit-cond" id="' . $id . '">Edit Conditions <span class="dashicons dashicons-edit"></span></a>';
+            $cond_with_edit = wp_kses_post($cond) . '<br><a href="#" class="jltma-theme-builder-edit-cond" id="' . esc_attr($id) . '">Edit Conditions <span class="dashicons dashicons-edit"></span></a>';
 
 
             return [

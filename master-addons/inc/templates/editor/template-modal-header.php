@@ -15,9 +15,9 @@
         // Only show cache status if templates are cached
         if ($total_templates > 0):
     ?>
-        <div id="ma-el-template-cache-status" class="elementor-template-library-header-item" title="Cache Status: <?php echo $total_templates; ?> templates cached">
+        <div id="ma-el-template-cache-status" class="elementor-template-library-header-item" title="Cache Status: <?php echo esc_attr($total_templates); ?> templates cached">
             <i class="eicon-database-solid"></i>
-            <span class="cache-count"><?php echo $total_templates; ?></span>
+            <span class="cache-count"><?php echo esc_html($total_templates); ?></span>
         </div>
     <?php endif; ?>
         <div id="ma-el-template-cache-refresh" class="elementor-template-library-header-item" title="Refresh Cache">

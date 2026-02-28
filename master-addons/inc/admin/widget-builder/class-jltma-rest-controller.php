@@ -153,7 +153,7 @@ class JLTMA_REST_Controller extends WP_REST_Controller {
      * Permission callback
      */
     public function check_permission() {
-        return current_user_can('edit_posts');
+        return current_user_can('manage_options');
     }
 
     /**

@@ -188,7 +188,7 @@ class JLTMA_CPT_Hook
                     }
                 }
 
-                echo $condition_text . '<br><a href="#" class="jltma-theme-builder-edit-cond" id="' . $post_id . '">Edit Conditions <span class="dashicons dashicons-edit"></span></a>';
+                echo wp_kses_post($condition_text) . '<br><a href="#" class="jltma-theme-builder-edit-cond" id="' . esc_attr($post_id) . '">Edit Conditions <span class="dashicons dashicons-edit"></span></a>';
 
                 break;
             case 'shortcode':

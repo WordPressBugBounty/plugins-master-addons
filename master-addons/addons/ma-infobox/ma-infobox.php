@@ -1185,7 +1185,7 @@ class JLTMA_Infobox extends Widget_Base
 					<?php if (($settings['ma_el_infobox_preset'] === "two") || ($settings['ma_el_infobox_preset'] === "three")) { ?>
 						<div class="bg-fade-icon">
 							<?php if ('img' == $settings['ma_el_infobox_img_or_icon']) { ?>
-								<img src="<?php echo esc_url($infobox_image_url); ?>" alt="<?php echo get_post_meta($infobox_image['id'], '_wp_attachment_image_alt', true); ?>">
+								<img src="<?php echo esc_url($infobox_image_url); ?>" alt="<?php echo esc_attr(get_post_meta($infobox_image['id'], '_wp_attachment_image_alt', true)); ?>">
 								<?php } else {
 								$migrated = isset($settings['__fa4_migrated']['ma_el_infobox_icon']);
 								$is_new   = empty($settings['icon']) && \Elementor\Icons_Manager::is_migration_allowed();
@@ -1215,7 +1215,7 @@ class JLTMA_Infobox extends Widget_Base
 							}
 
 							if ('img' == $settings['ma_el_infobox_img_or_icon']) { ?>
-								<img src="<?php echo esc_url($infobox_image_url); ?>" alt="<?php echo get_post_meta($infobox_image['id'], '_wp_attachment_image_alt', true); ?>">
+								<img src="<?php echo esc_url($infobox_image_url); ?>" alt="<?php echo esc_attr(get_post_meta($infobox_image['id'], '_wp_attachment_image_alt', true)); ?>">
 							<?php }
 
 							if ($settings['ma_el_infobox_preset'] == "nine") { ?>

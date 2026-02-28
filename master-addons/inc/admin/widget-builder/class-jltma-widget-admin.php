@@ -820,6 +820,10 @@ class JLTMA_Widget_Admin {
     }
 
     public function get_widget_data() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'You do not have permission to perform this action.'], 403);
+        }
+
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
         $widget_id = intval($_GET['widget_id']);
@@ -847,6 +851,10 @@ class JLTMA_Widget_Admin {
     }
 
     public function save_widget_data() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'You do not have permission to perform this action.'], 403);
+        }
+
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
         $widget_id = intval($_POST['widget_id']);
@@ -916,6 +924,10 @@ class JLTMA_Widget_Admin {
     }
 
     public function delete_widget() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'You do not have permission to perform this action.'], 403);
+        }
+
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
         $widget_id = intval($_POST['widget_id']);
@@ -937,6 +949,10 @@ class JLTMA_Widget_Admin {
     }
 
     public function update_widget_category() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'You do not have permission to perform this action.'], 403);
+        }
+
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
         $widget_id = intval($_POST['widget_id']);
@@ -1000,6 +1016,10 @@ class JLTMA_Widget_Admin {
      * Get widget conditions via AJAX
      */
     public function get_widget_conditions() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'You do not have permission to perform this action.'], 403);
+        }
+
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
         $widget_id = intval($_GET['widget_id']);
@@ -1028,6 +1048,10 @@ class JLTMA_Widget_Admin {
      * Save widget conditions via AJAX
      */
     public function save_widget_conditions() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'You do not have permission to perform this action.'], 403);
+        }
+
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
         $widget_id = intval($_POST['widget_id']);
@@ -1055,6 +1079,12 @@ class JLTMA_Widget_Admin {
      * Handles AJAX request to render widget HTML with PHP code executed
      */
     public function render_preview() {
+        // Capability check: only administrators can execute widget previews (contains eval)
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'You do not have permission to perform this action.'], 403);
+            return;
+        }
+
         $nonce = isset($_POST['_nonce']) ? $_POST['_nonce'] : (isset($_GET['_nonce']) ? $_GET['_nonce'] : '');
         if (!wp_verify_nonce($nonce, 'wp_rest')) {
             wp_send_json_error(['message' => 'Nonce verification failed']);

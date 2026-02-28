@@ -817,7 +817,7 @@ class JLTMA_Search extends Widget_Base
 
                                 <?php
                                 if ($jltma_search_submit_button) {
-                                    echo '<span>' . $this->parse_text_editor($jltma_search_submit_button) . '</span>';
+                                    echo '<span>' . esc_html($this->parse_text_editor($jltma_search_submit_button)) . '</span>';
                                 } ?>
                             </button>
                         </div>

@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-23 09:53+0000\n"
+"POT-Creation-Date: 2026-02-28 11:34+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -11776,39 +11776,39 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
-#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:981
+#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:985
 msgid "You do not have permission to add categories."
 msgstr ""
 
-#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:990
+#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:994
 msgid "Category name is required."
 msgstr ""
 
-#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1003
+#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1007
 msgid "A category with this name already exists."
 msgstr ""
 
-#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1015
+#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1019
 msgid "Category \"%s\" added successfully!"
 msgstr ""
 
-#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1029
+#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1033
 msgid "You do not have permission to preview widgets."
 msgstr ""
 
-#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1036
+#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1040
 msgid "Invalid widget preview request."
 msgstr ""
 
-#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1042
+#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1046
 msgid "Widget not found."
 msgstr ""
 
-#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1057
+#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1061
 msgid "Widget Preview"
 msgstr ""
 
-#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1083
+#: ../inc/admin/widget-builder/class-jltma-widget-cpt.php:1087
 msgid "This is a live preview of your widget. Changes made to the widget will be reflected here after saving and refreshing."
 msgstr ""
 
@@ -12021,7 +12021,7 @@ msgid " has some updates.."
 msgstr ""
 
 #: ../inc/classes/Notifications/Latest_Updates.php:43
-msgid "<span class=\"dashicons dashicons-yes\"></span> <span class=\"jltma-changes-list\"> Fixed: Rollback feature hide.</span><br>"
+msgid "<span class=\"dashicons dashicons-yes\"></span> <span class=\"jltma-changes-list\"> Security: Security update.</span><br>"
 msgstr ""
 
 #: ../inc/classes/Notifications/Notifications.php:198

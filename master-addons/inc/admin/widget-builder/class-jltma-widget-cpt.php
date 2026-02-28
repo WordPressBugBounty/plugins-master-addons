@@ -961,6 +961,10 @@ class JLTMA_Widget_CPT {
     }
 
     public function get_shortcode_ajax() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'You do not have permission to perform this action.'], 403);
+        }
+
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
         $post_id = intval($_POST['post_id']);
@@ -976,7 +980,7 @@ class JLTMA_Widget_CPT {
         check_ajax_referer('jltma_add_category_nonce', '_nonce');
 
         // Check user capabilities
-        if (!current_user_can('edit_posts')) {
+        if (!current_user_can('manage_options')) {
             wp_send_json_error([
                 'message' => __('You do not have permission to add categories.', 'master-addons')
             ]);

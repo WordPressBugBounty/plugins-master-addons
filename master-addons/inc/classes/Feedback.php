@@ -147,7 +147,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Feedback')) {
                 <form action="#" class="jltma-deactivate-form-wrapper">
                     <?php foreach ($this->get_survey_questions() as $reason_key => $reason) { ?>
                         <div class="jltma-deactivate-input-wrapper">
-                            <input id="jltma-deactivate-feedback-<?php echo esc_attr($reason_key); ?>" class="jltma-deactivate-feedback-dialog-input" type="radio" name="reason_key" value="<?php echo $reason_key; ?>">
+                            <input id="jltma-deactivate-feedback-<?php echo esc_attr($reason_key); ?>" class="jltma-deactivate-feedback-dialog-input" type="radio" name="reason_key" value="<?php echo esc_attr($reason_key); ?>">
                             <label for="jltma-deactivate-feedback-<?php echo esc_attr($reason_key); ?>" class="jltma-deactivate-feedback-dialog-label"><?php echo esc_html($reason['title']); ?></label>
                             <?php if (!empty($reason['input_placeholder'])) : ?>
                                 <input class="jltma-deactivate-feedback-text" type="text" name="reason_<?php echo esc_attr($reason_key); ?>" placeholder="<?php echo esc_attr($reason['input_placeholder']); ?>" />

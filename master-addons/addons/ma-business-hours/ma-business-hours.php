@@ -1486,7 +1486,7 @@ class JLTMA_Business_Hours extends Widget_Base
 							<?php
 							} else {
 								if ($item['ma_el_bh_closed_text']) {
-									echo '<span class="closed">' . $this->parse_text_editor($item['ma_el_bh_closed_text']) . '</span>';
+									echo '<span class="closed">' . esc_html($this->parse_text_editor($item['ma_el_bh_closed_text'])) . '</span>';
 								} else {
 									echo '<span class="closed">' . esc_html('Closed', 'master-addons' ) . '</span>';
 								}
