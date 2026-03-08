@@ -1,9 +1,9 @@
 <?php do_action('masteraddons/template/before_footer'); ?>
 	<div class="jltma-template-content-markup jltma-template-content-footer jltma-template-content-theme-support">
 		<?php
-			$template = \MasterHeaderFooter\JLTMA_HF_Activator::template_ids();
+			$template = \MasterAddons\Inc\Admin\Theme_Builder\Activator::template_ids();
 			if ($template[1]) {
-				echo \MasterHeaderFooter\Master_Header_Footer::render_elementor_content($template[1]);
+				echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($template[1]);
 			}
 		?>
 	</div>

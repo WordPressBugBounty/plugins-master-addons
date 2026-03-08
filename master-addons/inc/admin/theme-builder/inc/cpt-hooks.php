@@ -1,10 +1,10 @@
 <?php
 
-namespace MasterHeaderFooter;
+namespace MasterAddons\Inc\Admin\Theme_Builder;
 
 defined('ABSPATH') || exit;
 
-class JLTMA_CPT_Hook
+class CPT_Hooks
 {
     public static $instance = null;
 
@@ -294,4 +294,4 @@ class JLTMA_CPT_Hook
     }
 }
 
-new JLTMA_CPT_Hook();
+new CPT_Hooks();

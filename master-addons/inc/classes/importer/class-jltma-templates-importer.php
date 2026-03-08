@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
  * Master Addons Templates Kit Importer
  * Handles importing template kits from local JSON files
  */
-class JLTMA_Templates_Importer {
+class Templates_Importer {
 
     private $kit_id;
     private $kit_path;
@@ -100,9 +100,11 @@ class JLTMA_Templates_Importer {
         }
 
         // Create WordPress page
+        $post_type = $template_data['page_settings']['post_type'] ?? 'page';
+
         $page_id = wp_insert_post(array(
             'post_title' => $template_data['page_settings']['post_title'],
-            'post_type' => $template_data['page_settings']['post_type'],
+            'post_type' => $post_type,
             'post_status' => 'publish',
             'post_content' => '', // Elementor handles content
             'meta_input' => array(
@@ -111,7 +113,9 @@ class JLTMA_Templates_Importer {
                 '_elementor_version' => $template_data['version'],
                 '_elementor_data' => wp_slash(json_encode($template_data['content'])),
                 '_jltma_demo_import_item' => true,
-                '_jltma_import_kit_id' => $this->kit_id
+                '_jltma_import_kit_id' => $this->kit_id,
+                '_jltma_import_date' => current_time('mysql'),
+                '_wp_page_template' => 'elementor_canvas',
             )
         ));
 

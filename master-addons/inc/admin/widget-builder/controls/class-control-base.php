@@ -1,5 +1,5 @@
 <?php
-namespace MasterAddons\Admin\WidgetBuilder\Controls;
+namespace MasterAddons\Inc\Admin\WidgetBuilder\Controls;
 
 defined('ABSPATH') || exit;
 
@@ -501,18 +501,46 @@ abstract class Control_Base {
      * @return string Full control key
      */
     protected function convert_to_control_key($name, $field = []) {
-        // If already a full key (starts with jltma_), return as-is
-        if (strpos($name, 'jltma_') === 0) {
+        $widget_id = $field['_widget_id'] ?? '';
+        $widget_id_suffix = '_' . $widget_id;
+
+        // If already a full key (ends with _widget_id), return as-is
+        if (!empty($widget_id) && substr($name, -strlen($widget_id_suffix)) === $widget_id_suffix) {
             return $name;
         }
 
-        // Extract context
-        $tab_prefix = $field['_tab_prefix'] ?? 'jltma_content_';
-        $widget_id = $field['_widget_id'] ?? '';
+        // If name already has a jltma_ prefix (but no widget_id suffix), just append widget_id
+        if (strpos($name, 'jltma_content_') === 0 || strpos($name, 'jltma_style_') === 0 || strpos($name, 'jltma_advanced_') === 0) {
+            return $name . $widget_id_suffix;
+        }
 
-        // Build full key: tab_prefix + sanitized_name + '_' + widget_id
+        // Search across ALL sections to find which tab the target control actually lives in
         $sanitized_name = $this->sanitize_key($name);
-        return $tab_prefix . $sanitized_name . '_' . $widget_id;
+        if (!empty($field['_sections_data']) && is_array($field['_sections_data'])) {
+            $tab_prefix_map = [
+                'content' => 'jltma_content_',
+                'style' => 'jltma_style_',
+                'advanced' => 'jltma_advanced_',
+            ];
+
+            foreach ($field['_sections_data'] as $section) {
+                if (!is_array($section)) {
+                    continue;
+                }
+                $controls = !empty($section['controls']) ? $section['controls'] : (!empty($section['fields']) ? $section['fields'] : []);
+                foreach ($controls as $control) {
+                    if (!empty($control['name']) && $this->sanitize_key($control['name']) === $sanitized_name) {
+                        $tab = !empty($section['tab']) ? $section['tab'] : 'content';
+                        $prefix = $tab_prefix_map[$tab] ?? 'jltma_content_';
+                        return $prefix . $sanitized_name . $widget_id_suffix;
+                    }
+                }
+            }
+        }
+
+        // Fallback: use current field's tab prefix
+        $tab_prefix = $field['_tab_prefix'] ?? 'jltma_content_';
+        return $tab_prefix . $sanitized_name . $widget_id_suffix;
     }
 
     /**

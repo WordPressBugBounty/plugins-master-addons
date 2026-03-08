@@ -1,5 +1,5 @@
 <?php
-namespace MasterAddons\Admin\WidgetBuilder;
+namespace MasterAddons\Inc\Admin\WidgetBuilder;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -32,14 +32,11 @@ class Icon_Library_Helper
         $plugin_url = trailingslashit(JLTMA_URL);
         $fonts_path = $plugin_url . 'assets/fonts/';
 
-        // Elementor Icons (already loaded by Elementor)
-        if (!wp_style_is('elementor-icons', 'enqueued')) {
-            wp_enqueue_style(
-                'elementor-icons',
-                ELEMENTOR_ASSETS_URL . 'lib/eicons/css/elementor-icons.min.css',
-                [],
-                JLTMA_VER
-            );
+        // Elementor Icons — use Elementor's copy if available, otherwise local fallback
+        if (wp_style_is('elementor-icons', 'registered')) {
+            wp_enqueue_style('elementor-icons');
+        } else {
+            wp_enqueue_style('jltma-elementor-icons');
         }
 
         // Simple Line Icons
@@ -109,14 +106,20 @@ class Icon_Library_Helper
 
         $libraries = [];
 
-        // Add Elementor Icons if Elementor is active
+        // Add Elementor Icons — use Elementor's copy if available, otherwise local fallback
+        $eicons_css = null;
         if (defined('ELEMENTOR_ASSETS_PATH') && file_exists(ELEMENTOR_ASSETS_PATH . 'lib/eicons/css/elementor-icons.min.css')) {
+            $eicons_css = ELEMENTOR_ASSETS_PATH . 'lib/eicons/css/elementor-icons.min.css';
+        } elseif (file_exists(JLTMA_PATH . 'assets/fonts/elementor-icon/elementor-icons.css')) {
+            $eicons_css = JLTMA_PATH . 'assets/fonts/elementor-icon/elementor-icons.css';
+        }
+        if ($eicons_css) {
             $libraries['Elementor Icons'] = [
                 'prefix' => 'eicon-',
                 'display_prefix' => 'eicon eicon-',
                 'list-icon' => 'eicon eicon-elementor',
                 'icon-style' => 'elementor-icons',
-                'css_file' => ELEMENTOR_ASSETS_PATH . 'lib/eicons/css/elementor-icons.min.css'
+                'css_file' => $eicons_css
             ];
         }
 

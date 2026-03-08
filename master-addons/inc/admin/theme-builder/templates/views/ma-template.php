@@ -3,7 +3,7 @@
  * Master Addons Template with Header/Footer
  */
 
-use MasterHeaderFooter\Master_Header_Footer;
+use MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -16,8 +16,8 @@ $template_id = $wp_query->get( 'master_template_id' );
 get_header();
 
 // Render Master Addons template content
-if ( $template_id && class_exists( 'MasterHeaderFooter\Master_Header_Footer' ) ) {
-	$content = Master_Header_Footer::render_elementor_content( $template_id );
+if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder' ) ) {
+	$content = Theme_Builder::render_elementor_content( $template_id );
 	if ( ! empty( $content ) ) {
 		echo $content;
 	} else {
@@ -167,7 +167,7 @@ if ( $template_id && class_exists( 'MasterHeaderFooter\Master_Header_Footer' ) )
 	}
 } else {
 	// Debug: Show what went wrong
-	echo '<!-- Master Addons Debug: Template ID = ' . esc_html( $template_id ) . ', Class exists = ' . ( class_exists( 'MasterHeaderFooter\Master_Header_Footer' ) ? 'yes' : 'no' ) . ' -->';
+	echo '<!-- Master Addons Debug: Template ID = ' . esc_html( $template_id ) . ', Class exists = ' . ( class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder' ) ? 'yes' : 'no' ) . ' -->';
 }
 
 get_footer();

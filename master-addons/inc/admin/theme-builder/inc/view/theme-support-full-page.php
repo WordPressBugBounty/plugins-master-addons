@@ -18,11 +18,11 @@
 <div class="jltma-template-content-markup jltma-template-content-full-page jltma-template-content-theme-support">
 	<?php
 		// Get the full page template ID (templates_template - index 3)
-		$template_ids = \MasterHeaderFooter\JLTMA_HF_Activator::template_ids();
+		$template_ids = \MasterAddons\Inc\Admin\Theme_Builder\Activator::template_ids();
 		$full_page_template_id = $template_ids[3] ?? null;
 		
 		if ( $full_page_template_id ) {
-			echo \MasterHeaderFooter\Master_Header_Footer::render_elementor_content( $full_page_template_id );
+			echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content( $full_page_template_id );
 		}
 	?>
 </div>

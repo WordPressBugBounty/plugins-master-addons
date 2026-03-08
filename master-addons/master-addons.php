@@ -8,9 +8,9 @@
  * Author URI: https://master-addons.com
  * Text Domain: master-addons
  * Domain Path: /languages
- * Version: 2.1.4
- * Elementor tested up to: 3.35.4
- * Elementor Pro tested up to: 3.35.4
+ * Version: 3.0.2
+ * Elementor tested up to: 3.35.6
+ * Elementor Pro tested up to: 3.35.1
  * Wordfence Vendor Key: qgxtflvqaabgarz4gu9nozmceloswzrg
  *
  */
@@ -79,6 +79,15 @@ if ( function_exists( 'ma_el_fs' ) ) {
     ma_el_fs();
     // Disable automatic plugin deactivation on activation
     ma_el_fs()->add_filter( 'deactivate_on_activation', '__return_false' );
+    // After Freemius consent (connect or skip), go to settings page.
+    // Setup wizard runs first via admin_init redirect; by the time
+    // Freemius consent shows, the wizard is already complete.
+    ma_el_fs()->add_filter( 'after_connect_url', function ( $url ) {
+        return admin_url( 'admin.php?page=master-addons-settings' );
+    } );
+    ma_el_fs()->add_filter( 'after_skip_url', function ( $url ) {
+        return admin_url( 'admin.php?page=master-addons-settings' );
+    } );
     // Signal that SDK was initiated.
     do_action( 'ma_el_fs_loaded' );
 }
@@ -149,10 +158,20 @@ if ( !defined( 'JLTMA_PRO_EXTENSIONS' ) ) {
 if ( !defined( 'JLTMA_TEMPLATES' ) ) {
     define( 'JLTMA_TEMPLATES', plugin_dir_path( __FILE__ ) . 'inc/template-parts/' );
 }
-if ( !defined( 'JLTMA_ACTIVATION_REDIRECT_TRANSIENT_KEY' ) ) {
-    define( 'JLTMA_ACTIVATION_REDIRECT_TRANSIENT_KEY', '_master_addons_activation_redirect' );
+if ( !defined( 'JLTMA_NF' ) ) {
+    define( 'JLTMA_NF', '<span class="jltma-new-control"></span>' );
 }
-// Load the free class (only exists in free version)
+if ( !defined( 'JLTMA_NETWORK_ACTIVATED' ) ) {
+    if ( !function_exists( 'is_plugin_active_for_network' ) ) {
+        require_once ABSPATH . '/wp-admin/includes/plugin.php';
+    }
+    if ( is_plugin_active_for_network( 'master-addons/master-addons.php' ) || is_plugin_active_for_network( 'master-addons-pro/master-addons.php' ) ) {
+        define( "JLTMA_NETWORK_ACTIVATED", true );
+    } else {
+        define( "JLTMA_NETWORK_ACTIVATED", false );
+    }
+}
+// Load the main class (autoloader is embedded within)
 if ( !class_exists( '\\MasterAddons\\Master_Elementor_Addons' ) ) {
     require_once __DIR__ . '/class-master-elementor-addons.php';
 }
@@ -162,4 +181,32 @@ if ( class_exists( '\\MasterAddons\\Master_Elementor_Addons' ) ) {
     register_deactivation_hook( __FILE__, array('\\MasterAddons\\Master_Elementor_Addons', 'jltma_plugin_deactivation_hook') );
     // Initialize the plugin
     \MasterAddons\Master_Elementor_Addons::get_instance();
+}
+// Global helper for chainable settings access
+// Usage: jltma_settings()->addons->get('key')
+if ( !function_exists( 'jltma_settings' ) ) {
+    function jltma_settings() {
+        return \MasterAddons\Inc\Admin\Settings\Settings::instance();
+    }
+
+}
+// Backward-compat: old Pro plugins (< 3.0.0) call jltma_get_options()
+// which was removed in the v3.0.0 refactor. This wrapper prevents fatal
+// errors when free v3.0.0+ runs alongside an outdated pro plugin.
+if ( !function_exists( 'jltma_get_options' ) ) {
+    function jltma_get_options(  $key, $network_override = true  ) {
+        if ( class_exists( '\\MasterAddons\\Inc\\Classes\\Utils' ) ) {
+            return \MasterAddons\Inc\Classes\Utils::get_options( $key, $network_override );
+        }
+        return get_option( $key );
+    }
+
+}
+// Backward-compat: old Pro plugins (< 3.0.0) call jltma_check_options()
+// which was renamed to jltma_settings() in v3.0.0.
+if ( !function_exists( 'jltma_check_options' ) ) {
+    function jltma_check_options() {
+        return jltma_settings();
+    }
+
 }

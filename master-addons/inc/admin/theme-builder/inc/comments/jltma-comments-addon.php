@@ -1,6 +1,6 @@
 <?php
 
-namespace MasterHeaderFooter\Inc\Comments\Addon;
+namespace MasterAddons\Inc\Admin\Theme_Builder\Comments\Addon;
 
 // Elementor Classes
 use \Elementor\Widget_Base;
@@ -18,8 +18,8 @@ use \Elementor\Group_Control_Box_Shadow;
 use \Elementor\Group_Control_Text_Shadow;
 use \Elementor\Group_Control_Css_Filter;
 use \Elementor\Core\Kits\Documents\Tabs\Global_Colors;
-use MasterAddons\Inc\Helper\Master_Addons_Helper;
-use MasterHeaderFooter\Inc\Comments\JLTMA_Comments_Builder;
+use MasterAddons\Inc\Classes\Helper;
+use MasterAddons\Inc\Admin\Theme_Builder\Comments\Comments_Builder;
 
 /**
  * Author Name: Liton Arefin
@@ -2533,7 +2533,7 @@ class Master_Addons_Comments extends Widget_Base
 							if ($last_field === $name) {
 								do_action('comment_form_after_fields');
 							}
-						} elseif (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+						} elseif (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 
 							do_action('comment_form_before_fields');
 
@@ -2754,7 +2754,7 @@ class Master_Addons_Comments extends Widget_Base
 				}
 			}
 
-			if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+			if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 				echo esc_html__('Check Frontend Comment Form for reCaptcha', 'master-addons' );
 			}
 
@@ -2817,7 +2817,7 @@ class Master_Addons_Comments extends Widget_Base
 		<div class="jltma-comment-list-inner">
 			<?php
 			$db_table_name   = $wpdb->prefix . "comments";
-			$comment_listing = JLTMA_Comments_Builder::jltma_recursive_array_builder(
+			$comment_listing = Comments_Builder::jltma_recursive_array_builder(
 				$db_table_name = $wpdb->prefix . "comments",
 				$parent        = 0,
 				$parent_child  = true,
@@ -2834,7 +2834,7 @@ class Master_Addons_Comments extends Widget_Base
 				$class               = 'jltma-comment-list';
 				$css                 = "";
 				$child               = 0;
-				$jltma_list_comments = new JLTMA_Comments_Builder();
+				$jltma_list_comments = new Comments_Builder();
 				$jltma_list_comments->jltma_list_comments($comment_listing, $class, $css, $template, $settings);
 				?>
 			</div>
@@ -2857,13 +2857,13 @@ class Master_Addons_Comments extends Widget_Base
 
 		$page_number           = empty($page_number) ? 1 : $page_number;
 		$items_per_page        = $settings['jltma_comment_pagination_items']['size'];
-		$all_comments_approved = JLTMA_Comments_Builder::parent_comment_counter($post_id);
+		$all_comments_approved = Comments_Builder::parent_comment_counter($post_id);
 
 		$total = ceil($all_comments_approved / $items_per_page);
 
 		$pagination_type = 'page-number';
 
-		$jltma_comment_settings = new JLTMA_Comments_Builder();
+		$jltma_comment_settings = new Comments_Builder();
 		$jltma_comment_settings->jltma_comment_pagination($settings);
 
 	?>
@@ -2887,7 +2887,7 @@ class Master_Addons_Comments extends Widget_Base
 					<li class="jltma-next-page-wrap"><a href="javascript:void(0);" data-total-page="<?php echo esc_attr($total); ?>" data-page-number="2" data-pagination-type="page-number" class="jltma-next-page"><i class="fa fa-angle-right"></i></a></li>
 				<?php } ?>
 			</ul>
-			<img src="<?php echo JLTMA_PLUGIN_URL . 'assets/images/ajax-loader.gif' ?>" class="jltma-page-number-loader" style="display:none;">
+			<img src="<?php echo \JLTMA_URL . '/assets/images/ajax-loader.gif' ?>" class="jltma-page-number-loader" style="display:none;">
 			<?php
 			?>
 		</div>
@@ -2911,14 +2911,14 @@ class Master_Addons_Comments extends Widget_Base
 
 			<?php
 			// Demo Contents for Elementor Template Preivew
-			if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+			if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 				echo '<h5 class="alert alert-info">These Comments Data\'s are only for Live Preview on Elementor Backend</h5><br>';
 			}
 
 			if (isset($settings['jltma_comment_total_number']) && $settings['jltma_comment_total_number'] == 'show') {
 
 				// Demo Contents for Elementor Template Preivew
-				if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+				if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 
 					if ($settings['jltma_comment_plural_comment_text'] != "") {
 						$backend_comment_text = $settings['jltma_comment_plural_comment_text'];
@@ -3001,7 +3001,7 @@ class Master_Addons_Comments extends Widget_Base
 
 		<div <?php echo $this->get_render_attribute_string('jltma_comments_wrap'); ?>>
 
-			<?php if (comments_open() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+			<?php if (comments_open() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 
 				$this->jltma_comment_list_template();
 
@@ -3022,7 +3022,7 @@ class Master_Addons_Comments extends Widget_Base
 
 		$settings = $this->get_settings_for_display();
 
-		$jltma_settings = new JLTMA_Comments_Builder($settings);
+		$jltma_settings = new Comments_Builder($settings);
 
 		$this->jltma_comment_template();
 	}

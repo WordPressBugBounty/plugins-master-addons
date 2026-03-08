@@ -1,12 +1,18 @@
 <?php
 
-namespace MasterAddons\Inc;
-
-use MasterAddons\Inc\Helper\Master_Addons_Helper;
+namespace MasterAddons\Inc\Classes;
+use MasterAddons\Inc\Classes\Helper;
 
 if (!defined('ABSPATH')) exit;
 
-class Master_Addons_Rollback
+/**
+ * Master Addons Rollback
+ *
+ * Allows rolling back to previous versions of the free plugin from WordPress.org.
+ * This feature is only available for the free version installed from WordPress.org.
+ * Pro versions should use Freemius for version management.
+ */
+class Rollback
 {
 
 	protected $package_url;
@@ -21,9 +27,9 @@ class Master_Addons_Rollback
 
 	public function __construct($args = [])
 	{
-		// Rollback is only available for the free version from WordPress.org
+		// Rollback is only available for free version from WordPress.org
 		// Pro users should use Freemius account for version management
-		if (Master_Addons_Helper::jltma_premium()) {
+		if (Helper::jltma_premium()) {
 			return;
 		}
 
@@ -218,4 +224,4 @@ class Master_Addons_Rollback
 	}
 }
 
-Master_Addons_Rollback::get_instance();
+Rollback::get_instance();

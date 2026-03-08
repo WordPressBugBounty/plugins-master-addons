@@ -6,14 +6,14 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-use MasterAddons\Inc\Classes\JLTMA_Extension_Prototype;
+use MasterAddons\Inc\Classes\Extension_Prototype;
 
 /**
  * Master Addons Widget Builder
  * No-code custom widget creation for Elementor
  */
 
-class JLTMA_Widget_Builder extends JLTMA_Extension_Prototype {
+class Widget_Builder extends Extension_Prototype {
 
     public static $instance = null;
 
@@ -320,7 +320,7 @@ class JLTMA_Widget_Builder extends JLTMA_Extension_Prototype {
         if (file_exists($widget_file)) {
             require_once $widget_file;
 
-            $class_name = 'JLTMA_Custom_Widget_' . ucfirst($widget_id);
+            $class_name = 'Custom_Widget_' . ucfirst($widget_id);
             if (class_exists($class_name)) {
                 \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new $class_name());
             }
@@ -432,7 +432,7 @@ class JLTMA_Widget_Builder extends JLTMA_Extension_Prototype {
         }
 
         $widget_id = $widget_data['id'];
-        $class_name = 'JLTMA_Custom_Widget_' . ucfirst($widget_id);
+        $class_name = 'Custom_Widget_' . ucfirst($widget_id);
         $widget_name = sanitize_key($widget_data['name']);
 
         $class_content = $this->get_widget_class_template($widget_data, $class_name, $widget_name);
@@ -693,7 +693,7 @@ class {$class_name} extends Widget_Base {
 }
 
 // Initialize Widget Builder
-JLTMA_Widget_Builder::get_instance();
+Widget_Builder::get_instance();
 
 
 // Widget Builder - Production Ready

@@ -1,10 +1,9 @@
 <?php
-namespace MasterHeaderFooter;
-use MasterHeaderFooter\Handler_Api;
+namespace MasterAddons\Inc\Admin\Theme_Builder\Api;
 
 defined( 'ABSPATH' ) || exit;
 
-class JLTMA_Ajax_Select2_Api extends Handler_Api {
+class Select2_API extends Handler_API {
 
     public function config(){
         $this->prefix = 'select2';
@@ -246,4 +245,4 @@ class JLTMA_Ajax_Select2_Api extends Handler_Api {
     }
 
 }
-new JLTMA_Ajax_Select2_Api();
+new Select2_API();

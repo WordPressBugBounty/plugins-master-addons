@@ -1,15 +1,15 @@
 <?php
 
-namespace MasterHeaderFooter\Inc\Comments;
+namespace MasterAddons\Inc\Admin\Theme_Builder\Comments;
 
-use  MasterHeaderFooter\Inc\Comments\Addon\Master_Addons_Comments;
+use MasterAddons\Inc\Admin\Theme_Builder\Comments\Addon\Comments_Addon;
 
 defined('ABSPATH') || exit;
 
 
-if (!class_exists('JLTMA_Comments_Builder')) {
+if (!class_exists(__NAMESPACE__ . '\Comments_Builder')) {
 
-    class JLTMA_Comments_Builder
+    class Comments_Builder
     {
 
         private static $_instance = null;
@@ -41,8 +41,6 @@ if (!class_exists('JLTMA_Comments_Builder')) {
 
             add_action('elementor/frontend/before_register_styles', [$this, 'jltma_comments_frontend_styles']);
             add_action('elementor/frontend/before_register_scripts', [$this, 'jltma_comments_frontend_scripts']);
-
-            add_action('elementor/widgets/register', [$this, 'jltma_register_comments_widget']);
 
             $this->jltma_set_var = $settings;
 
@@ -369,34 +367,31 @@ if (!class_exists('JLTMA_Comments_Builder')) {
 
         public function jltma_comments_preview_scripts()
         {
-            wp_enqueue_style('jltma-comments', JLTMA_PLUGIN_URL . 'assets/css/jltma-comments.css', array(), JLTMA_VER);
-            wp_enqueue_script('jltma-comments', JLTMA_PLUGIN_URL . 'assets/js/jltma-comments.js', array('jquery'), JLTMA_VER, true);
+            // Comments assets registered by Assets_Manager (jltma-comments)
+            \MasterAddons\Inc\Classes\Assets_Manager::enqueue('comments');
         }
 
-        // CSS
+        // CSS - Uses Assets_Manager registry (jltma-comments)
         public function jltma_comments_frontend_styles()
         {
-            wp_register_style('jltma-comments', JLTMA_PLUGIN_URL . 'assets/css/jltma-comments.css', array(), JLTMA_VER);
+            // Comments styles registered by Assets_Manager
         }
 
 
-        // JS
+        // JS - Uses Assets_Manager registry (jltma-comments, jltma-google-recaptcha)
         public function jltma_comments_frontend_scripts()
         {
-            wp_register_script('jltma-comments', JLTMA_PLUGIN_URL . 'assets/js/jltma-comments.js', array('jquery'), JLTMA_VER, true);
-            if (!empty($this->jltma_api_settings['recaptcha_site_key']) and !empty($this->jltma_api_settings['recaptcha_secret_key'])) {
-                wp_register_script('google-recaptcha', 'https://www.google.com/recaptcha/api.js', ['jquery'], null, true);
-            }
-
+            // Comments script registered by Assets_Manager
+            // Localize when enqueued
             $jc_page = get_query_var('cpage') ? get_query_var('cpage') : 1;
 
             $localize_comments_data = array(
-                'ajax_url'                 => admin_url('admin-ajax.php'),
-                'ajax_nonce'             => wp_create_nonce('jltma_frontend_ajax_nonce'),
-                'empty_comment'            => esc_html__('Comment cannot be empty', 'master-addons'),
-                'page_number_loader'     => JLTMA_PLUGIN_URL . '/assets/images/ajax-loader.gif',
-                'parent_post_id'        => get_the_ID(),
-                'jc_page'                 => (int) $jc_page
+                'ajax_url'             => admin_url('admin-ajax.php'),
+                'ajax_nonce'           => wp_create_nonce('jltma_frontend_ajax_nonce'),
+                'empty_comment'        => esc_html__('Comment cannot be empty', 'master-addons'),
+                'page_number_loader'   => \JLTMA_ASSETS . 'images/ajax-loader.gif',
+                'parent_post_id'       => get_the_ID(),
+                'jc_page'              => (int) $jc_page
             );
             wp_localize_script('jltma-comments', 'jltma_localize_comments_data', $localize_comments_data);
         }
@@ -638,7 +633,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
 
 
             // Demo Contents for Elementor Template Preivew
-            if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+            if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 
                 $dummy_comment_array = array(1, 2, 3, 4, 5);
                 foreach ($dummy_comment_array as $key => $value) {
@@ -729,7 +724,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
 
                 <div class="jltma-comment-gravatar">
 
-                    <?php if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) { ?>
+                    <?php if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) { ?>
                         <img class="<?php echo esc_attr($class); ?>" scr="https://secure.gravatar.com/avatar/d7a973c7dab26985da5f961be7b74480?s=96&amp;d=mm&amp;r=g" srcset="https://secure.gravatar.com/avatar/d7a973c7dab26985da5f961be7b74480?s=96&d=mm&r=g">
                     <?php } else { ?>
                         <img class="<?php echo esc_attr($class); ?>" scr="<?php echo esc_url($listing['gravatar']); ?>" srcset="<?php echo esc_attr($listing['gravatar']); ?>">
@@ -743,7 +738,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
                 <div class="jltma-title-date clearfix">
                     <div class="jltma-author-name">
                         <?php
-                        if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+                        if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
                             echo esc_html__('A WordPress Commenter', 'master-addons');
                         } else {
                             echo esc_html($listing['author_name']);
@@ -751,7 +746,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
                     </div>
                     <div class="jltma-date-time" data-time="<?php echo get_the_modified_date('c'); ?>">
                         <?php
-                        if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+                        if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
                             echo get_the_time('j M Y g:ia');
                         } else {
 
@@ -769,7 +764,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
                 <div class="jltma-comment jltma-comment-content-<?php echo esc_attr($comment_id); ?>" id="jltma-comment-<?php echo esc_attr($comment_id); ?>">
 
                     <?php
-                    if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+                    if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
                         echo wp_specialchars_decode('Hi, this is a comment. <br>
 								To get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.<br>
 								Commenter avatars come from Gravatar.');
@@ -782,7 +777,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
 
                     <?php
                     if ($settings['jltma_comment_ratings'] == "show") {
-                        if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+                        if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
                             $this->jltma_comment_rating();
                         } else {
                             $this->jltma_comment_rating($comment_id, $settings);
@@ -796,7 +791,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
                     $args = array('reply_text' => $reply_button_label, 'depth' => 1, 'max_depth' => 10, 'add_below' => "jltma-unique-comment");
 
                     if (comments_open()) {
-                        if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+                        if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
                             echo '<div class="jltma-reply-button">';
                             echo esc_html($settings['jltma_comment_reply_label']);
                             echo '</div>';
@@ -822,7 +817,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
 
                             <a href="javascript:void(0);" class="jltma-hide-replies-trigger jltma-hide-reply-trigger-<?php echo esc_attr($comment_id); ?>" data-comment-id="<?php echo esc_attr($comment_id); ?>" style="display:none;"> <?php echo esc_html($hide_reply_label); ?> </a> <?php
                                                                                                                                                                                                                                                                                         }
-                                                                                                                                                                                                                                                                                    } elseif (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+                                                                                                                                                                                                                                                                                    } elseif (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 
                                                                                                                                                                                                                                                                                         if ($demo_comment_id % 2 != 0 && $demo_comment_id != 5) { ?>
 
@@ -858,7 +853,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
             $css = "style='display:block;'";
 
             // Demo Contents for Elementor Template Preivew
-            if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+            if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 
                 if ($demo_comment_id % 2 != 0) { ?>
                     <ul class="<?php echo esc_attr($class); ?> " data-comment-id="<?php echo esc_attr($demo_comment_id); ?>" <?php echo esc_attr($css); ?>>
@@ -886,7 +881,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
 
                         <?php
                         // Demo Contents for Elementor Template Preivew
-                        if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) { ?>
+                        if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) { ?>
                             <div class="jltma-comment-template media jltma-comment-<?php echo esc_attr($template); ?> <?php echo esc_attr($clearfix); ?>" id="jltma-unique-comment-<?php echo esc_attr($demo_comment_id); ?>">
                             <?php } else { ?>
                                 <div class="jltma-comment-template media jltma-comment-<?php echo esc_attr($template); ?> <?php echo esc_attr($clearfix); ?>" id="jltma-unique-comment-<?php echo esc_attr($comment_id);; ?>">
@@ -918,7 +913,7 @@ if (!class_exists('JLTMA_Comments_Builder')) {
                         $css = "style='display:block;'";
                     }
 
-                    if (is_user_logged_in() && JLTMA_Comments_Builder::jltma_comment_elementor_preview_mode()) {
+                    if (is_user_logged_in() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 
                         if ($demo_comment_id % 2 != 0) {
                             return;
@@ -928,14 +923,6 @@ if (!class_exists('JLTMA_Comments_Builder')) {
                     } else {
                         echo "</ul>";
                     }
-                }
-
-                public function jltma_register_comments_widget()
-                {
-                    //Master Comments for Elementor
-                    include JLTMA_PATH . 'inc/admin/theme-builder/inc/comments/jltma-comments-addon.php';
-
-                    \Elementor\Plugin::instance()->widgets_manager->register(new Addon\Master_Addons_Comments());
                 }
 
                 /**
@@ -995,5 +982,5 @@ if (!class_exists('JLTMA_Comments_Builder')) {
                     return self::$_instance;
                 }
             }
-            JLTMA_Comments_Builder::get_instance();
+            Comments_Builder::get_instance();
         }

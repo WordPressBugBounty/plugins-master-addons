@@ -1,6 +1,6 @@
 <?php
-namespace MasterHeaderFooter\Theme_Hooks;
-use MasterHeaderFooter\Master_Header_Footer;
+namespace MasterAddons\Inc\Admin\Theme_Builder\Theme_Hooks;
+use MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder;
 
 if(!function_exists( 'jltma_get_hfc_render_comment' )){
     function jltma_get_hfc_render_comment( $comment_template ){
@@ -10,7 +10,7 @@ if(!function_exists( 'jltma_get_hfc_render_comment' )){
         }
 
         ob_start();
-        return JLTMA_PATH . 'inc/admin/theme-builder/inc/view/theme-support-comment.php';
+        return \JLTMA_PATH . 'inc/admin/theme-builder/inc/view/theme-support-comment.php';
         ob_get_clean();
     }
 }
@@ -33,7 +33,7 @@ if(!function_exists( 'jltma_get_hfc_render_header' )){
 
         do_action('masteraddons/template/before_header');
         echo '<div class="jltma-template-content-markup jltma-template-content-header">';
-            echo \MasterHeaderFooter\Master_Header_Footer::render_elementor_content($master_template_ids[0]);
+            echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($master_template_ids[0]);
         echo '</div>';
         do_action('masteraddons/template/after_header');
     }
@@ -55,7 +55,7 @@ if(!function_exists( 'jltma_hfc_render_footer' )){
 
         do_action('masteraddons/template/before_header');
         echo '<div class="jltma-template-content-markup jltma-template-content-header">';
-            echo \MasterHeaderFooter\Master_Header_Footer::render_elementor_content($master_template_ids[1]);
+            echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($master_template_ids[1]);
         echo '</div>';
         do_action('masteraddons/template/after_header');
     }

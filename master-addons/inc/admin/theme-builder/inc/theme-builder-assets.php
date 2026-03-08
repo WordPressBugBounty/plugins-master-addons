@@ -1,10 +1,10 @@
 <?php
 
-namespace MasterHeaderFooter;
+namespace MasterAddons\Inc\Admin\Theme_Builder;
 
 defined('ABSPATH') || exit;
 
-class JLTMA_Header_Footer_Assets
+class Assets
 {
 
     private static $_instance = null;
@@ -42,27 +42,29 @@ class JLTMA_Header_Footer_Assets
 
         $screen = get_current_screen();
 
-        if ($screen->id == 'edit-master_template') {    
-
-            // CSS
-            wp_enqueue_style('jtlma-popup', JLTMA_PLUGIN_URL . 'assets/css/theme-builder.css');
-            wp_enqueue_style('select2', JLTMA_PLUGIN_URL . 'assets/css/select2.min.css');
-
-            // JS
-            wp_enqueue_script('select2', JLTMA_PLUGIN_URL . 'assets/js/select2.js', array('jquery'), true, JLTMA_VER);
-            wp_enqueue_script('jltma-hfc-admin-script', JLTMA_PLUGIN_URL . 'assets/js/admin-script.js', array('jquery'), true, JLTMA_VER);
+        if ($screen->id == 'edit-master_template') {
+            // Theme Builder assets (registered by Assets_Manager, includes select2 as dependency)
+            wp_enqueue_style('jltma-theme-builder');
+            wp_enqueue_script('jltma-theme-builder');
 
             // Localize Scripts
             $jltma_localize_hfc_data = array(
-                'plugin_url'    => JLTMA_PLUGIN_URL,
+                'plugin_url'    => \JLTMA_URL,
                 'ajaxurl'       => admin_url('admin-ajax.php'),
                 'resturl'       => get_rest_url() . 'masteraddons/v2/',
                 'ajax_nonce'    => wp_create_nonce('jltma_frontend_ajax_nonce'),
                 'rest_nonce'    => wp_create_nonce('wp_rest'),
                 'woocommerce_active' => class_exists('WooCommerce'),
-                'upgrade_pro'   => /* translators: %s: Upgrade Pro Link. */ sprintf(__('<a href="%1$s" target="_blank">Upgrade to Pro</a> unlock this feature. <a href="%1$s" target="_blank">Upgrade Now</a>', 'master-addons' ), ma_el_fs()->get_upgrade_url())
+                'upgrade_pro'   => /* translators: %s: Upgrade Pro Link. */ sprintf(__('<a href="%1$s" target="_blank">Upgrade to Pro</a> unlock this feature. <a href="%1$s" target="_blank">Upgrade Now</a>', 'master-addons' ), esc_url(apply_filters('master_addons/upgrade_url', 'https://master-addons.com/pricing/')))
             );
-            wp_localize_script('jltma-hfc-admin-script', 'masteraddons', $jltma_localize_hfc_data);
+            wp_localize_script('jltma-theme-builder', 'masteraddons', $jltma_localize_hfc_data);
+
+            // JLTMACORE for premium check (used by theme-builder.js)
+            wp_localize_script('jltma-theme-builder', 'JLTMACORE', array(
+                'admin_ajax'      => admin_url('admin-ajax.php'),
+                'is_premium'      => apply_filters('master_addons/is_premium', false),
+                'pro_conditions'  => apply_filters('master_addons/theme_builder/pro_conditions', false),
+            ));
         }
     }
 
@@ -76,4 +78,4 @@ class JLTMA_Header_Footer_Assets
     }
 }
 
-JLTMA_Header_Footer_Assets::get_instance();
+Assets::get_instance();

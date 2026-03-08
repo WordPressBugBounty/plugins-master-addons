@@ -16,12 +16,12 @@
 <div class="jltma-template-content-markup jltma-template-content-header jltma-template-content-theme-support">
 <?php
 	// Get the header template ID from the theme builder system
-	$template_ids = \MasterHeaderFooter\JLTMA_HF_Activator::template_ids();
+	$template_ids = \MasterAddons\Inc\Admin\Theme_Builder\Activator::template_ids();
 	$header_template_id = $template_ids[0] ?? null;
 	
 	// Display header if template exists
 	if ($header_template_id) {
-		echo \MasterHeaderFooter\Master_Header_Footer::render_elementor_content($header_template_id);
+		echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($header_template_id);
 	}
 ?>
 </div>

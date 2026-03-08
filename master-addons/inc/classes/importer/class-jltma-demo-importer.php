@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
  * @subpackage Importer
  * @since 2.0.0
  */
-class JLTMA_Demo_Importer {
+class Demo_Importer {
   private static $instance = null;
   public $demo_path;
   public $demo_url;
@@ -121,7 +121,7 @@ class JLTMA_Demo_Importer {
     }
 
     // Enqueue Widget Builder admin script
-    $widget_admin_url = JLTMA_URL . '/inc/admin/widget-builder/assets/js/widget-admin.js';
+    $widget_admin_url = JLTMA_ASSETS . 'js/admin/widget-admin.js';
     wp_enqueue_script(
         'jltma-widget-admin',
         $widget_admin_url,
@@ -1918,4 +1918,4 @@ class JLTMA_Demo_Importer {
 }
 
 // Initialize
-JLTMA_Demo_Importer::get_instance();
+Demo_Importer::get_instance();

@@ -1,5 +1,5 @@
 <?php
-namespace MasterAddons\Admin\WidgetBuilder;
+namespace MasterAddons\Inc\Admin\WidgetBuilder;
 
 defined('ABSPATH') || exit;
 
@@ -30,38 +30,14 @@ class Control_Manager {
         // Load base class first
         require_once __DIR__ . '/controls/class-control-base.php';
 
-        // Load all control type classes
+        // Load FREE control type classes only
         $control_files = [
-            'background',
-            'border',
-            'box-shadow',
-            'choose',
-            'code',
             'color',
-            'date-time',
-            'dimensions',
-            'divider',
-            'font',
-            'gallery',
             'heading',
             'hidden',
-            'icons',
-            'media',
-            'number',
-            'popover-toggle',
-            'repeater',
-            'select',
-            'select2',
-            'slider',
-            'switcher',
-            'tabs',
             'text',
             'textarea',
-            'text-shadow',
-            'typography',
             'url',
-            'visual-choice',
-            'wysiwyg',
         ];
 
         foreach ($control_files as $file) {
@@ -70,6 +46,9 @@ class Control_Manager {
                 require_once $file_path;
             }
         }
+
+        // Allow Pro to load additional controls
+        do_action('jltma_widget_builder_load_controls');
     }
 
     /**
@@ -87,45 +66,29 @@ class Control_Manager {
             return $this->controls[$type];
         }
 
-        // Map control types to classes
+        // Map control types to classes (FREE controls only)
         $class_map = [
-            'BACKGROUND' => 'Background',
-            'BORDER' => 'Border',
-            'BOX_SHADOW' => 'Box_Shadow',
-            'CHOOSE' => 'Choose',
-            'CODE' => 'Code',
             'COLOR' => 'Color',
-            'DATE_TIME' => 'Date_Time',
-            'DIMENSIONS' => 'Dimensions',
-            'DIVIDER' => 'Divider',
-            'FONT' => 'Font',
-            'GALLERY' => 'Gallery',
-            'GROUP_CONTROL_TYPOGRAPHY' => 'Typography',
             'HEADING' => 'Heading',
             'HIDDEN' => 'Hidden',
-            'ICONS' => 'Icons',
-            'MEDIA' => 'Media',
-            'NUMBER' => 'Number',
-            'POPOVER_TOGGLE' => 'Popover_Toggle',
-            'REPEATER' => 'Repeater',
-            'SELECT' => 'Select',
-            'SELECT2' => 'Select2',
-            'SLIDER' => 'Slider',
-            'SWITCHER' => 'Switcher',
-            'TABS' => 'Tabs',
             'TEXT' => 'Text',
             'TEXTAREA' => 'Textarea',
-            'TEXT_SHADOW' => 'Text_Shadow',
-            'TYPOGRAPHY' => 'Typography',
             'URL' => 'Url',
-            'VISUAL_CHOICE' => 'Visual_Choice',
-            'WYSIWYG' => 'Wysiwyg',
         ];
+
+        // Allow Pro to add additional control class mappings
+        $class_map = apply_filters('jltma_widget_builder_control_class_map', $class_map);
+
         if (!isset($class_map[$type])) {
             return null;
         }
 
-        $class_name = '\\MasterAddons\\Admin\\WidgetBuilder\\Controls\\' . $class_map[$type];
+        // Check if class_map value is a full class name (from Pro) or just class name (free)
+        if (strpos($class_map[$type], '\\') !== false) {
+            $class_name = $class_map[$type];
+        } else {
+            $class_name = '\\MasterAddons\\Inc\\Admin\\WidgetBuilder\\Controls\\' . $class_map[$type];
+        }
 
         if (!class_exists($class_name)) {
             return null;
