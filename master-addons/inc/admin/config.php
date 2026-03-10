@@ -178,6 +178,7 @@ class Config
                             'assets'   => [
                                 'css' => true,
                                 'js'  => true,
+                                'vendors' => ['common'],
                             ],
                         ],
                         'ma-countdown-timer' => [
@@ -344,6 +345,7 @@ class Config
                             'is_pro'   => false,
                             'assets'   => [
                                 'css' => true,
+                                'vendors' => ['common'],
                             ],
                             'ribbons' => [ 'popular' ]
                         ],
@@ -405,6 +407,7 @@ class Config
                             'assets'   => [
                                 'css' => true,
                                 'js'  => true,
+                                'vendors' => ['common'],
                             ],
                             'ribbons' => [ 'popular' ]
                         ],
@@ -469,7 +472,7 @@ class Config
                             'assets'   => [
                                 'css'     => true,
                                 'js'      => true,
-                                'vendors' => ['swiper', 'swiper-carousel', 'isotope', 'masonry'],
+                                'vendors' => ['common', 'swiper', 'swiper-carousel', 'isotope', 'masonry'],
                             ],
                             'ribbons' => [ 'featured' ]
                         ],
@@ -506,7 +509,7 @@ class Config
                             'assets'   => [
                                 'css'     => true,
                                 'js'      => true,
-                                'vendors' => ['swiper', 'swiper-carousel'],
+                                'vendors' => ['common', 'animation', 'swiper', 'swiper-carousel'],
                             ],
                         ],
                         'ma-toggle-content' => [
@@ -707,7 +710,7 @@ class Config
                             'assets'   => [
                                 'css'     => true,
                                 'js'      => true,
-                                'vendors' => ['fancybox', 'isotope', 'tilt', 'tippy'],
+                                'vendors' => ['common', 'fancybox', 'isotope', 'tilt', 'tippy'],
                             ],
                             'ribbons' => [ 'popular' ]
                         ],
@@ -1145,7 +1148,7 @@ class Config
                             'is_pro'   => false,
                             'assets'   => [
                                 'css' => true,
-
+                                'vendors' => ['common'],
                             ],
                         ],
                         'ma-pricing-table' => [
@@ -1369,6 +1372,7 @@ class Config
                             'is_pro'   => false,
                             'assets'   => [
                                 'css' => true,
+                                'vendors' => ['common'],
                             ],
                         ],
                         // 'ma-chatgpt' => [

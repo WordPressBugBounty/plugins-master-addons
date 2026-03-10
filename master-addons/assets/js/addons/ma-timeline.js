@@ -186,7 +186,7 @@ function filterFancyBox(element) {
 (function($, elementor) {
   "use strict";
   var JLTMA_Timeline = function($scope, $2) {
-    var elementSettings = getElementSettings($scope), $timeline = $scope.find(".jltma-timeline"), $swiperSlider = $scope.find(".jltma-timeline-slider"), $timeline_type = elementSettings.ma_el_timeline_type, $timeline_layout = elementSettings.ma_el_timeline_design_type, timelineArgs = {}, $uniqueId = getUniqueLoopScopeId($scope);
+    var elementSettings = getElementSettings($scope), $timeline = $scope.find(".jltma-timeline"), $swiperSlider = $scope.find(".jltma-timeline-slider"), $timeline_type = elementSettings.ma_el_timeline_type || "custom", $timeline_layout = elementSettings.ma_el_timeline_design_type || "vertical", timelineArgs = {}, $uniqueId = getUniqueLoopScopeId($scope);
     if ($timeline_layout === "horizontal") {
       var $carousel = $scope.find(".jltma-timeline-carousel-slider");
       if (!$carousel.length) {

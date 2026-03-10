@@ -6,11 +6,7 @@
   max-width: 100%;
   margin: 0 auto;
 }
-.jltma-timeline .jltma-timeline__line {
-  background-color: #f7f7f7;
-}
 .jltma-timeline .jltma-timeline__line__inner {
-  background-color: #54595f;
   width: 100%;
   height: 20%;
 }

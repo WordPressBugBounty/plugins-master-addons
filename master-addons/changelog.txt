@@ -1,4 +1,14 @@
 == Changelog ==
+= Master Elementor Addons 3.0.3 (10-03-2026) =
+* Fixed: Blog Post Master Elementor Addon frontend showing single column instead of grid layout
+* Fixed: Timeline Master Elementor Addon vertical scroll animation not working on frontend
+* Fixed: Timeline Master Elementor Addon vertical scroll line colors not matching between editor and frontend
+* Fixed: Multiple Master Elementor Addon missing grid CSS on frontend (Counter Up, Business Hours, Tabs, Call to Action, Image Filter Gallery, Table)
+* Fixed: Timeline Master Elementor Addon unclosed wrapper div for post-type timelines
+* Fixed: PHP 8.x deprecation warnings (strpos/str_replace with null values) in Master Elementor Addons
+* Fixed: Version mismatch notice showing incorrectly when both Free and Pro Master Elementor Addons are compatible
+* Fixed: Setup Wizard scroll issue fixed.
+* Added: Fail-safe version guard in Master Elementor Addons Pro plugin with 3-tier version detection
 
 = Master Elementor Addons 3.0.2 (08-03-2026) =
 * Fixed: Fatal error issue fixed.
@@ -7,7 +17,7 @@
 * Fixed: Add Master Addons Pro guard.
 
 = Master Elementor Addons 3.0.0 (08-03-2026) =
-* New Feature: Elementor Popup builder released 
+* New Feature: Elementor Popup builder released
 * New Feature: Elementor Template Kit library released
 * Fixed: Transforms extension styles now load correctly on the frontend
 * Fixed: Slider controls now display proper default values in the Transforms extension

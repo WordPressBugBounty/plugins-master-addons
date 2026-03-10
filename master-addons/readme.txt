@@ -4,7 +4,7 @@ Tags: elementor, elementor addons, elementor widgets, elementor templates, widge
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 3.0.2
+Stable tag: 3.0.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 [Live Demo](https://demo.pixarlabs.com/?pl-product=master-addons) | [Docs](https://master-addons.com/docs/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [All Widgets](https://master-addons.com/widgets-and-extensions/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Support](https://master-addons.com/contact-us/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Upgrade to Pro](https://master-addons.com/pricing/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons)
 
-From animated headlines and image hover effects to mega menus, display conditions, and full theme templates — Master Addons covers every layer of your website. Every widget ships with deep customization: margins, padding, typography, borders, responsive controls, and more. Download free today and start building the website your visitors deserve. 
+From animated headlines and image hover effects to mega menus, display conditions, and full theme templates — Master Addons covers every layer of your website. Every widget ships with deep customization: margins, padding, typography, borders, responsive controls, and more. Download free today and start building the website your visitors deserve.
 
 [youtube https://www.youtube.com/watch?v=t8Qa4pq7WLs]
 
@@ -317,6 +317,17 @@ Report security issues through the [Patchstack Vulnerability Disclosure Program]
 
 
 == Changelog ==
+= Master Elementor Addons 3.0.3 (10-03-2026) =
+* Fixed: Blog Post Master Elementor Addon frontend showing single column instead of grid layout
+* Fixed: Timeline Master Elementor Addon vertical scroll animation not working on frontend
+* Fixed: Timeline Master Elementor Addon vertical scroll line colors not matching between editor and frontend
+* Fixed: Multiple Master Elementor Addon missing grid CSS on frontend (Counter Up, Business Hours, Tabs, Call to Action, Image Filter Gallery, Table)
+* Fixed: Timeline Master Elementor Addon unclosed wrapper div for post-type timelines
+* Fixed: PHP 8.x deprecation warnings (strpos/str_replace with null values) in Master Elementor Addons
+* Fixed: Version mismatch notice showing incorrectly when both Free and Pro Master Elementor Addons are compatible
+* Fixed: Setup Wizard scroll issue fixed.
+* Added: Fail-safe version guard in Master Elementor Addons Pro plugin with 3-tier version detection
+
 = Master Elementor Addons 3.0.2 (08-03-2026) =
 * Fixed: Fatal error issue fixed.
 
@@ -324,7 +335,7 @@ Report security issues through the [Patchstack Vulnerability Disclosure Program]
 * Fixed: Add Master Addons Pro guard.
 
 = Master Elementor Addons 3.0.0 (08-03-2026) =
-* New Feature: Elementor Popup builder released 
+* New Feature: Elementor Popup builder released
 * New Feature: Elementor Template Kit library released
 * Fixed: Transforms extension styles now load correctly on the frontend
 * Fixed: Slider controls now display proper default values in the Transforms extension

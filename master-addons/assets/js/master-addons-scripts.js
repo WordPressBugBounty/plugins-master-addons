@@ -1201,7 +1201,7 @@
     },
     //Master Addons: Timeline
     MA_Timeline: function($scope2, $2) {
-      var elementSettings2 = getElementSettings($scope2), $timeline = $scope2.find(".jltma-timeline"), $swiperSlider = $scope2.find(".jltma-timeline-slider"), $timeline_type = elementSettings2.ma_el_timeline_type, $timeline_layout = elementSettings2.ma_el_timeline_design_type, swiperSlider = null, timelineArgs = {}, hasCarousel = $swiperSlider.length, $uniqueId = getUniqueLoopScopeId($scope2);
+      var elementSettings2 = getElementSettings($scope2), $timeline = $scope2.find(".jltma-timeline"), $swiperSlider = $scope2.find(".jltma-timeline-slider"), $timeline_type = elementSettings2.ma_el_timeline_type || "custom", $timeline_layout = elementSettings2.ma_el_timeline_design_type || "vertical", swiperSlider = null, timelineArgs = {}, hasCarousel = $swiperSlider.length, $uniqueId = getUniqueLoopScopeId($scope2);
       if ($timeline_layout === "horizontal") {
         var $carousel = $scope2.find(".jltma-timeline-carousel-slider");
         if (!$carousel.length) {

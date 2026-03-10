@@ -1889,10 +1889,11 @@ class Timeline extends Master_Widget
 
 					// If Custom and Vertical Horizontal Design
 					$this->jltma_horizontal_timeline();
-				} ?>
+				}
+			} ?>
 
 		</div>
-	<?php }
+	<?php
 		}
 
 		protected function jltma_post_timeline()
