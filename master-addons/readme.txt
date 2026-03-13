@@ -317,6 +317,10 @@ Report security issues through the [Patchstack Vulnerability Disclosure Program]
 
 
 == Changelog ==
+= Master Elementor Addons 3.0.4 (13-03-2026) =
+* Fixed: Gallery Slider swiper slide issue fixed.
+* Fixed: Gallery Slider lightbox features frontend image infinite loading issue fixed.
+
 = Master Elementor Addons 3.0.3 (10-03-2026) =
 * Fixed: Blog Post Master Elementor Addon frontend showing single column instead of grid layout
 * Fixed: Timeline Master Elementor Addon vertical scroll animation not working on frontend
