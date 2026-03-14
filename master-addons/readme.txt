@@ -4,7 +4,7 @@ Tags: elementor, elementor addons, elementor widgets, elementor templates, widge
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 3.0.4
+Stable tag: 3.0.5
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 **[Master Addons for Elementor](https://master-addons.com/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons)** is a complete Elementor addon plugin that gives you 55+ widgets, 20+ powerful extensions, a full Theme Builder, Popup Builder, Widget Builder, and a growing library of ready-made Template Kits — everything you need to design stunning WordPress websites without writing a single line of code.
 
-[Live Demo](https://demo.pixarlabs.com/?pl-product=master-addons) | [Docs](https://master-addons.com/docs/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [All Widgets](https://master-addons.com/widgets-and-extensions/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Support](https://master-addons.com/contact-us/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Upgrade to Pro](https://master-addons.com/pricing/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons)
+[Live Demo](https://demo.pixarlabs.com/?pl-product=master-addons) | [Docs](https://master-addons.com/docs/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [All Widgets](https://master-addons.com/widgets-and-extensions/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Support](https://master-addons.com/contact-us/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Upgrade to Pro](https://master-addons.com/pricing/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Rate us on WordPress →](https://wordpress.org/support/plugin/master-addons/reviews/?filter=5#new-post) ⭐⭐⭐⭐⭐
 
 From animated headlines and image hover effects to mega menus, display conditions, and full theme templates — Master Addons covers every layer of your website. Every widget ships with deep customization: margins, padding, typography, borders, responsive controls, and more. Download free today and start building the website your visitors deserve.
 
@@ -252,7 +252,7 @@ Increasing the PHP memory limit in `wp-config.php` or `php.ini` resolves this in
 
 [Great Plugin and Insane Support!](https://wordpress.org/support/topic/great-plugin-and-insane-support/)
 
-Rate us on [WordPress →](https://wordpress.org/support/plugin/master-addons/reviews/#new-post) ⭐⭐⭐⭐⭐
+[Rate us on WordPress →](https://wordpress.org/support/plugin/master-addons/reviews/?filter=5#new-post) ⭐⭐⭐⭐⭐
 
 == Want More? Check Our Other Plugins ==
 
@@ -317,6 +317,9 @@ Report security issues through the [Patchstack Vulnerability Disclosure Program]
 
 
 == Changelog ==
+= Master Elementor Addons 3.0.5 (14-03-2026) =
+* Fixed: Fatal error in RegistrationMagic plugin resolved.
+
 = Master Elementor Addons 3.0.4 (13-03-2026) =
 * Fixed: Gallery Slider swiper slide issue fixed.
 * Fixed: Gallery Slider lightbox features frontend image infinite loading issue fixed.

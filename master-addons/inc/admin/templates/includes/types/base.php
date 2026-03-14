@@ -9,7 +9,7 @@
 
 	if ( ! defined('ABSPATH') ) exit; // No access of directly access
 
-	if ( ! class_exists( 'Base' ) ) {
+	if ( ! class_exists( __NAMESPACE__ . '\\Base' ) ) {
 
 
 		abstract class Base {

@@ -1,4 +1,7 @@
 == Changelog ==
+= Master Elementor Addons 3.0.5 (14-03-2026) =
+* Fixed: Fatal error in RegistrationMagic plugin resolved.
+
 = Master Elementor Addons 3.0.4 (13-03-2026) =
 * Fixed: Gallery Slider swiper slide issue fixed.
 * Fixed: Gallery Slider lightbox features frontend image infinite loading issue fixed.
