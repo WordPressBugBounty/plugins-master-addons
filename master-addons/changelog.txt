@@ -1,4 +1,7 @@
 == Changelog ==
+= Master Elementor Addons 3.0.6 (29-03-2026) =
+* Fixed: Elementor Custom Icon Library not showing issue fixed.
+
 = Master Elementor Addons 3.0.5 (14-03-2026) =
 * Fixed: Fatal error in RegistrationMagic plugin resolved.
 

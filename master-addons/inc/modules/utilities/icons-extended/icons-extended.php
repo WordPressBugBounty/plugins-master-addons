@@ -107,16 +107,25 @@ class IconsExtended
             $tabs[$key] = $icon_config;
         }
 
-        // Check Enabled Icons Libraries
+        // Check Enabled Icons Libraries - only filter MA's own icon tabs
         $jltma_get_icons_library_settings = \MasterAddons\Inc\Admin\Settings\Settings::get_icons() ?: [];
-        $enabled_tabs = [];
-        foreach ($tabs as $key => $tab) {
-            if (isset($jltma_get_icons_library_settings[$key]) && $jltma_get_icons_library_settings[$key] == 1) {
-                $enabled_tabs[$key] = $tab;
+        $jltma_icon_keys = [
+            'elementor-icons', 'simple-line-icons', 'iconic-fonts',
+            'linear-icons', 'material-icons',
+        ];
+        // Include pro icon keys if any
+        foreach ($pro_icons as $key => $icon_config) {
+            $jltma_icon_keys[] = $key;
+        }
+
+        // Remove disabled MA icon libraries, but keep all other tabs intact
+        foreach ($jltma_icon_keys as $key) {
+            if (!isset($jltma_get_icons_library_settings[$key]) || $jltma_get_icons_library_settings[$key] != 1) {
+                unset($tabs[$key]);
             }
         }
 
-        return $enabled_tabs;
+        return $tabs;
     }
 
 
