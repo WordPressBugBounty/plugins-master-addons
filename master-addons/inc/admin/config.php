@@ -572,7 +572,7 @@ class Config
                             'class'    => 'MasterAddons\Addons\Comments',
                             'demo_url' => 'https://master-addons.com/demos/comments-builder',
                             'docs_url' => 'https://master-addons.com/docs/addons/comments-builder/',
-                            'tuts_url' => '',
+                            'tuts_url' => 'https://www.youtube.com/watch?v=vKglaHoWxQs',
                             'tuts_feature' => [
                                 "Add conditional comment form",
                                 "Design in Elementor Editor",
@@ -1835,7 +1835,7 @@ class Config
                             'class'    => 'MasterAddons\Modules\Display\Extras',
                             'demo_url' => 'https://master-addons.com/extension/container-extras/',
                             'docs_url' => 'https://master-addons.com/docs/extensions/container-extras/',
-                            'tuts_url' => '',
+                            'tuts_url' => 'https://www.youtube.com/watch?v=-_ZsQFq9Z-k',
                             'tuts_features' => [
                                 "Precise px or % size control",
                                 "Beyond Elementor built-in limits",
@@ -1897,7 +1897,13 @@ class Config
                             'class'    => 'MasterAddons\Modules\Dynamic\DynamicTags',
                             'demo_url' => 'https://master-addons.com/extension/dynamic-tags/',
                             'docs_url' => 'https://master-addons.com/docs/extensions/dynamic-tags/',
-                            'tuts_url' => 'https://youtu.be/vvhhMq8uz1g',
+                            'tuts_url' => 'https://www.youtube.com/watch?v=89-whEg85uE',
+                            'tuts_features' => [
+                                "Support all Elements",
+                                "Archive support",
+                                "ACF support (coming soon)",
+                                "Taxonomy & Meta support"
+                            ],
                             'is_pro'   => false,
                             'ribbons' => [ 'featured' ]
                         ],
@@ -2084,7 +2090,13 @@ class Config
                         'is_pro' => false,
                         'demo_url' => 'https://master-addons.com/icon-library/',
                         'docs_url' => 'https://master-addons.com/docs/extensions/icon-library/',
-                        'tuts_url' => '',
+                        'tuts_url' => 'https://www.youtube.com/watch?v=sp3XSiB_Uu8',
+                        'tuts_features' => [
+                            "5 Free Icon library",
+                            "3 Pro icon library",
+                            "Lightweight icons",
+                            "Faster performance on loading"
+                        ],
                     ],
                     'elementor-icons' => [
                         'title'  => 'Elementor Icons',
@@ -2092,49 +2104,91 @@ class Config
                         'is_pro' => false,
                         'demo_url' => 'https://master-addons.com/icon-library/',
                         'docs_url' => 'https://master-addons.com/docs/extensions/icon-library/',
-                        'tuts_url' => '',
+                        'tuts_url' => 'https://www.youtube.com/watch?v=sp3XSiB_Uu8',
+                        'tuts_features' => [
+                            "5 Free Icon library",
+                            "3 Pro icon library",
+                            "Lightweight icons",
+                            "Faster performance on loading"
+                        ],
                     ],
                     'iconic-fonts' => [
                         'title'  => 'Ionic Font',
                         'is_pro' => false,
                         'demo_url' => 'https://master-addons.com/icon-library/',
                         'docs_url' => 'https://master-addons.com/docs/extensions/icon-library/',
-                        'tuts_url' => '',
+                        'tuts_url' => 'https://www.youtube.com/watch?v=sp3XSiB_Uu8',
+                        'tuts_features' => [
+                            "5 Free Icon library",
+                            "3 Pro icon library",
+                            "Lightweight icons",
+                            "Faster performance on loading"
+                        ],
                     ],
                     'linear-icons' => [
                         'title'  => 'Linear Icons',
                         'is_pro' => false,
                         'demo_url' => 'https://master-addons.com/icon-library/',
                         'docs_url' => 'https://master-addons.com/docs/extensions/icon-library/',
-                        'tuts_url' => '',
+                        'tuts_url' => 'https://www.youtube.com/watch?v=sp3XSiB_Uu8',
+                        'tuts_features' => [
+                            "5 Free Icon library",
+                            "3 Pro icon library",
+                            "Lightweight icons",
+                            "Faster performance on loading"
+                        ],
                     ],
                     'material-icons' => [
                         'title'  => 'Material Icons',
                         'is_pro' => false,
                         'demo_url' => 'https://master-addons.com/icon-library/',
                         'docs_url' => 'https://master-addons.com/docs/extensions/icon-library/',
-                        'tuts_url' => '',
+                        'tuts_url' => 'https://www.youtube.com/watch?v=sp3XSiB_Uu8',
+                        'tuts_features' => [
+                            "5 Free Icon library",
+                            "3 Pro icon library",
+                            "Lightweight icons",
+                            "Faster performance on loading"
+                        ],
                     ],
                     'feather-icons' => [
                         'title'  => 'Feather Icons',
                         'is_pro' => true,
                         'demo_url' => 'https://master-addons.com/icon-library/',
                         'docs_url' => 'https://master-addons.com/docs/extensions/icon-library/',
-                        'tuts_url' => '',
+                        'tuts_url' => 'https://www.youtube.com/watch?v=sp3XSiB_Uu8',
+                        'tuts_features' => [
+                            "5 Free Icon library",
+                            "3 Pro icon library",
+                            "Lightweight icons",
+                            "Faster performance on loading"
+                        ],
                     ],
                     'remix-icons' => [
                         'title'  => 'Remix Icons',
                         'is_pro' => true,
                         'demo_url' => 'https://master-addons.com/icon-library/',
                         'docs_url' => 'https://master-addons.com/docs/extensions/icon-library/',
-                        'tuts_url' => '',
+                        'tuts_url' => 'https://www.youtube.com/watch?v=sp3XSiB_Uu8',
+                        'tuts_features' => [
+                            "5 Free Icon library",
+                            "3 Pro icon library",
+                            "Lightweight icons",
+                            "Faster performance on loading"
+                        ],
                     ],
                     'teeny-icons' => [
                         'title'  => 'Teeny Icons',
                         'is_pro' => true,
                         'demo_url' => 'https://master-addons.com/icon-library/',
                         'docs_url' => 'https://master-addons.com/docs/extensions/icon-library/',
-                        'tuts_url' => '',
+                        'tuts_url' => 'https://www.youtube.com/watch?v=sp3XSiB_Uu8',
+                        'tuts_features' => [
+                            "5 Free Icon library",
+                            "3 Pro icon library",
+                            "Lightweight icons",
+                            "Faster performance on loading"
+                        ],
                     ],
                 ],
             ],

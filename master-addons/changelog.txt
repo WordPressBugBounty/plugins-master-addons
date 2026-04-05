@@ -1,4 +1,8 @@
 == Changelog ==
+= Master Elementor Addons 3.0.7 (05-04-2026) =
+* Fixed: Gallery Slider Thumbnails style issue fixed.
+* Added: Some missing help links add to options settings.
+
 = Master Elementor Addons 3.0.6 (29-03-2026) =
 * Fixed: Elementor Custom Icon Library not showing issue fixed.
 

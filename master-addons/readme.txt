@@ -4,7 +4,7 @@ Tags: elementor, elementor addons, elementor widgets, elementor templates, widge
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -317,6 +317,10 @@ Report security issues through the [Patchstack Vulnerability Disclosure Program]
 
 
 == Changelog ==
+= Master Elementor Addons 3.0.7 (05-04-2026) =
+* Fixed: Gallery Slider Thumbnails style issue fixed.
+* Added: Some missing help links add to options settings.
+
 = Master Elementor Addons 3.0.6 (29-03-2026) =
 * Fixed: Elementor Custom Icon Library not showing issue fixed.
 

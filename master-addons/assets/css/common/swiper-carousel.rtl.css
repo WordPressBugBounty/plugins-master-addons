@@ -139,6 +139,16 @@
   z-index: 3;
 }
 
+.jltma-arrows--vertical.jltma-swiper__navigation--center {
+  flex-direction: column;
+  justify-content: space-between;
+  top: 0 !important;
+  right: 50%;
+  transform: translateX(50%);
+  width: auto;
+  height: 100%;
+}
+
 .jltma-swiper__navigation--bottom-left,
 .jltma-position-bottom-left {
   align-items: flex-end;
