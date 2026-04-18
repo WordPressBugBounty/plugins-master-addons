@@ -8,9 +8,9 @@
  * Author URI: https://master-addons.com
  * Text Domain: master-addons
  * Domain Path: /languages
- * Version: 3.0.7
- * Elementor tested up to: 4.0.1
- * Elementor Pro tested up to: 4.0.1
+ * Version: 3.0.8
+ * Elementor tested up to: 4.0.2
+ * Elementor Pro tested up to: 4.0.2
  * Wordfence Vendor Key: qgxtflvqaabgarz4gu9nozmceloswzrg
  *
  */
@@ -79,14 +79,24 @@ if ( function_exists( 'ma_el_fs' ) ) {
     ma_el_fs();
     // Disable automatic plugin deactivation on activation
     ma_el_fs()->add_filter( 'deactivate_on_activation', '__return_false' );
-    // After Freemius consent (connect or skip), go to settings page.
+    // After Freemius consent (connect or skip), go to the settings page
+    // only when the free plugin is active. Otherwise redirect to the
+    // plugins list so the user sees the "install/activate Master Addons
+    // Free" notice instead of a settings page that triggers WordPress's
+    // "Sorry, you are not allowed to access this page." error.
     // Setup wizard runs first via admin_init redirect; by the time
     // Freemius consent shows, the wizard is already complete.
     ma_el_fs()->add_filter( 'after_connect_url', function ( $url ) {
-        return admin_url( 'admin.php?page=master-addons-settings' );
+        if ( is_plugin_active( 'master-addons/master-addons.php' ) ) {
+            return admin_url( 'admin.php?page=master-addons-settings' );
+        }
+        return admin_url( 'plugins.php' );
     } );
     ma_el_fs()->add_filter( 'after_skip_url', function ( $url ) {
-        return admin_url( 'admin.php?page=master-addons-settings' );
+        if ( is_plugin_active( 'master-addons/master-addons.php' ) ) {
+            return admin_url( 'admin.php?page=master-addons-settings' );
+        }
+        return admin_url( 'plugins.php' );
     } );
     // Signal that SDK was initiated.
     do_action( 'ma_el_fs_loaded' );

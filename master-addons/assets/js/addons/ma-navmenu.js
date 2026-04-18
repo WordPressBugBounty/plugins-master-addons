@@ -102,6 +102,23 @@ function filterFancyBox(element) {
         }
       });
     } else {
+      let jltmaOpen = function() {
+        $widget.addClass("jltma-is-open");
+        $toggle.attr("aria-expanded", "true");
+        if (lockBody) {
+          $dropdown.attr("aria-hidden", "false");
+          $2("body").addClass("jltma-menu-locked");
+        }
+      }, jltmaClose = function() {
+        $widget.removeClass("jltma-is-open");
+        $toggle.attr("aria-expanded", "false");
+        if (lockBody) {
+          $dropdown.attr("aria-hidden", "true");
+          $2("body").removeClass("jltma-menu-locked");
+        }
+      }, jltmaIsOpen = function() {
+        return $widget.hasClass("jltma-is-open");
+      };
       var submenu_animate_class = "animated " + $submenu_animation, submenu_selector = $2(".jltma-dropdown.jltma-sub-menu");
       $2("#" + $menuID + " .jltma-menu-has-children").hover(function() {
         if (submenu_selector.hasClass("fade-up")) {
@@ -170,44 +187,90 @@ function filterFancyBox(element) {
           e.stopPropagation();
         });
       }
-      if ($menu_offcanvas == "toggle-bar") {
-        $2(".jltma-nav-panel .navbar-toggler").on("click", function(e) {
-          $2(".jltma-burger").toggleClass("jltma-close");
+      var $widget = $scope;
+      var $toggle = $scope.find(".jltma-nav-menu__toggle-container");
+      var $dropdown = $scope.find(".jltma-nav-menu__dropdown");
+      var $closeBtn = $scope.find(".jltma-nav-menu__dropdown-close");
+      var $backdrop = $scope.find(".jltma-nav-menu__backdrop");
+      var dropdownType = $dropdown.data("menu-type");
+      var lockBody = dropdownType === "offcanvas" || dropdownType === "popup";
+      var widgetId = $widget.attr("data-id") || "";
+      var keyNs = "keydown.jltmaNav-" + widgetId;
+      $toggle.off(".jltmaNav");
+      $closeBtn.off(".jltmaNav");
+      $backdrop.off(".jltmaNav");
+      $dropdown.off(".jltmaNav");
+      $2(document).off(keyNs);
+      if ($toggle.length === 0) {
+        return;
+      }
+      $toggle.on("click.jltmaNav", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (jltmaIsOpen()) {
+          jltmaClose();
+        } else {
+          jltmaOpen();
+        }
+      });
+      $toggle.on("keydown.jltmaNav", function(e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          if (jltmaIsOpen()) {
+            jltmaClose();
+          } else {
+            jltmaOpen();
+          }
+        }
+      });
+      $closeBtn.on("click.jltmaNav", function(e) {
+        e.preventDefault();
+        jltmaClose();
+      });
+      if (lockBody) {
+        $backdrop.on("click.jltmaNav", jltmaClose);
+        $2(document).on(keyNs, function(e) {
+          if (e.key === "Escape" && jltmaIsOpen()) {
+            jltmaClose();
+          }
+        });
+        $dropdown.on("click.jltmaNav", 'a[href]:not([href="#"]):not([href=""])', function() {
+          jltmaClose();
         });
       }
-      if ($menu_offcanvas == "offcanvas" || $menu_offcanvas == "overlay") {
-        $2(".jltma-nav-panel .navbar-toggler").on("click", function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          var offcanvas_id = $2(this).attr("data-trigger");
-          $2(offcanvas_id).toggleClass("show");
-          $2("body").toggleClass("offcanvas-active");
-          $2(".jltma-nav-panel ").toggleClass("offcanvas-nav");
-          if ($menu_offcanvas == "overlay") {
-            $2(".jltma-nav-panel ").toggleClass("offcanvas-overlay");
+      if (dropdownType === "default" || dropdownType === "icon") {
+        $dropdown.on("click.jltmaNav", "a", function(e) {
+          var $link = $2(this);
+          var $li = $link.parent("li.menu-item-has-children");
+          if (!$li.length) {
+            return;
           }
-        });
-        $2(document).on("keydown", function(event) {
-          if (event.keyCode === 27) {
-            $2(".mobile-offcanvas").removeClass("show");
-            $2(".desktop-offcanvas").removeClass("show");
-            $2("body").removeClass("overlay-active");
+          var $submenu = $li.children("ul").first();
+          if (!$submenu.length) {
+            return;
           }
-        });
-        $2(".btn-close, .jltma-nav-panel .offcanvas-nav, .jltma-nav-panel.desktop .jltma-close, .jltma-close").click(function(e) {
-          $2(".jltma-nav-panel ").removeClass("offcanvas-nav");
-          $2(".mobile-offcanvas").removeClass("show");
-          $2(".desktop-offcanvas").removeClass("show");
-          $2("body").removeClass("offcanvas-active");
-          if ($menu_offcanvas == "overlay") {
-            $2(".jltma-nav-panel ").removeClass("offcanvas-overlay");
+          if (!$li.hasClass("jltma-submenu-open")) {
+            e.preventDefault();
+            e.stopPropagation();
+            $li.addClass("jltma-submenu-open");
           }
         });
       }
     }
   };
   $(window).on("elementor/frontend/init", function() {
-    elementorFrontend.hooks.addAction("frontend/element_ready/ma-navmenu.default", JLTMA_NavMenu);
+    if (typeof elementorFrontend !== "undefined" && elementorFrontend.hooks) {
+      elementorFrontend.hooks.addAction("frontend/element_ready/ma-navmenu.default", JLTMA_NavMenu);
+    }
+  });
+  $(function() {
+    $(".jltma-nav-menu__toggle-container").each(function() {
+      var $scope = $(this).closest(".elementor-element, .elementor-widget, [data-widget_type]").first();
+      if (!$scope.length) {
+        $scope = $(this).parent();
+      }
+      JLTMA_NavMenu($scope, $);
+    });
   });
 })(jQuery, window.elementorFrontend);
 })();

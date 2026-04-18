@@ -1,4 +1,194 @@
 (function(){
+var STYLE_ID = "jltma-dialog-styles";
+var PORTAL_ID = "jltma-dialog-portal";
+var CSS = [
+  /* z-index must beat the template-library uploader modal (999999)
+     and match the shared shadcn DialogOverlay/DialogContent convention
+     (9999999). The dialog is the topmost interactive layer in the admin,
+     so we anchor at one more order of magnitude to leave room underneath. */
+  ".jltma-dialog{position:fixed;inset:0;z-index:9999999;display:flex;align-items:center;justify-content:center;animation:jltma-dialog-fade-in 0.15s ease-out;}",
+  ".jltma-dialog__overlay{position:absolute;inset:0;background:rgba(15,23,42,0.55);backdrop-filter:blur(1.5px);-webkit-backdrop-filter:blur(1.5px);}",
+  '.jltma-dialog__content{position:relative;z-index:1;width:min(460px,calc(100% - 32px));background:var(--jltma-popover,#ffffff);color:var(--jltma-popover-foreground,#0f172a);border:1px solid var(--jltma-border,#e2e8f0);border-radius:var(--jltma-radius,10px);box-shadow:0 20px 48px rgba(15,23,42,0.24),0 8px 16px rgba(15,23,42,0.12);padding:24px;box-sizing:border-box;animation:jltma-dialog-scale-in 0.18s cubic-bezier(0.16,1,0.3,1);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;}',
+  ".jltma-dialog__title{margin:0 0 10px;font-size:18px;font-weight:600;line-height:1.35;letter-spacing:-0.01em;color:var(--jltma-foreground,#0f172a);}",
+  ".jltma-dialog__message{margin:0 0 24px;font-size:14px;line-height:1.55;color:var(--jltma-muted-foreground,#475569);white-space:pre-line;}",
+  ".jltma-dialog__actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;}",
+  ".jltma-dialog__btn{appearance:none;border:1px solid transparent;border-radius:calc(var(--jltma-radius,10px) - 2px);height:36px;padding:0 16px;font-size:13px;font-weight:600;line-height:1;cursor:pointer;transition:background-color 0.15s ease,border-color 0.15s ease,color 0.15s ease,box-shadow 0.15s ease,opacity 0.15s ease;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px;}",
+  ".jltma-dialog__btn:focus-visible{outline:2px solid var(--jltma-ring,rgba(104,20,205,0.45));outline-offset:2px;}",
+  ".jltma-dialog__btn:disabled{opacity:0.6;cursor:not-allowed;}",
+  ".jltma-dialog__btn--secondary{background:var(--jltma-background,#ffffff);border-color:var(--jltma-border,#e2e8f0);color:var(--jltma-foreground,#334155);}",
+  ".jltma-dialog__btn--secondary:hover:not(:disabled){background:var(--jltma-accent,#f1f5f9);border-color:var(--jltma-border,#cbd5e1);}",
+  ".jltma-dialog__btn--primary{background:var(--jltma-primary,#6814cd);color:var(--jltma-primary-foreground,#ffffff);}",
+  ".jltma-dialog__btn--primary:hover:not(:disabled){opacity:0.9;}",
+  ".jltma-dialog__btn--danger{background:var(--jltma-destructive,#dc2626);color:#ffffff;}",
+  ".jltma-dialog__btn--danger:hover:not(:disabled){opacity:0.9;}",
+  ".jltma-dialog__btn--success{background:#16a34a;color:#ffffff;}",
+  ".jltma-dialog__btn--success:hover:not(:disabled){opacity:0.9;}",
+  ".jltma-dialog__btn--warning{background:#d97706;color:#ffffff;}",
+  ".jltma-dialog__btn--warning:hover:not(:disabled){opacity:0.9;}",
+  ".jltma-dialog--loading .jltma-dialog__content{padding:32px 28px;width:min(340px,calc(100% - 32px));text-align:center;}",
+  ".jltma-dialog--loading .jltma-dialog__message{margin:0;color:var(--jltma-foreground,#0f172a);font-weight:500;font-size:14px;}",
+  ".jltma-dialog__spinner{width:36px;height:36px;border:3px solid var(--jltma-border,#e2e8f0);border-top-color:var(--jltma-primary,#6814cd);border-radius:50%;margin:0 auto 16px;animation:jltma-dialog-spin 0.8s linear infinite;}",
+  "@keyframes jltma-dialog-fade-in{from{opacity:0;}to{opacity:1;}}",
+  "@keyframes jltma-dialog-scale-in{from{opacity:0;transform:scale(0.94) translateY(4px);}to{opacity:1;transform:scale(1) translateY(0);}}",
+  "@keyframes jltma-dialog-spin{to{transform:rotate(360deg);}}"
+].join("");
+function ensureStyles() {
+  if (typeof document === "undefined") return;
+  if (document.getElementById(STYLE_ID)) return;
+  var style = document.createElement("style");
+  style.id = STYLE_ID;
+  style.textContent = CSS;
+  document.head.appendChild(style);
+}
+function ensurePortal() {
+  var portal = document.getElementById(PORTAL_ID);
+  if (!portal) {
+    portal = document.createElement("div");
+    portal.id = PORTAL_ID;
+    document.body.appendChild(portal);
+  }
+  return portal;
+}
+function openDialog(opts) {
+  return new Promise(function(resolve) {
+    ensureStyles();
+    var portal = ensurePortal();
+    var tone = opts.tone || "primary";
+    var showCancel = !!opts.showCancel;
+    var root = document.createElement("div");
+    root.className = "jltma-dialog";
+    var overlay = document.createElement("div");
+    overlay.className = "jltma-dialog__overlay";
+    var content = document.createElement("div");
+    content.className = "jltma-dialog__content jltma-dialog-tone-" + tone;
+    content.setAttribute("role", "alertdialog");
+    content.setAttribute("aria-modal", "true");
+    if (opts.title) {
+      var titleEl = document.createElement("h3");
+      titleEl.className = "jltma-dialog__title";
+      titleEl.textContent = opts.title;
+      content.appendChild(titleEl);
+    }
+    if (opts.message) {
+      var msgEl = document.createElement("p");
+      msgEl.className = "jltma-dialog__message";
+      msgEl.textContent = opts.message;
+      content.appendChild(msgEl);
+    }
+    var actions = document.createElement("div");
+    actions.className = "jltma-dialog__actions";
+    var cleanup = function(value) {
+      document.removeEventListener("keydown", onKey);
+      overlay.removeEventListener("click", onOverlay);
+      if (root.parentNode) root.parentNode.removeChild(root);
+      resolve(value);
+    };
+    var onKey = function(e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        cleanup(false);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        cleanup(true);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    var onOverlay = function() {
+      cleanup(false);
+    };
+    overlay.addEventListener("click", onOverlay);
+    if (showCancel) {
+      var cancelBtn = document.createElement("button");
+      cancelBtn.type = "button";
+      cancelBtn.className = "jltma-dialog__btn jltma-dialog__btn--secondary";
+      cancelBtn.textContent = opts.cancelText || "Cancel";
+      cancelBtn.addEventListener("click", function() {
+        cleanup(false);
+      });
+      actions.appendChild(cancelBtn);
+    }
+    var confirmBtn = document.createElement("button");
+    confirmBtn.type = "button";
+    confirmBtn.className = "jltma-dialog__btn jltma-dialog__btn--" + tone;
+    confirmBtn.textContent = opts.confirmText || "OK";
+    confirmBtn.addEventListener("click", function() {
+      cleanup(true);
+    });
+    actions.appendChild(confirmBtn);
+    content.appendChild(actions);
+    root.appendChild(overlay);
+    root.appendChild(content);
+    portal.appendChild(root);
+    try {
+      confirmBtn.focus({ preventScroll: true });
+    } catch (e) {
+      confirmBtn.focus();
+    }
+  });
+}
+function confirmDialog(options) {
+  var opts = options || {};
+  return openDialog({
+    title: opts.title || "Are you sure?",
+    message: opts.message || "",
+    confirmText: opts.confirmText || "Confirm",
+    cancelText: opts.cancelText || "Cancel",
+    tone: opts.tone || "primary",
+    showCancel: true
+  });
+}
+function alertDialog(options) {
+  var opts = options || {};
+  return openDialog({
+    title: opts.title || "Notice",
+    message: opts.message || "",
+    confirmText: opts.confirmText || "OK",
+    tone: opts.tone || "primary",
+    showCancel: false
+  });
+}
+function loadingDialog(options) {
+  var opts = options || {};
+  ensureStyles();
+  var portal = ensurePortal();
+  var root = document.createElement("div");
+  root.className = "jltma-dialog jltma-dialog--loading";
+  var overlay = document.createElement("div");
+  overlay.className = "jltma-dialog__overlay";
+  var content = document.createElement("div");
+  content.className = "jltma-dialog__content";
+  content.setAttribute("role", "status");
+  content.setAttribute("aria-live", "polite");
+  var spinner = document.createElement("div");
+  spinner.className = "jltma-dialog__spinner";
+  spinner.setAttribute("aria-hidden", "true");
+  content.appendChild(spinner);
+  var msgEl = document.createElement("p");
+  msgEl.className = "jltma-dialog__message";
+  msgEl.textContent = opts.message || "Working…";
+  content.appendChild(msgEl);
+  root.appendChild(overlay);
+  root.appendChild(content);
+  portal.appendChild(root);
+  var closed = false;
+  return {
+    close: function() {
+      if (closed) return;
+      closed = true;
+      if (root.parentNode) root.parentNode.removeChild(root);
+    },
+    setMessage: function(next) {
+      msgEl.textContent = next;
+    }
+  };
+}
+if (typeof window !== "undefined") {
+  window.JLTMA_Dialog = window.JLTMA_Dialog || {};
+  window.JLTMA_Dialog.confirm = confirmDialog;
+  window.JLTMA_Dialog.alert = alertDialog;
+  window.JLTMA_Dialog.loading = loadingDialog;
+}
+const dialog = { confirmDialog, alertDialog, loadingDialog };
 (function($) {
   "use strict";
   var JLTMA_Toaster = {
@@ -1122,7 +1312,7 @@
       $themeAddNewBtn.text("Add New Template");
       if (!$2(".jltma-theme-builder-tutorial").length) {
         $themeAddNewBtn.after(
-          '<a href="https://www.youtube.com/watch?v=Ae5Mlvc6wgQ" target="_blank" class="jltma-cpt-btn jltma-cpt-btn-youtube jltma-theme-builder-tutorial"><svg width="16" height="16" viewBox="0 0 24 24" fill="#ff0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.546 12 3.546 12 3.546s-7.505 0-9.377.504A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.504 9.376.504 9.376.504s7.505 0 9.377-.504a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> Video Tutorial</a>'
+          '<a href="https://www.youtube.com/watch?v=KmlHyER6uEQ" target="_blank" class="jltma-cpt-btn jltma-cpt-btn-youtube jltma-theme-builder-tutorial"><svg width="16" height="16" viewBox="0 0 24 24" fill="#ff0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.546 12 3.546 12 3.546s-7.505 0-9.377.504A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.504 9.376.504 9.376.504s7.505 0 9.377-.504a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> Video Tutorial</a>'
         );
       }
     }

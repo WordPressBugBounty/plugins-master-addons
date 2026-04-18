@@ -2425,10 +2425,13 @@ class Template_Kit_Cache
 
         $image_data = wp_remote_retrieve_body($response);
 
-        // Detect actual extension from content
+        // Detect actual extension from content.
+        // Note: finfo_close() is deprecated in PHP 8.5 (finfo objects are
+        // freed automatically). The local `$finfo` goes out of scope at
+        // function return, so no explicit close is needed for GC in any
+        // supported PHP version.
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime_type = finfo_buffer($finfo, $image_data);
-        finfo_close($finfo);
 
         $extension = 'jpg';
         if ($mime_type === 'image/png') $extension = 'png';

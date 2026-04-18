@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* MA Navigation Menu */
 .jltma-nav-menu__container > ul > li.current_page_item > a,
 .jltma-nav-menu__container > ul > li.current_page_item > a:hover,
@@ -1598,4 +1599,185 @@ ul.dropdown-menu.jltma-megamenu.flip-effect {
 .jltma-menu-has-children:not(.jltma-megamenu-click):hover > ul.dropdown-menu.jltma-megamenu.flip-effect,
 .jltma-menu-has-children.jltma-megamenu-click > ul.dropdown-menu.jltma-megamenu.flip-effect.show {
   transform: perspective(1000px) rotateX(0deg) !important;
+}
+
+/* =========================================================================
+   Master Addons Nav Menu — Toggle, Offcanvas, Popup, Default-Mobile, Backdrop
+   See: docs/superpowers/specs/2026-04-17-ma-navmenu-toggle-and-dropdown-modes-design.md
+   ========================================================================= */
+/* Close-icon SVG size constraint (all dropdown modes).
+   The existing .jltma-menu-dropdown-type-popup .jltma-nav-menu__dropdown-close
+   rule sets font-size:24px; this rule makes the SVG inherit that as a 1em box
+   instead of stretching to its container's full width. */
+.jltma-nav-menu__dropdown-close svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* Body scroll-lock when an offcanvas or popup is open. */
+body.jltma-menu-locked {
+  overflow: hidden;
+}
+
+/* Toggle: ensure clickable cursor + visual focus ring for keyboard users. */
+.jltma-nav-menu__toggle-container {
+  cursor: pointer;
+}
+.jltma-nav-menu__toggle-container:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* -------- OFFCANVAS MODE -------- */
+/* Default (closed) state — drawer parked off-screen, no interaction.
+   Overrides the base `.jltma-nav-menu__dropdown { display: none }` rule —
+   offcanvas needs the element in the layout (hidden by transform/visibility),
+   not display:none, otherwise transforms and transitions don't run. */
+.jltma-nav-menu__dropdown.jltma-menu-dropdown-type-offcanvas {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 10000;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.3s;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Position-aware: slide direction follows the widget's offcanvas_position
+   control (.jltma-offcanvas-position-{left|right} on the widget root). */
+.jltma-offcanvas-position-right .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-offcanvas {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.jltma-offcanvas-position-left .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-offcanvas {
+  right: 0;
+  transform: translateX(100%);
+}
+
+/* Open state — drawer slides in. */
+.jltma-is-open .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-offcanvas {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s;
+}
+
+/* Backdrop — sibling of the offcanvas drawer. */
+.jltma-nav-menu__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.jltma-is-open .jltma-nav-menu__backdrop {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.3s ease, visibility 0s linear 0s;
+}
+
+/* -------- POPUP MODE -------- */
+/* The base .jltma-menu-dropdown-type-popup rule already exists in this file
+   (see line ~307); we only add the open/closed visibility transitions.
+   Override the base `.jltma-nav-menu__dropdown { display: none }` so opacity
+   and transform transitions have an element to animate. */
+.jltma-nav-menu__dropdown.jltma-menu-dropdown-type-popup {
+  display: block;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.96);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.jltma-is-open .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-popup {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0s;
+}
+
+/* -------- DEFAULT MODE — MOBILE COLLAPSE -------- */
+/* Below 768px, the default / icon-fallback dropdown becomes a click-to-expand
+   collapse below the toggle (max-height transition). Desktop hover behavior
+   in the existing rules is unaffected.
+
+   Note on `type-icon`: the widget's PHP (get_toggle / get_dropdown /
+   get_dropdown_nav) falls back to `dropdown_menu_type = 'icon'` when the
+   setting isn't hydrated — which is the typical free-version case because
+   the Pro-only control options aren't available. That fallback emits
+   `.jltma-menu-dropdown-type-icon` on the dropdown nav, which historically
+   had no CSS rules at all. Treat `type-icon` as an alias of `type-default`
+   here so the free-version mobile menu actually expands on hamburger tap.
+
+   Breakpoint note: kept at 767px to match the existing
+   .jltma-dropdown-breakpoints-tablet .jltma-nav-menu__main { display:none }
+   rule (line ~1647) which also fires at ≤767px. Widening to 1024
+   caused a double-menu regression at 768–1023px because the desktop
+   __main stays visible there (its display:none only fires ≤767) and
+   the mobile __dropdown was flashing into view alongside it. */
+@media (max-width: 767px) {
+  .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-default,
+  .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-icon {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+  .jltma-is-open .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-default,
+  .jltma-is-open .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-icon {
+    /* The base `.jltma-nav-menu__dropdown` rule sets `display: none`
+       (it's hidden on desktop where the horizontal menu shows instead).
+       `max-height` can't un-hide a `display: none` element, so we must
+       explicitly flip display here when the widget is open. */
+    display: block;
+    /* 100vh upper bound is intentional — actual height collapses to content
+       because the inner ul has its own intrinsic height. */
+    max-height: 100vh;
+  }
+  /* Submenus — click-to-expand accordion in mobile collapse mode.
+     No hover on touch, so the desktop hover-reveal rules never fire.
+     Base state: submenus are laid out in the flow (position:static) but
+     collapsed via max-height:0. When the parent li gets the JS-toggled
+     class `jltma-submenu-open`, the submenu expands inline.
+     `li ul` covers the native WP `<ul class="sub-menu">` the mobile
+     dropdown uses (no .jltma-nav-menu__dropdown-submenu BEM class). */
+  .jltma-is-open .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-default > ul li ul,
+  .jltma-is-open .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-icon > ul li ul {
+    position: static;
+    padding-right: 16px;
+    margin: 0;
+    list-style: none;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.3s ease, opacity 0.2s ease, visibility 0s linear 0.3s;
+  }
+  /* !important here because several pre-existing rules target the
+     same li > ul with equivalent or higher specificity (hover reveals
+     for the desktop menu, the "visibility: hidden; opacity: 0" base
+     hide rule, etc.). Without !important the cascade unpredictably
+     lands on whichever rule was written later in the source, which on
+     mobile means the submenu stays hidden even when jltma-submenu-open
+     is set. With !important the JS-toggled class definitively wins. */
+  .jltma-is-open .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-default > ul li.jltma-submenu-open > ul,
+  .jltma-is-open .jltma-nav-menu__dropdown.jltma-menu-dropdown-type-icon > ul li.jltma-submenu-open > ul {
+    max-height: 100vh !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    transition: max-height 0.3s ease, opacity 0.2s ease, visibility 0s linear 0s;
+  }
 }

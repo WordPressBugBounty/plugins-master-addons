@@ -185,9 +185,9 @@ class Popup_Admin {
     public function save_popup_data() {
         check_ajax_referer('jltma_popup_nonce', '_nonce');
 
-        $popup_id = intval($_POST['popup_id']);
-        $title = sanitize_text_field($_POST['title']);
-        $activation = sanitize_text_field($_POST['activation']);
+        $popup_id   = isset($_POST['popup_id']) ? intval($_POST['popup_id']) : 0;
+        $title      = isset($_POST['title']) ? sanitize_text_field(wp_unslash($_POST['title'])) : '';
+        $activation = isset($_POST['activation']) ? sanitize_text_field(wp_unslash($_POST['activation'])) : '';
 
         // Handle conditions data
         $conditions_data = $this->parse_conditions_from_post();

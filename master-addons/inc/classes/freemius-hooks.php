@@ -65,11 +65,15 @@ if (!class_exists('MasterAddons\Inc\Classes\Freemius_Hooks')) {
       // Remove Freemius links from free plugin when Pro is active
       if ( Helper::jltma_premium() ) {
         add_filter( 'plugin_action_links_' . JLTMA_BASE, [$this, 'jltma_remove_freemius_action_links'], 999 );
-        add_filter( 'plugin_row_meta', [$this, 'jltma_remove_freemius_row_meta'], 999, 2 );
       }
 
-      // Add plugin row meta links
+      // Add plugin row meta links + deduplicate with Freemius's own
+      // Support / Documentation entries (always, regardless of Pro).
+      // Our branded entries with dashicons ship first via jltma_plugin_row_meta;
+      // jltma_remove_freemius_row_meta runs at priority 999 to strip
+      // the duplicate plain-text links Freemius injects afterwards.
       add_filter( 'plugin_row_meta', [$this, 'jltma_plugin_row_meta'], 10, 2 );
+      add_filter( 'plugin_row_meta', [$this, 'jltma_remove_freemius_row_meta'], 999, 2 );
 
       // Trial
       // ma_el_fs()->override_i18n( array(
@@ -307,11 +311,22 @@ if (!class_exists('MasterAddons\Inc\Classes\Freemius_Hooks')) {
      */
     public function jltma_plugin_row_meta( $links, $file ) {
       if ( JLTMA_BASE === $file ) {
+        // Array keys are prefixed with jltma_ so they never collide
+        // with Freemius's own 'support' / 'documentation' / 'pricing'
+        // keys that jltma_remove_freemius_row_meta drops.
+        //
+        // Inline styles brand-color the links on the Plugins list
+        // (blue for Docs/Support, purple for Premium) because this
+        // runs on the core plugins.php screen where our admin CSS
+        // isn't enqueued — inline is the safe, self-contained path.
+        $link_style    = 'style="color:#2563eb;font-weight:600;"';
+        $premium_style = 'style="color:#6814cd;font-weight:700;"';
+        $icon_style    = 'style="vertical-align:middle;margin-right:3px;font-size:16px;width:16px;height:16px;"';
+
         $new_links = array(
-          // 'demo'    => '<a href="' . esc_url( 'https://master-addons.com' ) . '" target="_blank"><span class="dashicons dashicons-welcome-view-site"></span>Live Demo</a>',
-          'doc'     => '<a href="' . esc_url( 'https://master-addons.com/docs/' ) . '" target="_blank"><span class="dashicons dashicons-media-document"></span>Documentation</a>',
-          'support' => '<a href="https://master-addons.com/contact-us" target="_blank"><span class="dashicons dashicons-admin-users"></span>Support</a>',
-          'pro'     => '<a href="' . esc_url( 'https://master-addons.com/pricing' ) . '" target="_blank"><span class="dashicons dashicons-cart"></span>Premium version</a>'
+          'jltma_doc'     => '<a ' . $link_style . ' href="' . esc_url( 'https://master-addons.com/docs/' ) . '" target="_blank"><span class="dashicons dashicons-media-document" ' . $icon_style . '></span>Docs</a>',
+          'jltma_support' => '<a ' . $link_style . ' href="' . esc_url( 'https://master-addons.com/contact-us' ) . '" target="_blank"><span class="dashicons dashicons-admin-users" ' . $icon_style . '></span>Support</a>',
+          'jltma_pro'     => '<a ' . $premium_style . ' href="' . esc_url( 'https://master-addons.com/pricing' ) . '" target="_blank"><span class="dashicons dashicons-star-filled" ' . $icon_style . '></span>Upgrade to Pro</a>',
         );
         $links = array_merge( $links, $new_links );
       }
@@ -358,6 +373,10 @@ if (!class_exists('MasterAddons\Inc\Classes\Freemius_Hooks')) {
      */
     public function jltma_remove_freemius_row_meta( $links, $file ) {
       if ( $file === JLTMA_BASE ) {
+        // Known Freemius row-meta keys. 'support' and 'documentation'
+        // are included because we already ship our own branded versions
+        // via jltma_plugin_row_meta and Freemius would otherwise add
+        // plain-text duplicates next to ours.
         $freemius_keys = array(
           'upgrade',
           'pricing',
@@ -365,11 +384,26 @@ if (!class_exists('MasterAddons\Inc\Classes\Freemius_Hooks')) {
           'opt-in',
           'opt-out',
           'activate-license',
-          'deactivate-license'
+          'deactivate-license',
+          'support',
+          'documentation',
+          'docs',
         );
 
         foreach ( $freemius_keys as $key ) {
           if ( isset( $links[ $key ] ) ) {
+            unset( $links[ $key ] );
+          }
+        }
+
+        // Belt-and-suspenders: Freemius sometimes emits the links
+        // without a stable array key. Scan by anchor text content and
+        // drop any plain-text 'Support' / 'Documentation' entry that
+        // isn't our own (ours contain the dashicons-* span class).
+        foreach ( $links as $key => $html ) {
+          if ( ! is_string( $html ) ) continue;
+          if ( strpos( $html, 'dashicons-' ) !== false ) continue; // ours
+          if ( preg_match( '~>(Support|Documentation)\s*<~i', $html ) ) {
             unset( $links[ $key ] );
           }
         }

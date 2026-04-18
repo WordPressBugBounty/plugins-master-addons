@@ -4,7 +4,7 @@ Tags: elementor, elementor addons, elementor widgets, elementor templates, widge
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 3.0.7
+Stable tag: 3.0.8
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -317,6 +317,19 @@ Report security issues through the [Patchstack Vulnerability Disclosure Program]
 
 
 == Changelog ==
+= Master Elementor Addons 3.0.8 (18-04-2026) =
+* Fixed: Nav Menu hamburger toggle not working on mobile devices.
+* Fixed: Nav Menu offcanvas, popup, and default dropdown modes styling restored after Bootstrap dependency removal.
+* Fixed: Pro plugin showing "Sorry, you are not allowed to access this page." when Master Addons Free is not installed - now shows a proper install-free notice.
+* Fixed: Console errors across the Template Library after SweetAlert removal (delete kit, template import, plugin install/activate).
+* Fixed: Template Kit card thumbnail click now opens the in-app kit details view instead of opening an external preview URL.
+* Added: Redesigned Template Kit upload flow with a single continuous modal — inline confirmation, stepped progress, per-template filename display, no popup-over-popup.
+* Added: Faster Template Kit extraction using native ZipArchive with raised memory and execution time limits.
+* Added: "IMPORTED" badge on Template Kit cards already present in the local library.
+* Added: Shared promise-based confirmation and alert dialog system usable across Template Library, Widget Builder, Popup Builder, and Theme Builder.
+* Added: ARIA attributes and keyboard accessibility (Enter / Space / Esc) to Nav Menu toggle and import modals.
+* Added: Template Kits, Library & Popup Builder help tutorials links added.
+
 = Master Elementor Addons 3.0.7 (05-04-2026) =
 * Fixed: Gallery Slider Thumbnails style issue fixed.
 * Added: Some missing help links add to options settings.

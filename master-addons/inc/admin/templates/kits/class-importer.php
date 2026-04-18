@@ -2146,6 +2146,22 @@ class Importer
             return;
         }
 
+        // ── Resource headroom ────────────────────────────────────────────
+        // Extracting a multi-MB zip and reading dozens of JSON template
+        // files in one request can easily hit the default 30s / 128M
+        // limits on shared hosting. Request generous limits up-front so
+        // the "Reading kit contents" step isn't dragged out by throttled
+        // resources. Only bumps the ceiling if the host allows it — a
+        // disabled ini_set or a lower hard cap simply becomes the limit.
+        if (function_exists('set_time_limit')) {
+            @set_time_limit(600);
+        }
+        if (function_exists('wp_raise_memory_limit')) {
+            wp_raise_memory_limit('admin');
+        }
+        @ini_set('memory_limit', '512M');
+        @ignore_user_abort(true);
+
         $uploaded_file = $_FILES['kit_file'];
 
         $file_type = wp_check_filetype($uploaded_file['name']);
@@ -2185,12 +2201,26 @@ class Importer
             $wp_filesystem->mkdir($kits_dir, 0755, true);
         }
 
-        $unzip_result = unzip_file($uploaded_file['tmp_name'], $kits_dir);
-
-        if (is_wp_error($unzip_result)) {
-            $wp_filesystem->delete($kits_dir, true);
-            wp_send_json_error(['message' => 'Failed to extract ZIP file: ' . $unzip_result->get_error_message()]);
-            return;
+        // Native PHP's ZipArchive is significantly faster than WP's
+        // unzip_file() because it avoids the pclzip pure-PHP fallback,
+        // streams file entries directly to disk, and doesn't double-buffer
+        // each file in memory. Falls back to unzip_file() when the ext
+        // isn't available (extremely rare on modern PHP).
+        $unzip_ok = false;
+        if (class_exists('ZipArchive')) {
+            $zip = new \ZipArchive();
+            if ($zip->open($uploaded_file['tmp_name']) === true) {
+                $unzip_ok = $zip->extractTo($kits_dir);
+                $zip->close();
+            }
+        }
+        if (!$unzip_ok) {
+            $unzip_result = unzip_file($uploaded_file['tmp_name'], $kits_dir);
+            if (is_wp_error($unzip_result)) {
+                $wp_filesystem->delete($kits_dir, true);
+                wp_send_json_error(['message' => 'Failed to extract ZIP file: ' . $unzip_result->get_error_message()]);
+                return;
+            }
         }
 
         $manifest_path = $kits_dir . '/manifest.json';
@@ -2409,11 +2439,20 @@ class Importer
         );
 
         wp_send_json_success([
-            'kit_id' => $kit_id,
-            'name' => $kit_data['kit_name'],
+            'kit_id'         => $kit_id,
+            'name'           => $kit_data['kit_name'],
             'template_count' => $template_count,
-            'is_purchased' => true,
-            'message' => sprintf('Template kit "%s" uploaded successfully with %d templates', $kit_data['kit_name'], $template_count)
+            'is_purchased'   => true,
+            'message'        => sprintf('Template kit "%s" uploaded successfully with %d templates', $kit_data['kit_name'], $template_count),
+            'templates'      => $templates,
+            'parentTemplate' => [
+                'kit_id'           => $kit_id,
+                'kit_name'         => $kit_data['kit_name'],
+                'title'            => $kit_data['kit_name'],
+                'categories'       => $kit_data['categories'],
+                'required_plugins' => $required_plugins,
+                'is_purchased'     => true,
+            ],
         ]);
     }
 

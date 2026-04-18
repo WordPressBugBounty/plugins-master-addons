@@ -4911,6 +4911,16 @@ class Nav_Menu extends Master_Widget
             'jltma-menu-dropdown-type-' . esc_attr($settings['dropdown_menu_type']),
         ));
 
+        $dropdown_id = 'jltma-nav-dropdown-' . $this->get_id();
+
+        $this->add_render_attribute('toggle-container', array(
+            'role'           => 'button',
+            'tabindex'       => '0',
+            'aria-controls'  => $dropdown_id,
+            'aria-expanded'  => 'false',
+            'aria-label'     => __('Toggle menu', 'master-addons'),
+        ));
+
         echo '<div ' . $this->get_render_attribute_string('toggle-container') . '>' .
             '<div class="' . $this->get_widget_class() . '__toggle">';
 
@@ -4971,7 +4981,8 @@ class Nav_Menu extends Master_Widget
         $dropdown_menu_type = $settings['dropdown_menu_type'];
 
         if ('offcanvas' === $dropdown_menu_type) {
-            echo '<div class="' . $this->get_widget_class() . '__dropdown-container">';
+            echo '<div class="' . esc_attr($this->get_widget_class() . '__dropdown-container') . '">';
+            echo '<div class="' . esc_attr($this->get_widget_class() . '__backdrop') . '" aria-hidden="true"></div>';
         }
 
         $this->get_dropdown_nav();
@@ -5003,6 +5014,21 @@ class Nav_Menu extends Master_Widget
             'jltma-layout-' . esc_attr($layout),
             'jltma-menu-dropdown-type-' . esc_attr($dropdown_menu_type),
         ));
+
+        $dropdown_id = 'jltma-nav-dropdown-' . $this->get_id();
+
+        $this->add_render_attribute('dropdown-menu', array(
+            'id'             => $dropdown_id,
+            'data-menu-type' => esc_attr($dropdown_menu_type),
+        ));
+
+        if ('popup' === $dropdown_menu_type || 'offcanvas' === $dropdown_menu_type) {
+            $this->add_render_attribute('dropdown-menu', array(
+                'role'        => 'dialog',
+                'aria-modal'  => 'true',
+                'aria-hidden' => 'true',
+            ));
+        }
 
         $indicator_submenu_icon = (isset($settings['indicator_submenu']) && '' !== $settings['indicator_submenu']['value'] ? $settings['indicator_submenu']['value'] : '');
         // eicon-sort-down
