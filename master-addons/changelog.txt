@@ -1,4 +1,8 @@
 == Changelog ==
+= Master Elementor Addons 3.0.9 (25-04-2026) =
+* Added: Dynamic Table Addons table head show/hide option add.
+* Fixed: Dynamic Table mobile view warning issue fixed.
+
 = Master Elementor Addons 3.0.8 (18-04-2026) =
 * Fixed: Nav Menu hamburger toggle not working on mobile devices.
 * Fixed: Nav Menu offcanvas, popup, and default dropdown modes styling restored after Bootstrap dependency removal.

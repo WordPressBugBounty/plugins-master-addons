@@ -4,7 +4,7 @@ Tags: elementor, elementor addons, elementor widgets, elementor templates, widge
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 3.0.8
+Stable tag: 3.0.9
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -317,6 +317,10 @@ Report security issues through the [Patchstack Vulnerability Disclosure Program]
 
 
 == Changelog ==
+= Master Elementor Addons 3.0.9 (25-04-2026) =
+* Added: Dynamic Table Addons table head show/hide option add.
+* Fixed: Dynamic Table mobile view warning issue fixed.
+
 = Master Elementor Addons 3.0.8 (18-04-2026) =
 * Fixed: Nav Menu hamburger toggle not working on mobile devices.
 * Fixed: Nav Menu offcanvas, popup, and default dropdown modes styling restored after Bootstrap dependency removal.

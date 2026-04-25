@@ -70,6 +70,18 @@ class Dynamic_Table extends Master_Widget
             ]
         );
 
+        $this->add_control(
+            'ma_el_show_table_head',
+            [
+                'label' => __('Table Head', 'master-addons'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'master-addons'),
+                'label_off' => __('Hide', 'master-addons'),
+                'default' => 'yes',
+                'return_value' => 'yes',
+            ]
+        );
+
         $repeater = new Repeater();
         $repeater->start_controls_tabs('ma_el_table_head_contents');
         $repeater->start_controls_tab('head_tab_contents', ['label' => __('Content', 'master-addons')]);
@@ -265,7 +277,10 @@ class Dynamic_Table extends Master_Widget
                     ]
                 ],
                 'fields' => $repeater->get_controls(),
-                'title_field' => '{{{ title }}}'
+                'title_field' => '{{{ title }}}',
+                'condition' => [
+                    'ma_el_show_table_head' => 'yes',
+                ],
             ]
         );
         $this->end_controls_section();
@@ -659,7 +674,11 @@ class Dynamic_Table extends Master_Widget
             [
                 'label' => __('Table Header Style', 'master-addons'),
                 'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'ma_el_show_table_head' => 'yes',
+                ],
             ]
+            
         );
 
         $this->add_control(
@@ -670,7 +689,10 @@ class Dynamic_Table extends Master_Widget
                 'default' => '#020817',
                 'selectors' => [
                     '{{WRAPPER}} .jltma-table .jltma-table-header th' => 'background-color: {{VALUE}};',
-                ]
+                ],
+                'condition' => [
+                    'ma_el_show_table_head' => 'yes',
+                ],
             ]
         );
 
@@ -694,7 +716,10 @@ class Dynamic_Table extends Master_Widget
                     '{{WRAPPER}} .jltma-table .jltma-table-header span i' => 'font-size:{{SIZE}}{{UNIT}} !important;',
                     '{{WRAPPER}} .jltma-table .jltma-table-header span svg' => 'width:{{SIZE}}{{UNIT}} !important;',
                 ),
-                'style_transfer' => true
+                'style_transfer' => true,
+                'condition' => [
+                    'ma_el_show_table_head' => 'yes',
+                ],
             ]
         );
 
@@ -706,7 +731,10 @@ class Dynamic_Table extends Master_Widget
                 'selectors' => [
                     '{{WRAPPER}} .jltma-table .jltma-table-header span i' => 'color: {{VALUE}};',
                     '{{WRAPPER}} .jltma-table .jltma-table-header span svg path' => 'fill: {{VALUE}};',
-                ]
+                ],
+                'condition' => [
+                    'ma_el_show_table_head' => 'yes',
+                ],
             ]
         );
 
@@ -717,7 +745,10 @@ class Dynamic_Table extends Master_Widget
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} .jltma-table .jltma-table-header th' => 'color: {{VALUE}};',
-                ]
+                ],
+                'condition' => [
+                    'ma_el_show_table_head' => 'yes',
+                ],
             ]
         );
 
@@ -731,6 +762,9 @@ class Dynamic_Table extends Master_Widget
                 'selectors' => [
                     '{{WRAPPER}} .jltma-table .jltma-table-header th' => 'text-align: {{VALUE}} !important;',
                 ],
+                'condition' => [
+                    'ma_el_show_table_head' => 'yes',
+                ],
             ]
         );
 
@@ -741,6 +775,9 @@ class Dynamic_Table extends Master_Widget
                 'selector' => '{{WRAPPER}} .jltma-table .jltma-table-header th',
                 'global' => [
                     'default' => Global_Typography::TYPOGRAPHY_TEXT,
+                ],
+                'condition' => [
+                    'ma_el_show_table_head' => 'yes',
                 ],
             ]
         );
@@ -753,6 +790,9 @@ class Dynamic_Table extends Master_Widget
                 'size_units' => ['px', '%', 'em'],
                 'selectors' => [
                     '{{WRAPPER}} .jltma-table .jltma-table-header td,{{WRAPPER}} .jltma-table .jltma-table-header th' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+                'condition' => [
+                    'ma_el_show_table_head' => 'yes',
                 ],
             ]
         );
@@ -891,6 +931,7 @@ class Dynamic_Table extends Master_Widget
         ?>
 
         <table <?php echo $this->get_render_attribute_string('ma_el_table_wrap'); ?>>
+            <?php if ('yes' === $settings['ma_el_show_table_head']) : ?>
             <thead class="jltma-table-header">
                 <tr>
                     <?php foreach ($settings['ma_el_table_header'] as $index => $thead) {
@@ -898,11 +939,11 @@ class Dynamic_Table extends Master_Widget
                         $icon_key = $this->get_repeater_setting_key('icon', 'ma_el_table_header', $index);
                         $this->add_inline_editing_attributes($repeater_setting_key);
 
-                        $colspan = ($thead['colspannumber']) ? 'colSpan="' . $thead['colspannumber'] . '"' : '';
+                        $colspan = !empty($thead['colspannumber']) ? ' colspan="' . esc_attr($thead['colspannumber']) . '"' : '';
                         ?>
 
                         <th scope="jltma-row"
-                            class="elementor-inline-editing elementor-repeater-item-<?php echo esc_attr($thead['_id']); ?>" <?php echo esc_attr($colspan); ?>             <?php echo $this->get_render_attribute_string($repeater_setting_key); ?>>
+                            class="elementor-inline-editing elementor-repeater-item-<?php echo esc_attr($thead['_id']); ?>"<?php echo $colspan; ?>             <?php echo $this->get_render_attribute_string($repeater_setting_key); ?>>
 
                             <?php if ('icon' === $thead['icon_type'] && (!empty($thead['header_icon']) || !empty($thead['header_icon']['value']))) { ?>
                                 <span <?php echo $this->get_render_attribute_string($repeater_setting_key); ?>>
@@ -935,11 +976,13 @@ class Dynamic_Table extends Master_Widget
                     <?php } ?>
                 </tr>
             </thead>
+            <?php endif; ?>
 
             <tbody class="jltma-table-body">
                 <tr>
                     <?php
-                    $th_values = $settings['ma_el_table_header'];
+                    $th_values = is_array($settings['ma_el_table_header']) ? $settings['ma_el_table_header'] : [];
+                    $show_head = ('yes' === $settings['ma_el_show_table_head']);
                     $counter = 0;
                     foreach ($settings['ma_el_table_body'] as $index => $tbody) {
                         $table_body_key = $this->get_repeater_setting_key('text', 'ma_el_table_body', $index);
@@ -955,9 +998,10 @@ class Dynamic_Table extends Master_Widget
 
                         $colspan = ($tbody['colspannumber']) ? 'colSpan="' . esc_attr($tbody['colspannumber']) . '"' : '';
                         $rowspan = ($tbody['rowspannumber']) ? 'rowSpan="' . esc_attr($tbody['rowspannumber']) . '"' : '';
+                        $data_column = ($show_head && isset($th_values[$counter]['title'])) ? $th_values[$counter]['title'] : '';
                         ?>
 
-                        <td data-column="<?php echo esc_attr($th_values[$counter]['title']); ?>" <?php echo esc_attr($colspan); ?>
+                        <td data-column="<?php echo esc_attr($data_column); ?>" <?php echo esc_attr($colspan); ?>
                             <?php echo esc_attr($rowspan); ?>             <?php echo $this->get_render_attribute_string($table_body_key); ?>>
 
                             <?php echo $this->parse_text_editor($tbody['text']); ?>
