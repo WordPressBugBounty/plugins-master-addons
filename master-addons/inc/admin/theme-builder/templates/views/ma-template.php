@@ -19,13 +19,13 @@ get_header();
 if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder' ) ) {
 	$content = Theme_Builder::render_elementor_content( $template_id );
 	if ( ! empty( $content ) ) {
-		echo $content;
+		echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor rendered HTML content
 	} else {
 		// Fallback: If no content, show appropriate default content
 		if ( is_search() ) {
 			?>
 			<div class="master-addons-search-results">
-				<h1><?php printf( __( 'Search Results for: %s', 'master-addons' ), get_search_query() ); ?></h1>
+				<h1><?php /* translators: %s: search query term */ printf( esc_html__( 'Search Results for: %s', 'master-addons' ), esc_html( get_search_query() ) ); ?></h1>
 				<?php
 				if ( have_posts() ) {
 					while ( have_posts() ) {
@@ -34,7 +34,7 @@ if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_B
 						the_excerpt();
 					}
 				} else {
-					echo '<p>' . __( 'No results found.', 'master-addons' ) . '</p>';
+					echo '<p>' . esc_html__( 'No results found.', 'master-addons' ) . '</p>';
 				}
 				?>
 			</div>
@@ -42,8 +42,8 @@ if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_B
 		} elseif ( is_404() ) {
 			?>
 			<div class="master-addons-404">
-				<h1><?php _e( '404 - Page Not Found', 'master-addons' ); ?></h1>
-				<p><?php _e( 'The page you are looking for could not be found.', 'master-addons' ); ?></p>
+				<h1><?php esc_html_e( '404 - Page Not Found', 'master-addons' ); ?></h1>
+				<p><?php esc_html_e( 'The page you are looking for could not be found.', 'master-addons' ); ?></p>
 			</div>
 			<?php
 		} elseif ( is_category() ) {
@@ -59,7 +59,7 @@ if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_B
 						the_excerpt();
 					}
 				} else {
-					echo '<p>' . __( 'No posts found in this category.', 'master-addons' ) . '</p>';
+					echo '<p>' . esc_html__( 'No posts found in this category.', 'master-addons' ) . '</p>';
 				}
 				?>
 			</div>
@@ -77,7 +77,7 @@ if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_B
 						the_excerpt();
 					}
 				} else {
-					echo '<p>' . __( 'No posts found with this tag.', 'master-addons' ) . '</p>';
+					echo '<p>' . esc_html__( 'No posts found with this tag.', 'master-addons' ) . '</p>';
 				}
 				?>
 			</div>
@@ -85,7 +85,7 @@ if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_B
 		} elseif ( is_author() ) {
 			?>
 			<div class="master-addons-author">
-				<h1><?php printf( __( 'Posts by %s', 'master-addons' ), get_the_author() ); ?></h1>
+				<h1><?php /* translators: %s: author display name */ printf( esc_html__( 'Posts by %s', 'master-addons' ), esc_html( get_the_author() ) ); ?></h1>
 				<?php the_archive_description( '<div class="author-description">', '</div>' ); ?>
 				<?php
 				if ( have_posts() ) {
@@ -95,7 +95,7 @@ if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_B
 						the_excerpt();
 					}
 				} else {
-					echo '<p>' . __( 'No posts found by this author.', 'master-addons' ) . '</p>';
+					echo '<p>' . esc_html__( 'No posts found by this author.', 'master-addons' ) . '</p>';
 				}
 				?>
 			</div>
@@ -112,7 +112,7 @@ if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_B
 						the_excerpt();
 					}
 				} else {
-					echo '<p>' . __( 'No posts found for this date.', 'master-addons' ) . '</p>';
+					echo '<p>' . esc_html__( 'No posts found for this date.', 'master-addons' ) . '</p>';
 				}
 				?>
 			</div>
@@ -130,7 +130,7 @@ if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_B
 						the_excerpt();
 					}
 				} else {
-					echo '<p>' . __( 'No posts found.', 'master-addons' ) . '</p>';
+					echo '<p>' . esc_html__( 'No posts found.', 'master-addons' ) . '</p>';
 				}
 				?>
 			</div>

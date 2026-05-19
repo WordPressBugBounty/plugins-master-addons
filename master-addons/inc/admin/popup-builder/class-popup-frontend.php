@@ -435,7 +435,7 @@ class Popup_Frontend {
     public function track_popup_view() {
         check_ajax_referer('ma_popup_frontend', 'nonce');
 
-        $popup_id = intval($_POST['popup_id']);
+        $popup_id = isset( $_POST['popup_id'] ) ? intval( $_POST['popup_id'] ) : 0;
 
         if (!$popup_id) {
             wp_send_json_error();
@@ -458,7 +458,7 @@ class Popup_Frontend {
     public function track_popup_conversion() {
         check_ajax_referer('ma_popup_frontend', 'nonce');
 
-        $popup_id = intval($_POST['popup_id']);
+        $popup_id = isset( $_POST['popup_id'] ) ? intval( $_POST['popup_id'] ) : 0;
 
         if (!$popup_id) {
             wp_send_json_error();
@@ -507,7 +507,7 @@ class Popup_Frontend {
             ?>
             <script>
                 const cookieName = '<?php echo esc_js($cookie_name); ?>';
-                const value = '<?php echo time(); ?>';
+                const value = '<?php echo absint( time() ); ?>';
                 const maxAge = <?php echo (int) $max_age; ?>;
                 const path = '/';
 
@@ -517,9 +517,14 @@ class Popup_Frontend {
             // setcookie($cookie_name, time(), $expiration, '/');
         }
 
-        if ($frequency === 'once_session' && !isset($_SESSION)) {
-            session_start();
-            $_SESSION[$cookie_name] = true;
+        if ($frequency === 'once_session') {
+            // Session cookie (no max-age/expires) — cleared automatically when the browser closes.
+            // Avoids PHP sessions, which break full-page caching on the frontend.
+            ?>
+            <script>
+                document.cookie = '<?php echo esc_js($cookie_name); ?>=<?php echo absint(time()); ?>; path=/;';
+            </script>
+            <?php
         }
     }
 
@@ -531,7 +536,7 @@ class Popup_Frontend {
     
     public function set_visitor_cookie() {
         // Skip on admin, Elementor preview/editor, and if cookie already set
-        if ( is_feed() || is_admin() || isset($_COOKIE['ma_popup_visitor']) || isset($_GET['elementor-preview']) || ( defined('ELEMENTOR_VERSION') && \Elementor\Plugin::$instance->preview->is_preview_mode() ) ) {
+        if ( is_feed() || is_admin() || isset($_COOKIE['ma_popup_visitor']) || isset($_GET['elementor-preview']) || ( defined('ELEMENTOR_VERSION') && \Elementor\Plugin::$instance->preview->is_preview_mode() ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only existence check, no data processed
             return;
         }
         echo '<script>if (document.cookie.indexOf("ma_popup_visitor=") === -1) {
@@ -586,7 +591,7 @@ class Popup_Frontend {
 
     public function disable_expired_popup() {
         // Verify nonce for security
-        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'ma_popup_frontend')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ma_popup_frontend')) {
             wp_die('Security check failed');
         }
 

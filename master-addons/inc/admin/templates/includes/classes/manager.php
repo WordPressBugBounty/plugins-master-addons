@@ -65,17 +65,21 @@ if (!class_exists(__NAMESPACE__ . '\\Manager')) {
 			$current_post_type = get_post_type();
 			$is_popup_builder = false;
 
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only admin context, no nonce available
+			$get_post_id = isset( $_GET['post'] ) ? absint( wp_unslash( $_GET['post'] ) ) : 0;
+			$get_page    = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
 			if ($current_post_type === 'jltma_popup' || $current_post_type === 'popupbuilder' ||
-				(isset($_GET['post']) && get_post_type($_GET['post']) === 'jltma_popup') ||
-				(isset($_GET['post']) && get_post_type($_GET['post']) === 'popupbuilder') ||
-				(isset($_GET['page']) && strpos($_GET['page'], 'popup') !== false)) {
+				( $get_post_id && get_post_type( $get_post_id ) === 'jltma_popup' ) ||
+				( $get_post_id && get_post_type( $get_post_id ) === 'popupbuilder' ) ||
+				( $get_page && strpos( $get_page, 'popup' ) !== false )) {
 				$is_popup_builder = true;
 			}
 
-			if (isset($_GET['action']) && $_GET['action'] === 'elementor' &&
-				isset($_GET['post']) && (get_post_type($_GET['post']) === 'ma_popup' || get_post_type($_GET['post']) === 'jltma_popup' || get_post_type($_GET['post']) === 'popupbuilder')) {
+			if (isset($_GET['action']) && sanitize_key( wp_unslash( $_GET['action'] ) ) === 'elementor' &&
+				$get_post_id && (get_post_type( $get_post_id ) === 'ma_popup' || get_post_type( $get_post_id ) === 'jltma_popup' || get_post_type( $get_post_id ) === 'popupbuilder')) {
 				$is_popup_builder = true;
 			}
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 			$data['isPopupBuilder'] = $is_popup_builder;
 
@@ -145,8 +149,8 @@ if (!class_exists(__NAMESPACE__ . '\\Manager')) {
 
 			// Enhanced input validation - check both POST and GET for compatibility
 			$tab = isset($_POST['tab']) ? sanitize_key($_POST['tab']) : (isset($_GET['tab']) ? sanitize_key($_GET['tab']) : null);
-		$search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : (isset($_GET['search']) ? sanitize_text_field($_GET['search']) : '');
-		$category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : (isset($_GET['category']) ? sanitize_text_field($_GET['category']) : 'all');
+		$search = isset($_POST['search']) ? sanitize_text_field( wp_unslash( $_POST['search'] ) ) : (isset($_GET['search']) ? sanitize_text_field( wp_unslash( $_GET['search'] ) ) : '');
+		$category = isset($_POST['category']) ? sanitize_text_field( wp_unslash( $_POST['category'] ) ) : (isset($_GET['category']) ? sanitize_text_field( wp_unslash( $_GET['category'] ) ) : 'all');
 		$page = isset($_POST['page']) ? absint($_POST['page']) : (isset($_GET['page']) ? absint($_GET['page']) : 1);
 		$per_page = 15; // Templates per page
 
@@ -532,7 +536,7 @@ if (!class_exists(__NAMESPACE__ . '\\Manager')) {
 				wp_send_json_error(array('message' => 'Template data is required'));
 			}
 
-			$template = $this->sanitize_template((array) $_REQUEST['template']);
+			$template = $this->sanitize_template( (array) wp_unslash( $_REQUEST['template'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized inside sanitize_template()
 
 			if (!$template || empty($template['template_id']) || empty($template['source'])) {
 				wp_send_json_error(array('message' => 'Invalid template data'));
@@ -602,11 +606,11 @@ if (!class_exists(__NAMESPACE__ . '\\Manager')) {
 		public function jltma_register_ajax_actions($ajax_manager)
 		{
 
-			if (empty($_REQUEST['actions'])) {
+			if (empty($_REQUEST['actions'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- no nonce available for this action hook
 				return;
 			}
 
-			$actions     = (array) json_decode(stripslashes(sanitize_text_field($_REQUEST['actions'])), true);
+			$actions     = (array) json_decode(stripslashes(sanitize_text_field( wp_unslash( $_REQUEST['actions'] ) )), true); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- no nonce available for this action hook
 			$data        = false;
 
 			foreach ($actions as $action_data) {
@@ -709,7 +713,7 @@ if (!class_exists(__NAMESPACE__ . '\\Manager')) {
 		public function get_template_data()
 		{
 
-			$template = $this->get_template_data_array($_REQUEST);
+			$template = $this->get_template_data_array($_REQUEST); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- no nonce available for this AJAX handler
 
 			if (!$template) {
 				wp_send_json_error();

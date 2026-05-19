@@ -171,10 +171,10 @@ class Changelogs extends Master_Widget
 			<?php foreach ($settings['changelog_tabs'] as $index => $tab) { ?>
 				<ul>
 					<li>
-						<span class="jltma-label jltma-<?php echo strtolower($tab['ma_el_changelog_title']); ?>">
-							<?php echo $this->parse_text_editor($tab['ma_el_changelog_title']); ?>
+						<span class="jltma-label jltma-<?php echo esc_attr( strtolower($tab['ma_el_changelog_title']) ); ?>">
+							<?php echo wp_kses_post( $this->parse_text_editor($tab['ma_el_changelog_title']) ); ?>
 						</span>
-						<?php echo $this->parse_text_editor($tab['ma_el_changelog_content']); ?>
+						<?php echo wp_kses_post( $this->parse_text_editor($tab['ma_el_changelog_content']) ); ?>
 					</li>
 				</ul>
 

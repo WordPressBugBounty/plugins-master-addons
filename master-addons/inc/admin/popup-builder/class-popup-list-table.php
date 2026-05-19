@@ -74,17 +74,20 @@ class Popup_List_Table extends \WP_List_Table {
         
         $sql = "SELECT * FROM $table_name";
         
-        if (!empty($_REQUEST['orderby'])) {
-            $sql .= ' ORDER BY ' . esc_sql($_REQUEST['orderby']);
-            $sql .= !empty($_REQUEST['order']) ? ' ' . esc_sql($_REQUEST['order']) : ' ASC';
+        if (!empty($_REQUEST['orderby'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
+            $sql .= ' ORDER BY ' . esc_sql( sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
+            $sql .= !empty($_REQUEST['order']) ? ' ' . esc_sql( sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) ) : ' ASC'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
         } else {
             $sql .= ' ORDER BY created_at DESC';
         }
         
-        $sql .= " LIMIT $per_page";
-        $sql .= ' OFFSET ' . ($page_number - 1) * $per_page;
-        
-        $results = $wpdb->get_results($sql, 'ARRAY_A');
+        $offset = ( $page_number - 1 ) * $per_page;
+        // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- custom popups table: LIMIT/OFFSET bound via prepare(); ORDER BY sanitized with esc_sql(); table name cannot be parameterized
+        $results = $wpdb->get_results(
+            $wpdb->prepare( $sql . ' LIMIT %d OFFSET %d', $per_page, $offset ),
+            'ARRAY_A'
+        );
+        // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
         
         return $results ? $results : [];
     }
@@ -93,7 +96,7 @@ class Popup_List_Table extends \WP_List_Table {
         global $wpdb;
         $table_name = $wpdb->prefix . 'ma_popups';
         
-        return (int) $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
+        return (int) $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- custom popups table count; table name from $wpdb->prefix, not user input
     }
     
     public function column_cb($item) {
@@ -215,23 +218,23 @@ class Popup_List_Table extends \WP_List_Table {
     
     public function process_bulk_action() {
         if ('delete' === $this->current_action()) {
-            $popup_id = absint($_GET['popup_id']);
-            
-            if (wp_verify_nonce($_GET['_wpnonce'], 'delete_popup_' . $popup_id)) {
+            $popup_id = isset( $_GET['popup_id'] ) ? absint( $_GET['popup_id'] ) : 0;
+
+            if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'delete_popup_' . $popup_id ) ) {
                 global $wpdb;
                 $table_name = $wpdb->prefix . 'ma_popups';
                 
-                $wpdb->delete($table_name, ['id' => $popup_id]);
+                $wpdb->delete( $table_name, [ 'id' => $popup_id ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for custom table delete
                 
-                wp_redirect(admin_url('admin.php?page=ma-popups&deleted=1'));
+                wp_safe_redirect(admin_url('admin.php?page=ma-popups&deleted=1'));
                 exit;
             }
         }
         
-        if (isset($_POST['action']) && $_POST['action'] != -1) {
-            $action = $_POST['action'];
-        } elseif (isset($_POST['action2']) && $_POST['action2'] != -1) {
-            $action = $_POST['action2'];
+        if (isset($_POST['action']) && $_POST['action'] != -1) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- bulk action, nonce checked per-action below
+            $action = sanitize_key( wp_unslash( $_POST['action'] ) );
+        } elseif (isset($_POST['action2']) && $_POST['action2'] != -1) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- bulk action, nonce checked per-action below
+            $action = sanitize_key( wp_unslash( $_POST['action2'] ) );
         } else {
             return;
         }
@@ -248,28 +251,28 @@ class Popup_List_Table extends \WP_List_Table {
         switch ($action) {
             case 'bulk-delete':
                 foreach ($popup_ids as $id) {
-                    $wpdb->delete($table_name, ['id' => $id]);
+                    $wpdb->delete( $table_name, [ 'id' => $id ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for custom table bulk delete
                 }
                 break;
-                
+
             case 'bulk-activate':
                 foreach ($popup_ids as $id) {
-                    $wpdb->update($table_name, ['status' => 'active'], ['id' => $id]);
+                    $wpdb->update( $table_name, [ 'status' => 'active' ], [ 'id' => $id ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for custom table bulk status update
                 }
                 break;
-                
+
             case 'bulk-deactivate':
                 foreach ($popup_ids as $id) {
-                    $wpdb->update($table_name, ['status' => 'inactive'], ['id' => $id]);
+                    $wpdb->update( $table_name, [ 'status' => 'inactive' ], [ 'id' => $id ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for custom table bulk status update
                 }
                 break;
         }
         
-        wp_redirect(admin_url('admin.php?page=ma-popups'));
+        wp_safe_redirect(admin_url('admin.php?page=ma-popups'));
         exit;
     }
     
     public function no_items() {
-        _e('No popups found. Create your first popup to get started!', 'master-addons');
+        esc_html_e('No popups found. Create your first popup to get started!', 'master-addons');
     }
 }

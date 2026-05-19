@@ -369,9 +369,6 @@ class Assets_Loader
         // Register all vendor assets from central registry
         Assets_Manager::get_instance()->register_all();
 
-        // Check if user has premium license
-        $has_premium_license = Helper::jltma_premium();
-
         // Base URL and paths — switch constants based on is_pro flag
         $free_url  = defined('JLTMA_URL') ? trailingslashit(JLTMA_URL) : (defined('JLTMA_PRO_URL') ? JLTMA_PRO_URL : '');
         $free_path = defined('JLTMA_PATH') ? JLTMA_PATH : (defined('JLTMA_PRO_PATH') ? JLTMA_PRO_PATH : '');
@@ -393,13 +390,21 @@ class Assets_Loader
             // Build paths based on asset type
             $free_css_url  = $plugin_url . 'assets/css/' . $type_folder . '/';
             $free_js_url   = $plugin_url . 'assets/js/' . $type_folder . '/';
-            $premium_css_url = $plugin_url . 'premium/assets/css/' . $type_folder . '/';
-            $premium_js_url  = $plugin_url . 'premium/assets/js/' . $type_folder . '/';
-
             $free_css_path  = $plugin_path . 'assets/css/' . $type_folder . '/';
             $free_js_path   = $plugin_path . 'assets/js/' . $type_folder . '/';
-            $premium_css_path = $plugin_path . 'premium/assets/css/' . $type_folder . '/';
-            $premium_js_path  = $plugin_path . 'premium/assets/js/' . $type_folder . '/';
+
+            // Premium asset locations live in the pro plugin's premium/ directory.
+            // The pro plugin (MasterAddons\Pro\Classes\Assets_Pro) supplies them
+            // through this filter; in a free-only install the defaults stay empty
+            // so the free plugin never references the premium/ directory itself.
+            $premium_base = wp_parse_args(
+                (array) apply_filters('master_addons/assets/premium_base', array(), $type_folder),
+                array('css_url' => '', 'js_url' => '', 'css_path' => '', 'js_path' => '')
+            );
+            $premium_css_url  = $premium_base['css_url'];
+            $premium_js_url   = $premium_base['js_url'];
+            $premium_css_path = $premium_base['css_path'];
+            $premium_js_path  = $premium_base['js_path'];
 
             // Register CSS files (now an array)
             // First style is the main addon style, rest are dependencies
@@ -433,17 +438,19 @@ class Assets_Loader
                 $css_filename = $main_css . $suffix . '.css';
                 $css_fallback = $main_css . '.css';
 
-                // Determine which path to use: premium or free
-                // For pro extensions/addons, check premium path first (if extension is in config, premium is active)
+                // Determine which path to use: premium or free.
+                // The premium base is only populated when the pro plugin is
+                // active (see the premium_base filter above), so a premium
+                // version is preferred whenever one is shipped — no separate
+                // license check, which would hide premium styling from
+                // existing content on trial/expired sites.
                 $css_url = $free_css_url;
                 $css_path = $free_css_path;
 
-                if ($has_premium_license || $is_pro_asset) {
-                    // Check if premium version exists
-                    if (file_exists($premium_css_path . $css_filename) || file_exists($premium_css_path . $css_fallback)) {
-                        $css_url = $premium_css_url;
-                        $css_path = $premium_css_path;
-                    }
+                if (!empty($premium_css_path)
+                    && (file_exists($premium_css_path . $css_filename) || file_exists($premium_css_path . $css_fallback))) {
+                    $css_url = $premium_css_url;
+                    $css_path = $premium_css_path;
                 }
 
                 if (file_exists($css_path . $css_filename)) {
@@ -496,17 +503,16 @@ class Assets_Loader
                 $js_filename = $main_js . $suffix . '.js';
                 $js_fallback = $main_js . '.js';
 
-                // Determine which path to use: premium or free
-                // For pro extensions/addons, check premium path first (if extension is in config, premium is active)
+                // Determine which path to use: premium or free.
+                // Premium base is populated only when the pro plugin is active,
+                // so a premium version is preferred whenever one is shipped.
                 $js_url = $free_js_url;
                 $js_path = $free_js_path;
 
-                if ($has_premium_license || $is_pro_asset) {
-                    // Check if premium version exists
-                    if (file_exists($premium_js_path . $js_filename) || file_exists($premium_js_path . $js_fallback)) {
-                        $js_url = $premium_js_url;
-                        $js_path = $premium_js_path;
-                    }
+                if (!empty($premium_js_path)
+                    && (file_exists($premium_js_path . $js_filename) || file_exists($premium_js_path . $js_fallback))) {
+                    $js_url = $premium_js_url;
+                    $js_path = $premium_js_path;
                 }
 
                 if (file_exists($js_path . $js_filename)) {
@@ -970,7 +976,7 @@ class Assets_Loader
         $meta_key = self::META_KEY;
 
         // Get all posts with cached widget data
-        $results = $wpdb->get_results(
+        $results = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for bulk postmeta scan across all posts; no core API supports this efficiently
             $wpdb->prepare(
                 "SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s",
                 $meta_key

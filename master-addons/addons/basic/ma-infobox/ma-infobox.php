@@ -1116,7 +1116,7 @@ class Infobox extends Master_Widget
 						</div>
 					<?php } ?>
 
-					<div class="jltma-infobox-icon <? echo esc_attr(('img' == $settings['ma_el_infobox_img_or_icon']) ? 'image' : ''); ?>">
+					<div class="jltma-infobox-icon <?php echo esc_attr(('img' == $settings['ma_el_infobox_img_or_icon']) ? 'image' : ''); ?>">
 
 						<div class="jltma-inner-content">
 
@@ -1138,7 +1138,7 @@ class Infobox extends Master_Widget
 							if ($settings['ma_el_infobox_preset'] == "nine") { ?>
 
 								<?php if ($settings['ma_el_infobox_title_link']['url']) { ?>
-									<a href="<?php echo esc_url_raw($settings['ma_el_infobox_title_link']['url']); ?>" <?php echo $this->get_render_attribute_string('ma_el_infobox_title_link_attr'); ?>>
+									<a href="<?php echo esc_url_raw($settings['ma_el_infobox_title_link']['url']); ?>" <?php echo $this->get_render_attribute_string('ma_el_infobox_title_link_attr'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 										<h3 class="jltma-infobox-content-title">
 											<?php echo esc_html($this->parse_text_editor($settings['ma_el_infobox_title'])); ?>
 										</h3>
@@ -1163,7 +1163,7 @@ class Infobox extends Master_Widget
 				<div class="jltma-infobox-content">
 					<div class="jltma-inner-content">
 						<?php if ($settings['ma_el_infobox_title_link']['url']) { ?>
-							<a href="<?php echo esc_url_raw($settings['ma_el_infobox_title_link']['url']); ?>" <?php echo $this->get_render_attribute_string('ma_el_infobox_title_link_attr'); ?>>
+							<a href="<?php echo esc_url_raw($settings['ma_el_infobox_title_link']['url']); ?>" <?php echo $this->get_render_attribute_string('ma_el_infobox_title_link_attr'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 								<h3 class="jltma-infobox-content-title">
 									<?php echo esc_html($this->parse_text_editor($settings['ma_el_infobox_title'])); ?>
 								</h3>
@@ -1175,11 +1175,11 @@ class Infobox extends Master_Widget
 						<?php } ?>
 
 						<p class="jltma-infobox-content-description">
-							<?php echo $this->parse_text_editor($settings['ma_el_infobox_description']); ?>
+							<?php echo $this->parse_text_editor($settings['ma_el_infobox_description']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns Elementor-processed safe HTML ?>
 						</p>
 
 						<?php if ($settings['ma_el_infobox_preset'] == "six") { ?>
-							<a <?php echo $this->get_render_attribute_string('ma_el_infobox_readmore_link'); ?> class="jltma-btn-learn" <?php echo $this->get_render_attribute_string('ma_el_infobox_readmore'); ?>>
+							<a <?php echo $this->get_render_attribute_string('ma_el_infobox_readmore_link'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?> class="jltma-btn-learn" <?php echo $this->get_render_attribute_string('ma_el_infobox_readmore'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 								<?php echo esc_html($settings['ma_el_infobox_readmore_text']); ?>
 								<i class="ti-arrow-right"></i>
 							</a>

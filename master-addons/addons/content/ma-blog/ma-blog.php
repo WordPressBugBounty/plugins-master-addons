@@ -2029,7 +2029,7 @@ class Blog extends Master_Widget
 
 		if ($settings['ma_el_post_grid_post_title'] == 'yes') { ?>
 
-			<<?php echo esc_html($title_html_tag) . ' ' . $this->get_render_attribute_string('title'); ?>>
+			<<?php echo esc_html($title_html_tag) . ' ' . $this->get_render_attribute_string('title'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 				<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr($link_target); ?>"><?php the_title(); ?></a>
 			</<?php echo esc_html($title_html_tag); ?>>
 
@@ -2059,7 +2059,7 @@ class Blog extends Master_Widget
 			echo 'margin-left:0px;';
 		endif; ?>">
 			<?php if ($settings['ma_el_post_grid_excerpt'] === 'yes') {
-				echo Helper::ma_el_get_excerpt_by_id(get_the_ID(), $settings['ma_el_blog_excerpt_length'], $excerpt_type, $excerpt_text, $excerpt_src, $excerpt_icon = "", $excerpt_icon_align = "", $read_more_link);
+				echo Helper::ma_el_get_excerpt_by_id(get_the_ID(), $settings['ma_el_blog_excerpt_length'], $excerpt_type, $excerpt_text, $excerpt_src, $excerpt_icon = "", $excerpt_icon_align = "", $read_more_link); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- ma_el_get_excerpt_by_id returns plugin-constructed HTML with sanitized values
 			} else {
 				if ($settings['ma_el_blog_show_content'] == 'yes') {
 					the_content();
@@ -2110,10 +2110,10 @@ class Blog extends Master_Widget
 						<?php
 
 						if ($settings['ma_el_post_grid_layout'] == "list" && $settings['ma_el_post_list_layout'] == "thumbnail_bg") { ?>
-							<time datetime="<?php echo get_the_modified_date('c'); ?>">
-								<?php echo get_the_time('M d'); ?>
+							<time datetime="<?php echo esc_attr( get_the_modified_date('c') ); ?>">
+								<?php echo esc_html( get_the_time('M d') ); ?>
 								<span>
-									<?php echo get_the_time('Y'); ?>
+									<?php echo esc_html( get_the_time('Y') ); ?>
 								</span>
 							</time>
 						<?php } else { ?>
@@ -2308,10 +2308,10 @@ class Blog extends Master_Widget
 		<?php if ($settings['ma_el_blog_thumbnail_position'] == 'left' && $settings['ma_el_post_grid_layout'] == 'grid') { ?>
 			<div class="jltma-col-6">
 			<?php } else { ?>
-				<div <?php echo $this->get_render_attribute_string($tax_key); ?>>
+				<div <?php echo $this->get_render_attribute_string($tax_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 				<?php } ?>
 
-				<div <?php echo $this->get_render_attribute_string($wrap_key); ?>>
+				<div <?php echo $this->get_render_attribute_string($wrap_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 
 					<?php if (
 						($settings['ma_el_blog_thumbnail_position'] == 'left' && $settings['ma_el_post_grid_layout'] == 'grid') ||
@@ -2387,7 +2387,7 @@ class Blog extends Master_Widget
 												<div class="jltma-container">
 												<?php } ?>
 
-												<div <?php echo $this->get_render_attribute_string($content_key); ?>>
+												<div <?php echo $this->get_render_attribute_string($content_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 
 													<div class="jltma-blog-inner-container">
 
@@ -2398,7 +2398,7 @@ class Blog extends Master_Widget
 																	):
 																		echo 'standard';
 																	else:
-																		echo get_post_format();
+																		echo esc_attr( get_post_format() );
 																	endif; ?>" target="<?php echo esc_attr($target); ?>">
 
 																	<?php $this->ma_el_blog_post_format_icon(); ?>
@@ -2514,7 +2514,7 @@ class Blog extends Master_Widget
 		?>
 
 					<?php if ($settings['ma_el_post_grid_thumbnail'] == 'yes') { ?>
-						<div <?php echo $this->get_render_attribute_string('hover_animations'); ?>>
+						<div <?php echo $this->get_render_attribute_string('hover_animations'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 							<div
 								class="jltma-post-thumbnail jltma-img-<?php echo esc_attr($image_effect); ?> jltma-img-shape-<?php echo esc_attr($settings['ma_el_blog_image_shapes']); ?>">
 								<a href="<?php the_permalink(); ?>" target="<?php echo esc_attr($target); ?>">
@@ -2523,10 +2523,10 @@ class Blog extends Master_Widget
 								<?php if ($settings['ma_el_blog_cards_skin'] === "absolute_content_two") { ?>
 									<div class="jltma-post-entry-meta">
 										<span class="jltma-post-date">
-											<time datetime="<?php echo get_the_modified_date('c'); ?>">
-												<?php echo get_the_time('d'); ?>
+											<time datetime="<?php echo esc_attr( get_the_modified_date('c') ); ?>">
+												<?php echo esc_html( get_the_time('d') ); ?>
 												<span>
-													<?php echo get_the_time('M'); ?>
+													<?php echo esc_html( get_the_time('M') ); ?>
 												</span>
 											</time>
 										</span>
@@ -2621,7 +2621,7 @@ class Blog extends Master_Widget
 		?>
 
 					<?php if ($carousel) { ?>
-						<div <?php echo $this->get_render_attribute_string('carousel'); ?>>
+						<div <?php echo $this->get_render_attribute_string('carousel'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 						<?php } ?>
 						<div class="jltma-blog">
 
@@ -2652,7 +2652,7 @@ class Blog extends Master_Widget
 											);
 											?>
 											<li>
-												<a href="javascript:;" <?php echo $this->get_render_attribute_string($cat_list_key); ?>
+												<a href="javascript:;" <?php echo $this->get_render_attribute_string($cat_list_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>
 													data-filter=".<?php echo esc_attr($name_lower); ?>"><span><?php echo esc_html($name); ?></span>
 												</a>
 											</li>
@@ -2661,10 +2661,10 @@ class Blog extends Master_Widget
 								</div>
 							<?php } ?>
 
-							<div <?php echo $this->get_render_attribute_string('ma_el_blog'); ?>>
+							<div <?php echo $this->get_render_attribute_string('ma_el_blog'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 
 								<?php if ($carousel) { ?>
-									<div <?php echo $this->get_render_attribute_string('swiper-wrapper'); ?>>
+									<div <?php echo $this->get_render_attribute_string('swiper-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 									<?php }
 
 								if (count($posts)) {
@@ -2672,7 +2672,7 @@ class Blog extends Master_Widget
 									foreach ($posts as $post) {
 										setup_postdata($post);
 										if ($carousel) {
-											echo '<div ' . $this->get_render_attribute_string('swiper-item') . '>';
+											echo '<div ' . $this->get_render_attribute_string('swiper-item') . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes
 										}
 										$this->ma_el_blog_layout();
 										if ($carousel) {
@@ -2711,7 +2711,7 @@ class Blog extends Master_Widget
 							$page_tot = ceil(($total_posts - $offset) / $settings['ma_el_blog_posts_per_page']);
 							if ($page_tot > 1) {
 								$big = 999999999;
-								echo paginate_links(
+								echo paginate_links( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- paginate_links returns WordPress-generated pagination HTML
 									array(
 										'base' => str_replace($big, '%#%', get_pagenum_link(999999999, false)),
 										'format' => '?paged=%#%',

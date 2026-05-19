@@ -137,18 +137,18 @@ final class Page_Importer {
 
         // Count pages imported via Master Addons
         // Check both meta keys: _jltma_demo_import_item (kit imports) and _jltma_imported_template (single imports)
-        $count = $wpdb->get_var("
-            SELECT COUNT(*) FROM $wpdb->posts
+        $count = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for counting imported pages by meta key; query is fully static with no user-supplied values
+            "SELECT COUNT(*) FROM {$wpdb->posts}
             WHERE post_type = 'page'
             AND post_status = 'publish'
             AND ID IN (
-                SELECT post_id FROM $wpdb->postmeta
+                SELECT post_id FROM {$wpdb->postmeta}
                 WHERE meta_key IN ('_jltma_demo_import_item', '_jltma_imported_template')
-            )
-        ");
+            )"
+        );
 
         if ($count > 0) {
-            $class = (isset($_GET['jltma_imported']) && $_GET['jltma_imported'] == '1') ? 'current' : '';
+            $class = (isset($_GET['jltma_imported']) && $_GET['jltma_imported'] == '1') ? 'current' : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only view filter, no data processed
             $url = add_query_arg('jltma_imported', '1', admin_url('edit.php?post_type=page'));
             $views['jltma_imported'] = sprintf(
                 '<a href="%s" class="%s" style="color: %s; font-weight: 500">%s <span class="count">(%s)</span></a>',
@@ -176,7 +176,7 @@ final class Page_Importer {
             return;
         }
 
-        if (isset($_GET['jltma_imported']) && $_GET['jltma_imported'] === '1') {
+        if (isset($_GET['jltma_imported']) && $_GET['jltma_imported'] === '1') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only query filter, no data processed
             $query->set('meta_query', [
                 'relation' => 'OR',
                 [

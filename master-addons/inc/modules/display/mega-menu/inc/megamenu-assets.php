@@ -22,7 +22,7 @@ class Megamenu_Assets
         ob_start();
 ?>
         var masteraddons = {
-        resturl: '<?php echo get_rest_url() . 'masteraddons/v2/'; ?>',
+        resturl: '<?php echo esc_url( get_rest_url() . 'masteraddons/v2/' ); ?>',
         }
 <?php
         $output = ob_get_contents();
@@ -91,7 +91,7 @@ class Megamenu_Assets
     public function admin_js()
     {
         echo "<script type='text/javascript'>\n";
-        echo $this->common_js();
+        echo $this->common_js(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- common_js returns safe JS script content
         echo "\n</script>";
     }
 

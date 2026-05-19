@@ -54,7 +54,7 @@ if (!class_exists(__NAMESPACE__ . '\\Assets')) {
 					height: 100%;
 				}
 			';
-			wp_register_style('master-addons-editor-preview', false);
+			wp_register_style('master-addons-editor-preview', false, array(), JLTMA_VER);
 			wp_enqueue_style('master-addons-editor-preview');
 			wp_add_inline_style('master-addons-editor-preview', $css);
 		}
@@ -113,7 +113,7 @@ if (!class_exists(__NAMESPACE__ . '\\Assets')) {
 
 				include $file;
 
-				printf('<script type="text/html" id="views-ma-el-%1$s">%2$s</script>', $name, ob_get_clean());
+				printf('<script type="text/html" id="views-ma-el-%1$s">%2$s</script>', esc_attr( $name ), ob_get_clean()); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- ob_get_clean() returns a PHP template file's output intended for Backbone/Underscore JS template rendering
 			}, $scripts);
 
 			// Add cache refresh functionality for template modal

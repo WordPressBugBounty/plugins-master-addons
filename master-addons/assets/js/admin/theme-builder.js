@@ -465,7 +465,7 @@ const dialog = { confirmDialog, alertDialog, loadingDialog };
             $2(".jltma-validation-message").remove();
             var validationResult = Master_Header_Footer.Validate_Conditions();
             if (!validationResult.valid) {
-              var validationHtml = '<div class="jltma-validation-message">' + validationResult.message + "</div>";
+              var validationHtml = '<div class="jltma-validation-message jltma-validation-message--error">' + validationResult.message + "</div>";
               $2(".jltma-tab-conditions .jltma-conditions-section").prepend(
                 validationHtml
               );
@@ -524,7 +524,7 @@ const dialog = { confirmDialog, alertDialog, loadingDialog };
                   }
                 }
                 $2(".jltma-validation-message").remove();
-                var errorHtml = '<div class="jltma-validation-message">' + errorMessage + "</div>";
+                var errorHtml = '<div class="jltma-validation-message jltma-validation-message--error">' + errorMessage + "</div>";
                 $2(".jltma-tab-conditions .jltma-conditions-section").prepend(
                   errorHtml
                 );

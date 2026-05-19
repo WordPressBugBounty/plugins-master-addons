@@ -654,9 +654,9 @@ class Creative_Links extends Master_Widget
 		}
 		?>
 
-		<div <?php echo $this->get_render_attribute_string('ma_el_creative_links_wrapper'); ?>>
+		<div <?php echo $this->get_render_attribute_string('ma_el_creative_links_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor::get_render_attribute_string returns sanitized HTML attributes ?>>
 			<div class="jltma-creative-link">
-				<a <?php echo $this->get_render_attribute_string('ma_el_creative_link'); ?>>
+				<a <?php echo $this->get_render_attribute_string('ma_el_creative_link'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor::get_render_attribute_string returns sanitized HTML attributes ?>>
 					<?php
 					// Span wrapper start for specific effects
 					if (in_array($effect, $span_wrapper_effects)) {

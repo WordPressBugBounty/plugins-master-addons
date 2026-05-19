@@ -52,7 +52,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Feedback')) {
     public function admin_suvery_scripts($handle)
     {
         if ('plugins.php' === $handle) {
-            wp_enqueue_style('jltma-survey', JLTMA_ASSETS . 'css/plugin-survey.css');
+            wp_enqueue_style('jltma-survey', JLTMA_ASSETS . 'css/plugin-survey.css', array(), JLTMA_VER);
         }
     }
 
@@ -105,8 +105,10 @@ if (!class_exists('MasterAddons\Inc\Classes\Feedback')) {
                 'input_placeholder' => '',
             ],
             'jltma_pro' => [
+                /* translators: %1$s: Plugin name (e.g. Master Addons). */
                 'title' => sprintf(esc_html__('I have %1$s Pro', 'master-addons'), JLTMA),
                 'input_placeholder' => '',
+                /* translators: %1$s: Plugin name (e.g. Master Addons). */
                 'alert' => sprintf(esc_html__('Wait! Don\'t deactivate %1$s. You have to activate both %1$s and %1$s Pro in order for the plugin to work.', 'master-addons'), JLTMA),
             ],
             'need_better_design' => [
@@ -137,11 +139,11 @@ if (!class_exists('MasterAddons\Inc\Classes\Feedback')) {
             <header>
                 <div class="jltma-deactivate-survey-header">
                     <img src="<?php echo esc_url(JLTMA_IMAGE_DIR . 'logo.png'); ?>" />
-                    <h3><?php echo wp_sprintf('%1$s %2$s', JLTMA, __('- Feedback', 'master-addons')); ?></h3>
+                    <h3><?php echo wp_sprintf('%1$s %2$s', esc_html(JLTMA), esc_html__('- Feedback', 'master-addons')); ?></h3>
                 </div>
             </header>
             <div class="jltma-deactivate-info">
-                <?php echo wp_sprintf('%1$s %2$s', __('If you have a moment, please share why you are deactivating', 'master-addons'), JLTMA); ?>
+                <?php echo wp_sprintf('%1$s %2$s', esc_html__('If you have a moment, please share why you are deactivating', 'master-addons'), esc_html(JLTMA)); ?>
             </div>
             <div class="jltma-deactivate-content-wrapper">
                 <form action="#" class="jltma-deactivate-form-wrapper">

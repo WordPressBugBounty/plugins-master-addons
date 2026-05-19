@@ -304,7 +304,7 @@ HTACCESS;
         $widget_assets = $assets_loader->get_widget_assets();
         $is_rtl = is_rtl();
 
-        $bundled_css = "/* Master Addons Bundled CSS - " . date('Y-m-d H:i:s') . " */\n";
+        $bundled_css = "/* Master Addons Bundled CSS - " . gmdate('Y-m-d H:i:s') . " */\n";
         $processed = [];
 
         foreach ($widgets as $widget_name) {
@@ -379,7 +379,7 @@ HTACCESS;
         $assets_loader = Assets_Loader::get_instance();
         $widget_assets = $assets_loader->get_widget_assets();
 
-        $bundled_js = "/* Master Addons Bundled JS - " . date('Y-m-d H:i:s') . " */\n";
+        $bundled_js = "/* Master Addons Bundled JS - " . gmdate('Y-m-d H:i:s') . " */\n";
         $bundled_js .= "(function($){\n'use strict';\n";
 
         $has_content = false;
@@ -479,7 +479,7 @@ HTACCESS;
                 'jltma-bundled-' . $cache_info['hash'],
                 $this->cache_url . '/' . $cache_info['css_file'],
                 [],
-                null  // Hash in filename = no query string needed
+                JLTMA_VER
             );
         }
 
@@ -489,7 +489,7 @@ HTACCESS;
                 'jltma-bundled-' . $cache_info['hash'],
                 $this->cache_url . '/' . $cache_info['js_file'],
                 ['jquery'],
-                null,
+                JLTMA_VER,
                 true
             );
         }
@@ -547,12 +547,12 @@ HTACCESS;
         if ($cache_info) {
             // Delete cached files (including gzipped versions)
             if (!empty($cache_info['css_file'])) {
-                @unlink($this->cache_path . '/' . $cache_info['css_file']);
-                @unlink($this->cache_path . '/' . $cache_info['css_file'] . '.gz');
+                wp_delete_file($this->cache_path . '/' . $cache_info['css_file']);
+                wp_delete_file($this->cache_path . '/' . $cache_info['css_file'] . '.gz');
             }
             if (!empty($cache_info['js_file'])) {
-                @unlink($this->cache_path . '/' . $cache_info['js_file']);
-                @unlink($this->cache_path . '/' . $cache_info['js_file'] . '.gz');
+                wp_delete_file($this->cache_path . '/' . $cache_info['js_file']);
+                wp_delete_file($this->cache_path . '/' . $cache_info['js_file'] . '.gz');
             }
 
             // Clear transient
@@ -578,7 +578,7 @@ HTACCESS;
 
         if ($files) {
             foreach ($files as $file) {
-                @unlink($file);
+                wp_delete_file($file);
             }
         }
 
@@ -907,6 +907,7 @@ HTACCESS;
         $count = $this->regenerate_all_cache();
 
         wp_send_json_success([
+            /* translators: %d: number of pages */
             'message' => sprintf(__('Regenerated cache for %d pages', 'master-addons'), $count),
             'stats'   => $this->get_cache_stats(),
         ]);
@@ -962,6 +963,7 @@ HTACCESS;
         $this->invalidate_post_cache($post_id);
 
         wp_send_json_success([
+            /* translators: %d: post ID number */
             'message' => sprintf(__('Cache cleared for post #%d', 'master-addons'), $post_id),
             'stats'   => $this->get_cache_stats(),
         ]);
@@ -992,11 +994,13 @@ HTACCESS;
 
         if ($result) {
             wp_send_json_success([
+                /* translators: %d: post ID number */
                 'message' => sprintf(__('Cache regenerated for post #%d', 'master-addons'), $post_id),
                 'stats'   => $this->get_cache_stats(),
             ]);
         } else {
             wp_send_json_error([
+                /* translators: %d: post ID number */
                 'message' => sprintf(__('Failed to regenerate cache for post #%d', 'master-addons'), $post_id),
             ]);
         }

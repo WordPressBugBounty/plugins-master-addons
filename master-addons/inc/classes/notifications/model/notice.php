@@ -73,7 +73,7 @@ abstract class Notice extends Notification
 		{
 			?>
 			</div>
-			<?php echo  $this->footer_content(); ?>
+			<?php echo $this->footer_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML content returned by footer_content() method ?>
 		</div>
 	<?php
 		}

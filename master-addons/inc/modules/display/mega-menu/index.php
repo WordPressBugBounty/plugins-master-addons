@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 /**
  * Plugin Name:	Master Mega Menu
  * Description: Mega Menu for Elementor by Master Addons

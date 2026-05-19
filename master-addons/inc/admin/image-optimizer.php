@@ -69,6 +69,7 @@ class Image_Optimizer
 			'pricingUrl' => $pricing_url,
 			'settings'   => [],
 			'i18n'       => [
+				/* translators: %d is the percentage of savings. */
 				'savePercent'    => __('Save ~%d%%', 'master-addons'),
 				'autoOptimize'   => __('Auto-optimize images on upload', 'master-addons'),
 				'upgradeToPro'   => __('Upgrade to Pro', 'master-addons'),
@@ -95,7 +96,7 @@ class Image_Optimizer
 
 		// Skip on attachment edit page
 		global $pagenow;
-		if ($pagenow === 'post.php' && isset($_GET['action']) && $_GET['action'] === 'edit' && !wp_doing_ajax()) {
+		if ($pagenow === 'post.php' && isset($_GET['action']) && $_GET['action'] === 'edit' && !wp_doing_ajax()) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only admin context detection, no data processed
 			return $form_fields;
 		}
 
@@ -104,7 +105,7 @@ class Image_Optimizer
 		$file_size = $file_path && file_exists($file_path) ? filesize($file_path) : 0;
 
 		// Estimate potential savings (~60-80% for WebP conversion)
-		$savings_percent = rand(65, 85);
+		$savings_percent = wp_rand(65, 85);
 		$potential_savings = $file_size > 0 ? round($file_size * ($savings_percent / 100)) : 0;
 		$potential_size = $file_size - $potential_savings;
 
@@ -114,6 +115,7 @@ class Image_Optimizer
 		if ($file_size > 0) {
 			$html .= '<div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #92400e;">';
 			$html .= '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;"><circle cx="12" cy="12" r="10" stroke="#d97706" stroke-width="2"/><path d="M12 6v6l4 2" stroke="#d97706" stroke-width="2" stroke-linecap="round"/></svg>';
+			/* translators: %d is the percentage of savings. */
 			$html .= '<span style="font-weight: 600;">' . sprintf(__('Save ~%d%%', 'master-addons'), $savings_percent) . '</span>';
 			$html .= '<span style="color: #b45309;">(' . size_format($file_size) . ' → ~' . size_format($potential_size) . ')</span>';
 			$html .= '</div>';

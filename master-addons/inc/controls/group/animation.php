@@ -28,7 +28,7 @@ class JLTMA_Animation extends Group_Control_Base
         $fields = [];
 
         $fields['controls'] = [
-            'label' => __('', 'master-addons' ),
+            'label' => '',
             'type' => Controls_Manager::CHOOSE,
             'default' => 'running',
             'toggle' => false,

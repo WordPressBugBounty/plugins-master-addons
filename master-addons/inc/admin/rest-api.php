@@ -686,6 +686,7 @@ class REST_API {
 		// WordPress Environment
 		$memory_limit   = ini_get( 'memory_limit' ) ?: 'N/A';
 		$uploads        = wp_upload_dir( null, false ); // false = skip creating dirs.
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable -- Read-only writability probe of the uploads directory for a diagnostics report.
 		$upload_writable = is_writable( $uploads['basedir'] );
 
 		$wordpress = array(

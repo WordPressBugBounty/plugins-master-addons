@@ -523,7 +523,7 @@ class Fluent_Form extends Master_Widget
         $this->add_control(
             'ff_radio_check_size',
             array(
-                'label'      => _x('Size', 'master-addons'),
+                'label'      => __('Size', 'master-addons'),
                 'type'       => Controls_Manager::SLIDER,
                 'size_units' => array('px', 'em', 'rem'),
                 'condition'  => array(

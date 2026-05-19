@@ -2,6 +2,10 @@
 
 namespace MasterAddons\Inc\Classes\Notifications;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use MasterAddons\Inc\Classes\Notifications\Model\Notice;
 
 if (!class_exists('New_Features_Notice')) {

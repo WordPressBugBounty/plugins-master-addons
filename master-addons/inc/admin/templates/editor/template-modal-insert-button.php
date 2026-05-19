@@ -2,6 +2,9 @@
 /**
  * Template Insert Button
  */
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 ?>
     <# if ( '' !=url ) { #>
         <a class="template-library-live-preview jltma-live-preview-link" href="{{{ url }}}" target="_blank" style="text-transform: capitalize; font-weight: 400;">
@@ -14,7 +17,7 @@
         <a class="elementor-template-library-template-action ma-el-template-insert elementor-button">
             <i class="eicon-file-download"></i>
             <span class="elementor-button-title">
-                <?php echo __('Insert', 'master-addons' ); ?>
+                <?php echo esc_html__('Insert', 'master-addons' ); ?>
             </span>
         </a>
     <# } else { #>

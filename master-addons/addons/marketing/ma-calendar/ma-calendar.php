@@ -160,7 +160,7 @@ class Calendar extends Master_Widget
                 'picker_options' => [
                     'enableTime' => false,
                 ],
-                'default'     => date('Y-m-d H:i', strtotime('+1 day') + (get_option('gmt_offset') * HOUR_IN_SECONDS)),
+                'default'     => wp_date('Y-m-d H:i', strtotime('+1 day') + (get_option('gmt_offset') * HOUR_IN_SECONDS)),
             ]
         );
 
@@ -172,7 +172,7 @@ class Calendar extends Master_Widget
                 'picker_options' => [
                     'enableTime' => false,
                 ],
-                'default'     => date('Y-m-d H:i', strtotime('+3 day') + (get_option('gmt_offset') * HOUR_IN_SECONDS)),
+                'default'     => wp_date('Y-m-d H:i', strtotime('+3 day') + (get_option('gmt_offset') * HOUR_IN_SECONDS)),
             ]
         );
 
@@ -2742,8 +2742,8 @@ class Calendar extends Master_Widget
         if (empty($this->_events)) {
 
             if ('message' !== $settings['no_events']) {
-                echo $this->render_placeholder([
-                    'body' => __('You have no events in your calendar. Check the settings and make sure the source fields for the dates of the events are setup correctly.', 'master-addons' ),
+                echo $this->render_placeholder([ // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_placeholder returns safe HTML
+                    'body' => esc_html__('You have no events in your calendar. Check the settings and make sure the source fields for the dates of the events are setup correctly.', 'master-addons' ),
                 ]);
             }
 
@@ -2755,8 +2755,8 @@ class Calendar extends Master_Widget
                 $this->add_render_attribute('no-events', 'class', 'jltma-calendar__no-events');
 
 ?>
-                <div <?php echo $this->get_render_attribute_string('no-events'); ?>>
-                    <?php echo $this->parse_text_editor($settings['no_events_message']); ?>
+                <div <?php echo $this->get_render_attribute_string('no-events'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string ?>>
+                    <?php echo $this->parse_text_editor($settings['no_events_message']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns safe HTML ?>
                 </div>
         <?php
                 return;
@@ -2772,7 +2772,7 @@ class Calendar extends Master_Widget
         ]);
 
         ?>
-        <div <?php echo $this->get_render_attribute_string('calendar'); ?>>
+        <div <?php echo $this->get_render_attribute_string('calendar'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string ?>>
             <?php foreach ($this->_events as $index => $event) {
 
                 if (!$event['start'])
@@ -2800,8 +2800,8 @@ class Calendar extends Master_Widget
                     'data-after'        => $this->get_after_title($event),
                 ]);
             ?>
-                <div <?php echo $this->get_render_attribute_string($event_key); ?>>
-                    <?php echo $this->parse_text_editor($title);
+                <div <?php echo $this->get_render_attribute_string($event_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string ?>>
+                    <?php echo $this->parse_text_editor($title); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns safe HTML
                     ?>
                 </div>
             <?php } ?>

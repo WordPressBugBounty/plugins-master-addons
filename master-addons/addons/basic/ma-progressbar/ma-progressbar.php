@@ -303,7 +303,7 @@ class Progress_Bar extends Master_Widget
 		}
 ?>
 
-		<div <?php echo $this->get_render_attribute_string('ma-el-progress-bar') ?> data-progress-bar>
+		<div <?php echo $this->get_render_attribute_string('ma-el-progress-bar'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render attribute string is safe ?> data-progress-bar>
 			<?php if(!empty($settings['ma_el_progress_bar_title'])){?>
 				<h6 class="jltma-progress-bar-title">
 					<?php echo esc_html($this->parse_text_editor($settings['ma_el_progress_bar_title'])); ?>

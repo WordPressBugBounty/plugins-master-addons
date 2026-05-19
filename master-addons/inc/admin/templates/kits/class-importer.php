@@ -38,7 +38,6 @@ class Importer
     private function register_ajax_hooks()
     {
         add_action('wp_ajax_jltma_activate_required_theme', [$this, 'activate_required_theme']);
-        add_action('wp_ajax_jltma_fix_compatibility', [$this, 'fix_compatibility']);
         add_action('wp_ajax_jltma_reset_previous_import', [$this, 'reset_previous_import']);
         add_action('wp_ajax_jltma_import_templates_kit', [$this, 'import_templates_kit']);
         add_action('wp_ajax_jltma_final_settings_setup', [$this, 'final_settings_setup']);
@@ -108,40 +107,6 @@ class Importer
     }
 
     /**
-     * Fix Compatibility
-     */
-    public function fix_compatibility()
-    {
-        $nonce = $_POST['nonce'];
-
-        if (!wp_verify_nonce($nonce, 'jltma-template-kits-js') || !current_user_can('manage_options')) {
-            exit;
-        }
-
-        // Get currently active plugins
-        $active_plugins = (array) get_option('active_plugins', array());
-        $active_plugins = array_values($active_plugins);
-        // Required plugins should come from manifest
-        $required_plugins = [];
-
-        // Keep only required plugins active during import
-        foreach ($active_plugins as $key => $value) {
-            if (!in_array($value, $required_plugins)) {
-                $active_key = array_search($value, $active_plugins);
-                unset($active_plugins[$active_key]);
-            }
-        }
-
-        // Set Active Plugins
-        update_option('active_plugins', array_values($active_plugins));
-
-        // Get Current Theme
-        $theme = get_option('stylesheet');
-
-        // No default theme activation - themes should be specified in manifest
-    }
-
-    /**
      * Custom upload mimes for template kit imports
      */
     public function custom_upload_mimes($mimes)
@@ -194,7 +159,7 @@ class Importer
      */
     public function import_templates_kit()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
@@ -230,7 +195,7 @@ class Importer
         // Get template kit ID
         $kit = isset($_POST['jltma_templates_kit']) ? sanitize_file_name(wp_unslash($_POST['jltma_templates_kit'])) : '';
         if (!$kit && isset($_POST['parentTemplate'])) {
-            $kit = $_POST['parentTemplate'];
+            $kit = sanitize_text_field( wp_unslash( $_POST['parentTemplate'] ) );
         }
 
         // Handle template import
@@ -283,13 +248,13 @@ class Importer
      */
     private function handle_single_template_import($kit, $cache_manager)
     {
-        $template_data = wp_unslash($_POST['template']);
+        $template_data = isset( $_POST['template'] ) ? sanitize_textarea_field( wp_unslash( $_POST['template'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method
         $decoded = json_decode($template_data, true);
         $kit_id = $decoded['template_id'];
         $kit_name = $decoded['title'];
 
         // Duplicate detection: check if this template was already imported for this kit
-        $parent_kit = isset($_POST['parentTemplate']) ? sanitize_text_field($_POST['parentTemplate']) : $kit;
+        $parent_kit = isset($_POST['parentTemplate']) ? sanitize_text_field( wp_unslash( $_POST['parentTemplate'] ) ) : $kit; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method
         $existing_page = $this->find_existing_imported_page($kit_id, $parent_kit, $kit_name);
         if ($existing_page) {
             $page_edit_url = admin_url('post.php?post=' . $existing_page->ID . '&action=elementor');
@@ -307,7 +272,7 @@ class Importer
         }
 
         // Check if we have both parentTemplate and template_id for cached templates
-        if (isset($_POST['parentTemplate']) && isset($decoded['template_id'])) {
+        if (isset($_POST['parentTemplate']) && isset($decoded['template_id'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method
             $decoded = $this->load_template_from_cache($decoded, $kit_name, $cache_manager);
         }
 
@@ -389,7 +354,7 @@ class Importer
      */
     private function load_template_from_cache($decoded, $kit_name, $cache_manager)
     {
-        $parent_template = sanitize_text_field($_POST['parentTemplate']);
+        $parent_template = isset( $_POST['parentTemplate'] ) ? sanitize_text_field( wp_unslash( $_POST['parentTemplate'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method
         $template_id = sanitize_text_field($decoded['template_id']);
 
         $upload_dir = wp_upload_dir();
@@ -682,6 +647,7 @@ class Importer
         global $wpdb;
 
         // Check for existing page with same original_template_id
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for meta join lookup without core API equivalent
         $existing = $wpdb->get_var($wpdb->prepare(
             "SELECT p.ID FROM {$wpdb->posts} p
              INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
@@ -707,8 +673,8 @@ class Importer
     {
         $page_prefix = 'New';
 
-        if (isset($_POST['parentTemplate'])) {
-            $parent_template = sanitize_text_field($_POST['parentTemplate']);
+        if (isset($_POST['parentTemplate'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method
+            $parent_template = sanitize_text_field( wp_unslash( $_POST['parentTemplate'] ) );
             $upload_dir = wp_upload_dir();
 
             $manifest_path = $upload_dir['basedir'] . '/master_addons/purchased_kits/kits/kit_' . $parent_template . '/manifest.json';
@@ -1071,7 +1037,7 @@ class Importer
      */
     public function reset_previous_import()
     {
-        $nonce = $_POST['nonce'];
+        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
         if (!wp_verify_nonce($nonce, 'jltma-template-kits-js') || !current_user_can('manage_options')) {
             exit;
@@ -1128,7 +1094,7 @@ class Importer
      */
     public function final_settings_setup()
     {
-        $nonce = $_POST['nonce'];
+        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
         if (!wp_verify_nonce($nonce, 'jltma-template-kits-js') || !current_user_can('manage_options')) {
             exit;
@@ -1180,10 +1146,10 @@ class Importer
     {
         update_option('elementor_experiment-e_local_google_fonts', 'inactive');
 
-        $site_settings = @file_get_contents('https://master-addons.com/templates-kit/' . $kit . '/site-settings.json');
+        $response = wp_remote_get('https://master-addons.com/templates-kit/' . rawurlencode($kit) . '/site-settings.json', array('timeout' => 60));
 
-        if (false !== $site_settings) {
-            $site_settings = json_decode($site_settings, true);
+        if (!is_wp_error($response) && 200 === wp_remote_retrieve_response_code($response)) {
+            $site_settings = json_decode(wp_remote_retrieve_body($response), true);
 
             if (!empty($site_settings['settings'])) {
                 $default_kit = \Elementor\Plugin::$instance->documents->get_doc_for_frontend(get_option('elementor_active_kit'));
@@ -1233,7 +1199,7 @@ class Importer
 
                 $site_url = get_site_url();
                 $site_url = str_replace('/', '\/', $site_url);
-                $demo_site_url = 'https://demosites.master-addons.com/' . get_option('jltma-import-kit-id');
+                $demo_site_url = 'https://el.master-addons.com/' . get_option('jltma-import-kit-id');
                 $demo_site_url = str_replace('/', '\/', $demo_site_url);
 
                 $data = get_post_meta(get_the_ID(), '_elementor_data', true);
@@ -1570,7 +1536,7 @@ class Importer
             file_put_contents($tmp, $image_data);
 
             if (!file_exists($tmp) || filesize($tmp) === 0) {
-                @unlink($tmp);
+                wp_delete_file($tmp);
                 return false;
             }
         }
@@ -1597,7 +1563,7 @@ class Importer
             'post_status' => 'inherit'
         ]);
 
-        @unlink($tmp);
+        wp_delete_file($tmp);
 
         if (is_wp_error($attachment_id)) {
             return false;
@@ -1634,21 +1600,24 @@ class Importer
 
         $clean_url = str_replace(['https://', 'http://'], '', $url);
 
-        $attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid='%s' AND post_type='attachment';", $url));
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for attachment lookup by guid without core API equivalent
+        $attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE guid=%s AND post_type='attachment';", $url));
         if (!empty($attachment)) {
             return $attachment[0];
         }
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for attachment lookup by normalised guid without core API equivalent
         $attachment = $wpdb->get_col($wpdb->prepare(
-            "SELECT ID FROM $wpdb->posts WHERE (REPLACE(REPLACE(guid, 'https://', ''), 'http://', '') = '%s') AND post_type='attachment' LIMIT 1;",
+            "SELECT ID FROM $wpdb->posts WHERE (REPLACE(REPLACE(guid, 'https://', ''), 'http://', '') = %s) AND post_type='attachment' LIMIT 1;",
             $clean_url
         ));
         if (!empty($attachment)) {
             return $attachment[0];
         }
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for attachment lookup by custom meta without core API equivalent
         $attachment = $wpdb->get_col($wpdb->prepare(
-            "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='_jltma_original_url' AND meta_value='%s' LIMIT 1;",
+            "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='_jltma_original_url' AND meta_value=%s LIMIT 1;",
             $url
         ));
         if (!empty($attachment)) {
@@ -1663,13 +1632,14 @@ class Importer
      */
     public function cleanup_template_images()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for bulk meta key lookup without core API equivalent
         $template_attachments = $wpdb->get_col(
             "SELECT post_id FROM $wpdb->postmeta WHERE meta_key='_jltma_imported_from_kit'"
         );
@@ -1680,9 +1650,11 @@ class Importer
         foreach ($template_attachments as $attachment_id) {
             $is_used = false;
 
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for bulk content LIKE search without core API equivalent
             $used_in_content = $wpdb->get_var($wpdb->prepare(
-                "SELECT COUNT(*) FROM $wpdb->posts WHERE post_content LIKE '%wp-image-%d%' OR post_content LIKE '%attachment_%d%'",
-                $attachment_id, $attachment_id
+                "SELECT COUNT(*) FROM $wpdb->posts WHERE post_content LIKE %s OR post_content LIKE %s",
+                '%' . $wpdb->esc_like( 'wp-image-' . $attachment_id ) . '%',
+                '%' . $wpdb->esc_like( 'attachment_' . $attachment_id ) . '%'
             ));
 
             if ($used_in_content > 0) {
@@ -1691,6 +1663,7 @@ class Importer
 
             if (!$is_used) {
                 $attachment_url = wp_get_attachment_url($attachment_id);
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for Elementor meta LIKE search without core API equivalent
                 $used_in_elementor = $wpdb->get_var($wpdb->prepare(
                     "SELECT COUNT(*) FROM $wpdb->postmeta WHERE meta_key='_elementor_data' AND meta_value LIKE %s",
                     '%"id":' . $attachment_id . '%'
@@ -1721,13 +1694,13 @@ class Importer
      */
     public function preimport_kit_images()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field($_POST['kit_id']) : '';
-        $template_data = isset($_POST['template_data']) ? wp_unslash($_POST['template_data']) : '';
+        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field( wp_unslash( $_POST['kit_id'] ) ) : '';
+        $template_data = isset($_POST['template_data']) ? sanitize_textarea_field( wp_unslash( $_POST['template_data'] ) ) : '';
 
         if (empty($kit_id)) {
             wp_send_json_error(['message' => 'Kit ID is required']);
@@ -1820,12 +1793,12 @@ class Importer
      */
     public function predownload_kit()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field($_POST['kit_id']) : '';
+        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field( wp_unslash( $_POST['kit_id'] ) ) : '';
 
         if (empty($kit_id)) {
             wp_send_json_error(['message' => 'Kit ID is required']);
@@ -1866,7 +1839,7 @@ class Importer
      */
     public function download_all_kits()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
@@ -1900,16 +1873,17 @@ class Importer
      */
     public function install_required_plugin()
     {
-        $valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') ||
-                       wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce');
+        $wpnonce_val = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $valid_nonce = wp_verify_nonce($wpnonce_val, 'jltma_template_kits_nonce_action') ||
+                       wp_verify_nonce($wpnonce_val, 'jltma_template_library_nonce');
 
         if (!$valid_nonce || !current_user_can('install_plugins')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $plugin_name = isset($_POST['plugin_name']) ? sanitize_text_field($_POST['plugin_name']) : '';
-        $plugin_file = isset($_POST['plugin_file']) ? sanitize_text_field($_POST['plugin_file']) : '';
+        $plugin_name = isset($_POST['plugin_name']) ? sanitize_text_field( wp_unslash( $_POST['plugin_name'] ) ) : '';
+        $plugin_file = isset($_POST['plugin_file']) ? sanitize_text_field( wp_unslash( $_POST['plugin_file'] ) ) : '';
         $plugin_slug = $this->get_plugin_slug($plugin_file);
 
         if (empty($plugin_slug)) {
@@ -2034,16 +2008,17 @@ class Importer
      */
     public function activate_required_plugin()
     {
-        $valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') ||
-                       wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce');
+        $wpnonce_activate = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $valid_nonce = wp_verify_nonce($wpnonce_activate, 'jltma_template_kits_nonce_action') ||
+                       wp_verify_nonce($wpnonce_activate, 'jltma_template_library_nonce');
 
         if (!$valid_nonce || !current_user_can('activate_plugins')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $plugin_slug = isset($_POST['plugin_slug']) ? sanitize_text_field($_POST['plugin_slug']) : '';
-        $plugin_file = isset($_POST['plugin_file']) ? sanitize_text_field($_POST['plugin_file']) : '';
+        $plugin_slug = isset($_POST['plugin_slug']) ? sanitize_text_field( wp_unslash( $_POST['plugin_slug'] ) ) : '';
+        $plugin_file = isset($_POST['plugin_file']) ? sanitize_text_field( wp_unslash( $_POST['plugin_file'] ) ) : '';
 
         if (empty($plugin_slug) && empty($plugin_file)) {
             wp_send_json_error(['message' => 'Plugin slug is required']);
@@ -2134,14 +2109,15 @@ class Importer
      */
     public function upload_template_kit()
     {
-        $valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') ||
-                       wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce');
+        $wpnonce_upload = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $valid_nonce = wp_verify_nonce($wpnonce_upload, 'jltma_template_kits_nonce_action') ||
+                       wp_verify_nonce($wpnonce_upload, 'jltma_template_library_nonce');
         if (!$valid_nonce || !current_user_can('upload_files')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        if (!isset($_FILES['kit_file']) || $_FILES['kit_file']['error'] !== UPLOAD_ERR_OK) {
+        if (!isset($_FILES['kit_file']) || $_FILES['kit_file']['error'] !== UPLOAD_ERR_OK) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated -- 'kit_file' existence verified by isset above
             wp_send_json_error(['message' => 'No file uploaded or upload failed']);
             return;
         }
@@ -2162,7 +2138,7 @@ class Importer
         @ini_set('memory_limit', '512M');
         @ignore_user_abort(true);
 
-        $uploaded_file = $_FILES['kit_file'];
+        $uploaded_file = $_FILES['kit_file']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- file upload array; individual keys sanitized before use
 
         $file_type = wp_check_filetype($uploaded_file['name']);
         if ($file_type['ext'] !== 'zip') {

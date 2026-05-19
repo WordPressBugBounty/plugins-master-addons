@@ -744,7 +744,7 @@ class Image_Hover_Effects extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -760,7 +760,7 @@ class Image_Hover_Effects extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -776,7 +776,7 @@ class Image_Hover_Effects extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -870,7 +870,7 @@ class Image_Hover_Effects extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -886,7 +886,7 @@ class Image_Hover_Effects extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -961,7 +961,7 @@ class Image_Hover_Effects extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -977,7 +977,7 @@ class Image_Hover_Effects extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -1188,12 +1188,12 @@ class Image_Hover_Effects extends Master_Widget
 		}
 		?>
 
-		<div <?php echo $this->get_render_attribute_string('ma_el_image_hover_effect_wrapper'); ?>>
+		<div <?php echo $this->get_render_attribute_string('ma_el_image_hover_effect_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 
 			<figure class="jltma-effect-<?php echo esc_attr($settings['ma_el_main_image_effect']); ?>">
 
 				<?php if (isset($settings['ma_el_main_image']['id']) && $settings['ma_el_main_image']['id'] != "") {
-					echo $this->render_image($settings['ma_el_main_image']['id'], $settings);
+					echo $this->render_image($settings['ma_el_main_image']['id'], $settings); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_image returns sanitized HTML
 				} else {
 					echo '<img src="' . esc_url($hover_effects_main_image_url) . '" >';
 				} ?>
@@ -1201,9 +1201,9 @@ class Image_Hover_Effects extends Master_Widget
 				<figcaption>
 					<div class="jltma-image-hover-content">
 						<<?php echo esc_html($title_html_tag); ?>
-							<?php echo $this->get_render_attribute_string('ma_el_image_hover_effect_heading'); ?>>
+							<?php echo $this->get_render_attribute_string('ma_el_image_hover_effect_heading'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 
-							<?php echo $this->parse_text_editor($settings['ma_el_main_image_title']); ?>
+							<?php echo $this->parse_text_editor($settings['ma_el_main_image_title']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns Elementor-processed safe HTML ?>
 
 							<?php $ma_el_main_image_sub_title = array("honey");
 							if (in_array($ma_el_main_image_effect, $ma_el_main_image_sub_title)) { ?>
@@ -1301,7 +1301,7 @@ class Image_Hover_Effects extends Master_Widget
 
 					if ($settings['ma_el_image_hover_link_type'] == "links" && $settings['ma_el_main_image_more_link_url']['url'] != "") { ?>
 
-						<a <?php echo $this->get_render_attribute_string('ma_el_image_hover_link'); ?>></a>
+						<a <?php echo $this->get_render_attribute_string('ma_el_image_hover_link'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>></a>
 
 					<?php } elseif (in_array('popup', $enabled_link_types) && $settings['ma_el_image_hover_link_type'] == "popup") { ?>
 
@@ -1320,16 +1320,16 @@ class Image_Hover_Effects extends Master_Widget
 										echo do_shortcode($settings['popup_content']);
 									} else if ($settings['ma_el_image_popup_type'] == 'image' && !empty($settings['popup_image']['url'])) {
 
-										echo $this->render_image($settings['popup_image']['id'], $settings);
+										echo $this->render_image($settings['popup_image']['id'], $settings); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_image returns sanitized HTML
 									} else if ($settings['ma_el_image_popup_type'] == 'section' && !empty($settings['popup_saved_section'])) {
 
-										echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($settings['popup_saved_section']);
+										echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($settings['popup_saved_section']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_builder_content_for_display returns sanitized HTML
 									} else if ($settings['ma_el_image_popup_type'] == 'template' && !empty($settings['popup_templates'])) {
 
-										echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($settings['popup_templates']);
+										echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($settings['popup_templates']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_builder_content_for_display returns sanitized HTML
 									} else if ($settings['ma_el_image_popup_type'] == 'widget' && !empty($settings['popup_saved_widget'])) {
 
-										echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($settings['popup_saved_widget']);
+										echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($settings['popup_saved_widget']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_builder_content_for_display returns sanitized HTML
 									} ?>
 								</div>
 							</div>

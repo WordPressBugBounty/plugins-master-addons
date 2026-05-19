@@ -57,7 +57,7 @@ class Rollback
 		}
 
 		$plugin_slug = basename(JLTMA_BASE, '.php');
-		$plugin_version = sanitize_text_field($_GET['version']);
+		$plugin_version = sanitize_text_field( wp_unslash( $_GET['version'] ) );
 
 		$jltma_rollback = new self(
 			[
@@ -70,7 +70,7 @@ class Rollback
 
 		$jltma_rollback->run();
 
-		wp_die('', __('Rollback to Previous Version', 'master-addons' ), ['response' => 200,]);
+		wp_die('', esc_html__('Rollback to Previous Version', 'master-addons' ), ['response' => 200,]);
 	}
 
 

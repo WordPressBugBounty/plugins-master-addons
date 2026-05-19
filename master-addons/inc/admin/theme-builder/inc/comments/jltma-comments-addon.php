@@ -409,7 +409,7 @@ class Master_Addons_Comments extends Widget_Base
 					'type'    => Controls_Manager::CHOOSE,
 					'options' => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -717,7 +717,7 @@ class Master_Addons_Comments extends Widget_Base
 					'type'    => Controls_Manager::CHOOSE,
 					'options' => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -2418,37 +2418,41 @@ class Master_Addons_Comments extends Widget_Base
 		$html5    = 'html5' === $args['format'];
 
 		$fields = array(
-			'author' => '<p class="jltma-comment-form-author">' . '<label for="author">' . esc_html__('Name') . ($req ? ' <span class="required">*</span>' : '') . '</label> ' .
+			'author' => '<p class="jltma-comment-form-author">' . '<label for="author">' . esc_html__('Name', 'master-addons') . ($req ? ' <span class="required">*</span>' : '') . '</label> ' .
 				'<input id="author" name="author" type="text" value="' . esc_attr($commenter['comment_author']) . '" size="30" maxlength="245"' . esc_attr($aria_req) . esc_attr(
 					$html_req
 				) . ' /></p>',
 
-			'email' => '<p class="jltma-comment-form-email"><label for="email">' . esc_html__('Email') . ($req ? ' <span class="required">*</span>' : '') . '</label> ' .
+			'email' => '<p class="jltma-comment-form-email"><label for="email">' . esc_html__('Email', 'master-addons') . ($req ? ' <span class="required">*</span>' : '') . '</label> ' .
 				'<input id="email" name="email" ' . ($html5 ? 'type="email"' : 'type="text"') . ' value="' . esc_attr($commenter['comment_author_email']) . '" size="30" maxlength="100" aria-describedby="email-notes"' . esc_attr($aria_req) . esc_attr($html_req) . ' /></p>',
 
-			'url' => '<p class="jltma-comment-form-url"><label for="url">' . esc_html__('Website') . '</label> ' .
+			'url' => '<p class="jltma-comment-form-url"><label for="url">' . esc_html__('Website', 'master-addons') . '</label> ' .
 				'<input id="url" name="url" ' . ($html5 ? 'type="url"' : 'type="text"') . ' value="' . esc_url($commenter['comment_author_url']) . '" size="30" maxlength="200" /></p>',
 		);
 
-		$required_text = sprintf(' ' . esc_html__('Required fields are marked %s'), '<span class="required">*</span>');
+		/* translators: %s: HTML span element wrapping the required field indicator (asterisk). */
+		$required_text = sprintf(' ' . esc_html__('Required fields are marked %s', 'master-addons'), '<span class="required">*</span>');
 
 		$fields = apply_filters('comment_form_default_fields', $fields);
 
 		$defaults = array(
 			'fields'        => $fields,
-			'comment_field' => '<p class="comment-form-comment"><label for="comment">' . _x('Comment', 'noun') . '</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p>',
+			'comment_field' => '<p class="comment-form-comment"><label for="comment">' . _x('Comment', 'noun', 'master-addons') . '</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p>',
 			'must_log_in'   => '<p class="must-log-in">' . sprintf(
-				esc_html__('You must be <a href="%s">logged in</a> to post a comment.'),
+				/* translators: %s: URL for the login page. */
+				esc_html__('You must be <a href="%s">logged in</a> to post a comment.', 'master-addons'),
 				wp_login_url(apply_filters('the_permalink', get_permalink($post_id), $post_id))
 			) . '</p>',
 			'logged_in_as' 			=> '<p class="logged-in-as">' . sprintf(
-				esc_html__('<a href="%1$s" aria-label="%2$s">Logged in as %3$s</a>. <a href="%4$s">Log out?</a>'),
+				/* translators: 1: URL for editing the user profile. 2: Accessible label for the edit profile link. 3: Current user display name. 4: URL to log out. */
+				esc_html__('<a href="%1$s" aria-label="%2$s">Logged in as %3$s</a>. <a href="%4$s">Log out?</a>', 'master-addons'),
 				get_edit_user_link(),
-				esc_attr(sprintf(__('Logged in as %s. Edit your profile.'), $user_identity)),
+				/* translators: %s: Current user display name. */
+				esc_attr(sprintf(__('Logged in as %s. Edit your profile.', 'master-addons'), $user_identity)),
 				$user_identity,
 				wp_logout_url(apply_filters('the_permalink', get_permalink($post_id), $post_id))
 			) . '</p>',
-			'comment_notes_before' => '<p class="comment-notes"><span id="email-notes">' . esc_html__('Your email address will not be published.') . '</span>' . ($req ? $required_text : '') . '</p>',
+			'comment_notes_before' => '<p class="comment-notes"><span id="email-notes">' . esc_html__('Your email address will not be published.', 'master-addons') . '</span>' . ($req ? $required_text : '') . '</p>',
 			'comment_notes_after'  => '',
 			'action'               => site_url('/wp-comments-post.php'),
 			'id_form'              => 'commentform',
@@ -2457,7 +2461,8 @@ class Master_Addons_Comments extends Widget_Base
 			'class_submit'         => 'submit',
 			'name_submit'          => 'submit',
 			'title_reply'          => esc_html__('Leave a Reply', 'master-addons' ),
-			'title_reply_to'       => esc_html__('Leave a Reply to %s'),
+			/* translators: %s: The name of the author being replied to. */
+			'title_reply_to'       => esc_html__('Leave a Reply to %s', 'master-addons'),
 			'title_reply_before'   => '<h3 id="reply-title" class="comment-reply-title clearfix">',
 			'title_reply_after'    => '</h3>',
 			'cancel_reply_before'  => ' <small>',
@@ -2501,7 +2506,7 @@ class Master_Addons_Comments extends Widget_Base
 
 					if (is_user_logged_in()) :
 
-						echo apply_filters('comment_form_logged_in', $args['logged_in_as'], $commenter, $user_identity);
+						echo wp_kses_post( apply_filters('comment_form_logged_in', $args['logged_in_as'], $commenter, $user_identity) );
 						do_action('comment_form_logged_in_after', $commenter, $user_identity);
 
 					else :
@@ -2528,7 +2533,7 @@ class Master_Addons_Comments extends Widget_Base
 								do_action('comment_form_before_fields');
 							}
 
-							echo apply_filters("comment_form_field_{$name}", $field) . "\n";
+							echo wp_kses_post( apply_filters("comment_form_field_{$name}", $field) ) . "\n";
 
 							if ($last_field === $name) {
 								do_action('comment_form_after_fields');
@@ -2537,7 +2542,7 @@ class Master_Addons_Comments extends Widget_Base
 
 							do_action('comment_form_before_fields');
 
-							echo apply_filters("comment_form_field_{$name}", $field) . "\n";
+							echo wp_kses_post( apply_filters("comment_form_field_{$name}", $field) ) . "\n";
 
 							if ($last_field === $name) {
 								do_action('comment_form_after_fields');
@@ -2548,7 +2553,7 @@ class Master_Addons_Comments extends Widget_Base
 								do_action('comment_form_before_fields');
 							}
 							if ($name != 'name' && $name != 'email' && $name != 'url') {
-								echo apply_filters("comment_form_field_{$name}", $field) . "\n";
+								echo wp_kses_post( apply_filters("comment_form_field_{$name}", $field) ) . "\n";
 							}
 
 							if ($last_field === $name) {
@@ -2573,7 +2578,7 @@ class Master_Addons_Comments extends Widget_Base
 						$submit_button,
 						get_comment_id_fields($post_id)
 					);
-					echo apply_filters('comment_form_submit_field', $submit_field, $args);
+					echo wp_kses_post( apply_filters('comment_form_submit_field', $submit_field, $args) );
 					do_action('jltma_comment_form', $post_id);
 					do_action('comment_form', $post_id); // required for _wp_unfiltered_html_comment_disabled nonce
 					?>
@@ -2887,7 +2892,7 @@ class Master_Addons_Comments extends Widget_Base
 					<li class="jltma-next-page-wrap"><a href="javascript:void(0);" data-total-page="<?php echo esc_attr($total); ?>" data-page-number="2" data-pagination-type="page-number" class="jltma-next-page"><i class="fa fa-angle-right"></i></a></li>
 				<?php } ?>
 			</ul>
-			<img src="<?php echo \JLTMA_URL . '/assets/images/ajax-loader.gif' ?>" class="jltma-page-number-loader" style="display:none;">
+			<img src="<?php echo esc_url( \JLTMA_URL . '/assets/images/ajax-loader.gif' ); ?>" class="jltma-page-number-loader" style="display:none;">
 			<?php
 			?>
 		</div>
@@ -2930,7 +2935,7 @@ class Master_Addons_Comments extends Widget_Base
 						$backend_comment_text = $settings['jltma_comment_no_comment_text'];
 					}
 					echo "<h3 class='jltma-comments-title'>";
-					echo '5 ' . esc_attr($backend_comment_text) . ' on ' . get_the_title();
+					echo '5 ' . esc_attr($backend_comment_text) . ' on ' . esc_html( get_the_title() );
 					echo "</h3>";
 				} else {
 
@@ -2942,7 +2947,7 @@ class Master_Addons_Comments extends Widget_Base
 
 					$comments_number = comments_number($no_comment, $one_comment, sprintf('%1$s %2$s', '%', $plural_comment));
 
-					echo esc_attr($comments_number) . ' on ' . get_the_title();
+					echo esc_attr($comments_number) . ' on ' . esc_html( get_the_title() );
 					echo "</h3>";
 				}
 			}
@@ -2999,7 +3004,7 @@ class Master_Addons_Comments extends Widget_Base
 			]]);
 		} ?>
 
-		<div <?php echo $this->get_render_attribute_string('jltma_comments_wrap'); ?>>
+		<div <?php echo $this->get_render_attribute_string('jltma_comments_wrap'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 
 			<?php if (comments_open() && Comments_Builder::jltma_comment_elementor_preview_mode()) {
 

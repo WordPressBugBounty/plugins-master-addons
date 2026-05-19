@@ -169,10 +169,28 @@ class Notifications
 	 */
 	public function display_popup($popup, $trigger_time)
 	{
+		$screen = get_current_screen();
+
+		// Screens where the notification popup is allowed to show.
+		$allowed_screens = array(
+			'dashboard',                                            // index.php
+			'toplevel_page_master-addons-settings',                 // admin.php?page=master-addons-settings
+			'master-addons_page_jltma-template-library',            // admin.php?page=jltma-template-library
+			'master-addons_page_jltma-template-kits',               // admin.php?page=jltma-template-kits
+			'master-addons_page_master-addons-recommended-plugins', // admin.php?page=master-addons-recommended-plugins
+			'master-addons_page_master-addons-settings-account',    // admin.php?page=master-addons-settings-account
+			'edit-master_template',                                 // edit.php?post_type=master_template
+			'edit-jltma_popup',                                     // edit.php?post_type=jltma_popup
+		);
+
+		if ( ! $screen || ! in_array( $screen->id, $allowed_screens, true ) ) {
+			return;
+		}
+
 		$image_url = $popup->get_content('image_url');
 		$notice = !empty($popup->get_content('notice')) ? $popup->get_content('notice') : '';
 
-?>
+		?>
 
 		<div class="jltma-popup" id="jltma-popup" data-plugin="<?php echo esc_attr($this->slug); ?>" tabindex="1">
 
@@ -252,6 +270,6 @@ class Notifications
 			});
 		</script>
 
-<?php
+		<?php
 	}
 }

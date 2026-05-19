@@ -573,14 +573,14 @@ class Dual_Heading extends Master_Widget
 
 			<div class="jltma-sec-head-container">
 				<div class="jltma-sec-head-style">
-					<<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); ?> class="jltma-section-title">
+					<<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- print_validated_html_tag returns a whitelisted tag name ?> class="jltma-section-title">
 						<span>
 							<?php echo esc_html($settings['ma_el_dual_first_heading']); ?>
 						</span><br>
 
 						<?php echo esc_html($settings['ma_el_dual_second_heading']); ?>
 
-					</<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); ?>><!-- /.section-title -->
+					</<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- print_validated_html_tag returns a whitelisted tag name ?>><!-- /.section-title -->
 
 					<div class="jltma-section-description">
 						<?php echo esc_html($settings['ma_el_dual_heading_description']); ?>
@@ -606,7 +606,7 @@ class Dual_Heading extends Master_Widget
 						</span>
 					<?php endif; ?>
 
-					<<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); ?> class="jltma-dual-heading-title">
+					<<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- print_validated_html_tag returns a whitelisted tag name ?> class="jltma-dual-heading-title">
 						<?php if (isset($settings['ma_el_dual_heading_title_link']['url']) && $settings['ma_el_dual_heading_title_link']['url'] != "") { ?>
 							<a href="<?php echo esc_url($settings['ma_el_dual_heading_title_link']['url']); ?>">
 							<?php } ?>
@@ -622,7 +622,7 @@ class Dual_Heading extends Master_Widget
 							<?php if (isset($settings['ma_el_dual_heading_title_link']['url']) && $settings['ma_el_dual_heading_title_link']['url'] != "") { ?>
 							</a>
 						<?php } ?>
-					</<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); ?>>
+					</<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- print_validated_html_tag returns a whitelisted tag name ?>>
 
 					<?php if ($settings['ma_el_dual_heading_description'] != "") : ?>
 						<p class="jltma-dual-heading-description"><?php echo wp_kses_post($this->parse_text_editor($settings['ma_el_dual_heading_description'])); ?></p>

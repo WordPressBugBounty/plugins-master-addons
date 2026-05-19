@@ -6,7 +6,7 @@
   var isRellax = false;
   var currentDevice = "";
   var getElementSettings = function($element2, setting) {
-    var elementSettings2 = {}, modelCID = $element2.data("model-cid");
+    var elementSettings = {}, modelCID = $element2.data("model-cid");
     if (elementorFrontend.isEditMode() && modelCID) {
       var settings = elementorFrontend.config.elements.data[modelCID], type = settings.attributes.widgetType || settings.attributes.elType, settingsKeys = elementorFrontend.config.elements.keys[type];
       if (!settingsKeys) {
@@ -19,13 +19,13 @@
       }
       jQuery.each(settings.getActiveControls(), function(controlKey) {
         if (-1 !== settingsKeys.indexOf(controlKey)) {
-          elementSettings2[controlKey] = settings.attributes[controlKey];
+          elementSettings[controlKey] = settings.attributes[controlKey];
         }
       });
     } else {
-      elementSettings2 = $element2.data("settings") || {};
+      elementSettings = $element2.data("settings") || {};
     }
-    return getItems(elementSettings2, setting);
+    return getItems(elementSettings, setting);
   };
   var getItems = function(items, itemKey) {
     if (itemKey) {
@@ -40,11 +40,11 @@
     }
     return items;
   };
-  var getUniqueLoopScopeId = function($scope2) {
-    if ($scope2.data("jltma-template-widget-id")) {
-      return $scope2.data("jltma-template-widget-id");
+  var getUniqueLoopScopeId = function($scope) {
+    if ($scope.data("jltma-template-widget-id")) {
+      return $scope.data("jltma-template-widget-id");
     }
-    return $scope2.data("id");
+    return $scope.data("id");
   };
   function jltMAObserveTarget(target, callback) {
     var options = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
@@ -116,8 +116,8 @@
       }
     },
     // Master Addons: Accordion
-    MA_Accordion: function($scope2, $2) {
-      var elementSettings2 = getElementSettings($scope2), $accordionHeader = $scope2.find(".jltma-accordion-header"), $accordionType = elementSettings2.accordion_type, $accordionSpeed = elementSettings2.toggle_speed ? elementSettings2.toggle_speed : 300;
+    MA_Accordion: function($scope, $2) {
+      var elementSettings = getElementSettings($scope), $accordionHeader = $scope.find(".jltma-accordion-header"), $accordionType = elementSettings.accordion_type, $accordionSpeed = elementSettings.toggle_speed ? elementSettings.toggle_speed : 300;
       $accordionHeader.each(function() {
         if ($2(this).hasClass("active-default")) {
           $2(this).addClass("show active");
@@ -150,10 +150,10 @@
       });
     },
     // Master Addons: Tabs
-    MA_Tabs: function($scope2, $2) {
+    MA_Tabs: function($scope, $2) {
       try {
         (function($3) {
-          var $tabsWrapper = $scope2.find("[data-tabs]"), $tabEffect = $tabsWrapper.data("tab-effect");
+          var $tabsWrapper = $scope.find("[data-tabs]"), $tabEffect = $tabsWrapper.data("tab-effect");
           $tabsWrapper.each(function() {
             var tab = $3(this);
             var isTabActive = false;
@@ -194,20 +194,20 @@
       }
     },
     //Master Addons: Progressbar
-    MA_ProgressBar: function($scope2, $2) {
-      var id = $scope2.data("id"), $progressBarWrapper = $scope2.find(".jltma-progress-bar-" + id), type = $progressBarWrapper.data("type"), value = $progressBarWrapper.data("progress-bar-value"), strokeWidth = $progressBarWrapper.data("progress-bar-stroke-width"), strokeTrailWidth = $progressBarWrapper.data("progress-bar-stroke-trail-width"), color = $progressBarWrapper.data("stroke-color"), trailColor = $progressBarWrapper.data("stroke-trail-color");
+    MA_ProgressBar: function($scope, $2) {
+      var id = $scope.data("id"), $progressBarWrapper = $scope.find(".jltma-progress-bar-" + id), type = $progressBarWrapper.data("type"), value = $progressBarWrapper.data("progress-bar-value"), strokeWidth = $progressBarWrapper.data("progress-bar-stroke-width"), strokeTrailWidth = $progressBarWrapper.data("progress-bar-stroke-trail-width"), color = $progressBarWrapper.data("stroke-color"), trailColor = $progressBarWrapper.data("stroke-trail-color");
       $progressBarWrapper.find("svg").remove();
       $progressBarWrapper.find(".ldBar-label").remove();
       $progressBarWrapper.removeClass("ldBar");
       Master_Addons.animatedProgressbar(id, type, value, color, trailColor, strokeWidth, strokeTrailWidth);
     },
     //Master Addons: Image Hotspot
-    MA_Image_Hotspot: function($scope2, $2) {
-      var elementSettings2 = getElementSettings($scope2), $ma_hotspot = $scope2.find(".jltma-hotspots-container");
+    MA_Image_Hotspot: function($scope, $2) {
+      var elementSettings = getElementSettings($scope), $ma_hotspot = $scope.find(".jltma-hotspots-container");
       if (!$ma_hotspot.length) {
         return;
       }
-      var $tooltip = $ma_hotspot.find("> .jltma-tooltip-item"), widgetID = $scope2.data("id");
+      var $tooltip = $ma_hotspot.find("> .jltma-tooltip-item"), widgetID = $scope.data("id");
       $tooltip.each(function(index) {
         tippy(this, {
           allowHTML: false,
@@ -216,12 +216,12 @@
       });
     },
     //Master Addons: Pricing Table
-    MA_Pricing_Table: function($scope2, $2) {
-      var $jltma_pricing_table = $scope2.find(".jltma-price-table-details ul");
+    MA_Pricing_Table: function($scope, $2) {
+      var $jltma_pricing_table = $scope.find(".jltma-price-table-details ul");
       if (!$jltma_pricing_table.length) {
         return;
       }
-      var $tooltip = $jltma_pricing_table.find("> .jltma-tooltip-item"), widgetID = $scope2.data("id");
+      var $tooltip = $jltma_pricing_table.find("> .jltma-tooltip-item"), widgetID = $scope.data("id");
       $tooltip.each(function(index) {
         tippy(this, {
           allowHTML: false,
@@ -231,18 +231,18 @@
       });
     },
     // Dynamic Data Tables
-    JLTMA_Data_Table: function($scope2, $2) {
-      var a = $scope2.find(".jltma-data-table-container"), n = a.data("source"), r = a.data("sourcecsv");
+    JLTMA_Data_Table: function($scope, $2) {
+      var a = $scope.find(".jltma-data-table-container"), n = a.data("source"), r = a.data("sourcecsv");
       if (1 == a.data("buttons")) var l = "Bfrtip";
       else l = "frtip";
       if ("custom" == n) {
-        var i = $scope2.find("table thead tr th").length;
-        $scope2.find("table tbody tr").each(function() {
+        var i = $scope.find("table thead tr th").length;
+        $scope.find("table tbody tr").each(function() {
           if (e(this).find("td").length < i) {
             var t = i - e(this).find("td").length;
             e(this).append(new Array(++t).join("<td></td>"));
           }
-        }), $scope2.find(".jltma-data-table").DataTable({
+        }), $scope.find(".jltma-data-table").DataTable({
           dom: l,
           paging: a.data("paging"),
           pagingType: "numbers",
@@ -278,7 +278,7 @@
       } else if ("csv" == n) {
         ({
           init: function(t) {
-            var a2 = (t = t || {}).csv_path || "", n2 = $scope2.element || $2("#table-container"), r2 = $scope2.csv_options || {}, l2 = $scope2.datatables_options || {}, i2 = $scope2.custom_formatting || [], s = {};
+            var a2 = (t = t || {}).csv_path || "", n2 = $scope.element || $2("#table-container"), r2 = $scope.csv_options || {}, l2 = $scope.datatables_options || {}, i2 = $scope.custom_formatting || [], s = {};
             $2.each(i2, function(e2, t2) {
               var a3 = t2[0], n3 = t2[1];
               s[a3] = n3;
@@ -333,20 +333,20 @@
           }
         });
       }
-      $scope2.find(".jltma-data-table").css("visibility", "visible");
+      $scope.find(".jltma-data-table").css("visibility", "visible");
     },
     // Dropdown Button
-    JLTMA_Dropdown_Button: function($scope2, $2) {
-      $scope2.find(".jltma-dropdown").hover(
+    JLTMA_Dropdown_Button: function($scope, $2) {
+      $scope.find(".jltma-dropdown").hover(
         function() {
-          $scope2.find(".jltma-dd-menu").addClass("jltma-dd-menu-opened");
+          $scope.find(".jltma-dd-menu").addClass("jltma-dd-menu-opened");
         },
         function() {
-          $scope2.find(".jltma-dd-menu").removeClass("jltma-dd-menu-opened");
+          $scope.find(".jltma-dd-menu").removeClass("jltma-dd-menu-opened");
         }
       );
     },
-    JLTMA_WC_Add_To_Cart: function($scope2, $2) {
+    JLTMA_WC_Add_To_Cart: function($scope, $2) {
       $2(document).on("click", ".ajax_add_to_cart", function(e2) {
         $2(this).append('<i class="fa fa-spinner animated rotateIn infinite"></i>');
       });
@@ -356,9 +356,9 @@
       });
     },
     /* Offcanvas Menu */
-    MA_Offcanvas_Menu: function($scope2, $2) {
-      Master_Addons.MA_Offcanvas_Menu.elementSettings = $scope2.data("settings");
-      var widgetSelector = "jltma-offcanvas-menu", getID = $scope2.data("id"), getElementSettings2 = $scope2.data("settings"), is_esc_close = getElementSettings2.esc_close ? getElementSettings2.esc_close : "", classes = {
+    MA_Offcanvas_Menu: function($scope, $2) {
+      Master_Addons.MA_Offcanvas_Menu.elementSettings = $scope.data("settings");
+      var widgetSelector = "jltma-offcanvas-menu", getID = $scope.data("id"), getElementSettings2 = $scope.data("settings"), is_esc_close = getElementSettings2.esc_close ? getElementSettings2.esc_close : "", classes = {
         widget: widgetSelector,
         triggerButton: "jltma-offcanvas__trigger",
         offcanvasContent: "jltma-offcanvas__content",
@@ -393,13 +393,13 @@
         $body: jQuery(document).find("body"),
         $outsideContainer: jQuery(selectors.offcanvasContainer),
         $containerOverlay: jQuery(selectors.offcanvasContainerOverlay),
-        $triggerButton: $scope2.find(selectors.triggerButton),
-        $offcanvasContent: $scope2.find(selectors.offcanvasContent),
-        $offcanvasContentBody: $scope2.find(selectors.offcanvasContentBody),
-        $offcanvasContainer: $scope2.find(selectors.offcanvasContainer),
-        $offcanvasWrapper: $scope2.find(selectors.offcanvasWrapper),
-        $closeButton: $scope2.find(selectors.closeButton),
-        $menuParent: $scope2.find(selectors.menuParent)
+        $triggerButton: $scope.find(selectors.triggerButton),
+        $offcanvasContent: $scope.find(selectors.offcanvasContent),
+        $offcanvasContentBody: $scope.find(selectors.offcanvasContentBody),
+        $offcanvasContainer: $scope.find(selectors.offcanvasContainer),
+        $offcanvasWrapper: $scope.find(selectors.offcanvasWrapper),
+        $closeButton: $scope.find(selectors.closeButton),
+        $menuParent: $scope.find(selectors.menuParent)
       };
       Master_Addons.MA_Offcanvas_Menu.resetCanvas = function() {
         var contentId = getID;
@@ -549,8 +549,8 @@
       return Master_Addons.MA_Offcanvas_Menu.onInit();
     },
     //Master Addons: Image Filter Gallery
-    MA_Image_Filter_Gallery: function($scope2, $2) {
-      var elementSettings2 = getElementSettings($scope2), $jltma_image_filter_gallery_wrapper = $scope2.find(".jltma-image-filter-gallery-wrapper").eq(0), $ma_el_image_filter_gallery_container = $scope2.find(".jltma-image-filter-gallery"), $ma_el_image_filter_gallery_nav = $scope2.find(".jltma-image-filter-nav"), $ma_el_image_filter_gallery_wrapper = $scope2.find(".jltma-image-filter-gallery-wrapper"), $uniqueId = getUniqueLoopScopeId($scope2), $maxtilt = elementSettings2.ma_el_image_gallery_max_tilt, $perspective = elementSettings2.ma_el_image_gallery_perspective, $speed = elementSettings2.ma_el_image_gallery_speed, $axis = elementSettings2.ma_el_image_gallery_tilt_axis, $glare = elementSettings2.ma_el_image_gallery_glare, $overlay_speed = elementSettings2.line_location, $ma_el_image_gallery_tooltip = elementSettings2.ma_el_image_gallery_tooltip, $container = $2(".elementor-element-" + $uniqueId + " .jltma-image-filter-gallery"), layoutMode = $ma_el_image_filter_gallery_wrapper.hasClass("jltma-masonry-yes") ? "masonry" : "fitRows";
+    MA_Image_Filter_Gallery: function($scope, $2) {
+      var elementSettings = getElementSettings($scope), $jltma_image_filter_gallery_wrapper = $scope.find(".jltma-image-filter-gallery-wrapper").eq(0), $ma_el_image_filter_gallery_container = $scope.find(".jltma-image-filter-gallery"), $ma_el_image_filter_gallery_nav = $scope.find(".jltma-image-filter-nav"), $ma_el_image_filter_gallery_wrapper = $scope.find(".jltma-image-filter-gallery-wrapper"), $uniqueId = getUniqueLoopScopeId($scope), $maxtilt = elementSettings.ma_el_image_gallery_max_tilt, $perspective = elementSettings.ma_el_image_gallery_perspective, $speed = elementSettings.ma_el_image_gallery_speed, $axis = elementSettings.ma_el_image_gallery_tilt_axis, $glare = elementSettings.ma_el_image_gallery_glare, $overlay_speed = elementSettings.line_location, $ma_el_image_gallery_tooltip = elementSettings.ma_el_image_gallery_tooltip, $container = $2(".elementor-element-" + $uniqueId + " .jltma-image-filter-gallery"), layoutMode = $ma_el_image_filter_gallery_wrapper.hasClass("jltma-masonry-yes") ? "masonry" : "fitRows";
       if (!$jltma_image_filter_gallery_wrapper.length) {
         return;
       }
@@ -559,7 +559,7 @@
         if (!$img_filter_gallery.length) {
           return;
         }
-        var $tooltip = $img_filter_gallery.find("> .jltma-tooltip-item"), widgetID = $scope2.data("id");
+        var $tooltip = $img_filter_gallery.find("> .jltma-tooltip-item"), widgetID = $scope.data("id");
         $tooltip.each(function(index) {
           tippy(this, {
             allowHTML: false,
@@ -589,7 +589,7 @@
       var $grid = $container.isotope(adata);
       $grid.imagesLoaded().progress(function() {
         $grid.isotope("layout");
-        $scope2.find(".jltma-image-filter-gallery").css({ "min-height": "300px" });
+        $scope.find(".jltma-image-filter-gallery").css({ "min-height": "300px" });
       });
       if ($2.isFunction($2.fn.imagesLoaded)) {
         $ma_el_image_filter_gallery_container.imagesLoaded(function() {
@@ -606,14 +606,14 @@
         $axis = "both";
       }
       if ($glare === "yes") {
-        var $max_glare = elementSettings2.ma_el_image_gallery_max_glare;
+        var $max_glare = elementSettings.ma_el_image_gallery_max_glare;
       }
       if ($glare === "yes") {
         $glare = true;
       } else {
         $glare = false;
       }
-      if ($scope2.find(".jltma-tilt-enable")) {
+      if ($scope.find(".jltma-tilt-enable")) {
         var tilt_args = {
           maxTilt: $maxtilt,
           perspective: $perspective,
@@ -634,7 +634,7 @@
           maxGlare: $max_glare
           // From 0 - 1.
         };
-        $scope2.find(".jltma-tilt").tilt(tilt_args);
+        $scope.find(".jltma-tilt").tilt(tilt_args);
       }
       $ma_el_image_filter_gallery_nav.on("click", "li", function() {
         $ma_el_image_filter_gallery_nav.find(".active").removeClass("active");
@@ -833,24 +833,24 @@
       return Master_Addons.MA_Carousel.init();
     },
     // Gallery Slider
-    MA_Gallery_Slider: function($scope2, $2) {
-      var elementSettings2 = getElementSettings($scope2), $swiperSlider = $scope2.find(".jltma-gallery-slider__slider"), $swiperCarousel = $scope2.find(".jltma-gallery-slider__carousel"), uniqueId = getUniqueLoopScopeId($scope2), scopeId = $scope2.data("id"), $preview = $scope2.find(".jltma-gallery-slider__preview"), $thumbs = $scope2.find(".jltma-swiper__wrapper .jltma-gallery__item"), $thumbnailsSlider = $scope2.find(".jltma-gallery-slider__gallery .jltma-gallery"), $thumbtype = elementSettings2.jltma_gallery_slider_thumb_type, $thumbposition = elementSettings2.jltma_gallery_slider_preview_position, $thumbVertical = $thumbposition == "top" || $thumbposition == "bottom" ? false : true, start = elementorFrontend.config.is_rtl ? "right" : "left", end = elementorFrontend.config.is_rtl ? "left" : "right", hasCarousel = $swiperCarousel.length, swiperSlider = null, swiperCarousel = null, sliderSettings = {
+    MA_Gallery_Slider: function($scope, $2) {
+      var elementSettings = getElementSettings($scope), $swiperSlider = $scope.find(".jltma-gallery-slider__slider"), $swiperCarousel = $scope.find(".jltma-gallery-slider__carousel"), uniqueId = getUniqueLoopScopeId($scope), scopeId = $scope.data("id"), $preview = $scope.find(".jltma-gallery-slider__preview"), $thumbs = $scope.find(".jltma-swiper__wrapper .jltma-gallery__item"), $thumbnailsSlider = $scope.find(".jltma-gallery-slider__gallery .jltma-gallery"), $thumbtype = elementSettings.jltma_gallery_slider_thumb_type, $thumbposition = elementSettings.jltma_gallery_slider_preview_position, $thumbVertical = $thumbposition == "top" || $thumbposition == "bottom" ? false : true, start = elementorFrontend.config.is_rtl ? "right" : "left", end = elementorFrontend.config.is_rtl ? "left" : "right", hasCarousel = $swiperCarousel.length, swiperSlider = null, swiperCarousel = null, sliderSettings = {
         key: "slider",
-        scope: $scope2,
+        scope: $scope,
         id: uniqueId,
         element: {
-          autoHeight: "yes" === elementSettings2.jltma_gallery_slider_adaptive_height ? true : false,
-          autoplay: "yes" === elementSettings2.jltma_gallery_slider_autoplay ? true : false,
-          autoplaySpeed: "yes" === elementSettings2.jltma_gallery_slider_autoplay && elementSettings2.jltma_gallery_slider_autoplay_speed ? elementSettings2.jltma_gallery_slider_autoplay_speed.size : false,
-          disableOnInteraction: "" !== elementSettings2.autoplay_disable_on_interaction,
-          stopOnHover: "yes" === elementSettings2.jltma_gallery_slider_pause_on_hover,
-          loop: "yes" === elementSettings2.jltma_gallery_slider_infinite,
-          arrows: "" !== elementSettings2.jltma_gallery_slider_show_arrows,
+          autoHeight: "yes" === elementSettings.jltma_gallery_slider_adaptive_height ? true : false,
+          autoplay: "yes" === elementSettings.jltma_gallery_slider_autoplay ? true : false,
+          autoplaySpeed: "yes" === elementSettings.jltma_gallery_slider_autoplay && elementSettings.jltma_gallery_slider_autoplay_speed ? elementSettings.jltma_gallery_slider_autoplay_speed.size : false,
+          disableOnInteraction: "" !== elementSettings.autoplay_disable_on_interaction,
+          stopOnHover: "yes" === elementSettings.jltma_gallery_slider_pause_on_hover,
+          loop: "yes" === elementSettings.jltma_gallery_slider_infinite,
+          arrows: "" !== elementSettings.jltma_gallery_slider_show_arrows,
           arrowPrev: ".jltma-arrow--prev",
           arrowNext: ".jltma-arrow--next",
-          effect: elementSettings2.jltma_gallery_slider_effect,
-          speed: elementSettings2.jltma_gallery_slider_speed ? elementSettings2.jltma_gallery_slider_speed : 500,
-          resistance: elementSettings2.resistance ? elementSettings2.resistance.size : 0.25,
+          effect: elementSettings.jltma_gallery_slider_effect,
+          speed: elementSettings.jltma_gallery_slider_speed ? elementSettings.jltma_gallery_slider_speed : 500,
+          resistance: elementSettings.resistance ? elementSettings.resistance.size : 0.25,
           keyboard: {
             // enabled: "yes" === slider_data.jltma_slider_keyboard ? true : false
             enabled: true
@@ -868,37 +868,37 @@
       if (hasCarousel) {
         var carouselSettings = {
           key: "carousel",
-          scope: $scope2,
+          scope: $scope,
           id: uniqueId,
           // stretch: 'yes' === elementSettings.thumbnails_stretch,
           element: {
-            direction: elementSettings2.carousel_orientation,
-            arrows: "" !== elementSettings2.jltma_gallery_slider_thumb_show_arrows,
+            direction: elementSettings.carousel_orientation,
+            arrows: "" !== elementSettings.jltma_gallery_slider_thumb_show_arrows,
             arrowPrev: ".jltma-arrow--prev",
             arrowNext: ".jltma-arrow--next",
             autoHeight: false,
-            loop: "yes" === elementSettings2.jltma_gallery_slider_thumb_infinite ? true : false,
-            autoplay: "yes" === elementSettings2.jltma_gallery_slider_thumb_autoplay ? true : false,
-            autoplaySpeed: "yes" === elementSettings2.jltma_gallery_slider_thumb_autoplay && elementSettings2.jltma_gallery_slider_thumb_autoplay_speed ? elementSettings2.jltma_gallery_slider_thumb_autoplay_speed.size : false,
-            stopOnHover: "yes" === elementSettings2.jltma_gallery_slider_thumb_pause_on_hover,
-            speed: elementSettings2.jltma_gallery_slider_thumb_speed ? elementSettings2.jltma_gallery_slider_thumb_speed : 500,
-            slidesPerView: elementSettings2.jltma_gallery_slider_thumb_items_mobile,
-            slidesPerColumn: "vertical" === elementSettings2.carousel_orientation ? 1 : elementSettings2.carousel_slides_per_column_mobile,
-            slidesPerGroup: elementSettings2.carousel_slides_to_scroll_mobile,
-            resistance: elementSettings2.carousel_resistance ? elementSettings2.carousel_resistance.size : 0.15,
-            spaceBetween: elementSettings2.carousel_spacing_mobile ? elementSettings2.carousel_spacing_mobile.size : 0,
+            loop: "yes" === elementSettings.jltma_gallery_slider_thumb_infinite ? true : false,
+            autoplay: "yes" === elementSettings.jltma_gallery_slider_thumb_autoplay ? true : false,
+            autoplaySpeed: "yes" === elementSettings.jltma_gallery_slider_thumb_autoplay && elementSettings.jltma_gallery_slider_thumb_autoplay_speed ? elementSettings.jltma_gallery_slider_thumb_autoplay_speed.size : false,
+            stopOnHover: "yes" === elementSettings.jltma_gallery_slider_thumb_pause_on_hover,
+            speed: elementSettings.jltma_gallery_slider_thumb_speed ? elementSettings.jltma_gallery_slider_thumb_speed : 500,
+            slidesPerView: elementSettings.jltma_gallery_slider_thumb_items_mobile,
+            slidesPerColumn: "vertical" === elementSettings.carousel_orientation ? 1 : elementSettings.carousel_slides_per_column_mobile,
+            slidesPerGroup: elementSettings.carousel_slides_to_scroll_mobile,
+            resistance: elementSettings.carousel_resistance ? elementSettings.carousel_resistance.size : 0.15,
+            spaceBetween: elementSettings.carousel_spacing_mobile ? elementSettings.carousel_spacing_mobile.size : 0,
             breakpoints: {
               tablet: {
-                slidesPerView: elementSettings2.jltma_gallery_slider_thumb_items_tablet,
-                slidesPerColumn: "vertical" === elementSettings2.carousel_orientation ? 1 : elementSettings2.carousel_slides_per_column_tablet,
-                slidesPerGroup: elementSettings2.carousel_slides_to_scroll_tablet,
-                spaceBetween: elementSettings2.carousel_spacing_tablet ? elementSettings2.carousel_spacing_tablet.size : 0
+                slidesPerView: elementSettings.jltma_gallery_slider_thumb_items_tablet,
+                slidesPerColumn: "vertical" === elementSettings.carousel_orientation ? 1 : elementSettings.carousel_slides_per_column_tablet,
+                slidesPerGroup: elementSettings.carousel_slides_to_scroll_tablet,
+                spaceBetween: elementSettings.carousel_spacing_tablet ? elementSettings.carousel_spacing_tablet.size : 0
               },
               desktop: {
-                slidesPerView: elementSettings2.jltma_gallery_slider_thumb_items,
-                slidesPerColumn: "vertical" === elementSettings2.carousel_orientation ? 1 : elementSettings2.carousel_slides_per_column,
-                slidesPerGroup: elementSettings2.carousel_slides_to_scroll,
-                spaceBetween: elementSettings2.carousel_spacing ? elementSettings2.carousel_spacing.size : 0
+                slidesPerView: elementSettings.jltma_gallery_slider_thumb_items,
+                slidesPerColumn: "vertical" === elementSettings.carousel_orientation ? 1 : elementSettings.carousel_slides_per_column,
+                slidesPerGroup: elementSettings.carousel_slides_to_scroll,
+                spaceBetween: elementSettings.carousel_spacing ? elementSettings.carousel_spacing.size : 0
               }
             }
           },
@@ -934,11 +934,11 @@
           const asyncSwiper = elementorFrontend.utils.swiper;
           new asyncSwiper($swiperSlider, sliderArgs).then(function(sliderSwiperInstance) {
             if (!hasCarousel) {
-              Master_Addons.MA_Gallery_Slider.initSliders($scope2, sliderSwiperInstance, false);
+              Master_Addons.MA_Gallery_Slider.initSliders($scope, sliderSwiperInstance, false);
               Master_Addons.MA_Carousel.onAfterInit($swiperSlider, sliderSwiperInstance, sliderSettings);
             } else {
               new asyncSwiper($swiperCarousel, carouselArgs).then(function(carouselSwiperInstance) {
-                Master_Addons.MA_Gallery_Slider.initSliders($scope2, sliderSwiperInstance, carouselSwiperInstance);
+                Master_Addons.MA_Gallery_Slider.initSliders($scope, sliderSwiperInstance, carouselSwiperInstance);
                 Master_Addons.MA_Carousel.onAfterInit($swiperSlider, sliderSwiperInstance, sliderSettings);
                 Master_Addons.MA_Carousel.onAfterInit($swiperCarousel, carouselSwiperInstance, carouselSettings);
               });
@@ -963,7 +963,7 @@
           if (hasCarousel) {
             swiperCarousel = new Swiper($swiperCarousel, carouselArgs);
           }
-          Master_Addons.MA_Gallery_Slider.initSliders($scope2, swiperSlider2, swiperCarousel);
+          Master_Addons.MA_Gallery_Slider.initSliders($scope, swiperSlider2, swiperCarousel);
           Master_Addons.MA_Carousel.onAfterInit($swiperSlider, swiperSlider2, sliderSettings);
           if (hasCarousel) {
             Master_Addons.MA_Carousel.onAfterInit($swiperCarousel, swiperCarousel, carouselSettings);
@@ -971,14 +971,14 @@
         }
       };
       Master_Addons.MA_Gallery_Slider.getSlider = function() {
-        return $scope2.find(".jltma-gallery-slider__slider");
+        return $scope.find(".jltma-gallery-slider__slider");
       };
       Master_Addons.MA_Gallery_Slider.getCarousel = function() {
-        return $scope2.find(".jltma-gallery-slider__carousel");
+        return $scope.find(".jltma-gallery-slider__carousel");
       };
-      Master_Addons.MA_Gallery_Slider.initSliders = function($scope3, swiperSlider2, swiperCarousel2) {
+      Master_Addons.MA_Gallery_Slider.initSliders = function($scope2, swiperSlider2, swiperCarousel2) {
         var data = {
-          scope: $scope3,
+          scope: $scope2,
           slider: swiperSlider2,
           carousel: swiperCarousel2
         };
@@ -1010,8 +1010,8 @@
         event2.preventDefault();
         swiperSlider.slideTo($2(this).index() + offset, 500, true);
       };
-      Master_Addons.onElementRemove($scope2, function() {
-        $scope2.find(".swiper-container").each(function() {
+      Master_Addons.onElementRemove($scope, function() {
+        $scope.find(".swiper-container").each(function() {
           if ($2(this).data("swiper")) {
             $2(this).data("swiper").destroy();
           }
@@ -1200,14 +1200,14 @@
       }
     },
     //Master Addons: Timeline
-    MA_Timeline: function($scope2, $2) {
-      var elementSettings2 = getElementSettings($scope2), $timeline = $scope2.find(".jltma-timeline"), $swiperSlider = $scope2.find(".jltma-timeline-slider"), $timeline_type = elementSettings2.ma_el_timeline_type || "custom", $timeline_layout = elementSettings2.ma_el_timeline_design_type || "vertical", swiperSlider = null, timelineArgs = {}, hasCarousel = $swiperSlider.length, $uniqueId = getUniqueLoopScopeId($scope2);
+    MA_Timeline: function($scope, $2) {
+      var elementSettings = getElementSettings($scope), $timeline = $scope.find(".jltma-timeline"), $swiperSlider = $scope.find(".jltma-timeline-slider"), $timeline_type = elementSettings.ma_el_timeline_type || "custom", $timeline_layout = elementSettings.ma_el_timeline_design_type || "vertical", swiperSlider = null, timelineArgs = {}, hasCarousel = $swiperSlider.length, $uniqueId = getUniqueLoopScopeId($scope);
       if ($timeline_layout === "horizontal") {
-        var $carousel = $scope2.find(".jltma-timeline-carousel-slider");
+        var $carousel = $scope.find(".jltma-timeline-carousel-slider");
         if (!$carousel.length) {
           return;
         }
-        var $carouselContainer = $scope2.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
+        var $carouselContainer = $scope.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
         initSwiper();
         async function initSwiper() {
           var swiper = await new Swiper2($carouselContainer[0], $settings);
@@ -1222,13 +1222,13 @@
         ;
       }
       if ($timeline_layout === "vertical" || $timeline_type === "post") {
-        var $timeline = $scope2.find(".jltma-timeline"), timelineArgs = {};
+        var $timeline = $scope.find(".jltma-timeline"), timelineArgs = {};
         Master_Addons.MA_Timeline.init = function() {
           if (elementorFrontend.isEditMode()) {
             timelineArgs.scope = window.elementor.$previewContents;
           }
-          if ("undefined" !== typeof elementSettings2.line_location && elementSettings2.line_location.size) {
-            timelineArgs.lineLocation = elementSettings2.line_location.size;
+          if ("undefined" !== typeof elementSettings.line_location && elementSettings.line_location.size) {
+            timelineArgs.lineLocation = elementSettings.line_location.size;
           }
           $timeline.maTimeline(timelineArgs);
         };
@@ -1236,10 +1236,10 @@
       }
     },
     //Master Addons: News Ticker
-    MA_NewsTicker: function($scope2, $2) {
+    MA_NewsTicker: function($scope, $2) {
       try {
-        var newsTickerWrapper = $scope2.find(".jltma-news-ticker"), tickerType = newsTickerWrapper.data("tickertype"), tickerid = newsTickerWrapper.data("tickerid"), feedUrl = newsTickerWrapper.data("feedurl"), feedAnimation = newsTickerWrapper.data("feedanimation"), limitPosts = newsTickerWrapper.data("limitposts"), tickerStyleEffect = newsTickerWrapper.data("scroll") || "slide-h", autoplay = newsTickerWrapper.data("autoplay"), timer = newsTickerWrapper.data("timer") || 3e3;
-        var swiperContainer = $scope2.find(".jltma-ticker-content-inner.swiper")[0];
+        var newsTickerWrapper = $scope.find(".jltma-news-ticker"), tickerType = newsTickerWrapper.data("tickertype"), tickerid = newsTickerWrapper.data("tickerid"), feedUrl = newsTickerWrapper.data("feedurl"), feedAnimation = newsTickerWrapper.data("feedanimation"), limitPosts = newsTickerWrapper.data("limitposts"), tickerStyleEffect = newsTickerWrapper.data("scroll") || "slide-h", autoplay = newsTickerWrapper.data("autoplay"), timer = newsTickerWrapper.data("timer") || 3e3;
+        var swiperContainer = $scope.find(".jltma-ticker-content-inner.swiper")[0];
         if (!swiperContainer) return;
         var swiperOptions = {
           loop: true,
@@ -1247,8 +1247,8 @@
           spaceBetween: 0,
           speed: 500,
           navigation: {
-            nextEl: $scope2.find(".jltma-ticker-next")[0],
-            prevEl: $scope2.find(".jltma-ticker-prev")[0]
+            nextEl: $scope.find(".jltma-ticker-next")[0],
+            prevEl: $scope.find(".jltma-ticker-prev")[0]
           }
         };
         if (tickerStyleEffect === "slide-v") {
@@ -1283,11 +1283,11 @@
     /*
      * Master Addons: MA Blog Posts
      */
-    MA_Blog: function($scope2, $2) {
-      var elementSettings2 = getElementSettings($scope2), uniqueId = getUniqueLoopScopeId($scope2), scopeId = $scope2.data("id"), $swiper = $scope2.find(".jltma-swiper__container"), $thumbs = $scope2.find(".jltma-grid__item"), blogElement = $scope2.find(".jltma-blog-wrapper"), colsNumber = blogElement.data("col"), carousel = blogElement.data("carousel"), grid = blogElement.data("grid");
-      $scope2.find(".jltma-blog-cats-container li a").click(function(e2) {
+    MA_Blog: function($scope, $2) {
+      var elementSettings = getElementSettings($scope), uniqueId = getUniqueLoopScopeId($scope), scopeId = $scope.data("id"), $swiper = $scope.find(".jltma-swiper__container"), $thumbs = $scope.find(".jltma-grid__item"), blogElement = $scope.find(".jltma-blog-wrapper"), colsNumber = blogElement.data("col"), carousel = blogElement.data("carousel"), grid = blogElement.data("grid");
+      $scope.find(".jltma-blog-cats-container li a").click(function(e2) {
         e2.preventDefault();
-        $scope2.find(".jltma-blog-cats-container li .active").removeClass("active");
+        $scope.find(".jltma-blog-cats-container li .active").removeClass("active");
         $2(this).addClass("active");
         var selector = $2(this).attr("data-filter");
         blogElement.isotope({ filter: selector });
@@ -1307,11 +1307,11 @@
           });
         });
       }
-      var $carousel = $scope2.find(".jltma-blog-carousel-slider");
+      var $carousel = $scope.find(".jltma-blog-carousel-slider");
       if (!$carousel.length) {
         return;
       }
-      var $carouselContainer = $scope2.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
+      var $carouselContainer = $scope.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
       initSwiper();
       async function initSwiper() {
         var swiper = await new Swiper2($carouselContainer[0], $settings);
@@ -1326,12 +1326,12 @@
       ;
     },
     /**** MA Image Carousel ****/
-    MA_Image_Carousel: function($scope2, $2) {
-      var $carousel = $scope2.find(".jltma-image-carousel-slider");
+    MA_Image_Carousel: function($scope, $2) {
+      var $carousel = $scope.find(".jltma-image-carousel-slider");
       if (!$carousel.length) {
         return;
       }
-      var $carouselContainer = $scope2.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
+      var $carouselContainer = $scope.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
       initSwiper();
       async function initSwiper() {
         var swiper = await new Swiper2($carouselContainer[0], $settings);
@@ -1346,12 +1346,12 @@
       ;
     },
     /**** MA Logo Slider ****/
-    MA_Logo_Slider: function($scope2, $2) {
-      var $carousel = $scope2.find(".jltma-logo-carousel-slider");
+    MA_Logo_Slider: function($scope, $2) {
+      var $carousel = $scope.find(".jltma-logo-carousel-slider");
       if (!$carousel.length) {
         return;
       }
-      var $carouselContainer = $scope2.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
+      var $carouselContainer = $scope.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
       initSwiper();
       async function initSwiper() {
         var swiper = await new Swiper2($carouselContainer[0], $settings);
@@ -1420,8 +1420,8 @@
       });
     },
     /**** MA Team Slider ****/
-    MA_TeamSlider: function($scope2, $2) {
-      var $teamCarouselWrapper = $scope2.find(".jltma-team-carousel-wrapper").eq(0), $team_preset = $teamCarouselWrapper.data("team-preset");
+    MA_TeamSlider: function($scope, $2) {
+      var $teamCarouselWrapper = $scope.find(".jltma-team-carousel-wrapper").eq(0), $team_preset = $teamCarouselWrapper.data("team-preset");
       if ($team_preset == "-content-drawer") {
         try {
           (function($3) {
@@ -1451,11 +1451,11 @@
         } catch (e2) {
         }
       } else {
-        var $carousel = $scope2.find(".jltma-team-carousel-slider");
+        var $carousel = $scope.find(".jltma-team-carousel-slider");
         if (!$carousel.length) {
           return;
         }
-        var $carouselContainer = $scope2.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
+        var $carouselContainer = $scope.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
         async function initSwiper() {
           var swiper = await new Swiper2($carouselContainer[0], $settings);
           if ($settings.pauseOnHover) {
@@ -1471,9 +1471,9 @@
       }
     },
     /**** MA Advanced Image ****/
-    MA_Advanced_Image: function($scope2, $2) {
-      Master_Addons.MA_Advanced_Image.elementSettings = getElementSettings($scope2);
-      $scope2.find(".jltma-img-dynamic-dropshadow").each(function() {
+    MA_Advanced_Image: function($scope, $2) {
+      Master_Addons.MA_Advanced_Image.elementSettings = getElementSettings($scope);
+      $scope.find(".jltma-img-dynamic-dropshadow").each(function() {
         var imgFrame, clonedImg, img;
         if (this instanceof jQuery) {
           if (this && this[0]) {
@@ -1496,7 +1496,7 @@
           imgFrame.appendChild(clonedImg);
         }
       });
-      $scope2.find(".jltma-tilt-box").tilt({
+      $scope.find(".jltma-tilt-box").tilt({
         maxTilt: $2(this).data("max-tilt"),
         easing: "cubic-bezier(0.23, 1, 0.32, 1)",
         speed: $2(this).data("time"),
@@ -1504,30 +1504,30 @@
       });
     },
     /* MA Tooltip */
-    MA_Tooltip: function($scope2, $2) {
+    MA_Tooltip: function($scope, $2) {
       "use strict";
-      if (!$scope2 || !$scope2.length || !$2 || typeof getElementSettings !== "function") {
+      if (!$scope || !$scope.length || !$2 || typeof getElementSettings !== "function") {
         return;
       }
       if (typeof tippy === "undefined") {
-        var retryCount = ($scope2.data("ma-tooltip-retry") || 0) + 1;
+        var retryCount = ($scope.data("ma-tooltip-retry") || 0) + 1;
         if (retryCount <= 10) {
-          $scope2.data("ma-tooltip-retry", retryCount);
+          $scope.data("ma-tooltip-retry", retryCount);
           setTimeout(function() {
-            Master_Addons.MA_Tooltip($scope2, $2);
+            Master_Addons.MA_Tooltip($scope, $2);
           }, 100);
         }
         return;
       }
-      $scope2.removeData("ma-tooltip-retry");
-      var elementSettings2 = getElementSettings($scope2), scopeId = $scope2.data("id"), currentTooltipElement = null;
+      $scope.removeData("ma-tooltip-retry");
+      var elementSettings = getElementSettings($scope), scopeId = $scope.data("id"), currentTooltipElement = null;
       if (!scopeId || typeof scopeId !== "string") {
         return;
       }
       try {
         currentTooltipElement = document.getElementById("jltma-tooltip-" + scopeId);
         if (!currentTooltipElement) {
-          var $fallbackElement = $scope2.find("#jltma-tooltip-" + scopeId);
+          var $fallbackElement = $scope.find("#jltma-tooltip-" + scopeId);
           if ($fallbackElement && $fallbackElement.length > 0) {
             var fallbackEl = $fallbackElement[0];
             if (fallbackEl && fallbackEl.nodeType === 1) {
@@ -1552,26 +1552,26 @@
           if (currentTooltipElement && currentTooltipElement._maTooltipInitializing) {
             return;
           }
-          if (!elementSettings2 || typeof elementSettings2 !== "object") {
+          if (!elementSettings || typeof elementSettings !== "object") {
             return;
           }
-          var tooltipText = elementSettings2.ma_el_tooltip_text;
+          var tooltipText = elementSettings.ma_el_tooltip_text;
           if (!tooltipText || typeof tooltipText !== "string") {
             return;
           }
           if (currentTooltipElement) {
             currentTooltipElement._maTooltipInitializing = true;
           }
-          var $jltma_el_tooltip_text = stripTags(tooltipText), $jltma_el_tooltip_direction = elementSettings2.ma_el_tooltip_direction || "top", $jltma_tooltip_animation = elementSettings2.jltma_tooltip_animation || "shift-away", $jltma_tooltip_arrow = elementSettings2.jltma_tooltip_arrow !== false, $jltma_tooltip_duration = parseInt(elementSettings2.jltma_tooltip_duration) || 300, $jltma_tooltip_delay = parseInt(elementSettings2.jltma_tooltip_delay) || 300, $jltma_tooltip_arrow_type = elementSettings2.jltma_tooltip_arrow_type || "sharp", $jltma_tooltip_trigger = elementSettings2.jltma_tooltip_trigger || "mouseenter", $jltma_tooltip_custom_trigger = elementSettings2.jltma_tooltip_custom_trigger, $animateFill = elementSettings2.jltma_tooltip_animation === "fill";
+          var $jltma_el_tooltip_text = stripTags(tooltipText), $jltma_el_tooltip_direction = elementSettings.ma_el_tooltip_direction || "top", $jltma_tooltip_animation = elementSettings.jltma_tooltip_animation || "shift-away", $jltma_tooltip_arrow = elementSettings.jltma_tooltip_arrow !== false, $jltma_tooltip_duration = parseInt(elementSettings.jltma_tooltip_duration) || 300, $jltma_tooltip_delay = parseInt(elementSettings.jltma_tooltip_delay) || 300, $jltma_tooltip_arrow_type = elementSettings.jltma_tooltip_arrow_type || "sharp", $jltma_tooltip_trigger = elementSettings.jltma_tooltip_trigger || "mouseenter", $jltma_tooltip_custom_trigger = elementSettings.jltma_tooltip_custom_trigger, $animateFill = elementSettings.jltma_tooltip_animation === "fill";
           $jltma_tooltip_duration = Math.max(100, Math.min(5e3, $jltma_tooltip_duration));
           $jltma_tooltip_delay = Math.max(0, Math.min(5e3, $jltma_tooltip_delay));
           var $jltma_tooltip_x_offset = 0, $jltma_tooltip_y_offset = 0;
           try {
-            if (elementSettings2.jltma_tooltip_x_offset && elementSettings2.jltma_tooltip_x_offset.size !== void 0) {
-              $jltma_tooltip_x_offset = parseInt(elementSettings2.jltma_tooltip_x_offset.size) || 0;
+            if (elementSettings.jltma_tooltip_x_offset && elementSettings.jltma_tooltip_x_offset.size !== void 0) {
+              $jltma_tooltip_x_offset = parseInt(elementSettings.jltma_tooltip_x_offset.size) || 0;
             }
-            if (elementSettings2.jltma_tooltip_y_offset && elementSettings2.jltma_tooltip_y_offset.size !== void 0) {
-              $jltma_tooltip_y_offset = parseInt(elementSettings2.jltma_tooltip_y_offset.size) || 0;
+            if (elementSettings.jltma_tooltip_y_offset && elementSettings.jltma_tooltip_y_offset.size !== void 0) {
+              $jltma_tooltip_y_offset = parseInt(elementSettings.jltma_tooltip_y_offset.size) || 0;
             }
           } catch (error) {
             $jltma_tooltip_x_offset = 0;
@@ -1579,8 +1579,8 @@
           }
           var $jltma_el_tooltip_text_width = 200;
           try {
-            if (elementSettings2.ma_el_tooltip_text_width && elementSettings2.ma_el_tooltip_text_width.size) {
-              $jltma_el_tooltip_text_width = parseInt(elementSettings2.ma_el_tooltip_text_width.size) || 200;
+            if (elementSettings.ma_el_tooltip_text_width && elementSettings.ma_el_tooltip_text_width.size) {
+              $jltma_el_tooltip_text_width = parseInt(elementSettings.ma_el_tooltip_text_width.size) || 200;
             }
           } catch (error) {
             $jltma_el_tooltip_text_width = 200;
@@ -1657,7 +1657,7 @@
               tooltipConfig.arrow = true;
             }
           }
-          if (elementSettings2.jltma_tooltip_follow_cursor === "yes" || elementSettings2.jltma_tooltip_follow_cursor === true) {
+          if (elementSettings.jltma_tooltip_follow_cursor === "yes" || elementSettings.jltma_tooltip_follow_cursor === true) {
             tooltipConfig.followCursor = true;
           } else if ($jltma_el_tooltip_direction && typeof $jltma_el_tooltip_direction === "string") {
             var validPlacements = ["top", "bottom", "left", "right", "top-start", "top-end", "bottom-start", "bottom-end", "left-start", "left-end", "right-start", "right-end", "auto"];
@@ -1775,7 +1775,7 @@
             if (tippyInstance && Array.isArray(tippyInstance) && tippyInstance.length > 0) {
               nativeElement._tippyInstance = tippyInstance[0];
               currentTooltipElement._tippyInstance = tippyInstance[0];
-              $scope2.data("ma-tooltip-active", true);
+              $scope.data("ma-tooltip-active", true);
             }
           } catch (error) {
             return;
@@ -1794,7 +1794,7 @@
       initTooltip();
       if (typeof elementorFrontend !== "undefined" && elementorFrontend.isEditMode()) {
         try {
-          $scope2.data("ma-tooltip-initialized", true);
+          $scope.data("ma-tooltip-initialized", true);
           var changeTimeout = null;
           var isChanging = false;
           var handleTooltipChange = function() {
@@ -1807,7 +1807,7 @@
             changeTimeout = setTimeout(function() {
               try {
                 isChanging = true;
-                elementSettings2 = getElementSettings($scope2);
+                elementSettings = getElementSettings($scope);
                 var orphanedTooltips = document.querySelectorAll(".tippy-popper:not([data-tippy-popper-id])");
                 orphanedTooltips.forEach(function(tooltip) {
                   if (tooltip.parentNode) {
@@ -1845,10 +1845,10 @@
             });
             try {
               elementorFrontend.elementsHandler.addHandler(MATooltipEditorHandler, {
-                $element: $scope2
+                $element: $scope
               });
             } catch (error) {
-              $scope2.one("remove", function() {
+              $scope.one("remove", function() {
                 if (changeTimeout) {
                   clearTimeout(changeTimeout);
                 }
@@ -1888,12 +1888,12 @@
       }
     },
     /**** MA Twitter Slider ****/
-    MA_Twitter_Slider: function($scope2, $2) {
-      var $carousel = $scope2.find(".jltma-twitter-carousel-slider");
+    MA_Twitter_Slider: function($scope, $2) {
+      var $carousel = $scope.find(".jltma-twitter-carousel-slider");
       if (!$carousel.length) {
         return;
       }
-      var $carouselContainer = $scope2.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
+      var $carouselContainer = $scope.find(".swiper"), $settings = $carousel.data("settings"), Swiper2 = elementorFrontend.utils.swiper;
       initSwiper();
       async function initSwiper() {
         var swiper = await new Swiper2($carouselContainer[0], $settings);
@@ -1907,22 +1907,22 @@
       }
       ;
     },
-    MA_ParticlesBG: function($scope2, $2) {
+    MA_ParticlesBG: function($scope, $2) {
       function isElementorEditor() {
         return typeof elementorFrontend !== "undefined" && elementorFrontend.isEditMode();
       }
-      if ($scope2.hasClass("jltma-particle-yes") || $scope2.attr("data-jltma-particle") || $scope2.find(".jltma-particle-wrapper").attr("data-jltma-particles-editor")) {
-        let element_type = $scope2.data("element_type");
-        let sectionID = encodeURIComponent($scope2.data("id"));
+      if ($scope.hasClass("jltma-particle-yes") || $scope.attr("data-jltma-particle") || $scope.find(".jltma-particle-wrapper").attr("data-jltma-particles-editor")) {
+        let element_type = $scope.data("element_type");
+        let sectionID = encodeURIComponent($scope.data("id"));
         let particlesJSON;
         if (!isElementorEditor()) {
-          particlesJSON = $scope2.attr("data-jltma-particle");
+          particlesJSON = $scope.attr("data-jltma-particle");
         } else {
-          particlesJSON = $scope2.find(".jltma-particle-wrapper").attr("data-jltma-particles-editor");
+          particlesJSON = $scope.find(".jltma-particle-wrapper").attr("data-jltma-particles-editor");
         }
         if (("section" === element_type || "column" === element_type || "container" === element_type) && particlesJSON) {
           if (!isElementorEditor()) {
-            $scope2.prepend('<div class="jltma-particle-wrapper" id="jltma-particle-' + sectionID + '"></div>');
+            $scope.prepend('<div class="jltma-particle-wrapper" id="jltma-particle-' + sectionID + '"></div>');
             try {
               let parsedData = JSON.parse(particlesJSON);
               particlesJS("jltma-particle-" + sectionID, parsedData);
@@ -1935,11 +1935,11 @@
             } catch (e2) {
             }
           } else {
-            if ($scope2.hasClass("jltma-particle-yes")) {
+            if ($scope.hasClass("jltma-particle-yes")) {
               try {
                 let parsedData = JSON.parse(particlesJSON);
                 particlesJS("jltma-particle-" + sectionID, parsedData);
-                $scope2.find(".elementor-column").css("z-index", 9);
+                $scope.find(".elementor-column").css("z-index", 9);
                 setTimeout(function() {
                   window.dispatchEvent(new Event("resize"));
                 }, 500);
@@ -1949,31 +1949,31 @@
               } catch (e2) {
               }
             } else {
-              $scope2.find(".jltma-particle-wrapper").remove();
+              $scope.find(".jltma-particle-wrapper").remove();
             }
           }
         }
       }
     },
-    MA_BgSlider: function($scope2, $2) {
+    MA_BgSlider: function($scope, $2) {
       function isElementorEditor() {
         return typeof elementorFrontend !== "undefined" && elementorFrontend.isEditMode();
       }
       if (!isElementorEditor()) {
-        if (!$scope2.hasClass("has_ma_el_bg_slider")) {
+        if (!$scope.hasClass("has_ma_el_bg_slider")) {
           return;
         }
       } else {
-        if (!$scope2.find(".ma-el-section-bs").length) {
+        if (!$scope.find(".ma-el-section-bs").length) {
           return;
         }
       }
       var ma_el_slides = [], ma_el_slides_json = [], ma_el_transition, ma_el_animation, ma_el_custom_overlay, ma_el_overlay, ma_el_cover, ma_el_delay, ma_el_timer;
       var slider_images;
       if (!isElementorEditor()) {
-        slider_images = $scope2.attr("data-ma-el-bg-slider-images");
+        slider_images = $scope.attr("data-ma-el-bg-slider-images");
       } else {
-        var slider_wrapper = $scope2.find(".ma-el-section-bs-inner");
+        var slider_wrapper = $scope.find(".ma-el-section-bs-inner");
         if (slider_wrapper.length) {
           slider_images = slider_wrapper.attr("data-ma-el-bg-slider");
         }
@@ -1982,16 +1982,16 @@
         return;
       }
       if (!isElementorEditor()) {
-        ma_el_transition = $scope2.attr("data-ma-el-bg-slider-transition");
-        ma_el_animation = $scope2.attr("data-ma-el-bg-slider-animation");
-        ma_el_custom_overlay = $scope2.attr("data-ma-el-bg-custom-overlay");
-        ma_el_cover = $scope2.attr("data-ma-el-bg-slider-cover");
-        ma_el_delay = $scope2.attr("data-ma-el-bs-slider-delay");
-        ma_el_timer = $scope2.attr("data-ma-el-bs-slider-timer");
+        ma_el_transition = $scope.attr("data-ma-el-bg-slider-transition");
+        ma_el_animation = $scope.attr("data-ma-el-bg-slider-animation");
+        ma_el_custom_overlay = $scope.attr("data-ma-el-bg-custom-overlay");
+        ma_el_cover = $scope.attr("data-ma-el-bg-slider-cover");
+        ma_el_delay = $scope.attr("data-ma-el-bs-slider-delay");
+        ma_el_timer = $scope.attr("data-ma-el-bs-slider-timer");
         if (ma_el_custom_overlay == "yes") {
           ma_el_overlay = JLTMA_SCRIPTS.plugin_url + "/assets/vendor/vegas/overlays/00.png";
         } else {
-          var overlay_file = $scope2.attr("data-ma-el-bg-slider-overlay");
+          var overlay_file = $scope.attr("data-ma-el-bg-slider-overlay");
           if (overlay_file) {
             ma_el_overlay = JLTMA_SCRIPTS.plugin_url + "/assets/vendor/vegas/overlays/" + overlay_file + ".png";
           } else {
@@ -1999,7 +1999,7 @@
           }
         }
       } else {
-        var slider_wrapper = $scope2.find(".ma-el-section-bs-inner");
+        var slider_wrapper = $scope.find(".ma-el-section-bs-inner");
         ma_el_transition = slider_wrapper.attr("data-ma-el-bg-slider-transition");
         ma_el_animation = slider_wrapper.attr("data-ma-el-bg-slider-animation");
         ma_el_custom_overlay = slider_wrapper.attr("data-ma-el-bg-custom-overlay");
@@ -2024,10 +2024,10 @@
         ma_el_slides_json.push(slide);
       });
       var slider_container;
-      if (!$scope2.find(".ma-el-section-bs").length) {
-        $scope2.prepend('<div class="ma-el-section-bs"><div class="ma-el-section-bs-inner"></div></div>');
+      if (!$scope.find(".ma-el-section-bs").length) {
+        $scope.prepend('<div class="ma-el-section-bs"><div class="ma-el-section-bs-inner"></div></div>');
       }
-      slider_container = $scope2.find(".ma-el-section-bs-inner");
+      slider_container = $scope.find(".ma-el-section-bs-inner");
       slider_container.vegas({
         slides: ma_el_slides_json,
         transition: ma_el_transition,
@@ -2044,13 +2044,13 @@
         }
       });
     },
-    MA_AnimatedGradient: function($scope2, $2) {
-      if ($scope2.hasClass("ma-el-animated-gradient-yes")) {
-        let color = $scope2.data("color") || $scope2.attr("data-color");
-        let angle = $scope2.data("angle") || $scope2.attr("data-angle");
-        let duration = $scope2.data("duration") || $scope2.attr("data-duration") || "6s";
-        let smoothness = parseInt($scope2.data("smoothness") || $scope2.attr("data-smoothness") || 3);
-        let easing = $scope2.data("easing") || $scope2.attr("data-easing") || "cubic-bezier(0.4, 0.0, 0.2, 1)";
+    MA_AnimatedGradient: function($scope, $2) {
+      if ($scope.hasClass("ma-el-animated-gradient-yes")) {
+        let color = $scope.data("color") || $scope.attr("data-color");
+        let angle = $scope.data("angle") || $scope.attr("data-angle");
+        let duration = $scope.data("duration") || $scope.attr("data-duration") || "6s";
+        let smoothness = parseInt($scope.data("smoothness") || $scope.attr("data-smoothness") || 3);
+        let easing = $scope.data("easing") || $scope.attr("data-easing") || "cubic-bezier(0.4, 0.0, 0.2, 1)";
         if (!color || !angle) {
           return;
         }
@@ -2080,12 +2080,12 @@
         let style = document.createElement("style");
         style.textContent = keyframes;
         document.head.appendChild(style);
-        $scope2.css({
+        $scope.css({
           "animation": `${animationName} ${duration} ${easing} infinite`,
           "background-size": "400% 400%"
         });
-        if ($scope2.hasClass("elementor-element-edit-mode")) {
-          let editorGradient = $scope2.find(".animated-gradient");
+        if ($scope.hasClass("elementor-element-edit-mode")) {
+          let editorGradient = $scope.find(".animated-gradient");
           if (editorGradient.length > 0) {
             let editorColor = editorGradient.data("color") || editorGradient.attr("data-color");
             let editorAngle = editorGradient.data("angle") || editorGradient.attr("data-angle");
@@ -2125,8 +2125,8 @@
         }
       }
     },
-    MA_Image_Comparison: function($scope2, $2) {
-      var $jltma_image_comp_wrap = $scope2.find(".jltma-image-comparison").eq(0), $jltma_image_data = $jltma_image_comp_wrap.data("image-comparison-settings");
+    MA_Image_Comparison: function($scope, $2) {
+      var $jltma_image_comp_wrap = $scope.find(".jltma-image-comparison").eq(0), $jltma_image_data = $jltma_image_comp_wrap.data("image-comparison-settings");
       $jltma_image_comp_wrap.twentytwenty({
         default_offset_pct: $jltma_image_data.visible_ratio,
         orientation: $jltma_image_data.orientation,
@@ -2138,17 +2138,17 @@
         no_overlay: $jltma_image_data.no_overlay
       });
     },
-    MA_BarCharts: function BarChart($scope2) {
-      jltMAObserveTarget($scope2[0], function() {
-        var $container = $scope2.find(".jltma-bar-chart-container"), $chart_canvas = $scope2.find("#jltma-bar-chart"), settings = $container.data("settings");
+    MA_BarCharts: function BarChart($scope) {
+      jltMAObserveTarget($scope[0], function() {
+        var $container = $scope.find(".jltma-bar-chart-container"), $chart_canvas = $scope.find("#jltma-bar-chart"), settings = $container.data("settings");
         if ($container.length) {
           new Chart($chart_canvas, settings);
         }
       });
     },
-    MA_PieCharts: function($scope2, $2) {
-      jltMAObserveTarget($scope2[0], function() {
-        $scope2.find(".ma-el-piechart .ma-el-percentage").each(function() {
+    MA_PieCharts: function($scope, $2) {
+      jltMAObserveTarget($scope[0], function() {
+        $scope.find(".ma-el-piechart .ma-el-percentage").each(function() {
           var track_color = $2(this).data("track-color");
           var bar_color = $2(this).data("bar-color");
           $2(this).easyPieChart({
@@ -2163,18 +2163,18 @@
         });
       });
     },
-    ProgressBars: function($scope2, $2) {
-      jltMAObserveTarget($scope2[0], function() {
-        $scope2.find(".jltma-stats-bar-content").each(function() {
+    ProgressBars: function($scope, $2) {
+      jltMAObserveTarget($scope[0], function() {
+        $scope.find(".jltma-stats-bar-content").each(function() {
           var dataperc = $2(this).data("perc");
           $2(this).animate({ "width": dataperc + "%" }, dataperc * 20);
         });
       });
     },
     // Toggle Content
-    MA_Toggle_Content: function($scope2, $2) {
-      Master_Addons.getElementSettings = getElementSettings($scope2);
-      var $wrapper = $scope2.find(".jltma-toggle-content"), toggleElementArgs = {
+    MA_Toggle_Content: function($scope, $2) {
+      Master_Addons.getElementSettings = getElementSettings($scope);
+      var $wrapper = $scope.find(".jltma-toggle-content"), toggleElementArgs = {
         active: Master_Addons.getElementSettings.jltma_toggle_content_active_index
       };
       if ("" !== Master_Addons.getElementSettings.jltma_toggle_content_indicator_color) {
@@ -2189,9 +2189,9 @@
       $wrapper.MA_ToggleElement(toggleElementArgs);
     },
     // Comment Form reCaptcha
-    MA_Comment_Form_reCaptcha: function($scope2, $2) {
-      Master_Addons.getElementSettings = getElementSettings($scope2);
-      var $commentsWrapper = $scope2.find(".jltma-comments-wrap"), $comments_recaptcha_data = $commentsWrapper.data("recaptcha"), $recaptcha_protected = $commentsWrapper.data("jltma-comment-settings"), jltma_comment_form;
+    MA_Comment_Form_reCaptcha: function($scope, $2) {
+      Master_Addons.getElementSettings = getElementSettings($scope);
+      var $commentsWrapper = $scope.find(".jltma-comments-wrap"), $comments_recaptcha_data = $commentsWrapper.data("recaptcha"), $recaptcha_protected = $commentsWrapper.data("jltma-comment-settings"), jltma_comment_form;
       if ($recaptcha_protected.reCaptchaprotected == "yes") {
         var onloadCallback = function() {
           jltma_comment_form = grecaptcha.render("jltma_comment_form", {
@@ -2203,8 +2203,8 @@
       }
     },
     // Master Addons: Counter Up
-    MA_Counter_Up: function($scope2, $2) {
-      var $counterup = $scope2.find(".jltma-counter-up-number");
+    MA_Counter_Up: function($scope, $2) {
+      var $counterup = $scope.find(".jltma-counter-up-number");
       if ($2.isFunction($2.fn.counterUp)) {
         $counterup.counterUp({
           duration: 2e3,
@@ -2213,8 +2213,8 @@
       }
     },
     // Master Addons: Countdown Timer
-    MA_CountdownTimer: function($scope2, $2) {
-      var $countdownWidget = $scope2.find(".jltma-widget-countdown");
+    MA_CountdownTimer: function($scope, $2) {
+      var $countdownWidget = $scope.find(".jltma-widget-countdown");
       $2.fn.MasterCountDownTimer = function() {
         var $wrapper = $2(this).find(".jltma-countdown-wrapper"), data = {
           year: $wrapper.data("countdown-year"),
@@ -2263,7 +2263,7 @@
     /**
      * Fancybox popup
      */
-    MA_Fancybox_Popup: function($scope2, $2) {
+    MA_Fancybox_Popup: function($scope, $2) {
       (function($3) {
         if ($3.isFunction($3.fn.fancybox)) {
           $3("[data-fancybox]").fancybox({});
@@ -2273,8 +2273,8 @@
     /*
     * REVEAL
     */
-    MA_Reveal: function($scope2, $2) {
-      Master_Addons.MA_Reveal.elementSettings = getElementSettings($scope2);
+    MA_Reveal: function($scope, $2) {
+      Master_Addons.MA_Reveal.elementSettings = getElementSettings($scope);
       var rev1, isReveal = false;
       Master_Addons.MA_Reveal.revealAction = function() {
         rev1 = new RevealFx(revealistance, {
@@ -2293,7 +2293,7 @@
         rev1.reveal();
       };
       if (Master_Addons.MA_Reveal.elementSettings.enabled_reveal) {
-        var revealId = "#reveal-" + $scope2.data("id"), revealistance = document.querySelector(revealId);
+        var revealId = "#reveal-" + $scope.data("id"), revealistance = document.querySelector(revealId);
         if (!jQuery(revealId).hasClass("block-revealer")) {
           Master_Addons.MA_Reveal.revealAction();
         }
@@ -2307,10 +2307,10 @@
     /*
     * MA Rellax
     */
-    MA_Rellax: function($scope, $) {
+    MA_Rellax: function($scope, $2) {
       var elementSettings = getElementSettings($scope);
       var rellax = null;
-      $(window).on("resize", function() {
+      $2(window).on("resize", function() {
         if (rellax) {
           rellax.destroy();
           if (rellax)
@@ -2328,13 +2328,12 @@
           if (currentDevice != "desktop") {
             setting_speed = "speed_rellax_" + currentDevice;
           }
-          try {
-            if (eval("elementSettings." + setting_speed + ".size"))
-              value_speed = eval("elementSettings." + setting_speed + ".size");
-          } catch (error) {
+          var speed_setting = elementSettings[setting_speed];
+          if (speed_setting && typeof speed_setting.size !== "undefined") {
+            value_speed = speed_setting.size;
           }
           var rellaxId = "#rellax-" + $scope.data("id");
-          if ($(rellaxId).length) {
+          if ($2(rellaxId).length) {
             try {
               rellax = new Rellax(rellaxId, {
                 speed: value_speed
@@ -2349,14 +2348,14 @@
       initRellax();
     },
     MA_Rellax_Final: function(panel, model, view) {
-      Master_Addons.getElementSettings = getElementSettings($scope2);
-      var $scope2 = view.$el;
-      var scene = $scope2.find("#scene");
+      Master_Addons.getElementSettings = getElementSettings($scope);
+      var $scope = view.$el;
+      var scene = $scope.find("#scene");
     },
     // Entrance Animations
-    MA_Entrance_Animation: function($scope2, $2) {
-      $scope2 = $scope2 || $2(this);
-      var $target = $scope2.hasClass("jltma-appear-watch-animation") ? $scope2 : $scope2.find(".jltma-appear-watch-animation"), hasAnimation = $2("body").hasClass("jltma-page-animation");
+    MA_Entrance_Animation: function($scope, $2) {
+      $scope = $scope || $2(this);
+      var $target = $scope.hasClass("jltma-appear-watch-animation") ? $scope : $scope.find(".jltma-appear-watch-animation"), hasAnimation = $2("body").hasClass("jltma-page-animation");
       if (!$target.length) {
         return;
       }
@@ -2381,7 +2380,7 @@
       }
     },
     // Wrapper Link
-    MA_Wrapper_Link: function($scope2, $2) {
+    MA_Wrapper_Link: function($scope, $2) {
       $2("body").off("click.onWrapperLink", "[data-jltma-wrapper-link]");
       $2("body").on("click.onWrapperLink", "[data-jltma-wrapper-link]", function(e2) {
         e2.preventDefault();
@@ -2406,9 +2405,9 @@
     /**
      * Restrict Content
      */
-    MA_Restrict_Content_Ajax: function($scope2, $2) {
-      Master_Addons.getElementSettings = getElementSettings($scope2);
-      var $restrictwrapper = $scope2.find(".jltma-restrict-content-wrap").eq(0), $scopeId = $scope2.data("id"), $restrict_layout = $restrictwrapper.data("restrict-layout-type"), $restrict_type = $restrictwrapper.data("restrict-type"), $error_message = $restrictwrapper.data("error-message"), $rc_ajaxify = $restrictwrapper.data("rc-ajaxify"), $storageID = "ma_el_rc_" + $scopeId, $formID = $scope2.find(".jltma-restrict-form").eq(0).data("form-id"), $content_div = "#restrict-content-" + $scopeId, $popup = $scope2.find(".jltma-restrict-content-popup-content"), $content_pass = $restrictwrapper.data("content-pass") ? $restrictwrapper.data("content-pass") : "", $popup_type = $popup.data("popup-type") ? $popup.data("popup-type") : "", $age_wrapper = $scope2.find(".jltma-restrict-age-wrapper").eq(0), $restrict_age = {
+    MA_Restrict_Content_Ajax: function($scope, $2) {
+      Master_Addons.getElementSettings = getElementSettings($scope);
+      var $restrictwrapper = $scope.find(".jltma-restrict-content-wrap").eq(0), $scopeId = $scope.data("id"), $restrict_layout = $restrictwrapper.data("restrict-layout-type"), $restrict_type = $restrictwrapper.data("restrict-type"), $error_message = $restrictwrapper.data("error-message"), $rc_ajaxify = $restrictwrapper.data("rc-ajaxify"), $storageID = "ma_el_rc_" + $scopeId, $formID = $scope.find(".jltma-restrict-form").eq(0).data("form-id"), $content_div = "#restrict-content-" + $scopeId, $popup = $scope.find(".jltma-restrict-content-popup-content"), $content_pass = $restrictwrapper.data("content-pass") ? $restrictwrapper.data("content-pass") : "", $popup_type = $popup.data("popup-type") ? $popup.data("popup-type") : "", $age_wrapper = $scope.find(".jltma-restrict-age-wrapper").eq(0), $restrict_age = {
         min_age: $age_wrapper.data("min-age"),
         age_type: $age_wrapper.data("age-type"),
         age_title: $age_wrapper.data("age-title"),
@@ -2503,19 +2502,19 @@
         });
       }
     },
-    MA_Restrict_Content: function($scope2, $2) {
+    MA_Restrict_Content: function($scope, $2) {
       try {
         (function($3) {
-          Master_Addons.getElementSettings = getElementSettings($scope2);
-          var $restrictwrapper = $scope2.find(".jltma-restrict-content-wrap").eq(0), $scopeId = $scope2.data("id"), $restrict_layout = $restrictwrapper.data("restrict-layout-type"), $restrict_type = $restrictwrapper.data("restrict-type"), $storageID = "ma_el_rc", $popup = $scope2.find(".jltma-restrict-content-popup-content"), $content_pass = $restrictwrapper.data("content-pass"), $age_wrapper = $scope2.find(".jltma-restrict-age-wrapper").eq(0), $min_age = $age_wrapper.data("min-age"), $age_type = $age_wrapper.data("age-type"), $age_title = $age_wrapper.data("age-title"), $age_content = $age_wrapper.data("age-content"), $checkbox_msg = $age_wrapper.data("checkbox-msg");
-          Master_Addons.MA_Restrict_Content_Ajax($scope2, $3);
+          Master_Addons.getElementSettings = getElementSettings($scope);
+          var $restrictwrapper = $scope.find(".jltma-restrict-content-wrap").eq(0), $scopeId = $scope.data("id"), $restrict_layout = $restrictwrapper.data("restrict-layout-type"), $restrict_type = $restrictwrapper.data("restrict-type"), $storageID = "ma_el_rc", $popup = $scope.find(".jltma-restrict-content-popup-content"), $content_pass = $restrictwrapper.data("content-pass"), $age_wrapper = $scope.find(".jltma-restrict-age-wrapper").eq(0), $min_age = $age_wrapper.data("min-age"), $age_type = $age_wrapper.data("age-type"), $age_title = $age_wrapper.data("age-title"), $age_content = $age_wrapper.data("age-content"), $checkbox_msg = $age_wrapper.data("checkbox-msg");
+          Master_Addons.MA_Restrict_Content_Ajax($scope, $3);
         })(jQuery);
       } catch (e2) {
       }
     },
-    MA_Nav_Menu: function($scope2, $2) {
-      Master_Addons.getElementSettings = getElementSettings($scope2);
-      var $menuContainer = $scope2.find(".jltma-nav-menu-element"), $menuID = $menuContainer.data("menu-id"), $menu_type = $menuContainer.data("menu-layout"), $menu_trigger = $menuContainer.data("menu-trigger"), $menu_offcanvas = $menuContainer.data("menu-offcanvas"), $menu_toggletype = $menuContainer.data("menu-toggletype"), $submenu_animation = $menuContainer.data("menu-animation"), $menu_container_id = $menuContainer.data("menu-container-id"), $sticky_type = $menuContainer.data("sticky-type"), navbar_height = $2("#" + $menu_container_id).outerHeight(), menu_container_selector = $2("#" + $menu_container_id);
+    MA_Nav_Menu: function($scope, $2) {
+      Master_Addons.getElementSettings = getElementSettings($scope);
+      var $menuContainer = $scope.find(".jltma-nav-menu-element"), $menuID = $menuContainer.data("menu-id"), $menu_type = $menuContainer.data("menu-layout"), $menu_trigger = $menuContainer.data("menu-trigger"), $menu_offcanvas = $menuContainer.data("menu-offcanvas"), $menu_toggletype = $menuContainer.data("menu-toggletype"), $submenu_animation = $menuContainer.data("menu-animation"), $menu_container_id = $menuContainer.data("menu-container-id"), $sticky_type = $menuContainer.data("sticky-type"), navbar_height = $2("#" + $menu_container_id).outerHeight(), menu_container_selector = $2("#" + $menu_container_id);
       if ($menu_type == "onepage") {
         $2(document).on("click", ".jltma-navbar-nav li a", function(e2) {
           if ($2(this).attr("href")) {
@@ -2637,8 +2636,8 @@
         }
       }
     },
-    initEvents: function($scope2, $2) {
-      var mainSearchWrapper = $scope2.find(".jltma-search-wrapper").eq(0), $search_type = mainSearchWrapper.data("search-type"), mainContainer = $scope2.find(".jltma-search-main-wrap"), openCtrl = document.getElementById("jltma-btn-search"), closeCtrl = document.getElementById("jltma-btn-search-close"), searchContainer = $scope2.find(".jltma-search"), inputSearch = searchContainer.find(".jltma-search__input");
+    initEvents: function($scope, $2) {
+      var mainSearchWrapper = $scope.find(".jltma-search-wrapper").eq(0), $search_type = mainSearchWrapper.data("search-type"), mainContainer = $scope.find(".jltma-search-main-wrap"), openCtrl = document.getElementById("jltma-btn-search"), closeCtrl = document.getElementById("jltma-btn-search-close"), searchContainer = $scope.find(".jltma-search"), inputSearch = searchContainer.find(".jltma-search__input");
       $2(openCtrl).on("click", function() {
         mainContainer.addClass("main-wrap--move");
         searchContainer.addClass("search--open");
@@ -2658,9 +2657,9 @@
         }
       });
     },
-    MA_Header_Search: function($scope2, $2) {
+    MA_Header_Search: function($scope, $2) {
       $2("body").addClass("js");
-      Master_Addons.initEvents($scope2, $2);
+      Master_Addons.initEvents($scope, $2);
     }
   };
   function filter_fancy_box(element) {

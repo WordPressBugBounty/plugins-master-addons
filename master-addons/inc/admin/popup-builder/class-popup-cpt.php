@@ -124,7 +124,7 @@ class Popup_CPT {
         global $post;
 
         // Don't override template when editing with Elementor
-        if (is_admin() || (isset($_GET['action']) && $_GET['action'] === 'elementor')) {
+        if (is_admin() || (isset($_GET['action']) && $_GET['action'] === 'elementor')) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only template check, no form submission
             return $single_template;
         }
 
@@ -250,11 +250,11 @@ class Popup_CPT {
         }
 
         $condition_text = implode('<br>', $cond_parts);
-        echo $condition_text;
+        echo wp_kses_post( $condition_text );
         $edit_conditions_html = '<br><a href="#" class="jltma-popup-edit-conditions" data-popup-id="' . $post_id . '">'
             . '<span class="dashicons dashicons-edit"></span> ' . __('Edit Conditions', 'master-addons')
             . '</a>';
-        echo apply_filters('master_addons/popup_builder/edit_conditions_link', $edit_conditions_html, $post_id);
+        echo wp_kses_post( apply_filters('master_addons/popup_builder/edit_conditions_link', $edit_conditions_html, $post_id) );
     }
 
     private function render_shortcode_column($post_id) {
@@ -297,7 +297,7 @@ class Popup_CPT {
         $status_class = $is_active ? 'jltma-popup-status-active' : 'jltma-popup-status-inactive';
         $status_text = $is_active ? 'Active' : 'Inactive';
 
-        echo '<span class="jltma-popup-status ' . $status_class . '">' . esc_html($status_text) . '</span>';
+        echo '<span class="jltma-popup-status ' . esc_attr( $status_class ) . '">' . esc_html($status_text) . '</span>';
     }
 
     public function set_sortable_columns($columns) {
@@ -349,7 +349,7 @@ class Popup_CPT {
                 <td>
                     <label>
                         <input type="checkbox" name="jltma_popup_activation" value="yes" <?php checked($activation, 'yes'); ?>>
-                        <?php _e('Active', 'master-addons'); ?>
+                        <?php esc_html_e('Active', 'master-addons'); ?>
                     </label>
                 </td>
             </tr>
@@ -362,9 +362,9 @@ class Popup_CPT {
 
         ?>
         <div class="jltma-popup-conditions-meta">
-            <p><?php _e('Configure where this popup should be displayed. Use the "Edit Conditions" button in the popup list for advanced condition management.', 'master-addons'); ?></p>
-            <button type="button" class="button jltma-popup-edit-conditions" data-popup-id="<?php echo $post->ID; ?>">
-                <?php _e('Edit Conditions', 'master-addons'); ?>
+            <p><?php esc_html_e('Configure where this popup should be displayed. Use the "Edit Conditions" button in the popup list for advanced condition management.', 'master-addons'); ?></p>
+            <button type="button" class="button jltma-popup-edit-conditions" data-popup-id="<?php echo absint( $post->ID ); ?>">
+                <?php esc_html_e('Edit Conditions', 'master-addons'); ?>
             </button>
         </div>
         <?php
@@ -372,7 +372,7 @@ class Popup_CPT {
 
     public function save_meta_data($post_id) {
         if (!isset($_POST['jltma_popup_meta_nonce_field']) ||
-            !wp_verify_nonce($_POST['jltma_popup_meta_nonce_field'], 'jltma_popup_meta_nonce')) {
+            !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['jltma_popup_meta_nonce_field'] ) ), 'jltma_popup_meta_nonce')) {
             return;
         }
 
@@ -447,7 +447,7 @@ class Popup_CPT {
     public function get_shortcode_ajax() {
         check_ajax_referer('jltma_popup_nonce', '_nonce');
 
-        $post_id = intval($_POST['post_id']);
+        $post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
         $shortcode = '[jltma_popup id="' . $post_id . '"]';
 
         wp_send_json_success(['shortcode' => $shortcode]);
@@ -487,15 +487,15 @@ class Popup_CPT {
      */
     public function prevent_elementor_redirect() {
         // Check if we're trying to edit a popup with Elementor
-        if (!isset($_GET['action']) || $_GET['action'] !== 'elementor') {
+        if (!isset($_GET['action']) || $_GET['action'] !== 'elementor') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only redirect check, no form submission
             return;
         }
 
-        if (!isset($_GET['post'])) {
+        if (!isset($_GET['post'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only redirect check, no form submission
             return;
         }
 
-        $post_id = intval($_GET['post']);
+        $post_id = intval($_GET['post']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only redirect check, no form submission
         $post = get_post($post_id);
 
         if (!$post || $post->post_type !== $this->post_type) {
@@ -530,11 +530,11 @@ class Popup_CPT {
      */
     public function grant_elementor_edit_cap($allcaps, $caps, $args, $user) {
         // Only apply when editing with Elementor
-        if (!isset($_GET['action']) || $_GET['action'] !== 'elementor' || !isset($_GET['post'])) {
+        if (!isset($_GET['action']) || $_GET['action'] !== 'elementor' || !isset($_GET['post'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only capability check, no form submission
             return $allcaps;
         }
 
-        $post_id = intval($_GET['post']);
+        $post_id = intval($_GET['post']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only capability check, no form submission
         $post = get_post($post_id);
 
         if (!$post || $post->post_type !== $this->post_type) {

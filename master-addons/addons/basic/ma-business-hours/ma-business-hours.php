@@ -1256,13 +1256,13 @@ class Business_Hours extends Master_Widget
 					<h2 class="jltma-business-hour-title">
 					<?php } ?>
 
-					<?php echo $this->parse_text_editor($settings['ma_el_bh_table_title']); ?>
+					<?php echo $this->parse_text_editor($settings['ma_el_bh_table_title']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML content returned by parse_text_editor() ?>
 					</h2>
 				<?php } ?>
 
 				<?php if ($settings['ma_el_bh_show_subtitle'] == 'yes') { ?>
 						<h2 class="jltma-business-hour-title">
-							<?php echo $this->parse_text_editor($settings['ma_el_bh_table_subtitle']); ?>
+							<?php echo $this->parse_text_editor($settings['ma_el_bh_table_subtitle']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML content returned by parse_text_editor() ?>
 						</h2>
 				<?php } ?>
 
@@ -1277,7 +1277,7 @@ class Business_Hours extends Master_Widget
 						$this->add_render_attribute('jltma-row' . $i, 'class', 'jltma-bh-closed');
 					}
 					?>
-					<li <?php echo $this->get_render_attribute_string('jltma-row' . (int) $i); ?>>
+					<li <?php echo $this->get_render_attribute_string('jltma-row' . (int) $i); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 						<span class="jltma-business-day-name float-left">
 							<?php if ($settings['ma_el_bh_show_day_icon'] == "yes") {
                                 $migrated = isset($settings['__fa4_migrated']['ma_el_bh_day_icon']);
@@ -1293,9 +1293,9 @@ class Business_Hours extends Master_Widget
 
 							<?php
 							if ($settings['ma_el_days_format'] == 'full') {
-								echo ucwords(esc_attr($item['ma_el_bh_day']));
+								echo esc_html( ucwords( $item['ma_el_bh_day'] ) );
 							} else {
-								echo ucwords(esc_attr(substr($item['ma_el_bh_day'], 0, 3)));
+								echo esc_html( ucwords( substr( $item['ma_el_bh_day'], 0, 3 ) ) );
 							}
 							?>
 						</span>
@@ -1305,18 +1305,18 @@ class Business_Hours extends Master_Widget
 								<time class="jltma-opening-hours">
 									<?php
 									if ($settings['ma_el_bh_hours_format'] == 'yes') {
-										echo $this->parse_text_editor($item['ma_el_opening_hours']);
+										echo $this->parse_text_editor($item['ma_el_opening_hours']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML content returned by parse_text_editor()
 									} else {
-										echo esc_attr(date("g:i A", strtotime($item['ma_el_opening_hours'])));
+										echo esc_attr(wp_date("g:i A", strtotime($item['ma_el_opening_hours'])));
 									}
 									?>
 								</time>
 								<time class="jltma-closing-hours">
 									<?php
 									if ($settings['ma_el_bh_hours_format'] == 'yes') {
-										echo $this->parse_text_editor($item['ma_el_closing_hours']);
+										echo $this->parse_text_editor($item['ma_el_closing_hours']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML content returned by parse_text_editor()
 									} else {
-										echo esc_attr(date("g:i A", strtotime($item['ma_el_closing_hours'])));
+										echo esc_attr(wp_date("g:i A", strtotime($item['ma_el_closing_hours'])));
 									}
 									?>
 								</time>
@@ -1345,7 +1345,7 @@ class Business_Hours extends Master_Widget
 					$this->add_render_attribute('jltma-row', 'class', 'jltma-business-hour-item clearfix elementor-repeater-item-' . esc_attr($item['_id']));
 				?>
 
-					<li <?php echo $this->get_render_attribute_string('jltma-row' . $i); ?>>
+					<li <?php echo $this->get_render_attribute_string('jltma-row' . (int) $i); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 						<span class="jltma-business-day-name float-left">
 							<?php if ($settings['ma_el_bh_show_day_icon'] == "yes") {
 
@@ -1362,9 +1362,9 @@ class Business_Hours extends Master_Widget
 
 							<?php
 							if ($settings['ma_el_days_format'] == 'full') {
-								echo ucwords(esc_attr($item['ma_el_bh_day']));
+								echo esc_html( ucwords( $item['ma_el_bh_day'] ) );
 							} else {
-								echo ucwords(esc_attr(substr($item['ma_el_bh_day'], 0, 3)));
+								echo esc_html( ucwords( substr( $item['ma_el_bh_day'], 0, 3 ) ) );
 							}
 							?>
 						</span>
@@ -1374,18 +1374,18 @@ class Business_Hours extends Master_Widget
 								<time class="jltma-opening-hours">
 									<?php
 									if ($settings['ma_el_bh_hours_format'] == 'yes') {
-										echo$this->parse_text_editor($item['ma_el_opening_hours']);
+										echo $this->parse_text_editor($item['ma_el_opening_hours']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML content returned by parse_text_editor()
 									} else {
-										echo esc_attr(date("g:i A", strtotime($item['ma_el_opening_hours'])));
+										echo esc_attr(wp_date("g:i A", strtotime($item['ma_el_opening_hours'])));
 									}
 									?>
 								</time>
 								<time class="jltma-closing-hours">
 									<?php
 									if ($settings['ma_el_bh_hours_format'] == 'yes') {
-										echo $this->parse_text_editor($item['ma_el_closing_hours']);
+										echo $this->parse_text_editor($item['ma_el_closing_hours']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML content returned by parse_text_editor()
 									} else {
-										echo esc_attr(date("g:i A", strtotime($item['ma_el_closing_hours'])));
+										echo esc_attr(wp_date("g:i A", strtotime($item['ma_el_closing_hours'])));
 									}
 									?>
 								</time>
@@ -1451,7 +1451,7 @@ class Business_Hours extends Master_Widget
 								$this->add_render_attribute('jltma-row' . $i, 'class', 'jltma-bh-closed');
 							}
 							?>
-							<li <?php echo $this->get_render_attribute_string('jltma-row' . $i); ?>>
+							<li <?php echo $this->get_render_attribute_string('jltma-row' . (int) $i); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 
 								<?php if ($item['ma_el_bh_custom_day'] != '') { ?>
 									<span class="jltma-business-day-name float-left">
@@ -1551,7 +1551,7 @@ class Business_Hours extends Master_Widget
 					}
 
 					?>
-						<div <?php echo $this->get_render_attribute_string('ma_el_business_hours'); ?>>
+						<div <?php echo $this->get_render_attribute_string('ma_el_business_hours'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 
 							<?php if (($settings['ma_el_business_hours_style'] == 'content-corner-btn') || ($settings['ma_el_business_hours_style'] == 'table-reservation')) { ?>
 								<div class="jltma-row">
@@ -1565,7 +1565,7 @@ class Business_Hours extends Master_Widget
 									<div class="<?php echo ($settings['ma_el_business_hours_style'] == 'table-reservation') ? "jltma-col-4" : "jltma-col-6"; ?>">
 									<?php } ?>
 
-									<div <?php echo $this->get_render_attribute_string('jltma_business_hours_image'); ?>>
+									<div <?php echo $this->get_render_attribute_string('jltma_business_hours_image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 										<div class="jltma-business-hour-content-details">
 											<ul class="jltma-business-hour-list">
 												<?php
@@ -1583,7 +1583,7 @@ class Business_Hours extends Master_Widget
 										<?php if ($settings['ma_el_bh_show_button'] == 'yes' && $settings['ma_el_business_hours_style'] == 'content-corner-btn') { ?>
 											<div class="jltma-business-hour-content-bottom">
 
-												<a <?php echo $this->get_render_attribute_string('ma_el_bh_btn_link'); ?>>
+												<a <?php echo $this->get_render_attribute_string('ma_el_bh_btn_link'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 													<?php echo esc_html($settings['ma_el_bh_table_btn_text']); ?>
 													<i class="eicon-arrow-right"></i>
 												</a>
@@ -1595,7 +1595,7 @@ class Business_Hours extends Master_Widget
 											'table-reservation'
 										) { ?>
 											<div class="jltma-business-hour-content-bottom">
-												<a <?php echo $this->get_render_attribute_string('ma_el_bh_btn_link'); ?>>
+												<a <?php echo $this->get_render_attribute_string('ma_el_bh_btn_link'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 													<?php echo esc_html($settings['ma_el_bh_table_btn_text']); ?>
 												</a>
 											</div>
@@ -1606,7 +1606,7 @@ class Business_Hours extends Master_Widget
 											($settings['ma_el_business_hours_style'] !== 'table-reservation')
 										) { ?>
 											<div class="jltma-business-hour-content-bottom">
-												<a <?php echo $this->get_render_attribute_string('ma_el_bh_normal_btn'); ?>>
+												<a <?php echo $this->get_render_attribute_string('ma_el_bh_normal_btn'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 													<?php echo esc_html($settings['ma_el_bh_table_btn_text']); ?>
 													<i class="eicon-arrow-right"></i>
 												</a>

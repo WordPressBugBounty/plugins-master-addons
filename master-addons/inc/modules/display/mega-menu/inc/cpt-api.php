@@ -1,6 +1,11 @@
 <?php
 
 namespace MasterAddons\Modules\Display\MegaMenu;
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use MasterAddons\Inc\Classes\Helper;
 
 class Megamenu_Cpt_Api
@@ -50,7 +55,7 @@ class Megamenu_Cpt_Api
         }
         
         $url = get_admin_url() . 'post.php?post=' . $builder_post_id . '&action=elementor';
-        wp_redirect($url);
+        wp_safe_redirect($url);
         exit;
     }
 

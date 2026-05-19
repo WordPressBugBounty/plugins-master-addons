@@ -160,10 +160,12 @@ class CustomJs
             return;
         }
 
+        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Custom JS code, HTML escaping would break JavaScript
         echo "<script type='text/javascript'>jQuery(document).ready(function($){
             'use strict';
             " . $custom_js_code . "
         });</script>";
+        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
     private function jltma_collect_element_custom_js($elements)
@@ -206,10 +208,12 @@ class CustomJs
         if (empty($custom_js))
             return;
 
+        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Custom JS code, HTML escaping would break JavaScript
         echo "<script type='text/javascript'>jQuery(document).ready(function($){
             'use strict';
             " . $custom_js . "
         });</script>";
+        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
 

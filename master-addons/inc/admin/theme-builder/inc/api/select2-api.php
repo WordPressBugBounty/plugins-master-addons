@@ -114,7 +114,7 @@ class Select2_API extends Handler_API {
 
             // Check if user can read posts
             if (!current_user_can('read')) {
-                return new \WP_Error( 'rest_forbidden', __( 'Insufficient permissions.' ), [ 'status' => 403 ] );
+                return new \WP_Error( 'rest_forbidden', __( 'Insufficient permissions.', 'master-addons' ), [ 'status' => 403 ] );
             }
         }
 

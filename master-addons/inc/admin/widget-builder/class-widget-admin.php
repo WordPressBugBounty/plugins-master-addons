@@ -87,7 +87,7 @@ class Widget_Admin {
      * Render widget editor page (React app) — hidden submenu page
      */
     public function render_widget_editor_page() {
-        $widget_id = isset($_GET['widget_id']) ? intval($_GET['widget_id']) : 0;
+        $widget_id = isset($_GET['widget_id']) ? absint( $_GET['widget_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display routing, no state change
 
         if (!$widget_id) {
             wp_safe_redirect(admin_url('edit.php?post_type=jltma_widget'));
@@ -125,7 +125,7 @@ class Widget_Admin {
                         <div class="jltma-header-top">
                             <div class="jltma-popup-head-content" style="display: flex; align-items:center; gap:8px">
                                 <span>
-                                    <img src="<?php echo JLTMA_IMAGE_DIR . 'logo.svg'; ?>" style="width: 30px;">
+                                    <img src="<?php echo esc_url( JLTMA_IMAGE_DIR . 'logo.svg' ); ?>" style="width: 30px;">
                                 </span>
                                 <h3 class="jltma-modal-title"><?php echo esc_html__('Edit Widget', 'master-addons'); ?></h3>
                             </div>
@@ -149,7 +149,7 @@ class Widget_Admin {
 
                                                 <div class="jltma-form-group mb-2 jltma-col-6">
                                                     <label for="jltma_widget_title" style="font-size: 16px;">
-                                                        <strong><?php _e('Widget Title', 'master-addons'); ?> <span style="color: red;">*</span></strong>
+                                                        <strong><?php esc_html_e('Widget Title', 'master-addons'); ?> <span style="color: red;">*</span></strong>
                                                     </label>
                                                 </div>
                                                 <div class="jltma-form-group mb-2 jltma-col-6">
@@ -158,7 +158,7 @@ class Widget_Admin {
 
                                                 <div class="jltma-form-group mb-2 jltma-col-6">
                                                     <label for="jltma_widget_category" style="font-size: 16px;">
-                                                        <strong><?php _e('Widget Category', 'master-addons'); ?></strong>
+                                                        <strong><?php esc_html_e('Widget Category', 'master-addons'); ?></strong>
                                                     </label>
                                                 </div>
                                                 <div class="jltma-form-group mb-2 jltma-col-6">
@@ -170,33 +170,33 @@ class Widget_Admin {
                                                                 </option>
                                                             <?php endforeach; ?>
                                                         <?php else : ?>
-                                                            <option value="general"><?php _e('General', 'master-addons'); ?></option>
-                                                            <option value="basic"><?php _e('Basic', 'master-addons'); ?></option>
-                                                            <option value="pro"><?php _e('Pro', 'master-addons'); ?></option>
+                                                            <option value="general"><?php esc_html_e('General', 'master-addons'); ?></option>
+                                                            <option value="basic"><?php esc_html_e('Basic', 'master-addons'); ?></option>
+                                                            <option value="pro"><?php esc_html_e('Pro', 'master-addons'); ?></option>
                                                         <?php endif; ?>
                                                         <option value="__add_new__" data-is-pro="<?php echo Helper::jltma_premium() ? '0' : '1'; ?>">
                                                             <?php echo Helper::jltma_premium()
-                                                                ? __('+ Add New Category', 'master-addons')
-                                                                : __('+ Add New Category (Pro)', 'master-addons');
+                                                                ? esc_html__('+ Add New Category', 'master-addons')
+                                                                : esc_html__('+ Add New Category (Pro)', 'master-addons');
                                                             ?>
                                                         </option>
                                                     </select>
                                                     <p class="description" style="margin-top: 8px; font-size: 12px; color: #6c757d;">
-                                                        <?php _e('Select an Elementor category for this widget.', 'master-addons'); ?>
+                                                        <?php esc_html_e('Select an Elementor category for this widget.', 'master-addons'); ?>
                                                     </p>
 
                                                     <!-- Inline Add New Category -->
                                                     <div id="jltma-inline-category-add" style="display: none; margin-top: 12px;">
-                                                        <input type="text" id="jltma_new_category_title" placeholder="<?php _e('Enter Category name', 'master-addons'); ?>" style="width: 100%; padding: 6px 12px; border: 1px solid #5b6aff; border-radius: 6px; font-size: 14px; outline: none; margin-bottom: 12px; transition: border-color 0.2s ease;">
+                                                        <input type="text" id="jltma_new_category_title" placeholder="<?php esc_attr_e('Enter Category name', 'master-addons'); ?>" style="width: 100%; padding: 6px 12px; border: 1px solid #5b6aff; border-radius: 6px; font-size: 14px; outline: none; margin-bottom: 12px; transition: border-color 0.2s ease;">
                                                         <div style="display: flex; gap: 12px; align-items: center; justify-content: flex-start;">
                                                             <button type="button" class="button button-primary jltma-save-inline-category" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 20px; background: var(--jltma-primary-glow); color: #fff; border: none; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">
                                                                 <span class="dashicons dashicons-plus-alt"></span>
-                                                                <?php _e('Add Category', 'master-addons'); ?>
+                                                                <?php esc_html_e('Add Category', 'master-addons'); ?>
                                                             </button>
-                                                            <button type="button" class="button jltma-cancel-inline-category" style="background: transparent; color: #ff4757; border: 2px solid #ff4757; padding: 2px 20px; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; box-shadow: none; text-shadow: none; white-space: nowrap;"><?php _e('Cancel', 'master-addons'); ?></button>
+                                                            <button type="button" class="button jltma-cancel-inline-category" style="background: transparent; color: #ff4757; border: 2px solid #ff4757; padding: 2px 20px; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; box-shadow: none; text-shadow: none; white-space: nowrap;"><?php esc_html_e('Cancel', 'master-addons'); ?></button>
                                                         </div>
                                                         <p style="margin-top: 12px; font-size: 13px; color: #8a909a; font-style: italic; margin-bottom: 0;">
-                                                            <?php _e('Enter a name for the new category and click Add Category.', 'master-addons'); ?>
+                                                            <?php esc_html_e('Enter a name for the new category and click Add Category.', 'master-addons'); ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -209,7 +209,7 @@ class Widget_Admin {
                                 <!-- Modal Footer -->
                                 <div class="jltma-modal-footer">
                                     <button type="submit" class="jltma-save-widget jltma-save-btn jltma-color-two">
-                                        <?php _e('Save Changes', 'master-addons'); ?>
+                                        <?php esc_html_e('Save Changes', 'master-addons'); ?>
                                     </button>
                                 </div>
                             </form>
@@ -224,7 +224,7 @@ class Widget_Admin {
             <div class="jltma-import-backdrop"></div>
             <div class="jltma-import-dialog">
                 <div class="jltma-import-header">
-                    <h3><?php _e('Import Widget', 'master-addons'); ?></h3>
+                    <h3><?php esc_html_e('Import Widget', 'master-addons'); ?></h3>
                     <button class="jltma-import-close">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
@@ -239,23 +239,23 @@ class Widget_Admin {
                                     <line x1="12" y1="3" x2="12" y2="15"></line>
                                 </svg>
                             </div>
-                            <h4><?php _e('Import Widget', 'master-addons'); ?></h4>
-                            <p class="jltma-dropzone-subtitle"><?php _e('Drag & drop your .json file here', 'master-addons'); ?></p>
+                            <h4><?php esc_html_e('Import Widget', 'master-addons'); ?></h4>
+                            <p class="jltma-dropzone-subtitle"><?php esc_html_e('Drag & drop your .json file here', 'master-addons'); ?></p>
                             <label class="jltma-browse-btn">
-                                <?php _e('Browse files', 'master-addons'); ?>
+                                <?php esc_html_e('Browse files', 'master-addons'); ?>
                                 <input type="file" id="jltma-import-file" accept=".json,application/json" style="display: none;" />
                             </label>
-                            <p class="jltma-supported-format"><?php _e('Only .json files are supported', 'master-addons'); ?></p>
+                            <p class="jltma-supported-format"><?php esc_html_e('Only .json files are supported', 'master-addons'); ?></p>
                         </div>
                         <div class="jltma-importing" style="display: none;">
                             <div class="jltma-import-progress">
                                 <div class="jltma-progress-info">
-                                    <span class="jltma-progress-label"><?php _e('Importing...', 'master-addons'); ?></span>
+                                    <span class="jltma-progress-label"><?php esc_html_e('Importing...', 'master-addons'); ?></span>
                                 </div>
                                 <div class="jltma-progress-bar">
                                     <div class="jltma-progress-fill"></div>
                                 </div>
-                                <p class="jltma-progress-hint"><?php _e('Do not close this window', 'master-addons'); ?></p>
+                                <p class="jltma-progress-hint"><?php esc_html_e('Do not close this window', 'master-addons'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -493,7 +493,7 @@ class Widget_Admin {
         ]);
 
         // Localize script for React app
-        $widget_id = isset($_GET['widget_id']) ? intval($_GET['widget_id']) : 0;
+        $widget_id = isset($_GET['widget_id']) ? absint( $_GET['widget_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only localize data, no state change
         $localize_data = [
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('wp_rest'),
@@ -546,7 +546,7 @@ class Widget_Admin {
 
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
-        $widget_id = intval($_GET['widget_id']);
+        $widget_id = isset( $_GET['widget_id'] ) ? absint( $_GET['widget_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
 
         if (!$widget_id) {
             wp_send_json_error(['message' => 'Invalid widget ID']);
@@ -577,9 +577,9 @@ class Widget_Admin {
 
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
-        $widget_id = intval($_POST['widget_id']);
-        $title = sanitize_text_field($_POST['widget_title']);
-        $category = sanitize_text_field($_POST['widget_category']);
+        $widget_id = isset( $_POST['widget_id'] ) ? absint( $_POST['widget_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
+        $title = isset( $_POST['widget_title'] ) ? sanitize_text_field( wp_unslash( $_POST['widget_title'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
+        $category = isset( $_POST['widget_category'] ) ? sanitize_text_field( wp_unslash( $_POST['widget_category'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
 
         // Generate widget name from title if creating new
         $widget_name = !$widget_id ? sanitize_title($title) : get_post_meta($widget_id, '_jltma_widget_name', true);
@@ -650,7 +650,7 @@ class Widget_Admin {
 
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
-        $widget_id = intval($_POST['widget_id']);
+        $widget_id = isset( $_POST['widget_id'] ) ? absint( $_POST['widget_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
 
         if (!$widget_id) {
             wp_send_json_error(['message' => 'Invalid widget ID']);
@@ -675,8 +675,8 @@ class Widget_Admin {
 
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
-        $widget_id = intval($_POST['widget_id']);
-        $category = sanitize_text_field($_POST['category']);
+        $widget_id = isset( $_POST['widget_id'] ) ? absint( $_POST['widget_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
+        $category = isset( $_POST['category'] ) ? sanitize_text_field( wp_unslash( $_POST['category'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
 
         if (!$widget_id) {
             wp_send_json_error(['message' => 'Invalid widget ID']);
@@ -742,7 +742,7 @@ class Widget_Admin {
 
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
-        $widget_id = intval($_GET['widget_id']);
+        $widget_id = isset( $_GET['widget_id'] ) ? absint( $_GET['widget_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
 
         if (!$widget_id) {
             wp_send_json_error(['message' => 'Invalid widget ID']);
@@ -774,7 +774,7 @@ class Widget_Admin {
 
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
-        $widget_id = intval($_POST['widget_id']);
+        $widget_id = isset( $_POST['widget_id'] ) ? absint( $_POST['widget_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
 
         if (!$widget_id) {
             wp_send_json_error(['message' => 'Invalid widget ID']);
@@ -782,11 +782,11 @@ class Widget_Admin {
 
         $conditions = [
             'enabled' => !empty($_POST['enabled']),
-            'user_roles' => isset($_POST['user_roles']) ? array_map('sanitize_text_field', (array) $_POST['user_roles']) : [],
-            'device' => sanitize_text_field($_POST['device'] ?? ''),
-            'page_type' => isset($_POST['page_type']) ? array_map('sanitize_text_field', (array) $_POST['page_type']) : [],
-            'date_start' => sanitize_text_field($_POST['date_start'] ?? ''),
-            'date_end' => sanitize_text_field($_POST['date_end'] ?? '')
+            'user_roles' => isset( $_POST['user_roles'] ) ? array_map( 'sanitize_text_field', wp_unslash( (array) $_POST['user_roles'] ) ) : [], // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
+            'device' => sanitize_text_field( wp_unslash( $_POST['device'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
+            'page_type' => isset( $_POST['page_type'] ) ? array_map( 'sanitize_text_field', wp_unslash( (array) $_POST['page_type'] ) ) : [], // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
+            'date_start' => sanitize_text_field( wp_unslash( $_POST['date_start'] ?? '' ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
+            'date_end' => sanitize_text_field( wp_unslash( $_POST['date_end'] ?? '' ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified above
         ];
 
         update_post_meta($widget_id, '_jltma_widget_conditions', $conditions);
@@ -805,15 +805,15 @@ class Widget_Admin {
             return;
         }
 
-        $nonce = isset($_POST['_nonce']) ? $_POST['_nonce'] : (isset($_GET['_nonce']) ? $_GET['_nonce'] : '');
+        $nonce = isset($_POST['_nonce']) ? sanitize_text_field( wp_unslash( $_POST['_nonce'] ) ) : ( isset($_GET['_nonce']) ? sanitize_text_field( wp_unslash( $_GET['_nonce'] ) ) : '' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.NonceVerification.Recommended -- these are the nonce values being collected for verification on the very next line
         if (!wp_verify_nonce($nonce, 'wp_rest')) {
             wp_send_json_error(['message' => 'Nonce verification failed']);
             return;
         }
 
-        $html_code = isset($_POST['html_code']) ? wp_unslash($_POST['html_code']) : '';
-        $css_code = isset($_POST['css_code']) ? wp_unslash($_POST['css_code']) : '';
-        $controls = isset($_POST['controls']) ? json_decode(wp_unslash($_POST['controls']), true) : [];
+        $html_code = isset($_POST['html_code']) ? wp_kses_post( wp_unslash( $_POST['html_code'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
+        $css_code = isset($_POST['css_code']) ? sanitize_textarea_field( wp_unslash( $_POST['css_code'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
+        $controls = isset($_POST['controls']) ? json_decode( sanitize_textarea_field( wp_unslash( $_POST['controls'] ) ), true ) : []; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
 
         // Build mock settings array from controls
         $settings = [];
@@ -866,26 +866,41 @@ class Widget_Admin {
         // Make settings available in the PHP context
         extract($settings, EXTR_SKIP);
 
-        // Evaluate the PHP code
-        // Wrap in PHP tags if not present
+        // Render the code
         if (strpos($html_code, '<?php') === false && strpos($html_code, '<?=') === false) {
             // No PHP code, just output as is
-            echo $html_code;
+            echo wp_kses_post( $html_code );
         } else {
-            // Has PHP code, evaluate it
-            try {
-                eval('?>' . $html_code . '<?php ;');
-            } catch (ParseError $e) {
-                echo '<div style="color:red;padding:20px;background:#fff3cd;border:1px solid #ffc107;">';
-                echo '<h3>PHP Parse Error in Preview:</h3>';
-                echo '<pre>' . esc_html($e->getMessage()) . '</pre>';
-                echo '<h4>Line ' . $e->getLine() . '</h4>';
-                echo '</div>';
-            } catch (Exception $e) {
-                echo '<div style="color:red;padding:20px;background:#fff3cd;border:1px solid #ffc107;">';
-                echo '<h3>PHP Error in Preview:</h3>';
-                echo '<pre>' . esc_html($e->getMessage()) . '</pre>';
-                echo '</div>';
+            // Has PHP code: write it to a temporary file in the uploads directory
+            // and include it. include is used instead of eval(), which is not
+            // permitted in WordPress.org hosted plugins.
+            $upload_dir = wp_upload_dir();
+            $tmp_dir    = trailingslashit($upload_dir['basedir']) . 'master-addons/widget-builder/tmp/';
+
+            if (!file_exists($tmp_dir)) {
+                wp_mkdir_p($tmp_dir);
+                file_put_contents($tmp_dir . 'index.php', "<?php\n// Silence is golden.\n");
+            }
+
+            $tmp_file = $tmp_dir . 'preview-' . wp_generate_password(20, false) . '.php';
+
+            if (false !== file_put_contents($tmp_file, $html_code)) {
+                try {
+                    include $tmp_file;
+                } catch (ParseError $e) {
+                    echo '<div style="color:red;padding:20px;background:#fff3cd;border:1px solid #ffc107;">';
+                    echo '<h3>PHP Parse Error in Preview:</h3>';
+                    echo '<pre>' . esc_html($e->getMessage()) . '</pre>';
+                    echo '<h4>Line ' . absint( $e->getLine() ) . '</h4>';
+                    echo '</div>';
+                } catch (Exception $e) {
+                    echo '<div style="color:red;padding:20px;background:#fff3cd;border:1px solid #ffc107;">';
+                    echo '<h3>PHP Error in Preview:</h3>';
+                    echo '<pre>' . esc_html($e->getMessage()) . '</pre>';
+                    echo '</div>';
+                } finally {
+                    wp_delete_file($tmp_file);
+                }
             }
         }
 

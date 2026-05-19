@@ -83,7 +83,8 @@ class Template_Conditions_Upgrader
             AND pm.meta_value IS NULL
         ", 'master_template');
 
-        $count = $wpdb->get_var($query);
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.NotPrepared -- $query built via $wpdb->prepare() above; direct query required for upgrade check
+        $count = $wpdb->get_var( $query );
         return $count > 0;
     }
 
@@ -95,7 +96,7 @@ class Template_Conditions_Upgrader
         global $wpdb;
 
         // Start transaction for data integrity
-        $wpdb->query('START TRANSACTION');
+        $wpdb->query( 'START TRANSACTION' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- transaction control; no caching applicable
 
         try {
             $upgraded_count = 0;
@@ -108,7 +109,7 @@ class Template_Conditions_Upgrader
             }
 
             // Commit transaction
-            $wpdb->query('COMMIT');
+            $wpdb->query( 'COMMIT' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- transaction control; no caching applicable
 
             // Mark upgrade as completed
             update_option($this->upgrade_version_key, true);
@@ -119,13 +120,13 @@ class Template_Conditions_Upgrader
             // Show admin notice
             add_action('admin_notices', function() use ($upgraded_count) {
                 echo '<div class="notice notice-success is-dismissible">';
-                echo '<p><strong>Master Addons:</strong> Successfully upgraded ' . $upgraded_count . ' template conditions to new format.</p>';
+                echo '<p><strong>Master Addons:</strong> Successfully upgraded ' . absint( $upgraded_count ) . ' template conditions to new format.</p>';
                 echo '</div>';
             });
 
         } catch (Exception $e) {
             // Rollback on error
-            $wpdb->query('ROLLBACK');
+            $wpdb->query( 'ROLLBACK' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- transaction control; no caching applicable
             // error_log("JLTMA Conditions Upgrade Error: " . $e->getMessage());
 
             // Show error notice
@@ -146,16 +147,17 @@ class Template_Conditions_Upgrader
     {
         global $wpdb;
 
-        return $wpdb->get_results($wpdb->prepare("
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for upgrade migration; no equivalent WP_Query for meta-absent check
+        return $wpdb->get_results( $wpdb->prepare( "
             SELECT p.ID, p.post_title
-            FROM {$wpdb->posts} p 
-            LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id 
+            FROM {$wpdb->posts} p
+            LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
                 AND pm.meta_key = 'master_template_conditions_data'
-            WHERE p.post_type = %s 
-            AND p.post_status = 'publish' 
+            WHERE p.post_type = %s
+            AND p.post_status = 'publish'
             AND pm.meta_value IS NULL
             ORDER BY p.ID ASC
-        ", 'master_template'));
+        ", 'master_template' ) );
     }
 
     /**
@@ -289,15 +291,16 @@ class Template_Conditions_Upgrader
     {
         global $wpdb;
 
-        return (int) $wpdb->get_var($wpdb->prepare("
-            SELECT COUNT(p.ID) 
-            FROM {$wpdb->posts} p 
-            LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for upgrade count; no equivalent WP_Query for meta-absent check
+        return (int) $wpdb->get_var( $wpdb->prepare( "
+            SELECT COUNT(p.ID)
+            FROM {$wpdb->posts} p
+            LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
                 AND pm.meta_key = 'master_template_conditions_data'
-            WHERE p.post_type = %s 
-            AND p.post_status = 'publish' 
+            WHERE p.post_type = %s
+            AND p.post_status = 'publish'
             AND pm.meta_value IS NULL
-        ", 'master_template'));
+        ", 'master_template' ) );
     }
 
     /**
@@ -331,7 +334,7 @@ class Template_Conditions_Upgrader
                 </div>
             <?php else: ?>
                 <div class="notice notice-warning">
-                    <p><strong>Upgrade Pending:</strong> Found <?php echo $status['templates_to_upgrade']; ?> templates that need upgrading.</p>
+                    <p><strong>Upgrade Pending:</strong> Found <?php echo absint( $status['templates_to_upgrade'] ); ?> templates that need upgrading.</p>
                 </div>
             <?php endif; ?>
 
@@ -364,7 +367,7 @@ class Template_Conditions_Upgrader
                     type: 'POST',
                     data: {
                         action: 'jltma_force_conditions_upgrade',
-                        nonce: '<?php echo wp_create_nonce('jltma_force_upgrade'); ?>'
+                        nonce: '<?php echo esc_js( wp_create_nonce('jltma_force_upgrade') ); ?>'
                     },
                     success: function(response) {
                         if (response.success) {

@@ -157,6 +157,6 @@ class Current_Time extends Master_Widget
         }else{
             $date = current_time($time_type);
         }
-        echo sprintf(__('<div class="jltma-current-time">%s</div>', 'master-addons' ), $date );
+        echo '<div class="jltma-current-time">' . esc_html( $date ) . '</div>';
     }
 }

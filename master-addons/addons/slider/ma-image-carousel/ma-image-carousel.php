@@ -74,7 +74,7 @@ class Image_Carousel extends Master_Widget
 		$this->add_control(
 			'jltma_image_carousel_images',
 			[
-				'label' => esc_html__( 'Carousel Images', 'plugin-name' ),
+				'label' => esc_html__( 'Carousel Images', 'master-addons' ),
 				'type' => \Elementor\Controls_Manager::GALLERY,
 				'default' => [
 					[
@@ -676,9 +676,9 @@ class Image_Carousel extends Master_Widget
 
 		$this->add_render_attribute('carousel', 'class', ['jltma-image-carousel-slider']);
 ?>
-		<div <?php echo $this->get_render_attribute_string('carousel'); ?>>
-			<div <?php echo $this->get_render_attribute_string('jltma-img-carousel-wrapper'); ?>>
-				<div <?php echo $this->get_render_attribute_string('swiper-wrapper'); ?>>
+		<div <?php echo $this->get_render_attribute_string('carousel'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
+			<div <?php echo $this->get_render_attribute_string('jltma-img-carousel-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
+				<div <?php echo $this->get_render_attribute_string('swiper-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 
 					<?php
 				}
@@ -776,13 +776,13 @@ class Image_Carousel extends Master_Widget
 								$image_size = array_values($settings['jltma_image_carousel_image_custom_dimension']);
 							}
 					?>
-							<<?php echo esc_attr($tag); ?> <?php echo $this->get_render_attribute_string($repeater_key); ?>>
+							<<?php echo esc_attr($tag); ?> <?php echo $this->get_render_attribute_string($repeater_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 
 								<figure class="jltma-image-carousel-figure">
 
 									<?php
 									if ($settings['enable_lightbox'] == "yes") { ?>
-										<<?php echo esc_attr($popup_tag); ?> <?php echo $this->get_render_attribute_string($repeater_key_lightbox); ?>>
+										<<?php echo esc_attr($popup_tag); ?> <?php echo $this->get_render_attribute_string($repeater_key_lightbox); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 											<?php if ( (!empty($settings['icon']) || !empty($settings['preview_icon']['value']))) {
 												if (!isset($settings['icon']) && !Icons_Manager::is_migration_allowed()) {
 													$settings['icon'] = 'fa-link';
@@ -804,7 +804,7 @@ class Image_Carousel extends Master_Widget
 												if ($is_new || $migrated) {
 													Icons_Manager::render_icon($settings['preview_icon'], ['aria-hidden' => 'true']);
 												} else {
-													echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>';
+													echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes
 												}
 											}else{
 												echo '<?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><g><g><path d="M210,229.236V90H90v150h90.935L272,369.004v-52.215L210,229.236z M180,210h-60v-90h60V210z"/></g></g><g><g><path d="M0,0v512h512V0H0z M482,482H30V30h452V482z"/></g></g><g><g><path d="M330.031,272L240,142.997v52.214l62,89.135V422h120V272H330.031z M392,392h-60v-90h60V392z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>';

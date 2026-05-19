@@ -407,8 +407,8 @@ class Dynamic_Table extends Master_Widget
             [
                 'label' => __('Row Span', 'master-addons'),
                 'type' => Controls_Manager::TEXT,
-                'placeholder' => __('', 'master-addons'),
-                'default' => __('', 'master-addons'),
+                'placeholder' => '',
+                'default' => '',
             ]
         );
 
@@ -930,7 +930,7 @@ class Dynamic_Table extends Master_Widget
         );
         ?>
 
-        <table <?php echo $this->get_render_attribute_string('ma_el_table_wrap'); ?>>
+        <table <?php echo $this->get_render_attribute_string('ma_el_table_wrap'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
             <?php if ('yes' === $settings['ma_el_show_table_head']) : ?>
             <thead class="jltma-table-header">
                 <tr>
@@ -943,10 +943,10 @@ class Dynamic_Table extends Master_Widget
                         ?>
 
                         <th scope="jltma-row"
-                            class="elementor-inline-editing elementor-repeater-item-<?php echo esc_attr($thead['_id']); ?>"<?php echo $colspan; ?>             <?php echo $this->get_render_attribute_string($repeater_setting_key); ?>>
+                            class="elementor-inline-editing elementor-repeater-item-<?php echo esc_attr($thead['_id']); ?>"<?php echo $colspan; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- value already escaped above ?>             <?php echo $this->get_render_attribute_string($repeater_setting_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
 
                             <?php if ('icon' === $thead['icon_type'] && (!empty($thead['header_icon']) || !empty($thead['header_icon']['value']))) { ?>
-                                <span <?php echo $this->get_render_attribute_string($repeater_setting_key); ?>>
+                                <span <?php echo $this->get_render_attribute_string($repeater_setting_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
                                     <?php
                                     $migrated = isset($thead['__fa4_migrated']['header_icon']);
                                     $is_new = empty($thead['icon']) && Icons_Manager::is_migration_allowed();
@@ -966,10 +966,10 @@ class Dynamic_Table extends Master_Widget
                                     'alt' => esc_attr(get_post_meta($thead['header_image']['id'], '_wp_attachment_image_alt', true))
                                 ]);
                                 ?>
-                                <img <?php echo $this->get_render_attribute_string('ma_el_thead_img' . $index); ?>>
+                                <img <?php echo $this->get_render_attribute_string('ma_el_thead_img' . $index); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
                             <?php } ?>
 
-                            <?php echo $this->parse_text_editor($thead['title']); ?>
+                            <?php echo $this->parse_text_editor($thead['title']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>
 
                         </th>
 
@@ -1001,13 +1001,13 @@ class Dynamic_Table extends Master_Widget
                         $data_column = ($show_head && isset($th_values[$counter]['title'])) ? $th_values[$counter]['title'] : '';
                         ?>
 
-                        <td data-column="<?php echo esc_attr($data_column); ?>" <?php echo esc_attr($colspan); ?>
-                            <?php echo esc_attr($rowspan); ?>             <?php echo $this->get_render_attribute_string($table_body_key); ?>>
+                        <td data-column="<?php echo esc_attr($data_column); ?>" <?php echo $colspan; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- value already escaped above ?>
+                            <?php echo $rowspan; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- value already escaped above ?>             <?php echo $this->get_render_attribute_string($table_body_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
 
-                            <?php echo $this->parse_text_editor($tbody['text']); ?>
+                            <?php echo $this->parse_text_editor($tbody['text']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>
 
                             <?php if ('icon' === $tbody['icon_type'] && (!empty($tbody['body_icon']) || !empty($tbody['body_icon']['value']))) { ?>
-                                <span <?php echo $this->get_render_attribute_string($table_body_key); ?>>
+                                <span <?php echo $this->get_render_attribute_string($table_body_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
                                     <?php
                                     $migrated = isset($tbody['__fa4_migrated']['body_icon']);
                                     $is_new = empty($tbody['icon']) && Icons_Manager::is_migration_allowed();
@@ -1026,7 +1026,7 @@ class Dynamic_Table extends Master_Widget
                                     'alt' => esc_attr(get_post_meta($tbody['body_image']['id'], '_wp_attachment_image_alt', true))
                                 ]);
                                 ?>
-                                <img <?php echo $this->get_render_attribute_string('ma_el_tbody_img' . esc_attr($index)); ?>>
+                                <img <?php echo $this->get_render_attribute_string('ma_el_tbody_img' . esc_attr($index)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
                             <?php } ?>
 
                         </td>

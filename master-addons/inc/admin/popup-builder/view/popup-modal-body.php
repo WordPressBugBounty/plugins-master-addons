@@ -1,9 +1,10 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="jltma-pop-contents-body" id="jltma_popup_modal_body">
 
     <div class="jltma-spinner"></div>
 
     <div class="jltma-pop-contents-padding">
-        <form action="" method="get" id="jltma_popup_modal_form" data-open-editor="0" data-editor-url="<?php echo get_admin_url(); ?>" data-nonce="<?php echo wp_create_nonce('wp_rest'); ?>">
+        <form action="" method="get" id="jltma_popup_modal_form" data-open-editor="0" data-editor-url="<?php echo esc_url( get_admin_url() ); ?>" data-nonce="<?php echo esc_attr( wp_create_nonce('wp_rest') ); ?>">
         <!-- Tab Contents Container -->
         <div class="jltma-modal-content-area">
             <!-- General Tab Content -->
@@ -70,7 +71,7 @@
                                 <button type="button" class="<?php echo esc_attr($add_btn_class); ?>" id="jltma-popup-add-condition">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
                                     <?php esc_html_e('Add Condition', 'master-addons'); ?>
-                                    <?php echo $add_btn_badge; ?>
+                                    <?php echo wp_kses_post( $add_btn_badge ); ?>
                                 </button>
                             </div>
                         </div>
@@ -112,7 +113,7 @@
         <!-- Modal Footer - Outside tabs, always visible -->
         <div class="jltma-modal-footer">
             <button type="button" class="jltma-btn-editor jltma-save-btn jltma-color-three">
-                <img class="mr-1 mb-1" src="<?php echo JLTMA_IMAGE_DIR . 'icon.png'; ?>" alt="Master Addons Logo">
+                <img class="mr-1 mb-1" src="<?php echo esc_url( JLTMA_IMAGE_DIR . 'icon.png' ); ?>" alt="Master Addons Logo">
                 <?php esc_html_e('Edit with Elementor', 'master-addons'); ?>
             </button>
             <button type="submit" class="jltma-popup-save jltma-save-btn jltma-color-two">

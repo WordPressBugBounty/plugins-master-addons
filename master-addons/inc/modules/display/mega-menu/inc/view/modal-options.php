@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="jltma-modal fade" id="jltma_megamenu_modal">
     <div class="jltma-modal-dialog" role="document">
         <div class="jltma-modal-content">

@@ -1084,7 +1084,7 @@ class Flipbox extends Master_Widget
 						<?php } else if (($settings['ma_flipbox_layout_style'] == "one") || ($settings['ma_flipbox_layout_style'] == "three")) { ?>
 
 							<?php if ((!empty($settings['icon']) || !empty($settings['front_icon']['value']))) { ?>
-								<div <?php echo $this->get_render_attribute_string('front-icon-wrapper'); ?>>
+								<div <?php echo $this->get_render_attribute_string('front-icon-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 									<?php
                                     $migrated = isset($settings['__fa4_migrated']['front_icon']);
                                     $is_new   = empty($settings['icon']) && \Elementor\Icons_Manager::is_migration_allowed();
@@ -1098,7 +1098,7 @@ class Flipbox extends Master_Widget
 							<?php } ?>
 
 							<?php if (!empty($settings['front_title'])) { ?>
-								<<?php echo esc_html($front_title_tag); ?> <?php echo $this->get_render_attribute_string('front-icon-title'); ?>>
+								<<?php echo esc_html($front_title_tag); ?> <?php echo $this->get_render_attribute_string('front-icon-title'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 									<?php echo wp_kses_post($this->parse_text_editor($settings['front_title'])); ?>
 								</<?php echo esc_html($front_title_tag); ?>>
 							<?php } ?>
@@ -1106,7 +1106,7 @@ class Flipbox extends Master_Widget
 							<?php if (!empty($settings['front_text'])) {
 							?>
 								<p>
-									<?php echo $this->parse_text_editor($settings['front_text']); ?>
+									<?php echo wp_kses_post( $this->parse_text_editor($settings['front_text']) ); ?>
 								</p>
 							<?php }
 							?>
@@ -1119,7 +1119,7 @@ class Flipbox extends Master_Widget
 						<?php if ($settings['ma_flipbox_layout_style'] == "four") { ?>
 
 							<?php if (!empty($settings['front_icon'])) { ?>
-								<div <?php echo $this->get_render_attribute_string('front-icon-wrapper'); ?>>
+								<div <?php echo $this->get_render_attribute_string('front-icon-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 									<?php
                                     $migrated = isset($settings['__fa4_migrated']['front_icon']);
                                     $is_new   = empty($settings['icon']) && \Elementor\Icons_Manager::is_migration_allowed();
@@ -1140,7 +1140,7 @@ class Flipbox extends Master_Widget
 				<div class="jltma-flip-box-back">
 					<div class="jltma-flipbox-content">
 						<?php if (!empty($settings['back_icon'])) { ?>
-							<div <?php echo $this->get_render_attribute_string('back-icon-wrapper'); ?>>
+							<div <?php echo $this->get_render_attribute_string('back-icon-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 									<?php
                                     $migrated = isset($settings['__fa4_migrated']['back_icon']);
                                     $is_new   = empty($settings['icon']) && \Elementor\Icons_Manager::is_migration_allowed();
@@ -1154,22 +1154,22 @@ class Flipbox extends Master_Widget
 						<?php } ?>
 
 						<?php if (!empty($settings['back_title'])) { ?>
-							<<?php echo esc_html($back_title_tag); ?> <?php echo $this->get_render_attribute_string('back-icon-title'); ?>>
-								<?php echo $this->parse_text_editor($settings['back_title']); ?>
+							<<?php echo esc_html($back_title_tag); ?> <?php echo $this->get_render_attribute_string('back-icon-title'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
+								<?php echo wp_kses_post( $this->parse_text_editor($settings['back_title']) ); ?>
 							</<?php echo esc_html($back_title_tag); ?>>
 						<?php } ?>
 
 						<?php if (!empty($settings['back_text'])) { ?>
 							<p>
-								<?php echo $this->parse_text_editor($settings['back_text']); ?>
+								<?php echo wp_kses_post( $this->parse_text_editor($settings['back_text']) ); ?>
 							</p>
 						<?php } ?>
 
 						<?php if (!empty($settings['action_text'])) { ?>
 							<div class="jltma-flip-button-wrapper">
-								<a <?php echo $this->get_render_attribute_string('button'); ?>>
+								<a <?php echo $this->get_render_attribute_string('button'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 									<span class="elementor-button-text">
-										<?php echo $this->parse_text_editor($settings['action_text']); ?>
+										<?php echo wp_kses_post( $this->parse_text_editor($settings['action_text']) ); ?>
 									</span>
 								</a>
 							</div>

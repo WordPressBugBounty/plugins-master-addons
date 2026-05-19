@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo get_the_title() . ' - Popup Preview'; ?></title>
+    <title><?php echo esc_html( get_the_title() ) . ' - Popup Preview'; ?></title>
     <?php wp_head(); ?>
     <style>
         body {
@@ -108,14 +108,14 @@ if (!defined('ABSPATH')) {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M3,3H21V5H3V3M4,6H20V21H4V6M5,7V20H19V7H5Z" />
             </svg>
-            <h1><?php echo get_the_title(); ?> - Popup Preview</h1>
+            <h1><?php echo esc_html( get_the_title() ); ?> - Popup Preview</h1>
         </div>
         
         <div class="jltma-popup-preview-body">
             <?php
             // Output the Elementor content
             if (class_exists('\Elementor\Plugin')) {
-                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display(get_the_ID());
+                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display(get_the_ID()); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_builder_content_for_display returns sanitized HTML
             } else {
                 echo '<div style="padding: 40px; text-align: center; color: #666;">Elementor is required to preview popup content.</div>';
             }

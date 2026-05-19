@@ -862,9 +862,9 @@ class Tooltip extends Master_Widget
 			? $settings['jltma_tootltip_tag']
 			: 'button';
 ?>
-		<<?php echo esc_html($jltma_tootltip_tag); ?> <?php echo $this->get_render_attribute_string('jltma_tooltip_wrapper'); ?>>
+		<<?php echo esc_html($jltma_tootltip_tag); ?> <?php echo $this->get_render_attribute_string('jltma_tooltip_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 			<?php if ($settings['ma_el_tooltip_type'] === 'text') { ?>
-				<?php echo $this->parse_text_editor(Helper::wp_kses_custom($settings['ma_el_tooltip_content'])) ?>
+				<?php echo wp_kses_post( $this->parse_text_editor(Helper::wp_kses_custom($settings['ma_el_tooltip_content'])) ); ?>
 				<?php } elseif ($settings['ma_el_tooltip_type'] === 'icon') {
 				$migrated = isset($settings['__fa4_migrated']['ma_el_tooltip_icon_content']);
 				$is_new   = empty($settings['icon']) && Icons_Manager::is_migration_allowed();

@@ -1014,7 +1014,7 @@ class Team_Slider extends Master_Widget
 
 		<?php if ($team_preset == '-content-drawer') { ?>
 
-			<div <?php echo $this->get_render_attribute_string('ma_el_team_slider_section'); ?>>
+			<div <?php echo $this->get_render_attribute_string('ma_el_team_slider_section'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 				<!-- Gridder navigation -->
 				<ul class="gridder">
 
@@ -1059,7 +1059,7 @@ class Team_Slider extends Master_Widget
 						<li class="gridder-list" data-griddercontent="#jltma-team<?php echo esc_attr($key) + 1; ?>">
 							<?php
 							// Thumbnail Image
-							echo Helper::wp_kses_custom($team_member_image_src);
+							echo Helper::wp_kses_custom($team_member_image_src); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Helper::wp_kses_custom() is the plugin's safe HTML sanitizer
 							?>
 							<div class="jltma-team-drawer-hover-content">
 
@@ -1085,10 +1085,10 @@ class Team_Slider extends Master_Widget
 								<?php echo esc_html($member['ma_el_team_carousel_designation']); ?>
 							</span>
 							<<?php echo esc_html($title_html_tag); ?> class="jltma-team-member-name">
-								<?php echo $this->parse_text_editor($member['ma_el_team_carousel_name']); ?>
+								<?php echo wp_kses_post( $this->parse_text_editor($member['ma_el_team_carousel_name']) ); ?>
 							</<?php echo esc_html($title_html_tag); ?>>
 							<p class="jltma-team-member-desc">
-								<?php echo $this->parse_text_editor($member['ma_el_team_carousel_description']); ?>
+								<?php echo wp_kses_post( $this->parse_text_editor($member['ma_el_team_carousel_description']) ); ?>
 							</p>
 						</div>
 
@@ -1168,9 +1168,9 @@ class Team_Slider extends Master_Widget
 			$this->add_render_attribute('carousel', 'class', ['jltma-team-carousel-slider']);
 			?>
 
-			<div <?php echo $this->get_render_attribute_string('carousel'); ?>>
-				<div <?php echo $this->get_render_attribute_string('ma_el_team_carousel'); ?>>
-					<div <?php echo $this->get_render_attribute_string('swiper-wrapper'); ?>>
+			<div <?php echo $this->get_render_attribute_string('carousel'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
+				<div <?php echo $this->get_render_attribute_string('ma_el_team_carousel'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
+					<div <?php echo $this->get_render_attribute_string('swiper-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 						<?php
 						$demo_images = [];
 
@@ -1208,7 +1208,7 @@ class Team_Slider extends Master_Widget
 
 							?>
 
-							<div <?php echo $this->get_render_attribute_string('swiper-item'); ?>>
+							<div <?php echo $this->get_render_attribute_string('swiper-item'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 								<div class="jltma-team-member<?php echo esc_attr($team_preset); ?> text-center">
 									<div class="jltma-team-member-thumb">
 										<?php
@@ -1217,41 +1217,41 @@ class Team_Slider extends Master_Widget
 
 											// SVG Image Circle
 											$file_path = JLTMA_PATH . 'assets/images/circlesvg/' . esc_attr($settings['ma_el_team_circle_image']) . '.svg';
-											echo file_get_contents($file_path);
+											echo file_get_contents($file_path); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- local SVG file from plugin assets directory
 
 											// Thumbnail Image
-											echo Helper::wp_kses_custom($team_member_image_src);
+											echo Helper::wp_kses_custom($team_member_image_src); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Helper::wp_kses_custom() is the plugin's safe HTML sanitizer
 
 										} elseif ($team_preset == '-circle-animation' && isset($settings['ma_el_team_circle_image_animation'])) {
 
 											if ($settings['ma_el_team_circle_image_animation'] == "animation_svg_02") {
 
-												echo '<div class="animation_svg_02">' . Helper::wp_kses_custom($team_member_image_src) . '</div>';
+												echo '<div class="animation_svg_02">' . Helper::wp_kses_custom($team_member_image_src) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Helper::wp_kses_custom() is the plugin's safe HTML sanitizer
 											} elseif ($settings['ma_el_team_circle_image_animation'] == "animation_svg_03") {
 
-												echo '<div class="animation_svg_03"></div><div class="animation_svg_03"></div><div class="animation_svg_03"></div><div class="animation_svg_03_center">' . Helper::wp_kses_custom($team_member_image_src) . '</div>';
+												echo '<div class="animation_svg_03"></div><div class="animation_svg_03"></div><div class="animation_svg_03"></div><div class="animation_svg_03_center">' . Helper::wp_kses_custom($team_member_image_src) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Helper::wp_kses_custom() is the plugin's safe HTML sanitizer
 											} else {
 
 												$file_path = JLTMA_PATH . 'assets/images/animation/' .
 													$settings['ma_el_team_circle_image_animation'] . '.svg';
-												echo file_get_contents($file_path);
-												echo Helper::wp_kses_custom($team_member_image_src);
+												echo file_get_contents($file_path); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- local SVG file from plugin assets directory
+												echo Helper::wp_kses_custom($team_member_image_src); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Helper::wp_kses_custom() is the plugin's safe HTML sanitizer
 											}
 										} else {
-											echo Helper::wp_kses_custom($team_member_image_src);
+											echo Helper::wp_kses_custom($team_member_image_src); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Helper::wp_kses_custom() is the plugin's safe HTML sanitizer
 										} ?>
 
 									</div>
 									<div class="jltma-team-member-content">
 										<<?php echo esc_html($title_html_tag); ?> class="jltma-team-member-name">
-											<?php echo $this->parse_text_editor($member['ma_el_team_carousel_name']);
+											<?php echo wp_kses_post( $this->parse_text_editor($member['ma_el_team_carousel_name']) );
 											?>
 										</<?php echo esc_html($title_html_tag); ?>>
 										<span class="jltma-team-member-designation">
-											<?php echo $this->parse_text_editor($member['ma_el_team_carousel_designation']); ?>
+											<?php echo wp_kses_post( $this->parse_text_editor($member['ma_el_team_carousel_designation']) ); ?>
 										</span>
 										<p class="jltma-team-member-about">
-											<?php echo $this->parse_text_editor($member['ma_el_team_carousel_description']); ?>
+											<?php echo wp_kses_post( $this->parse_text_editor($member['ma_el_team_carousel_description']) ); ?>
 										</p>
 										<?php if ($member['ma_el_team_carousel_enable_social_profiles'] == 'yes'): ?>
 											<ul class="list-inline jltma-team-member-social">

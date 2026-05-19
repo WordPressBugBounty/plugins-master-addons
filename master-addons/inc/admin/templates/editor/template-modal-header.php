@@ -3,6 +3,10 @@
 /**
  * Template Library Header
  */
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 ?>
 <div id="ma-el-template-modal-header-logo-area"></div>
 <div id="ma-el-template-modal-header-tabs"></div>
@@ -25,6 +29,6 @@
         </div>
     <?php endif; ?>
 </div>
-<div id="ma-el-template-modal-header-close-modal" class="elementor-template-library-header-item" title="<?php echo __( 'Close', 'master-addons' ); ?>">
+<div id="ma-el-template-modal-header-close-modal" class="elementor-template-library-header-item" title="<?php echo esc_attr__( 'Close', 'master-addons' ); ?>">
         <i class="eicon-close" title="Close"></i>
 </div>

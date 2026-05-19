@@ -1369,7 +1369,7 @@ class Caldera_Forms extends Master_Widget
 
 		if (class_exists('Caldera_Forms')) {
 			if (!empty($settings['contact_form_list'])) { ?>
-				<div <?php echo $this->get_render_attribute_string('contact-form'); ?>>
+				<div <?php echo $this->get_render_attribute_string('contact-form'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 					<?php if ($settings['custom_title_description'] == 'yes') { ?>
 						<div class="jltma-caldera-form-heading">
 							<?php if ($settings['form_title_custom'] != '') { ?>
@@ -1379,7 +1379,7 @@ class Caldera_Forms extends Master_Widget
 							<?php } ?>
 							<?php if ($settings['form_description_custom'] != '') { ?>
 								<div class="jltma-contact-form-description jltma-caldera-form-description">
-									<?php echo $this->parse_text_editor($settings['form_description_custom']); ?>
+									<?php echo $this->parse_text_editor($settings['form_description_custom']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns Elementor-processed safe HTML ?>
 								</div>
 							<?php } ?>
 						</div>

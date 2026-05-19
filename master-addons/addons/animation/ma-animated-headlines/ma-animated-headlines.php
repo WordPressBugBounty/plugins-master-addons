@@ -597,16 +597,16 @@ class Animated_Headlines extends Master_Widget
 		]);
 
 ?>
-		<div <?php echo $this->get_render_attribute_string('jltma_animated_headlines'); ?>>
+		<div <?php echo $this->get_render_attribute_string('jltma_animated_headlines'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string ?>>
 			<div class="jltma-animated-heading-wrapper">
-				<<?php echo esc_html($title_html_tag) . ' ' . $this->get_render_attribute_string('jltma_animated_header_wrapper'); ?>>
+				<<?php echo esc_html($title_html_tag) . ' ' . $this->get_render_attribute_string('jltma_animated_header_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string ?>>
 					<span class="first-heading">
-						<?php echo $this->parse_text_editor($settings['ma_el_headlines_first_heading']); ?>
+						<?php echo $this->parse_text_editor($settings['ma_el_headlines_first_heading']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns safe HTML ?>
 					</span>
 					<span class="jltma-words-wrapper">
 						<?php foreach ($settings['tabs'] as $index => $tab) { ?>
 							<b class="second-heading <?php echo ($index == 0) ? "is-visible" : ""; ?>">
-								<?php echo $this->parse_text_editor($tab['ma_el_headlines_second_heading']); ?>
+								<?php echo $this->parse_text_editor($tab['ma_el_headlines_second_heading']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns safe HTML ?>
 							</b>
 						<?php } ?>
 					</span>

@@ -2742,7 +2742,7 @@ trait JLTMA_Swiper_Controls
         }
 
 ?>
-        <div <?php echo $this->get_render_attribute_string('navigation'); ?>>
+        <div <?php echo $this->get_render_attribute_string('navigation'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
             <?php if ('arrows' == $settings['navigation']) { ?>
                 <?php $this->render_swiper_arrows(); ?>
             <?php } elseif ('both' == $settings['navigation']) {
@@ -2792,11 +2792,11 @@ trait JLTMA_Swiper_Controls
             ],
         ]);
     ?>
-        <div <?php echo $this->get_render_attribute_string('button-prev'); ?>>
-            <i <?php echo $this->get_render_attribute_string('button-prev-icon'); ?>></i>
+        <div <?php echo $this->get_render_attribute_string('button-prev'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
+            <i <?php echo $this->get_render_attribute_string('button-prev-icon'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>></i>
         </div>
-        <div <?php echo $this->get_render_attribute_string('button-next'); ?>>
-            <i <?php echo $this->get_render_attribute_string('button-next-icon'); ?>></i>
+        <div <?php echo $this->get_render_attribute_string('button-next'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
+            <i <?php echo $this->get_render_attribute_string('button-next-icon'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>></i>
         </div>
         <?php
     }
@@ -2811,7 +2811,7 @@ trait JLTMA_Swiper_Controls
                 'jltma-position-' . esc_attr($settings['dots_position'])
             ]);
         ?>
-            <div <?php echo $this->get_render_attribute_string('pagination'); ?>></div>
+            <div <?php echo $this->get_render_attribute_string('pagination'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>></div>
 
         <?php } elseif ('progressbar' == $settings['navigation']) {
 
@@ -2819,7 +2819,7 @@ trait JLTMA_Swiper_Controls
                 'jltma-position-' . esc_attr($settings['progress_position']),
             ]);
         ?>
-            <div <?php echo $this->get_render_attribute_string('pagination'); ?>></div>
+            <div <?php echo $this->get_render_attribute_string('pagination'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>></div>
         <?php
         }
     }
@@ -2838,7 +2838,7 @@ trait JLTMA_Swiper_Controls
         ]);
 
         ?>
-        <div <?php echo $this->get_render_attribute_string('both_nagivation'); ?>>
+        <div <?php echo $this->get_render_attribute_string('both_nagivation'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
             <?php $this->render_swiper_arrows(); ?>
             <div class="swiper-pagination"></div>
         </div>

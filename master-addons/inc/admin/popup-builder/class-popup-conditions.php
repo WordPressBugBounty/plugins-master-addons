@@ -213,14 +213,14 @@ class Popup_Conditions {
                 
             case 'time_range':
                 if (isset($conditions['start_time']) && isset($conditions['end_time'])) {
-                    $current_hour = date('H:i', $current_time);
+                    $current_hour = wp_date('H:i', $current_time);
                     return $current_hour >= $conditions['start_time'] && $current_hour <= $conditions['end_time'];
                 }
                 break;
                 
             case 'days_of_week':
                 if (isset($conditions['days']) && is_array($conditions['days'])) {
-                    $current_day = strtolower(date('l', $current_time));
+                    $current_day = strtolower(wp_date('l', $current_time));
                     return in_array($current_day, $conditions['days']);
                 }
                 break;
@@ -234,7 +234,7 @@ class Popup_Conditions {
             return true;
         }
         
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
         
         switch ($conditions['referrer']) {
             case 'search_engines':
@@ -306,18 +306,18 @@ class Popup_Conditions {
                 return true;
                 
             case 'once_session':
-                return !isset($_SESSION[$cookie_name]);
+                return !isset($_COOKIE[$cookie_name]);
                 
             case 'once_day':
                 if (isset($_COOKIE[$cookie_name])) {
-                    $last_shown = $_COOKIE[$cookie_name];
+                    $last_shown = absint( sanitize_text_field( wp_unslash( $_COOKIE[$cookie_name] ) ) );
                     return (time() - $last_shown) > DAY_IN_SECONDS;
                 }
                 return true;
-                
+
             case 'once_week':
                 if (isset($_COOKIE[$cookie_name])) {
-                    $last_shown = $_COOKIE[$cookie_name];
+                    $last_shown = absint( sanitize_text_field( wp_unslash( $_COOKIE[$cookie_name] ) ) );
                     return (time() - $last_shown) > WEEK_IN_SECONDS;
                 }
                 return true;
@@ -330,7 +330,7 @@ class Popup_Conditions {
     }
     
     private function detect_device() {
-        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+        $user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
         
         if (preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', $user_agent)) {
             return 'tablet';

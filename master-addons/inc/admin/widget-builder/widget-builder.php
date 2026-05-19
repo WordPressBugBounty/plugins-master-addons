@@ -138,6 +138,7 @@ class Widget_Builder extends Extension_Prototype {
      */
     public function widget_builder_page() {
         // Check if we're editing a specific widget
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only query var that selects which widget the admin page renders; not form processing.
         $widget_id = isset($_GET['widget_id']) ? intval($_GET['widget_id']) : 0;
 
         if ($widget_id) {
@@ -170,7 +171,7 @@ class Widget_Builder extends Extension_Prototype {
             return;
         }
 
-        $widget_data = isset($_POST['widget_data']) ? json_decode(stripslashes($_POST['widget_data']), true) : array();
+        $widget_data = isset($_POST['widget_data']) ? json_decode( wp_unslash( $_POST['widget_data'] ), true ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON decoded and sanitized via sanitize_widget_data() below
 
         if (empty($widget_data['name']) || empty($widget_data['title'])) {
             wp_send_json_error(__('Widget name and title are required', 'master-addons'));
@@ -217,7 +218,7 @@ class Widget_Builder extends Extension_Prototype {
             wp_send_json_error(__('Insufficient permissions', 'master-addons'));
         }
 
-        $widget_id = sanitize_text_field($_POST['widget_id']);
+        $widget_id = isset( $_POST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above via check_ajax_referer
         $widgets = get_option('jltma_custom_widgets', array());
 
         if (isset($widgets[$widget_id])) {
@@ -315,7 +316,7 @@ class Widget_Builder extends Extension_Prototype {
      * Register a single custom widget
      */
     private function register_single_widget($widget_id, $widget_data) {
-        $widget_file = JLTMA_PATH . 'inc/admin/widgetbuilder/generated/' . $widget_id . '.php';
+        $widget_file = $this->get_generated_widgets_dir() . $widget_id . '.php';
 
         if (file_exists($widget_file)) {
             require_once $widget_file;
@@ -416,17 +417,31 @@ class Widget_Builder extends Extension_Prototype {
     }
 
     /**
+     * Get the directory where generated widget class files are stored.
+     *
+     * Stored under the uploads directory (not the plugin folder) so generated
+     * files survive plugin upgrades and are not publicly bundled with the plugin.
+     */
+    private function get_generated_widgets_dir() {
+        $upload_dir = wp_upload_dir();
+        return trailingslashit($upload_dir['basedir']) . 'master-addons/widget-builder/generated/';
+    }
+
+    /**
      * Generate widget class file
      */
     private function generate_widget_class($widget_data) {
-        $generated_dir = JLTMA_PATH . 'inc/admin/widgetbuilder/generated/';
+        $generated_dir = $this->get_generated_widgets_dir();
 
         if (!file_exists($generated_dir)) {
             if (!wp_mkdir_p($generated_dir)) {
                 return false;
             }
+            // Prevent directory listing of generated files.
+            file_put_contents($generated_dir . 'index.php', "<?php\n// Silence is golden.\n");
         }
 
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable -- Writability check on the local generated-widgets directory under wp-content/uploads.
         if (!is_writable($generated_dir)) {
             return false;
         }
@@ -612,12 +627,12 @@ class {$class_name} extends Widget_Base {
         }
 
         if (!empty($field['options'])) {
-            $options_export = var_export($field['options'], true);
+            $options_export = var_export($field['options'], true); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export -- used for PHP code generation, not debug output
             $control_code .= "                'options' => {$options_export},\n";
         }
 
         if (!empty($field['condition'])) {
-            $condition_export = var_export($field['condition'], true);
+            $condition_export = var_export($field['condition'], true); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export -- used for PHP code generation, not debug output
             $control_code .= "                'condition' => {$condition_export},\n";
         }
 
@@ -657,10 +672,10 @@ class {$class_name} extends Widget_Base {
      * Delete widget class file
      */
     private function delete_widget_class($widget_id) {
-        $widget_file = JLTMA_PATH . 'inc/admin/widgetbuilder/generated/' . $widget_id . '.php';
+        $widget_file = $this->get_generated_widgets_dir() . $widget_id . '.php';
 
         if (file_exists($widget_file)) {
-            unlink($widget_file);
+            wp_delete_file($widget_file);
         }
     }
 

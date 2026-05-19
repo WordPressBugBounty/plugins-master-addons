@@ -48,16 +48,16 @@ class Request_Parameter extends Tag
 
 		switch ($request_type) {
 			case 'POST':
-				if (!isset($_POST[$param_name])) {
+				if (!isset($_POST[$param_name])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- dynamic tag read-only display, no form processing
 					return '';
 				}
-				$value = sanitize_text_field($_POST[$param_name]);
+				$value = sanitize_text_field( wp_unslash( $_POST[$param_name] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- dynamic tag read-only display, no form processing
 				break;
 			case 'GET':
-				if (!isset($_GET[$param_name])) {
+				if (!isset($_GET[$param_name])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- dynamic tag read-only display, no form processing
 					return '';
 				}
-				$value = sanitize_text_field($_GET[$param_name]);
+				$value = sanitize_text_field( wp_unslash( $_GET[$param_name] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- dynamic tag read-only display, no form processing
 				break;
 			case 'QUERY_VAR':
 				$value = sanitize_text_field( get_query_var($param_name) );

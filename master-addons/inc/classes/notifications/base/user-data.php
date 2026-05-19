@@ -182,28 +182,6 @@ trait User_Data
 	}
 
 	/**
-	 * Get IP Address
-	 *
-	 * @author Jewel Theme <support@jeweltheme.com>
-	 */
-	public function get_user_ip_address()
-	{
-		$response = wp_remote_get('https://icanhazip.com/');
-
-		if (is_wp_error($response)) {
-			return '';
-		}
-
-		$ip_address = trim(wp_remote_retrieve_body($response));
-
-		if (!filter_var($ip_address, FILTER_VALIDATE_IP)) {
-			return '';
-		}
-
-		return $ip_address;
-	}
-
-	/**
 	 * Get Collection Data
 	 *
 	 * @return void
@@ -211,54 +189,12 @@ trait User_Data
 	 */
 	public function get_collect_data($user_id, $arr = [])
 	{
-
-		$billing_phone     = '';
-		$billing_company   = '';
-		$billing_address_1 = '';
-		$billing_address_2 = '';
-		$billing_city      = '';
-		$billing_postcode  = '';
-		$billing_country   = '';
-		$billing_state     = '';
-
-		// WooCommerce .
-		if (is_plugin_active('woocommerce/woocommerce.php')) {
-			$billing_phone     = get_user_meta($user_id, 'billing_phone', true);
-			$billing_company   = get_user_meta($user_id, 'billing_company', true);
-			$billing_address_1 = get_user_meta($user_id, 'billing_address_1', true);
-			$billing_address_2 = get_user_meta($user_id, 'billing_address_2', true);
-			$billing_city      = get_user_meta($user_id, 'billing_city', true);
-			$billing_postcode  = get_user_meta($user_id, 'billing_postcode', true);
-			$billing_country   = get_user_meta($user_id, 'billing_country', true);
-			$billing_state     = get_user_meta($user_id, 'billing_state', true);
-		}
-
-		$all_plugins               = $this->get_plugins_list();
-		$active_deactivate_plugins = $all_plugins['active_plugins'] . $all_plugins['deactivated_plugins'];
-
+		// Only the data the administrator actively submits through the form,
+		// plus the site URL and plugin slug needed to route the request.
+		// No site telemetry, plugin list, IP address or customer billing data is sent.
 		$data = array(
-			'phone'                   => $billing_phone,
-			'company'                 => $billing_company,
-			'address_1'               => $billing_address_1,
-			'address_2'               => $billing_address_2,
-			'city'                    => $billing_city,
-			'postcode'                => $billing_postcode,
-			'country'                 => $billing_country,
-			'state'                   => $billing_state,
-			'list_id'                 => [3, 23],
-			'tag_id'                  => [35, 40, 106],
-			'server'                  => $this->get_server_info(),
-			'wp'                      => $this->get_wp_info(),
-			'number_of_users'         => $this->get_user_counts(),
-			'site_language'           => \get_bloginfo('language'),
-			'active_inactive_plugins' => $active_deactivate_plugins,
-			'site_name'               => $this->get_site_name(),
-			'site_source'             => 'https://jeweltheme.com',
-			'is_local'                => $this->is_local_server(),
-			'ip_address'              => $this->get_user_ip_address(),
-			'site_url'                => \get_site_url(), // custom field end / need to be create this in .
-			'is_active_product'		  => 1,
-			'installed_product_slug'  => JLTMA_SLUG,
+			'site_url'               => \get_site_url(),
+			'installed_product_slug' => JLTMA_SLUG,
 		);
 
 		$payload_data =  array_merge($arr, $data);
@@ -267,7 +203,7 @@ trait User_Data
 			$response     = wp_remote_post(
 				$endpoint_url,
 				array(
-					'body'      => $payload_data,
+					'body'      => json_encode( $payload_data ),
 					'timeout'   => 100,
 					'sslverify' => false,
 				)
@@ -277,7 +213,7 @@ trait User_Data
 			$response     = wp_safe_remote_post(
 				$endpoint_url,
 				array(
-					'body'      => $payload_data,
+					'body'      => json_encode( $payload_data ),
 					'timeout'   => 100,
 				)
 			);

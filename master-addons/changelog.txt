@@ -1,4 +1,19 @@
 == Changelog ==
+= Master Elementor Addons 3.1.0 (19-05-2026) =
+* Compliance: Documented every external service the plugin contacts (Master Addons template API, Jewel Theme API, Google reCAPTCHA, Twitter/X, WhatsApp, Freemius) with terms and privacy links.
+* Compliance: Removed the Template Kit "fix compatibility" routine that rewrote the active_plugins option.
+* Compliance: Replaced deprecated openssl_free_key() and get_page_by_title() with version-safe equivalents.
+* Compliance: Removed eval() and create_function(); the Widget Builder preview now uses an included temporary file.
+* Compliance: Replaced the PHP short tag in the Infobox widget and removed remote CDN dependencies (Font Awesome, ace-builds, placeholder images now load locally / from Elementor).
+* Compliance: Replaced remote file_get_contents() calls with the WordPress HTTP API and moved generated Widget Builder files to the uploads directory.
+* Compliance: Removed the front-end PHP session in the Popup Builder in favour of a cookie.
+* Compliance: Standardised every gettext call on the "master-addons" text domain and added direct-file-access protection to entry-point files.
+* Compliance: Minimised the data sent by the subscribe form to only the administrator-submitted fields.
+* Added: Popup Builder now rejects duplicate display conditions and shows an inline validation message.
+* Improved: Theme Builder condition validation messages are shown as a centered, colour-coded alert.
+* Fixed: "Undefined array key" PHP warnings in the upgrade notice and Pro upgrade dashboard widget.
+* Fixed: Renamed an asset file containing a space and removed hidden system files.
+
 = Master Elementor Addons 3.0.9 (25-04-2026) =
 * Added: Dynamic Table Addons table head show/hide option add.
 * Fixed: Dynamic Table mobile view warning issue fixed.

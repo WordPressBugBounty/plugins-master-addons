@@ -98,16 +98,16 @@ class Template_Library {
      * AJAX: Get templates
      */
     public function get_templates() {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_library_nonce') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
-        $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
+        $category = isset($_POST['category']) ? sanitize_text_field( wp_unslash( $_POST['category'] ) ) : '';
+        $search = isset($_POST['search']) ? sanitize_text_field( wp_unslash( $_POST['search'] ) ) : '';
         $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
         $per_page = 12;
-        $tab = isset($_POST['tab']) ? sanitize_text_field($_POST['tab']) : 'master_section';
+        $tab = isset($_POST['tab']) ? sanitize_text_field( wp_unslash( $_POST['tab'] ) ) : 'master_section';
 
         // Use existing template manager instead of mock data
         $templates = $this->fetch_real_templates($tab, $category, $search, $page, $per_page);
@@ -153,12 +153,12 @@ class Template_Library {
      * AJAX: Get categories
      */
     public function get_categories() {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_library_nonce') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $tab = isset($_POST['tab']) ? sanitize_text_field($_POST['tab']) : 'master_section';
+        $tab = isset($_POST['tab']) ? sanitize_text_field( wp_unslash( $_POST['tab'] ) ) : 'master_section';
         $categories = $this->fetch_real_categories($tab);
 
         // Add debug logging
@@ -179,8 +179,9 @@ class Template_Library {
      * AJAX: Get kit categories
      */
     public function get_kit_categories() {
-        $valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce') ||
-                       wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action');
+        $wpnonce_kit_cats = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $valid_nonce = wp_verify_nonce($wpnonce_kit_cats, 'jltma_template_library_nonce') ||
+                       wp_verify_nonce($wpnonce_kit_cats, 'jltma_template_kits_nonce_action');
 
         if (!$valid_nonce || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
@@ -385,17 +386,18 @@ class Template_Library {
      */
     public function import_template() {
         // Accept both template library and template kits nonces
-        $valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce') ||
-                       wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action');
+        $wpnonce_import = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $valid_nonce = wp_verify_nonce($wpnonce_import, 'jltma_template_library_nonce') ||
+                       wp_verify_nonce($wpnonce_import, 'jltma_template_kits_nonce_action');
 
         if (!$valid_nonce || !current_user_can('import')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $template_id = isset($_POST['template_id']) ? sanitize_text_field($_POST['template_id']) : '';
-        $tab = isset($_POST['tab']) ? sanitize_text_field($_POST['tab']) : 'master_section';
-        $page_name = isset($_POST['page_name']) ? sanitize_text_field($_POST['page_name']) : null;
+        $template_id = isset($_POST['template_id']) ? sanitize_text_field( wp_unslash( $_POST['template_id'] ) ) : '';
+        $tab = isset($_POST['tab']) ? sanitize_text_field( wp_unslash( $_POST['tab'] ) ) : 'master_section';
+        $page_name = isset($_POST['page_name']) ? sanitize_text_field( wp_unslash( $_POST['page_name'] ) ) : null;
 
         if (empty($template_id)) {
             wp_send_json_error(['message' => 'Template ID is required']);
@@ -428,16 +430,17 @@ class Template_Library {
      */
     public function preview_template() {
         // Accept both template library and template kits nonces
-        $valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce') ||
-                       wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action');
+        $wpnonce_preview = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $valid_nonce = wp_verify_nonce($wpnonce_preview, 'jltma_template_library_nonce') ||
+                       wp_verify_nonce($wpnonce_preview, 'jltma_template_kits_nonce_action');
 
         if (!$valid_nonce || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $template_id = isset($_POST['template_id']) ? sanitize_text_field($_POST['template_id']) : '';
-        $mode = isset($_POST['mode']) ? sanitize_text_field($_POST['mode']) : 'library';
+        $template_id = isset($_POST['template_id']) ? sanitize_text_field( wp_unslash( $_POST['template_id'] ) ) : '';
+        $mode = isset($_POST['mode']) ? sanitize_text_field( wp_unslash( $_POST['mode'] ) ) : 'library';
         if (empty($template_id)) {
             wp_send_json_error(['message' => 'Template ID is required']);
             return;
@@ -585,8 +588,9 @@ class Template_Library {
      * AJAX: Refresh templates cache
      */
     public function refresh_templates_cache() {
-        $nonce_valid = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce') ||
-                        wp_verify_nonce($_POST['_wpnonce'], 'master_addons_nonce');
+        $wpnonce_refresh = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $nonce_valid = wp_verify_nonce($wpnonce_refresh, 'jltma_template_library_nonce') ||
+                        wp_verify_nonce($wpnonce_refresh, 'master_addons_nonce');
 
         // Enhanced security checks
         if (!$nonce_valid) {
@@ -642,7 +646,7 @@ class Template_Library {
         }
 
         // Check if this is a re-import
-        $is_reimport = isset($_POST['is_reimport']) && $_POST['is_reimport'] === '1';
+        $is_reimport = isset($_POST['is_reimport']) && $_POST['is_reimport'] === '1'; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method
 
         // Create a new page with the template content
         $page_title = isset($template_data['title']) ? $template_data['title'] : 'Demo Page ' . $template_id;
@@ -873,16 +877,17 @@ class Template_Library {
 
     public function jltma_template_kit_open_kit(){
         // Verify nonce and permissions
-        $valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce') ||
-                       wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action');
+        $wpnonce_open_kit = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $valid_nonce = wp_verify_nonce($wpnonce_open_kit, 'jltma_template_library_nonce') ||
+                       wp_verify_nonce($wpnonce_open_kit, 'jltma_template_kits_nonce_action');
 
         if (!$valid_nonce || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $kit_id = sanitize_text_field($_POST['template_id']);
-        $kit_category = sanitize_text_field($_POST['template_category']);
+        $kit_id = isset( $_POST['template_id'] ) ? sanitize_text_field( wp_unslash( $_POST['template_id'] ) ) : '';
+        $kit_category = isset( $_POST['template_category'] ) ? sanitize_text_field( wp_unslash( $_POST['template_category'] ) ) : '';
         $force_refresh = isset($_POST['force_refresh']) && $_POST['force_refresh'] === 'true';
 
 
@@ -1314,8 +1319,9 @@ class Template_Library {
     }
 
     public function jltma_get_plugins_status(){
-        $valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce') ||
-                       wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action');
+        $wpnonce_plugins_status = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $valid_nonce = wp_verify_nonce($wpnonce_plugins_status, 'jltma_template_library_nonce') ||
+                       wp_verify_nonce($wpnonce_plugins_status, 'jltma_template_kits_nonce_action');
 
         if (!$valid_nonce) {
             wp_send_json_error(['message' => 'Invalid nonce']);
@@ -1325,7 +1331,7 @@ class Template_Library {
         $plugins_with_status = array();
 
         if( isset($_POST['required_plugins']) && !empty( $_POST['required_plugins'])){
-            $plugins = json_decode(stripslashes($_POST['required_plugins']), true);
+            $plugins = json_decode( sanitize_textarea_field( wp_unslash( $_POST['required_plugins'] ) ), true);
 
             // Include plugin.php if needed
             if (!function_exists('get_plugins')) {
@@ -1536,15 +1542,16 @@ class Template_Library {
      */
     public function delete_purchased_kit() {
         // Verify nonce and permissions
-        $valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_library_nonce') ||
-                       wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action');
+        $wpnonce_delete_kit = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $valid_nonce = wp_verify_nonce($wpnonce_delete_kit, 'jltma_template_library_nonce') ||
+                       wp_verify_nonce($wpnonce_delete_kit, 'jltma_template_kits_nonce_action');
 
         if (!$valid_nonce || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field($_POST['kit_id']) : '';
+        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field( wp_unslash( $_POST['kit_id'] ) ) : '';
 
         if (empty($kit_id)) {
             wp_send_json_error(['message' => 'Kit ID is required']);
@@ -1624,11 +1631,12 @@ class Template_Library {
                 $this->delete_directory_recursive($path);
             } else {
                 // Delete file
-                @unlink($path);
+                wp_delete_file($path);
             }
         }
 
         // Delete the empty directory
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_rmdir -- Removes an empty local cache directory under wp-content/uploads.
         return @rmdir($dir);
     }
 

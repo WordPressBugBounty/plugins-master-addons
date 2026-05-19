@@ -59,6 +59,7 @@ if (!class_exists('Latest_Updates')) {
         public function notice_content()
         {
             $jltma_changelog_message = sprintf(
+                /* translators: 1: URL to changelogs page, 2: Link text for changelogs, 3: Plugin name and version heading HTML, 4: First changelog item HTML, 5: Second changelog item HTML */
                 __('%3$s %4$s %5$s <br> <strong>Check Changelogs for </strong> <a href="%1$s" target="__blank">%2$s</a>', 'master-addons'),
                 esc_url_raw('https://master-addons.com/changelogs'),
                 __('More Details', 'master-addons'),

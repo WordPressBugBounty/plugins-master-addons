@@ -2103,8 +2103,8 @@ class Pricing_Table extends Master_Widget
 		$this->add_render_attribute('wrapper', 'class', 'jltma-pricing-table-image');
 
 ?>
-		<div <?php echo $this->get_render_attribute_string('wrapper'); ?>>
-			<?php echo Group_Control_Image_Size::get_attachment_image_html($settings); ?>
+		<div <?php echo $this->get_render_attribute_string('wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+			<?php echo Group_Control_Image_Size::get_attachment_image_html($settings); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_attachment_image_html returns safe Elementor HTML ?>
 		</div>
 		<?php
 	}
@@ -2139,7 +2139,7 @@ class Pricing_Table extends Master_Widget
 				if ($is_new || $migrated) {
 					Icons_Manager::render_icon($settings['ma_el_pricing_table_icon'], ['aria-hidden' => 'true']);
 				} else {
-					echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>';
+					echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML
 				}
 			} ?>
 
@@ -2151,13 +2151,13 @@ class Pricing_Table extends Master_Widget
 					: 'h3';
 			?>
 				<<?php echo esc_html($heading_tag); ?> class="jltma-price-table-title">
-					<?php echo $this->parse_text_editor($settings['ma_el_pricing_table_heading']); ?>
+					<?php echo wp_kses_post( $this->parse_text_editor($settings['ma_el_pricing_table_heading']) ); ?>
 				</<?php echo esc_html($heading_tag); ?>>
 			<?php endif; ?>
 
 			<?php if (!empty($settings['ma_el_pricing_table_sub_heading'])) { ?>
 				<div class="jltma-price-table-subheading">
-					<?php echo $this->parse_text_editor($settings['ma_el_pricing_table_sub_heading']); ?>
+					<?php echo wp_kses_post( $this->parse_text_editor($settings['ma_el_pricing_table_sub_heading']) ); ?>
 				</div>
 			<?php } ?>
 
@@ -2181,7 +2181,7 @@ class Pricing_Table extends Master_Widget
 
 		if ($settings['ma_el_pricing_table_sale'] && !empty($settings['ma_el_pricing_table_original_price'])) { ?>
 			<span class="jltma-price-table-original-price">
-				<?php echo $this->parse_text_editor($price_symbol . $settings['ma_el_pricing_table_original_price']); ?>
+				<?php echo wp_kses_post( $this->parse_text_editor( $price_symbol . $settings['ma_el_pricing_table_original_price'] ) ); ?>
 			</span>
 		<?php }
 
@@ -2245,7 +2245,7 @@ class Pricing_Table extends Master_Widget
 					echo '.';
 				}
 
-				echo $this->parse_text_editor($fraction_part); ?>
+				echo wp_kses_post( $this->parse_text_editor($fraction_part) ); ?>
 			</span>
 		<?php }
 	}
@@ -2303,7 +2303,7 @@ class Pricing_Table extends Master_Widget
 
 	?>
 
-		<div <?php echo $this->get_render_attribute_string('ma_el_pricing_table_head'); ?>>
+		<div <?php echo $this->get_render_attribute_string('ma_el_pricing_table_head'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 			<?php $this->jltma_pt_render_heading(); ?>
 			<?php $this->jltma_pt_render_price(); ?>
 		</div><!-- /.price-table-head -->
@@ -2352,7 +2352,7 @@ class Pricing_Table extends Master_Widget
 					}
 
 				?>
-					<li <?php echo $this->get_render_attribute_string('features'); ?>>
+					<li <?php echo $this->get_render_attribute_string('features'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 
 						<?php if (!empty($item['ma_el_pricing_table_item_icon'])) {
 
@@ -2376,13 +2376,13 @@ class Pricing_Table extends Master_Widget
 							if ($is_new || $migrated) {
 								Icons_Manager::render_icon($item['ma_el_pricing_table_item_icon'], ['aria-hidden' => 'true']);
 							} else {
-								echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>';
+								echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML
 							}
 						}
 
 						if (!empty($item['ma_el_pricing_table_item_text'])) { ?>
 							<div class=" jltma-tooltip-content">
-								<?php echo $this->parse_text_editor($item['ma_el_pricing_table_item_text']); ?>
+								<?php echo wp_kses_post( $this->parse_text_editor($item['ma_el_pricing_table_item_text']) ); ?>
 							</div>
 						<?php } else {
 							echo '&nbsp;';
@@ -2433,17 +2433,17 @@ class Pricing_Table extends Master_Widget
 
 		if (\MasterAddons\Inc\Classes\Utils::is_plugin_active('easy-digital-downloads/easy-digital-downloads.php')) {
 			if ($settings['ma_el_pricing_table_edd_as_button'] === 'yes') {
-				echo edd_get_purchase_link([
+				echo wp_kses_post( edd_get_purchase_link([
 					'download_id' => $settings['ma_el_pricing_table_edd_id'],
 					'price'       => false,
 					'text'        => esc_html($settings['ma_el_pricing_table_button_text']),
 					'class'       => 'jltma-price-table-button elementor-button ' . $button_size . $button_animation,
-				]);
+				]) );
 			}
 		} else {
 			if (!empty($settings['ma_el_pricing_table_button_text'])) { ?>
 				<div class="jltma-price-table-bottom">
-					<a <?php echo $this->get_render_attribute_string('button'); ?>>
+					<a <?php echo $this->get_render_attribute_string('button'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 						<?php echo esc_html($settings['ma_el_pricing_table_button_text']); ?>
 					</a>
 				</div><!-- /.price-table-bottom -->
@@ -2462,7 +2462,7 @@ class Pricing_Table extends Master_Widget
 				$this->add_render_attribute('ribbon-wrapper', 'class', 'elementor-ribbon-' . esc_attr($settings['ma_el_pricing_table_ribbon_align']));
 			endif; ?>
 
-			<div <?php echo $this->get_render_attribute_string('ribbon-wrapper'); ?>>
+			<div <?php echo $this->get_render_attribute_string('ribbon-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 				<div class="jltma-price-table-ribbon-inner">
 					<?php echo esc_html($settings['ma_el_pricing_table_ribbon_title']); ?>
 				</div>
@@ -2538,9 +2538,9 @@ class Pricing_Table extends Master_Widget
 
 		?>
 
-		<section <?php echo $this->get_render_attribute_string('jltma_pricing_table'); ?>>
+		<section <?php echo $this->get_render_attribute_string('jltma_pricing_table'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 
-			<div <?php echo $this->get_render_attribute_string('ma_el_pricing_table_container'); ?>>
+			<div <?php echo $this->get_render_attribute_string('ma_el_pricing_table_container'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 
 				<?php if (
 					$ma_el_pricing_table_layout == 'three' ||

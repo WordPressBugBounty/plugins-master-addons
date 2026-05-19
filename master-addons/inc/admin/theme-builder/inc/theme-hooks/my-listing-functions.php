@@ -1,5 +1,10 @@
 <?php
 namespace MasterAddons\Inc\Admin\Theme_Builder\Theme_Hooks;
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder;
 
 if(!function_exists( 'jltma_get_hfc_render_comment' )){
@@ -33,7 +38,7 @@ if(!function_exists( 'jltma_get_hfc_render_header' )){
 
         do_action('masteraddons/template/before_header');
         echo '<div class="jltma-template-content-markup jltma-template-content-header">';
-            echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($master_template_ids[0]);
+            echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($master_template_ids[0]); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- returns safe Elementor-rendered HTML
         echo '</div>';
         do_action('masteraddons/template/after_header');
     }
@@ -55,7 +60,7 @@ if(!function_exists( 'jltma_hfc_render_footer' )){
 
         do_action('masteraddons/template/before_header');
         echo '<div class="jltma-template-content-markup jltma-template-content-header">';
-            echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($master_template_ids[1]);
+            echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($master_template_ids[1]); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- returns safe Elementor-rendered HTML
         echo '</div>';
         do_action('masteraddons/template/after_header');
     }

@@ -627,7 +627,7 @@ class CHATGPT extends Master_Widget {
 		$request_limit = $this->get_settings_for_display( 'request_limit' );
 		$expiration = constant($request_by);
 
-		$IP = $_SERVER['REMOTE_ADDR'];
+		$IP = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 		$cache = get_transient( 'liquid_chatgpt__' . $IP );
 
 		if ( false === $cache ) {

@@ -941,14 +941,14 @@ class Team_Member extends Master_Widget
 
 						<?php
 						if (isset($settings['ma_el_team_member_image']['id']) && $settings['ma_el_team_member_image']['id'] != "") {
-							echo $this->render_image($settings['ma_el_team_member_image']['id'], $settings);
+							echo $this->render_image($settings['ma_el_team_member_image']['id'], $settings); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- plugin method returns safe HTML
 						} else {
 							echo '<img src="' . esc_url($ma_el_team_member_image_url) . '" >';
 						} ?>
 
 						<div class="ma-el-member-details">
 							<h4 class="name">
-								<?php echo $this->parse_text_editor($settings['ma_el_team_member_name']); ?>
+								<?php echo $this->parse_text_editor($settings['ma_el_team_member_name']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>
 							</h4>
 							<p class="designation">
 								<?php echo esc_html($settings['ma_el_team_member_designation']); ?>
@@ -998,7 +998,7 @@ class Team_Member extends Master_Widget
 
 						<?php
 						if (isset($settings['ma_el_team_member_image']['id']) && $settings['ma_el_team_member_image']['id'] != "") {
-							echo $this->render_image($settings['ma_el_team_member_image']['id'], $settings);
+							echo $this->render_image($settings['ma_el_team_member_image']['id'], $settings); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- plugin method returns safe HTML
 						} else {
 							echo '<img src="' . esc_url($ma_el_team_member_image_url) . '" >';
 						} ?>
@@ -1006,15 +1006,15 @@ class Team_Member extends Master_Widget
 					</div>
 					<div class="jltma-team-member-content">
 						<h2 class="jltma-team-member-name">
-							<?php echo $this->parse_text_editor($settings['ma_el_team_member_name']); ?>
+							<?php echo $this->parse_text_editor($settings['ma_el_team_member_name']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>
 						</h2>
 
 						<span class="jltma-team-member-designation">
-							<?php echo $this->parse_text_editor($settings['ma_el_team_member_designation']); ?>
+							<?php echo $this->parse_text_editor($settings['ma_el_team_member_designation']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>
 						</span>
 
 						<p class="jltma-team-member-about">
-							<?php echo $this->parse_text_editor($settings['ma_el_team_member_description']); ?>
+							<?php echo $this->parse_text_editor($settings['ma_el_team_member_description']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>
 						</p>
 
 						<?php if ($settings['ma_el_team_member_enable_social_profiles'] == 'yes') { ?>

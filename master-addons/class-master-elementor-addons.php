@@ -808,14 +808,12 @@ if (!class_exists('Master_Elementor_Addons')) {
 			// Network Check
 			if (defined('NETWORK_ACTIVATED') && JLTMA_NETWORK_ACTIVATED) {
 				global $wpdb;
-				$blogs = $wpdb->get_results("
-				    SELECT blog_id
-				    FROM {$wpdb->blogs}
-				    WHERE site_id = '{$wpdb->siteid}'
-				    AND spam = '0'
-				    AND deleted = '0'
-				    AND archived = '0'
-				");
+				$blogs = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for multisite blog enumeration; result is not user-supplied
+					$wpdb->prepare(
+						"SELECT blog_id FROM {$wpdb->blogs} WHERE site_id = %d AND spam = '0' AND deleted = '0' AND archived = '0'",
+						$wpdb->siteid
+					)
+				);
 				$original_blog_id = get_current_blog_id();
 
 				foreach ($blogs as $blog_id) {
@@ -934,14 +932,12 @@ if (!class_exists('Master_Elementor_Addons')) {
 			// Network Check
 			if (defined('NETWORK_ACTIVATED') && JLTMA_NETWORK_ACTIVATED) {
 				global $wpdb;
-				$blogs = $wpdb->get_results("
-				    SELECT blog_id
-				    FROM {$wpdb->blogs}
-				    WHERE site_id = '{$wpdb->siteid}'
-				    AND spam = '0'
-				    AND deleted = '0'
-				    AND archived = '0'
-				");
+				$blogs = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for multisite blog enumeration; result is not user-supplied
+					$wpdb->prepare(
+						"SELECT blog_id FROM {$wpdb->blogs} WHERE site_id = %d AND spam = '0' AND deleted = '0' AND archived = '0'",
+						$wpdb->siteid
+					)
+				);
 				$original_blog_id = get_current_blog_id();
 
 				foreach ($blogs as $blog_id) {
@@ -1052,7 +1048,7 @@ if (!class_exists('Master_Elementor_Addons')) {
 
 		public function jltma_editor_scripts_css()
 		{
-			wp_enqueue_style('master-addons-editor', JLTMA_URL . '/assets/css/master-addons-editor.css');
+			wp_enqueue_style('master-addons-editor', JLTMA_URL . '/assets/css/master-addons-editor.css', array(), JLTMA_VER);
 		}
 
 
@@ -1081,12 +1077,14 @@ if (!class_exists('Master_Elementor_Addons')) {
 			if (apply_filters('jltma/setup_wizard_run', true) && get_transient('_master_addons_activation_redirect') && !REST_API::is_setup_complete()) {
 
 				// Don't redirect on multi-plugin activation
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of a WordPress-set admin query var for activation-redirect flow; not form processing.
 				if (isset($_GET['activate-multi'])) {
 					delete_transient('_master_addons_activation_redirect');
 					return;
 				}
 
 				// Already on the wizard page — don't redirect loop
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of the current admin page query var; not form processing.
 				if (isset($_GET['page']) && $_GET['page'] === 'master-addons-setup-wizard') {
 					delete_transient('_master_addons_activation_redirect');
 					return;
@@ -1104,8 +1102,9 @@ if (!class_exists('Master_Elementor_Addons')) {
 				if (get_option('ma_el_update_redirect', false)) {
 					delete_option('ma_el_update_redirect');
 					delete_transient('ma_el_update_redirect');
+					// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of a WordPress-set admin query var for activation-redirect flow; not form processing.
 					if (!isset($_GET['activate-multi']) && $this->is_elementor_activated()) {
-						wp_redirect('admin.php?page=master-addons-settings');
+						wp_safe_redirect('admin.php?page=master-addons-settings');
 						exit;
 					}
 				}
@@ -1154,7 +1153,7 @@ if (!class_exists('Master_Elementor_Addons')) {
 			\MasterAddons\Inc\Admin\Page_Importer::get_instance();
 
 			// Admin Settings
-			new Settings();
+			new \MasterAddons\Inc\Admin\Settings\Settings();
 
 			// Freemius hooks (filters, submenu reorder, etc.) — must load for all users
 			Freemius_Hooks::get_instance();
@@ -1239,12 +1238,12 @@ if (!class_exists('Master_Elementor_Addons')) {
 	public function jltma_ajax_plugin_action()
 	{
 		// Verify nonce
-		if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'jltma_plugin_action')) {
+		if (!isset($_POST['nonce']) || !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'jltma_plugin_action')) {
 			wp_send_json_error(__('Security check failed.', 'master-addons'));
 		}
 
-		$plugin_action = isset($_POST['plugin_action']) ? sanitize_text_field($_POST['plugin_action']) : '';
-		$plugin_slug = isset($_POST['plugin']) ? sanitize_text_field($_POST['plugin']) : '';
+		$plugin_action = isset($_POST['plugin_action']) ? sanitize_text_field( wp_unslash( $_POST['plugin_action'] ) ) : '';
+		$plugin_slug = isset($_POST['plugin']) ? sanitize_text_field( wp_unslash( $_POST['plugin'] ) ) : '';
 
 		if (empty($plugin_action) || empty($plugin_slug)) {
 			wp_send_json_error(__('Invalid request.', 'master-addons'));
@@ -1370,6 +1369,7 @@ if (!class_exists('Master_Elementor_Addons')) {
 
 	public function jltma_admin_notice_minimum_elementor_version()
 	{
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of the WordPress-set "activate" query var to suppress the default activation notice; not form processing.
 		if (isset($_GET['activate'])) {
 			unset($_GET['activate']);
 		}
@@ -1386,6 +1386,7 @@ if (!class_exists('Master_Elementor_Addons')) {
 
 	public function jltma_admin_notice_minimum_php_version()
 	{
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of the WordPress-set "activate" query var to suppress the default activation notice; not form processing.
 		if (isset($_GET['activate'])) {
 			unset($_GET['activate']);
 		}
@@ -1602,10 +1603,10 @@ if (!class_exists('Master_Elementor_Addons')) {
 		<?php
 	}
 
-		// Add this method to load the textdomain properly
-		public function load_textdomain() {
-			load_plugin_textdomain('master-addons', false, dirname(plugin_basename(__FILE__)) . '/languages/');
-		}
+		// WordPress.org-hosted plugins have their translations loaded
+		// automatically by WordPress (just-in-time, since 4.6), so a manual
+		// load_plugin_textdomain() call is no longer required.
+		public function load_textdomain() {}
 
 		// Check if Master Addons Pro is activated
 	public function is_master_addons_pro_activated($plugin_path = 'master-addons-pro/master-addons.php')

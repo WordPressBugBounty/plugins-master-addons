@@ -754,14 +754,19 @@ class Assets_Manager
      */
     private static function get_global_assets()
     {
-        return [
-            'font-awesome-5-all-css' => [
+        $assets = [];
+
+        // Use Font Awesome bundled with Elementor (a required dependency) instead of a CDN.
+        if (defined('ELEMENTOR_ASSETS_URL')) {
+            $assets['font-awesome-5-all-css'] = [
                 'type'    => 'css',
-                'url'     => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+                'url'     => ELEMENTOR_ASSETS_URL . 'lib/font-awesome/css/all.min.css',
                 'deps'    => [],
                 'version' => '6.5.1',
-            ],
-        ];
+            ];
+        }
+
+        return $assets;
     }
 
     /**

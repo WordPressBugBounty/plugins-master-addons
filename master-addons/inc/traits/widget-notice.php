@@ -88,6 +88,7 @@ trait Widget_Notice
                 [
                     'type'            => Controls_Manager::RAW_HTML,
                     'raw'             => sprintf(
+                        /* translators: %1$s: Opening anchor tag, %2$s: Closing anchor tag. */
                         esc_html__('%1$s Live Demo %2$s', 'master-addons'),
                         '<a href="' . esc_url($demo_url) . '" target="_blank" rel="noopener">',
                         '</a>'
@@ -103,6 +104,7 @@ trait Widget_Notice
                 [
                     'type'            => Controls_Manager::RAW_HTML,
                     'raw'             => sprintf(
+                        /* translators: %1$s: Opening anchor tag, %2$s: Closing anchor tag. */
                         esc_html__('%1$s Documentation %2$s', 'master-addons'),
                         '<a href="' . esc_url($docs_url) . '?utm_source=widget&utm_medium=panel&utm_campaign=dashboard" target="_blank" rel="noopener">',
                         '</a>'
@@ -118,6 +120,7 @@ trait Widget_Notice
                 [
                     'type'            => Controls_Manager::RAW_HTML,
                     'raw'             => sprintf(
+                        /* translators: %1$s: Opening anchor tag, %2$s: Closing anchor tag. */
                         esc_html__('%1$s Watch Video Tutorial %2$s', 'master-addons'),
                         '<a href="' . esc_url($tuts_url) . '" target="_blank" rel="noopener">',
                         '</a>'

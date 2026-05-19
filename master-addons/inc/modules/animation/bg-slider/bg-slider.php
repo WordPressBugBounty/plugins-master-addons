@@ -2,6 +2,10 @@
 
 namespace MasterAddons\Modules\Animation;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use \Elementor\Element_Base;
 use \Elementor\Controls_Manager;
 use \Elementor\Group_Control_Image_Size;

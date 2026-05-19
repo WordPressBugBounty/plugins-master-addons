@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Upgrade script for version 3.0.0
  * Migrates legacy option keys to unified Settings class keys.
@@ -6,6 +7,10 @@
  * Runs inside Upgrades::run_updates() via include — $this refers to the Upgrades instance.
  */
 namespace MasterAddons\Inc\Classes;
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 
 use MasterAddons\Inc\Admin\Settings\Settings;
 

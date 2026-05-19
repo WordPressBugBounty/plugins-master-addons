@@ -217,12 +217,12 @@ class Popup_Templates {
         $categories = $this->get_categories();
         ?>
         <div class="wrap ma-popup-templates">
-            <h1><?php _e('Popup Templates', 'master-addons'); ?></h1>
-            <p><?php _e('Choose from our pre-designed templates to get started quickly.', 'master-addons'); ?></p>
-            
+            <h1><?php esc_html_e('Popup Templates', 'master-addons'); ?></h1>
+            <p><?php esc_html_e('Choose from our pre-designed templates to get started quickly.', 'master-addons'); ?></p>
+
             <div class="ma-template-categories">
                 <button class="ma-category-filter active" data-category="all">
-                    <?php _e('All Templates', 'master-addons'); ?>
+                    <?php esc_html_e('All Templates', 'master-addons'); ?>
                 </button>
                 <?php foreach ($categories as $key => $label) : ?>
                     <button class="ma-category-filter" data-category="<?php echo esc_attr($key); ?>">
@@ -236,7 +236,7 @@ class Popup_Templates {
                     <div class="ma-template-card" data-category="<?php echo esc_attr($template['category']); ?>">
                         <div class="ma-template-preview">
                             <div class="ma-template-content">
-                                <?php echo $template['content']; ?>
+                                <?php echo wp_kses_post( $template['content'] ); ?>
                             </div>
                         </div>
                         <div class="ma-template-info">
@@ -248,7 +248,7 @@ class Popup_Templates {
                             </div>
                             <button class="button button-primary ma-use-template" 
                                     data-template="<?php echo esc_attr($key); ?>">
-                                <?php _e('Use This Template', 'master-addons'); ?>
+                                <?php esc_html_e('Use This Template', 'master-addons'); ?>
                             </button>
                         </div>
                     </div>

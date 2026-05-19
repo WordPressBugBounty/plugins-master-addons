@@ -22,7 +22,7 @@ class Assets
     public function jltma_admin_js()
     {
         echo "<script type='text/javascript'>\n";
-        echo $this->jltma_common_js();
+        echo $this->jltma_common_js(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- outputs safe JS built by jltma_common_js()
         echo "\n</script>";
     }
 
@@ -30,7 +30,7 @@ class Assets
     public function jltma_common_js()
     {
         ob_start(); ?>
-        var masteraddons = { resturl: '<?php echo get_rest_url() . 'masteraddons/v2/'; ?>', }
+        var masteraddons = { resturl: '<?php echo esc_url( get_rest_url() . 'masteraddons/v2/' ); ?>', }
         <?php
         $output = ob_get_contents();
         ob_end_clean();

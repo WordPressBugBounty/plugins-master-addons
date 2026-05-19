@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <div class="jltma-pop-contents-body" id="jltma_hf_modal_body">
 
     <div class="jltma-spinner"></div>
@@ -169,7 +170,7 @@
         <!-- Modal Footer - Outside tabs, always visible -->
         <div class="jltma-modal-footer">
             <button type="button" class="jltma-btn-editor jltma-save-btn jltma-color-three">
-                <img class="mr-1 mb-1" src="<?php echo JLTMA_IMAGE_DIR . 'icon.png'; ?>" alt="Master Addons Logo">
+                <img class="mr-1 mb-1" src="<?php echo esc_url( JLTMA_IMAGE_DIR . 'icon.png' ); ?>" alt="Master Addons Logo">
                 <?php esc_html_e('Edit with Elementor', 'master-addons'); ?>
             </button>
             <button type="submit" class="jltma-hf-save jltma-save-btn jltma-color-two">

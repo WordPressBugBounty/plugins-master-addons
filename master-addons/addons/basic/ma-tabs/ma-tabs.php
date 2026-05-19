@@ -109,7 +109,7 @@ class Tabs extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -125,7 +125,7 @@ class Tabs extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -141,7 +141,7 @@ class Tabs extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -157,7 +157,7 @@ class Tabs extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -894,7 +894,7 @@ class Tabs extends Master_Widget
 		$column_order = isset($settings['ma_el_tabs_content_style']) ? $settings['ma_el_tabs_content_style'] : "";
 ?>
 
-		<div <?php echo $this->get_render_attribute_string('ma_el_tab_wrapper'); ?> data-tabs>
+		<div <?php echo $this->get_render_attribute_string('ma_el_tab_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safely escaped HTML attributes ?> data-tabs>
 
 			<?php if (isset($settings['ma_el_tabs_preset']) && $settings['ma_el_tabs_preset'] == "five") { ?>
 				<div class="jltma-col-<?php echo esc_attr($ma_el_tabs_left_cols[0]); ?> <?php
@@ -926,7 +926,7 @@ class Tabs extends Master_Widget
                                     }
                             } ?>
 							<span class="jltma--tab-title">
-								<?php echo $this->parse_text_editor($tab['ma_el_tab_title']); ?>
+								<?php echo $this->parse_text_editor($tab['ma_el_tab_title']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor parse_text_editor() returns sanitized HTML ?>
 							</span>
 						</li>
 					<?php } ?>
@@ -954,11 +954,11 @@ class Tabs extends Master_Widget
 							if ($tab['ma_tabs_content_type'] == 'content') {
 								echo do_shortcode($tab['ma_el_tab_content']);
 							} else if (in_array('section', $pro_content_types) && $tab['ma_tabs_content_type'] == 'section' && !empty($tab['saved_section'])) {
-								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['saved_section']);
+								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['saved_section']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_builder_content_for_display() returns sanitized frontend markup
 							} else if (in_array('template', $pro_content_types) && $tab['ma_tabs_content_type'] == 'template' && !empty($tab['templates'])) {
-								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['templates']);
+								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['templates']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_builder_content_for_display() returns sanitized frontend markup
 							} else if (in_array('widget', $pro_content_types) && $tab['ma_tabs_content_type'] == 'widget' && !empty($tab['saved_widget'])) {
-								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['saved_widget']);
+								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['saved_widget']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_builder_content_for_display() returns sanitized frontend markup
 							}
 							?>
 						</div><!-- jltma--advance-tab-content -->

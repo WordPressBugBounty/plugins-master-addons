@@ -3,14 +3,16 @@
 /**
  * Plugin Name: Master Addons for Elementor
  * Description: Master Addons is easy and must have Elementor Addons for WordPress Page Builder. Clean, Modern, Hand crafted designed Addons blocks.
- * Plugin URI: https://master-addons.com/all-widgets/
+ * Plugin URI: https://master-addons.com/widgets-and-extensions/
  * Author: Jewel Theme
  * Author URI: https://master-addons.com
  * Text Domain: master-addons
  * Domain Path: /languages
- * Version: 3.0.9
- * Elementor tested up to: 4.0.3
- * Elementor Pro tested up to: 4.0.3
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Version: 3.1.0
+ * Elementor tested up to: 4.0.4
+ * Elementor Pro tested up to: 4.0.4
  * Wordfence Vendor Key: qgxtflvqaabgarz4gu9nozmceloswzrg
  *
  */

@@ -61,8 +61,7 @@ class Search extends Master_Widget
         $posts      = array();
 
         foreach ($post_types as $post_type) {
-            $labels           = get_post_type_labels($post_type);
-            $posts[$post_type->name] = $labels->name;
+            $posts[$post_type->name] = $post_type->label;
         }
 
         return $posts;
@@ -658,7 +657,7 @@ class Search extends Master_Widget
         ]);
 ?>
 
-        <div <?php echo $this->get_render_attribute_string('ma_el_search_wrap'); ?>>
+        <div <?php echo $this->get_render_attribute_string('ma_el_search_wrap'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safely escaped HTML attributes ?>>
 
             <?php if ($jltma_search_type == "icon") { ?>
 

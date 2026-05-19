@@ -43,10 +43,10 @@ class Current_Date_Time extends Tag
 				'options' => [
 					'default' => esc_html__('Default', 'master-addons' ),
 					'' => esc_html__('None', 'master-addons' ),
-					'F j, Y' => date('F j, Y'),
-					'Y-m-d' => date('Y-m-d'),
-					'm/d/Y' => date('m/d/Y'),
-					'd/m/Y' => date('d/m/Y'),
+					'F j, Y' => wp_date('F j, Y'),
+					'Y-m-d' => wp_date('Y-m-d'),
+					'm/d/Y' => wp_date('m/d/Y'),
+					'd/m/Y' => wp_date('d/m/Y'),
 					'custom' => esc_html__('Custom', 'master-addons' ),
 				],
 				'default' => 'default',
@@ -61,9 +61,9 @@ class Current_Date_Time extends Tag
 				'options' => [
 					'default' => esc_html__('Default', 'master-addons' ),
 					'' => esc_html__('None', 'master-addons' ),
-					'g:i a' => date('g:i a'),
-					'g:i A' => date('g:i A'),
-					'H:i' => date('H:i'),
+					'g:i a' => wp_date('g:i a'),
+					'g:i A' => wp_date('g:i A'),
+					'H:i' => wp_date('H:i'),
 				],
 				'default' => 'default',
 				'condition' => [

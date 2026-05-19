@@ -142,11 +142,11 @@ class Elementor_Integration {
     }
 
     private function is_popup_editor() {
-        if (!is_admin() || !isset($_GET['action']) || $_GET['action'] !== 'elementor') {
+        if (!is_admin() || !isset($_GET['action']) || $_GET['action'] !== 'elementor') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only admin context detection, no data processed
             return false;
         }
 
-        $post_id = isset($_GET['post']) ? intval($_GET['post']) : 0;
+        $post_id = isset($_GET['post']) ? intval($_GET['post']) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only admin context detection, no data processed
         if (!$post_id) {
             return false;
         }

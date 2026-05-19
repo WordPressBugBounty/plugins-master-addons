@@ -542,7 +542,7 @@ class Call_to_Action extends Master_Widget
 
 ?>
 
-		<section <?php echo $this->get_render_attribute_string('ma_el_call_to_action_wrapper'); ?>>
+		<section <?php echo $this->get_render_attribute_string('ma_el_call_to_action_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor::get_render_attribute_string returns sanitized HTML attributes ?>>
 			<div class="<?php echo esc_attr($settings['ma_el_call_to_action_style_preset']); ?>">
 				<div class="jltma-call-action-content">
 					<div class="jltma-row">
@@ -556,7 +556,7 @@ class Call_to_Action extends Master_Widget
 										if ($is_new || $migrated) {
 											Icons_Manager::render_icon($settings['ma_el_call_to_action_icon'], ['aria-hidden' => 'true']);
 										} else {
-											echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>';
+											echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor::get_render_attribute_string returns sanitized HTML attributes
 										}
 										?>
 									</div>
@@ -566,7 +566,7 @@ class Call_to_Action extends Master_Widget
 											<?php echo wp_kses_post($this->parse_text_editor($settings['ma_el_call_to_action_title'])); ?>
 										</h3>
 										<p class="jltma-call-action-description">
-											<?php echo $this->parse_text_editor($settings['ma_el_call_to_action_content_desc']); ?>
+											<?php echo wp_kses_post( $this->parse_text_editor($settings['ma_el_call_to_action_content_desc']) ); ?>
 										</p>
 									</div>
 
@@ -577,13 +577,13 @@ class Call_to_Action extends Master_Widget
 								</h3>
 
 								<p class="jltma-call-action-description">
-									<?php echo $this->parse_text_editor($settings['ma_el_call_to_action_content_desc']); ?>
+									<?php echo wp_kses_post( $this->parse_text_editor($settings['ma_el_call_to_action_content_desc']) ); ?>
 								</p>
 							<?php } ?>
 
 						</div>
 						<div class="jltma-col-3 text-right">
-							<a <?php echo $this->get_render_attribute_string('jltma_cta_link'); ?>>
+							<a <?php echo $this->get_render_attribute_string('jltma_cta_link'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor::get_render_attribute_string returns sanitized HTML attributes ?>>
 								<?php echo esc_html($this->parse_text_editor($settings['ma_el_call_to_action_button_text'])); ?>
 							</a>
 						</div>

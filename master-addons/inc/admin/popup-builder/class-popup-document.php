@@ -183,7 +183,7 @@ class Popup_Document extends \Elementor\Core\Base\Document
             'type' => \Elementor\Controls_Manager::CHOOSE,
             'options' => [
                 '1' => [
-                    'title' => esc_html__('', 'master-addons'),
+                    'title' => '',
                     'icon' => 'eicon-lock',
                 ],
             ],
@@ -198,7 +198,7 @@ class Popup_Document extends \Elementor\Core\Base\Document
             'type' => \Elementor\Controls_Manager::CHOOSE,
             'options' => [
                 '1' => [
-                    'title' => esc_html__('', 'master-addons'),
+                    'title' => '',
                     'icon' => 'eicon-lock',
                 ],
             ],
@@ -702,7 +702,7 @@ class Popup_Document extends \Elementor\Core\Base\Document
             'type' => \Elementor\Controls_Manager::CHOOSE,
             'options' => [
                 '1' => [
-                    'title' => esc_html__('', 'master-addons'),
+                    'title' => '',
                     'icon' => 'eicon-lock',
                 ],
             ],

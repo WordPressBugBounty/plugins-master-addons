@@ -55,9 +55,9 @@ class Post_Time extends Tag
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'default' => esc_html__('Default', 'master-addons' ),
-					'g:i a' => date('g:i a'),
-					'g:i A' => date('g:i A'),
-					'H:i' => date('H:i'),
+					'g:i a' => wp_date('g:i a'),
+					'g:i A' => wp_date('g:i A'),
+					'H:i' => wp_date('H:i'),
 					'custom' => esc_html__('Custom', 'master-addons' ),
 				],
 				'default' => 'default',

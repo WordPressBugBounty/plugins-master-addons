@@ -29,14 +29,14 @@ class Ajax_Handlers
      */
     public function get_kit_templates_unified()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated,WordPress.Security.NonceVerification.Missing -- collecting nonce for immediate verification
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
         // Get parameters
-        $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : 'all';
-        $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
+        $category = isset($_POST['category']) ? sanitize_text_field( wp_unslash( $_POST['category'] ) ) : 'all';
+        $search = isset($_POST['search']) ? sanitize_text_field( wp_unslash( $_POST['search'] ) ) : '';
         $page = isset($_POST['page']) ? absint($_POST['page']) : 1;
         $per_page = 12;
 
@@ -228,14 +228,14 @@ class Ajax_Handlers
      */
     public function import_single_template_kit()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'master_addons_nonce') || !current_user_can('import')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'master_addons_nonce') || !current_user_can('import')) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated,WordPress.Security.NonceVerification.Missing -- collecting nonce for immediate verification
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field($_POST['kit_id']) : '';
-        $template_slug = isset($_POST['template_slug']) ? sanitize_text_field($_POST['template_slug']) : '';
-        $template_title = isset($_POST['template_title']) ? sanitize_text_field($_POST['template_title']) : '';
+        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field( wp_unslash( $_POST['kit_id'] ) ) : '';
+        $template_slug = isset($_POST['template_slug']) ? sanitize_text_field( wp_unslash( $_POST['template_slug'] ) ) : '';
+        $template_title = isset($_POST['template_title']) ? sanitize_text_field( wp_unslash( $_POST['template_title'] ) ) : '';
 
         if (empty($kit_id) || empty($template_slug)) {
             wp_send_json_error(['message' => 'Kit ID and template slug are required']);
@@ -273,7 +273,7 @@ class Ajax_Handlers
      */
     public function refresh_template_kit_cache()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated,WordPress.Security.NonceVerification.Missing -- collecting nonce for immediate verification
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
@@ -289,7 +289,7 @@ class Ajax_Handlers
                 'total_templates' => $stats['total_templates'],
                 'refreshed_data' => $refreshed_data,
                 'cache_size' => $stats['cache_size'],
-                'last_update' => date('Y-m-d H:i:s', $stats['last_update'] ?? time())
+                'last_update' => wp_date('Y-m-d H:i:s', $stats['last_update'] ?? time())
             ]);
         } else {
             wp_send_json_error(['message' => 'Cache manager not available']);
@@ -301,13 +301,13 @@ class Ajax_Handlers
      */
     public function cache_kit_images()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated,WordPress.Security.NonceVerification.Missing -- collecting nonce for immediate verification
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field($_POST['kit_id']) : '';
-        $kit_category = isset($_POST['kit_category']) ? sanitize_text_field($_POST['kit_category']) : 'all';
+        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field( wp_unslash( $_POST['kit_id'] ) ) : '';
+        $kit_category = isset($_POST['kit_category']) ? sanitize_text_field( wp_unslash( $_POST['kit_category'] ) ) : 'all';
 
         if (empty($kit_id)) {
             wp_send_json_error(['message' => 'Kit ID is required']);
@@ -376,12 +376,12 @@ class Ajax_Handlers
      */
     public function get_kit_manifest()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated,WordPress.Security.NonceVerification.Missing -- collecting nonce for immediate verification
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }
 
-        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field($_POST['kit_id']) : '';
+        $kit_id = isset($_POST['kit_id']) ? sanitize_text_field( wp_unslash( $_POST['kit_id'] ) ) : '';
 
         if (empty($kit_id)) {
             wp_send_json_error(['message' => 'Kit ID is required']);
@@ -415,7 +415,7 @@ class Ajax_Handlers
      */
     public function update_purchased_kits_urls()
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
+        if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated,WordPress.Security.NonceVerification.Missing -- collecting nonce for immediate verification
             wp_send_json_error(['message' => 'Permission denied']);
             return;
         }

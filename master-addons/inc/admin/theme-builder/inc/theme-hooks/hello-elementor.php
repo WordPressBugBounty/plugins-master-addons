@@ -1,5 +1,11 @@
 <?php
+
 namespace MasterAddons\Inc\Admin\Theme_Builder\Theme_Hooks;
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder;
 
 /**

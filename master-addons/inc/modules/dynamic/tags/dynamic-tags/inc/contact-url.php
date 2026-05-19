@@ -319,15 +319,15 @@ class Contact_URL extends Tag
 	{
 		$time = strtotime($date);
 		if ($all_day) {
-			return date('Ymd\/Ymd', $time);
+			return gmdate('Ymd\/Ymd', $time);
 		}
-		return date('Ymd\THis', $time);
+		return gmdate('Ymd\THis', $time);
 	}
 
 	private function date_to_ics($date)
 	{
 		$time = strtotime($date);
-		return date('Y-m-d\Th:i:s', $time);
+		return gmdate('Y-m-d\Th:i:s', $time);
 	}
 
 	private function escape_space_in_url($url)
@@ -394,11 +394,11 @@ class Contact_URL extends Tag
 		];
 
 		if (!empty($settings['event_start_date'])) {
-			$build_parts['st'] = urlencode(date('Ymd\This', strtotime($settings['event_start_date'])));
+			$build_parts['st'] = urlencode(gmdate('Ymd\This', strtotime($settings['event_start_date'])));
 		}
 
 		if (!empty($settings['event_end_date'])) {
-			$build_parts['et'] = urlencode(date('Ymd\This', strtotime($settings['event_end_date'])));
+			$build_parts['et'] = urlencode(gmdate('Ymd\This', strtotime($settings['event_end_date'])));
 		}
 
 		return add_query_arg($build_parts, $link);

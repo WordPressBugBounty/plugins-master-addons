@@ -4921,8 +4921,8 @@ class Nav_Menu extends Master_Widget
             'aria-label'     => __('Toggle menu', 'master-addons'),
         ));
 
-        echo '<div ' . $this->get_render_attribute_string('toggle-container') . '>' .
-            '<div class="' . $this->get_widget_class() . '__toggle">';
+        echo '<div ' . $this->get_render_attribute_string('toggle-container') . '>' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
+            '<div class="' . esc_attr( $this->get_widget_class() ) . '__toggle">';
 
         if ('text' !== $dropdown_toggle_type) {
             $dropdown_toggle_icon = $settings['dropdown_toggle_icon'];
@@ -4951,7 +4951,7 @@ class Nav_Menu extends Master_Widget
         }
 
         if ('icon' !== $dropdown_toggle_type) {
-            echo '<span class="' . $this->get_widget_class() . '__toggle-label">';
+            echo '<span class="' . esc_attr( $this->get_widget_class() ) . '__toggle-label">';
 
             $dropdown_toggle_text = $settings['dropdown_toggle_text'];
 
@@ -5045,7 +5045,7 @@ class Nav_Menu extends Master_Widget
             $this->add_render_attribute('dropdown-menu', 'class', 'jltma-vertical-type-' . esc_attr($settings['vertical_menu_type']));
         }
 
-        echo '<nav ' . $this->get_render_attribute_string('dropdown-menu') . '>';
+        echo '<nav ' . $this->get_render_attribute_string('dropdown-menu') . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
 
         if ('offcanvas' === $dropdown_menu_type) {
             $this->get_dropdown_close();
@@ -5100,8 +5100,8 @@ class Nav_Menu extends Master_Widget
             'jltma-menu-dropdown-type-' . esc_attr($dropdown_menu_type),
         ));
 
-        echo '<div ' . $this->get_render_attribute_string('dropdown-close-container') . '">';
-        echo '<div class="' . $this->get_widget_class() . '__dropdown-close">';
+        echo '<div ' . $this->get_render_attribute_string('dropdown-close-container') . '">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
+        echo '<div class="' . esc_attr( $this->get_widget_class() ) . '__dropdown-close">';
 
         $close_icon = $settings['close_icon'];
 
@@ -5114,7 +5114,7 @@ class Nav_Menu extends Master_Widget
         }
 
         if ('icon' !== $close_type) {
-            echo '<span class="' . $this->get_widget_class() . '__dropdown-close-label">';
+            echo '<span class="' . esc_attr( $this->get_widget_class() ) . '__dropdown-close-label">';
 
             if ('' !== $close_text) {
                 echo esc_html($close_text);
@@ -5220,8 +5220,8 @@ class Nav_Menu extends Master_Widget
                 }
             }
 
-            echo '<nav ' . $this->get_render_attribute_string('main-menu') . '>' .
-                $menu_html .
+            echo '<nav ' . $this->get_render_attribute_string('main-menu') . '>' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
+                $menu_html . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nav_menu output
                 '</nav>';
         } else {
             $this->add_render_attribute('main-menu', 'data-icon-main', $indicator_submenu_icon);

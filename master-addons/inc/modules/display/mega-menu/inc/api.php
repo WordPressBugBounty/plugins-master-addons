@@ -25,7 +25,7 @@ class Megamenu_Api
             return;
         }
 
-        $nonce = $_SERVER['HTTP_X_WP_NONCE'];
+        $nonce = isset( $_SERVER['HTTP_X_WP_NONCE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_WP_NONCE'] ) ) : '';
         if ( ! wp_verify_nonce($nonce, 'wp_rest') ) {
             wp_send_json_error('Nonce verification failed.', 403);
         }

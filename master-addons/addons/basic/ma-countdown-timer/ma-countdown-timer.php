@@ -59,7 +59,7 @@ class Countdown_Timer extends Master_Widget
 			[
 				'label'       => esc_html__('Countdown Date & Time', 'master-addons' ),
 				'type'        => Controls_Manager::DATE_TIME,
-				'default'     => date("Y-m-d H:i:s", strtotime("+ 52 week")),
+				'default'     => wp_date("Y-m-d H:i:s", strtotime("+ 52 week")),
 				'description' => esc_html__('Set Datetime here', 'master-addons' ),
 			]
 		);

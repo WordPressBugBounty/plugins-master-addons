@@ -163,7 +163,7 @@ class Shortcode_Manager {
                 foreach ($includes['css_libraries'] as $css) {
                     if (!empty($css['handle']) && !empty($css['src'])) {
                         $deps = !empty($css['dependencies']) && is_array($css['dependencies']) ? $css['dependencies'] : [];
-                        wp_enqueue_style($css['handle'], $css['src'], $deps);
+                        wp_enqueue_style($css['handle'], $css['src'], $deps, JLTMA_VER);
                     }
                 }
             }
@@ -173,7 +173,7 @@ class Shortcode_Manager {
                 foreach ($includes['js_libraries'] as $js) {
                     if (!empty($js['handle']) && !empty($js['src'])) {
                         $deps = !empty($js['dependencies']) && is_array($js['dependencies']) ? $js['dependencies'] : [];
-                        wp_enqueue_script($js['handle'], $js['src'], $deps, null, true);
+                        wp_enqueue_script($js['handle'], $js['src'], $deps, JLTMA_VER, true);
                     }
                 }
             }

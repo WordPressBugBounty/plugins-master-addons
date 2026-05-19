@@ -156,11 +156,11 @@ class JLTMA_Template_Controls
 		if ($template) {
 ?>
 			<div class="elementor-template jltma-template">
-				<?php echo $template; ?>
+				<?php echo $template; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- output of Elementor get_builder_content_for_display(), already sanitized HTML ?>
 			</div>
 <?php
 		} else {
-			_e('No template selected.', 'master-addons' );
+			esc_html_e('No template selected.', 'master-addons' );
 		}
 	}
 }

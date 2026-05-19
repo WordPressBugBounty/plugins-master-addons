@@ -77,6 +77,6 @@ class Shortcode extends Tag
 			$value = wp_kses_post($value);
 		}
 
-		echo $value; // Previously Escaped
+		echo $value; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $value is already sanitized via wp_kses_post() above
 	}
 }

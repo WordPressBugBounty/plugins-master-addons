@@ -348,7 +348,7 @@ class Progress_Bars extends Master_Widget
 
 		$output .= '</div><!-- .jltma-stats-bars -->';
 
-		echo apply_filters('ma_el_stats_bars_output', $output, $settings);
+		echo apply_filters('ma_el_stats_bars_output', $output, $settings); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $output is plugin-constructed HTML built with escaped values; filter follows WP convention for HTML output filters
 	}
 
 	protected function content_template()

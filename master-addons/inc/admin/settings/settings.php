@@ -2,6 +2,10 @@
 
 namespace MasterAddons\Inc\Admin\Settings;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use MasterAddons\Inc\Admin\Config;
 use MasterAddons\Inc\Admin\REST_API;
 use MasterAddons\Inc\Classes\Helper;
@@ -692,7 +696,7 @@ class Settings
     {
         if (!isset(self::PROXY_MAP[$name])) {
             throw new \InvalidArgumentException(
-                sprintf('Unknown settings group "%s". Valid groups: %s', $name, implode(', ', array_keys(self::PROXY_MAP)))
+                esc_html(sprintf('Unknown settings group "%s". Valid groups: %s', $name, implode(', ', array_keys(self::PROXY_MAP))))
             );
         }
 
@@ -723,7 +727,7 @@ class Settings
         }
 
         throw new \BadMethodCallException(
-            sprintf('Call to undefined method %s::%s()', static::class, $name)
+            esc_html(sprintf('Call to undefined method %s::%s()', static::class, $name))
         );
     }
 

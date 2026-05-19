@@ -71,7 +71,7 @@ class Bbtheme {
 		?>
 			<header id="masthead" itemscope="itemscope" itemtype="https://schema.org/WPHeader">
 				<div class="jltma-template-content-markup jltma-template-content-header">
-					<?php echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($this->header); ?>
+					<?php echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($this->header); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- method returns safe Elementor-rendered HTML ?>
 				</div>
 			</header>
 			<style>
@@ -93,7 +93,7 @@ class Bbtheme {
 			do_action('masteraddons/template/before_footer'); ?>
 
 				<footer itemscope="itemscope" itemtype="https://schema.org/WPFooter">
-				<?php echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($this->footer); ; ?>
+				<?php echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($this->footer); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- method returns safe Elementor-rendered HTML ?>
 				</footer>
 
 			<?php 

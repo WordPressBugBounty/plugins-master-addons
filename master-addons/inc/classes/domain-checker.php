@@ -18,10 +18,8 @@ class Domain_Checker
     {
 
         if ($debug) {
-            error_reporting(E_ALL);
             $error_reporting = true;
         } else {
-            error_reporting(0);
             $error_reporting = false;
         }
     }
@@ -464,7 +462,8 @@ class Domain_Checker
     public function checkDomainNameAvailabilty($domain_name, $whois_server, $find_text)
     {
 
-        // Open a socket connection to the whois server
+        // Open a socket connection to the whois server.
+        // phpcs:disable WordPress.WP.AlternativeFunctions -- WHOIS is a raw TCP protocol on port 43; the WP HTTP API only supports HTTP/HTTPS and cannot perform WHOIS lookups, so a direct socket is required here.
         $con = fsockopen($whois_server, 43);
         if (!$con) return false;
 
@@ -478,6 +477,7 @@ class Domain_Checker
 
         // Close the connection
         fclose($con);
+        // phpcs:enable WordPress.WP.AlternativeFunctions
 
         // Check the Whois server response
         if (strpos(strtolower($response), strtolower($find_text)))

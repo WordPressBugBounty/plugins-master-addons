@@ -2,6 +2,10 @@
 
 namespace MasterAddons\Inc\Classes\Notifications;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use MasterAddons\Inc\Classes\Notifications\Base\User_Data;
 use MasterAddons\Inc\Classes\Notifications\Model\Notice;
 
@@ -97,20 +101,20 @@ if (!class_exists('What_We_Collect')) {
 			<div class="jltma-notice-review-box jltma-wwc">
 				<p>
 					<?php
-					// translators: %1$s: Improvement Notice for "Master Addons".
-					echo sprintf(
+					echo wp_kses_post( sprintf(
+						/* translators: %1$s: Plugin name "Master Addons". */
 						__('Want to help make <strong>%1$s</strong> even more awesome? Allow %1$s to collect non-sensitive diagnostic data and usage information.', 'master-addons'),
-						__('Master Addons', 'master-addons')
-					);
+						esc_html__('Master Addons', 'master-addons')
+					) );
 					?>
 					(<?php $this->what_we_collect_link(); ?>)</p>
 				<div class="jltma-wwc-content" style="display:none">
-					<?php 
-					// translators: %1$s: Server Enviroment Details.
-					echo sprintf(
+					<?php
+					echo wp_kses_post( sprintf(
+						/* translators: %1$s: URL to the Privacy Policy page. */
 						__('Server environment details (php, mysql, server, WordPress versions), Number of users in your site, Site language, Number of active and inactive plugins, Local or Production Site, IP Address, Site name and url, Your name and email address etc. No sensitive data is tracked. Learn more about our <a href="%1$s" target="_blank">Privacy Policy</a>, how we handle and collects your data.', 'master-addons'),
 						esc_url('https://master-addons.com/privacy-policy')
-					); ?>
+					) ); ?>
 				</div>
 			</div>
 

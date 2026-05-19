@@ -636,7 +636,7 @@ class Creative_Button extends Master_Widget
 ?>
 
 		<div class="jltma-creative-button-wrapper">
-			<a <?php echo $this->get_render_attribute_string('ma_el_creative_button'); ?>>
+			<a <?php echo $this->get_render_attribute_string('ma_el_creative_button'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string ?>>
 				<?php
 				$has_icon      = !empty($settings['ma_el_creative_button_icon']['value']);
 				$icon_position = $settings['ma_el_creative_button_icon_alignment'];

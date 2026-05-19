@@ -586,7 +586,7 @@ class Counter_Up extends Master_Widget
 				]);
 
 				echo '<div class="jltma-counterup-column">';
-				echo '<div class="jltma-counterup jltma-counterup-icon-' . esc_attr($settings['jltma_counterup_icon_align']) . '"  ' . $this->get_render_attribute_string($title_settings_key) . '>';
+				echo '<div class="jltma-counterup jltma-counterup-icon-' . esc_attr($settings['jltma_counterup_icon_align']) . '"  ' . $this->get_render_attribute_string($title_settings_key) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns sanitized HTML attributes
 				echo '<span class="jltma-counterup-icon counterup-icon-text-' . esc_attr($settings['jltma_counterup_icon_align']) . '">';
 
 				if (!empty($list['icon']) && ($list['icon_type'] == 'icon')) {
@@ -599,8 +599,8 @@ class Counter_Up extends Master_Widget
 				echo '</span>';
 				if (!empty($list['number']) || ($list['title'])) :
 					echo '<div class="jltma-counterup-content">';
-					$list['number'] ? printf('<div class="jltma-counter-up-number-section"><h3 class="jltma-counter-up-number-prefix">%1$s</h3><h3 class="jltma-counter-up-number">%2$s</h3><h3 class="jltma-counter-up-number-prefix">%3$s</h3></div>', $this->parse_text_editor($list['number_prefix']), esc_attr($list['number']), $this->parse_text_editor($list['number_suffix'])) : '';
-					$list['title'] ? printf('<span class="jltma-counterup-title">%s</span>', $this->parse_text_editor($list['title'])) : '';
+					$list['number'] ? printf('<div class="jltma-counter-up-number-section"><h3 class="jltma-counter-up-number-prefix">%1$s</h3><h3 class="jltma-counter-up-number">%2$s</h3><h3 class="jltma-counter-up-number-prefix">%3$s</h3></div>', wp_kses_post( $this->parse_text_editor($list['number_prefix']) ), esc_attr($list['number']), wp_kses_post( $this->parse_text_editor($list['number_suffix']) ) ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor output wrapped in wp_kses_post
+					$list['title'] ? printf('<span class="jltma-counterup-title">%s</span>', wp_kses_post( $this->parse_text_editor($list['title']) ) ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor output wrapped in wp_kses_post
 					echo '</div>';
 				endif;
 				echo '</div>';

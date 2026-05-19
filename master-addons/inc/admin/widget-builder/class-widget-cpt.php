@@ -130,8 +130,8 @@ class Widget_CPT {
         $category_name = ucfirst(str_replace('_', ' ', $category));
 
         echo '<span class="jltma-widget-category">' . esc_html($category_name) . '</span>';
-        echo '<br><a href="#" class="jltma-widget-edit-category" data-post-id="' . $post_id . '" data-category="' . esc_attr($category) . '">';
-        echo '<span class="dashicons dashicons-edit"></span> ' . __('Edit Category', 'master-addons');
+        echo '<br><a href="#" class="jltma-widget-edit-category" data-post-id="' . esc_attr( $post_id ) . '" data-category="' . esc_attr($category) . '">';
+        echo '<span class="dashicons dashicons-edit"></span> ' . esc_html__('Edit Category', 'master-addons');
         echo '</a>';
     }
 
@@ -171,7 +171,7 @@ class Widget_CPT {
 
     public function save_meta_data($post_id) {
         if (!isset($_POST['jltma_widget_meta_nonce_field']) ||
-            !wp_verify_nonce($_POST['jltma_widget_meta_nonce_field'], 'jltma_widget_meta_nonce')) {
+            !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['jltma_widget_meta_nonce_field'] ) ), 'jltma_widget_meta_nonce')) {
             return;
         }
 
@@ -185,13 +185,13 @@ class Widget_CPT {
 
         // Save widget name
         if (isset($_POST['jltma_widget_name'])) {
-            $widget_name = sanitize_title($_POST['jltma_widget_name']);
+            $widget_name = sanitize_title( wp_unslash( $_POST['jltma_widget_name'] ) );
             update_post_meta($post_id, '_jltma_widget_name', $widget_name);
         }
 
         // Save category
         if (isset($_POST['jltma_widget_category'])) {
-            update_post_meta($post_id, '_jltma_widget_category', sanitize_text_field($_POST['jltma_widget_category']));
+            update_post_meta($post_id, '_jltma_widget_category', sanitize_text_field( wp_unslash( $_POST['jltma_widget_category'] ) ));
         }
     }
 
@@ -623,17 +623,17 @@ class Widget_CPT {
         <!-- Add New Category Modal -->
         <div class="jltma-category-modal-overlay">
             <div class="jltma-category-modal">
-                <h2><?php _e('Add New Widget Category', 'master-addons'); ?></h2>
+                <h2><?php esc_html_e('Add New Widget Category', 'master-addons'); ?></h2>
                 <div class="jltma-category-modal-input-wrapper">
                     <input type="text" id="jltma-new-category-name" placeholder="<?php esc_attr_e('Enter category name', 'master-addons'); ?>" />
-                    <p class="jltma-category-modal-description"><?php _e('Category slug will be auto-generated from the name', 'master-addons'); ?></p>
+                    <p class="jltma-category-modal-description"><?php esc_html_e('Category slug will be auto-generated from the name', 'master-addons'); ?></p>
                 </div>
                 <div class="jltma-category-modal-buttons">
                     <button type="button" class="jltma-category-modal-btn secondary" id="jltma-cancel-category">
-                        <?php _e('Cancel', 'master-addons'); ?>
+                        <?php esc_html_e('Cancel', 'master-addons'); ?>
                     </button>
                     <button type="button" class="jltma-category-modal-btn primary" id="jltma-add-category" disabled>
-                        <?php _e('Add Category', 'master-addons'); ?>
+                        <?php esc_html_e('Add Category', 'master-addons'); ?>
                     </button>
                 </div>
             </div>
@@ -731,7 +731,7 @@ class Widget_CPT {
                     data: {
                         action: 'jltma_add_widget_category',
                         category_name: categoryName,
-                        _nonce: '<?php echo wp_create_nonce('jltma_add_category_nonce'); ?>'
+                        _nonce: '<?php echo esc_js( wp_create_nonce('jltma_add_category_nonce') ); ?>'
                     },
                     success: function(response) {
                         if (response.success) {
@@ -975,7 +975,7 @@ class Widget_CPT {
 
         check_ajax_referer('jltma_widget_nonce', '_nonce');
 
-        $post_id = intval($_POST['post_id']);
+        $post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
 
         // Use the new shortcode format with widget ID
         $shortcode = '[jltma_widget_' . $post_id . ']';
@@ -995,7 +995,7 @@ class Widget_CPT {
         }
 
         // Get category name
-        $category_name = isset($_POST['category_name']) ? sanitize_text_field($_POST['category_name']) : '';
+        $category_name = isset($_POST['category_name']) ? sanitize_text_field( wp_unslash( $_POST['category_name'] ) ) : '';
 
         if (empty($category_name)) {
             wp_send_json_error([
@@ -1024,6 +1024,7 @@ class Widget_CPT {
 
         // Return success
         wp_send_json_success([
+            /* translators: %s is the category name. */
             'message' => sprintf(__('Category "%s" added successfully!', 'master-addons'), $category_name),
             'slug' => $category_slug,
             'name' => $category_name
@@ -1032,26 +1033,26 @@ class Widget_CPT {
 
     public function handle_widget_preview() {
         // Check if this is a preview request
-        if (!isset($_GET['jltma_widget_preview']) || $_GET['jltma_widget_preview'] != '1') {
+        if (!isset($_GET['jltma_widget_preview']) || $_GET['jltma_widget_preview'] != '1') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only preview check, no nonce available
             return;
         }
 
         // Verify user permissions
         if (!current_user_can('edit_posts')) {
-            wp_die(__('You do not have permission to preview widgets.', 'master-addons'));
+            wp_die(esc_html__('You do not have permission to preview widgets.', 'master-addons'));
         }
 
-        $widget_id = isset($_GET['widget_id']) ? intval($_GET['widget_id']) : 0;
-        $shortcode = isset($_GET['shortcode']) ? sanitize_text_field($_GET['shortcode']) : '';
+        $widget_id = isset($_GET['widget_id']) ? intval($_GET['widget_id']) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce not available for preview URL
+        $shortcode = isset($_GET['shortcode']) ? sanitize_text_field( wp_unslash( $_GET['shortcode'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce not available for preview URL
 
         if (!$widget_id || !$shortcode) {
-            wp_die(__('Invalid widget preview request.', 'master-addons'));
+            wp_die(esc_html__('Invalid widget preview request.', 'master-addons'));
         }
 
         // Check if widget exists
         $widget_post = get_post($widget_id);
         if (!$widget_post || $widget_post->post_type !== $this->post_type) {
-            wp_die(__('Widget not found.', 'master-addons'));
+            wp_die(esc_html__('Widget not found.', 'master-addons'));
         }
 
         // Render preview template
@@ -1066,7 +1067,7 @@ class Widget_CPT {
         <head>
             <meta charset="<?php bloginfo('charset'); ?>">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php _e('Widget Preview', 'master-addons'); ?></title>
+            <title><?php esc_html_e('Widget Preview', 'master-addons'); ?></title>
             <?php wp_head(); ?>
             <style>
                 body {
@@ -1092,7 +1093,7 @@ class Widget_CPT {
         <body>
             <div class="jltma-preview-content">
                 <div class="jltma-preview-notice">
-                    <?php _e('This is a live preview of your widget. Changes made to the widget will be reflected here after saving and refreshing.', 'master-addons'); ?>
+                    <?php esc_html_e('This is a live preview of your widget. Changes made to the widget will be reflected here after saving and refreshing.', 'master-addons'); ?>
                 </div>
                 <div class="jltma-widget-preview-output">
                     <?php echo do_shortcode($shortcode); ?>

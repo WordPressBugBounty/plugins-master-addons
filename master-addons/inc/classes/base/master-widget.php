@@ -205,11 +205,11 @@ abstract class Master_Widget extends Widget_Base {
         ]);
 
         ob_start();
-        ?><div <?php echo $this->get_render_attribute_string( 'jltma-placeholder' ); ?>>
-            <<?php echo esc_html( $args['title_tag'] ); ?> <?php echo $this->get_render_attribute_string( 'jltma-placeholder-title' ); ?>>
+        ?><div <?php echo $this->get_render_attribute_string( 'jltma-placeholder' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
+            <<?php echo esc_html( $args['title_tag'] ); ?> <?php echo $this->get_render_attribute_string( 'jltma-placeholder-title' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
                 <?php echo esc_html( $args['title'] ); ?>
             </<?php echo esc_html( $args['title_tag'] ); ?>>
-            <div <?php echo $this->get_render_attribute_string( 'jltma-placeholder-body' ); ?>><?php echo esc_html( $args['body'] ); ?></div>
+            <div <?php echo $this->get_render_attribute_string( 'jltma-placeholder-body' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>><?php echo esc_html( $args['body'] ); ?></div>
         </div><?php
         return ob_get_clean();
     }

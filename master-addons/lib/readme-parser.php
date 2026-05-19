@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 // This is the path to markdown.php
 if (!defined('WORDPRESS_README_MARKDOWN')) {
 	if (defined('AUTOMATTIC_README_MARKDOWN'))
@@ -234,7 +235,7 @@ class WordPress_Readme_Parser
 
 	function sanitize_text($text)
 	{ // not fancy
-		$text = strip_tags($text);
+		$text = wp_strip_all_tags($text);
 		$text = esc_html($text);
 		$text = trim($text);
 		return $text;

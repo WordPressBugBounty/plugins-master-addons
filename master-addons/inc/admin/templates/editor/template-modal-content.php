@@ -3,6 +3,10 @@
  * Templates Content View
  */
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 // Get banner configuration
 $banner_config = null;
 if (class_exists('MasterAddons\\Inc\\Admin\\Templates\\Includes\\Classes\\Config')) {

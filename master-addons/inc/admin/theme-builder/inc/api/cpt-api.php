@@ -212,7 +212,7 @@ class CPT_API extends Rest_API
 
         if ($open_editor == 'true') {
             $url = get_admin_url() . '/post.php?post=' . $id . '&action=elementor';
-            wp_redirect($url);
+            wp_safe_redirect($url);
             exit;
         } else {
             

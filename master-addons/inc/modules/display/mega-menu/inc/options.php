@@ -119,12 +119,12 @@ class Megamenu_Options
 ?>
         <div class="master-mega-menu-accordion" style="display: flex; align-items: center; justify-content: space-between;" id="jltma-megamenu-options">
             <div style="font-weight: 600;">
-                <?php _e("Enable Mega Menu", "master-addons" ) ?>
+                <?php esc_html_e("Enable Mega Menu", "master-addons" ) ?>
             </div>
             <div class="jltma-checkbox-container" style="display: flex; align-items: center;">
                 <input type='checkbox' id="jltma-menu-metabox-input-is-enabled" class='jltma-menu-metabox-input-is-enabled' name='is_enabled' value='1' <?php checked((isset($data['is_enabled']) ? $data['is_enabled'] : ''), '1'); ?> />
                 <label for="jltma-menu-metabox-input-is-enabled">
-                    <?php _e("Enable Mega Menu?", "master-addons" ) ?>
+                    <?php esc_html_e("Enable Mega Menu?", "master-addons" ) ?>
                 </label>
                 <span class="spinner"></span>
             </div>

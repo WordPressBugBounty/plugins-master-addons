@@ -8,6 +8,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_rmdir, WordPress.WP.AlternativeFunctions.file_system_operations_is_writable, WordPress.WP.AlternativeFunctions.rename_rename -- Local template-library cache directory housekeeping (under wp-content/uploads); native PHP filesystem calls are appropriate here and WP_Filesystem credential prompts are not desirable for background cache operations.
+
 /**
  * Template Library Cache
  * Provides file-based caching with scheduled updates for template import functionality
@@ -161,7 +163,7 @@ class Template_Library_Cache
             if (is_dir($path)) {
                 $this->delete_directory_recursively($path);
             } else {
-                @unlink($path);
+                wp_delete_file($path);
             }
         }
         @rmdir($dir);
@@ -707,7 +709,7 @@ class Template_Library_Cache
                         $max_age = $priority_ages[$priority] ?? $priority_ages['low'];
 
                         if ($file_age > $max_age) {
-                            unlink($file);
+                            wp_delete_file($file);
                         }
                     }
                 }
@@ -785,7 +787,7 @@ class Template_Library_Cache
                 $this->delete_directory_contents($file);
                 rmdir($file);
             } else {
-                unlink($file);
+                wp_delete_file($file);
             }
         }
     }
@@ -797,12 +799,12 @@ class Template_Library_Cache
     {
         if (isset($_GET['jltma_clear_templates_cache']) &&
             isset($_GET['_wpnonce']) &&
-            wp_verify_nonce($_GET['_wpnonce'], 'jltma_clear_templates_cache') &&
+            wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'jltma_clear_templates_cache') &&
             current_user_can('manage_options')) {
 
             $this->clear_cache();
 
-            wp_redirect(add_query_arg([
+            wp_safe_redirect(add_query_arg([
                 'jltma_templates_cache_cleared' => '1'
             ], remove_query_arg(['jltma_clear_templates_cache', '_wpnonce'])));
             exit;
@@ -811,12 +813,12 @@ class Template_Library_Cache
         // Handle cache refresh from admin
         if (isset($_GET['jltma_refresh_templates_cache']) &&
             isset($_GET['_wpnonce']) &&
-            wp_verify_nonce($_GET['_wpnonce'], 'jltma_refresh_templates_cache') &&
+            wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'jltma_refresh_templates_cache') &&
             current_user_can('manage_options')) {
 
             $this->refresh_cache();
 
-            wp_redirect(add_query_arg([
+            wp_safe_redirect(add_query_arg([
                 'jltma_templates_cache_refreshed' => '1'
             ], remove_query_arg(['jltma_refresh_templates_cache', '_wpnonce'])));
             exit;
@@ -1174,7 +1176,7 @@ class Template_Library_Cache
             wp_die(-1);
         }
 
-        $tab = sanitize_text_field($_POST['tab'] ?? '');
+        $tab = sanitize_text_field( wp_unslash( $_POST['tab'] ?? '' ) );
 
         if (empty($tab)) {
             wp_send_json_error('Invalid tab');

@@ -8,6 +8,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_rmdir, WordPress.WP.AlternativeFunctions.file_system_operations_is_writable, WordPress.WP.AlternativeFunctions.rename_rename -- Local template-kit cache directory housekeeping (under wp-content/uploads); native PHP filesystem calls are appropriate here and WP_Filesystem credential prompts are not desirable for background cache operations.
+
 /**
  * Template Kit Cache
  * Provides file-based caching for Template Kit functionality (Site Importer)
@@ -591,7 +593,7 @@ class Template_Kit_Cache
         }
 
         // Parse the URL to get the extension
-        $parsed_url = parse_url($image_url);
+        $parsed_url = wp_parse_url($image_url);
         $path = $parsed_url['path'] ?? '';
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
@@ -1034,7 +1036,7 @@ class Template_Kit_Cache
         $folder = 'images';
 
         // Try to detect extension from URL
-        $parsed_url = parse_url($image_url);
+        $parsed_url = wp_parse_url($image_url);
         $path = $parsed_url['path'] ?? '';
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
@@ -1325,7 +1327,7 @@ class Template_Kit_Cache
                 $files = glob($full_dir . '*');
                 foreach ($files as $file) {
                     if (is_file($file) && (time() - filemtime($file)) > $max_age) {
-                        unlink($file);
+                        wp_delete_file($file);
                     }
                 }
             }
@@ -1370,7 +1372,7 @@ class Template_Kit_Cache
                 }
 
                 if (!$in_excluded_dir) {
-                    unlink($file);
+                    wp_delete_file($file);
                 }
             }
         }
@@ -1383,12 +1385,12 @@ class Template_Kit_Cache
     {
         if (isset($_GET['jltma_clear_template_kit_cache']) &&
             isset($_GET['_wpnonce']) &&
-            wp_verify_nonce($_GET['_wpnonce'], 'jltma_clear_template_kit_cache') &&
+            wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'jltma_clear_template_kit_cache') &&
             current_user_can('manage_options')) {
 
             $this->clear_cache();
 
-            wp_redirect(add_query_arg([
+            wp_safe_redirect(add_query_arg([
                 'jltma_template_kit_cache_cleared' => '1'
             ], remove_query_arg(['jltma_clear_template_kit_cache', '_wpnonce'])));
             exit;
@@ -1397,12 +1399,12 @@ class Template_Kit_Cache
         // Handle cache refresh from admin
         if (isset($_GET['jltma_refresh_template_kit_cache']) &&
             isset($_GET['_wpnonce']) &&
-            wp_verify_nonce($_GET['_wpnonce'], 'jltma_refresh_template_kit_cache') &&
+            wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'jltma_refresh_template_kit_cache') &&
             current_user_can('manage_options')) {
 
             $this->refresh_cache();
 
-            wp_redirect(add_query_arg([
+            wp_safe_redirect(add_query_arg([
                 'jltma_template_kit_cache_refreshed' => '1'
             ], remove_query_arg(['jltma_refresh_template_kit_cache', '_wpnonce'])));
             exit;
@@ -1411,12 +1413,12 @@ class Template_Kit_Cache
         // Handle download all kits from admin
         if (isset($_GET['jltma_download_all_kits']) &&
             isset($_GET['_wpnonce']) &&
-            wp_verify_nonce($_GET['_wpnonce'], 'jltma_download_all_kits') &&
+            wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'jltma_download_all_kits') &&
             current_user_can('manage_options')) {
 
             $result = $this->download_all_kits();
 
-            wp_redirect(add_query_arg([
+            wp_safe_redirect(add_query_arg([
                 'jltma_kits_downloaded' => $result['downloaded'],
                 'jltma_kits_failed' => $result['failed']
             ], remove_query_arg(['jltma_download_all_kits', '_wpnonce'])));
@@ -1558,9 +1560,9 @@ class Template_Kit_Cache
         
         // Clear kit template transients
         global $wpdb;
-        $wpdb->query(
-            "DELETE FROM {$wpdb->options} 
-             WHERE option_name LIKE '_transient_jltma_kit_templates_%' 
+        $wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for bulk transient cleanup; no suitable core API exists
+            "DELETE FROM {$wpdb->options}
+             WHERE option_name LIKE '_transient_jltma_kit_templates_%'
              OR option_name LIKE '_transient_timeout_jltma_kit_templates_%'"
         );
     }
@@ -1838,7 +1840,7 @@ class Template_Kit_Cache
 
                     if ($extracted) {
                         // Delete the ZIP file after extraction
-                        @unlink($zip_file);
+                        wp_delete_file($zip_file);
 
                         // Process manifest and template files
                         $this->process_extracted_kit_manifest($kit_dir);
@@ -1904,7 +1906,7 @@ class Template_Kit_Cache
 
         // Clean up temp file if move failed
         if (!$moved && file_exists($tmp_file)) {
-            @unlink($tmp_file);
+            wp_delete_file($tmp_file);
         }
 
         return $moved;
@@ -2240,7 +2242,7 @@ class Template_Kit_Cache
         $screenshots_dir = rtrim($kit_dir, '/') . '/screenshots/';
         if (file_exists($screenshots_dir)) {
             // Extract filename from URL
-            $filename = basename(parse_url($image_url, PHP_URL_PATH));
+            $filename = basename(wp_parse_url($image_url, PHP_URL_PATH));
             $local_file = $screenshots_dir . $filename;
 
             if (file_exists($local_file)) {
@@ -2481,7 +2483,7 @@ class Template_Kit_Cache
                     foreach ($menu['items'] as &$item) {
                         if (isset($item['url']) && filter_var($item['url'], FILTER_VALIDATE_URL)) {
                             // Replace absolute URLs with relative or placeholder
-                            $parsed = parse_url($item['url']);
+                            $parsed = wp_parse_url($item['url']);
                             if (isset($parsed['path'])) {
                                 // Use relative URL
                                 $item['url'] = $parsed['path'];
@@ -3219,7 +3221,7 @@ class Template_Kit_Cache
 
         foreach ($metadata_files as $metadata_file) {
             if (file_exists($metadata_file)) {
-                @unlink($metadata_file);
+                wp_delete_file($metadata_file);
                 $deleted = true;
             }
         }
@@ -3232,7 +3234,7 @@ class Template_Kit_Cache
 
         foreach ($kit_files as $kit_file) {
             if (file_exists($kit_file)) {
-                @unlink($kit_file);
+                wp_delete_file($kit_file);
                 $deleted = true;
             }
         }

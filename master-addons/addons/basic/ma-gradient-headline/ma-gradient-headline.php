@@ -179,7 +179,7 @@ protected function register_controls()
 		$this->add_control(
 			'jltma_gradient_heading_second_color',
 			[
-				'label'       => esc_html__('Second Color', 'Background Control', 'master-addons' ),
+				'label'       => esc_html__('Second Color', 'master-addons' ),
 				'type'        => Controls_Manager::COLOR,
 				'default'     => '#FB083E',
 				'render_type' => 'ui',
@@ -377,7 +377,7 @@ protected function register_controls()
 		$this->add_control(
 			'jltma_gradient_heading_hover_second_color',
 			[
-				'label'       => esc_html__('Second Color', 'Background Control', 'master-addons' ),
+				'label'       => esc_html__('Second Color', 'master-addons' ),
 				'type'        => Controls_Manager::COLOR,
 				'default'     => '#1fb5ac',
 				'render_type' => 'ui',
@@ -559,8 +559,8 @@ protected function register_controls()
 		printf(
 			'<%1$s %2$s>%3$s</%1$s>',
 			esc_html($title_tag),
-			$this->get_render_attribute_string('jltma_gradient_heading_title'),
-			$title
+			$this->get_render_attribute_string('jltma_gradient_heading_title'), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safely escaped HTML attributes
+			wp_kses_post( $title ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- title may contain safe link markup from parse_text_editor()
 		);
 	}
 

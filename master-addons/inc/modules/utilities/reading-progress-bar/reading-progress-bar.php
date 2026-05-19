@@ -217,7 +217,7 @@ class ReadingProgressBar
 					$jltma_r_p_b_custom_css .= '.ma-el-page-scroll-indicator{top:inherit !important; bottom:0;}';
 				}
 			}
-			echo '<style>' . strip_tags($jltma_r_p_b_custom_css) . '</style>';
+			echo '<style>' . wp_strip_all_tags( $jltma_r_p_b_custom_css ) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS value, tags stripped
 		}
 	}
 
@@ -309,7 +309,7 @@ class ReadingProgressBar
 				$jltma_r_p_b_custom_css .= '.logged-in.admin-bar .ma-el-page-scroll-indicator{top:32px;}';
 			}
 
-			echo '<style>' . strip_tags($jltma_r_p_b_custom_css) . '</style>';
+			echo '<style>' . wp_strip_all_tags( $jltma_r_p_b_custom_css ) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS value, tags stripped
 		}
 	}
 

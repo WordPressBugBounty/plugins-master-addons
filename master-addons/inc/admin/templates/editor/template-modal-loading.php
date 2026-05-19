@@ -3,6 +3,10 @@
 /**
  * Templates Loader View with Master Addons Logo
  */
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 ?>
 <div id="ma-el-modal-loading">
 	<div class="elementor-loader-wrapper">

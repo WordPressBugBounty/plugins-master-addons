@@ -1,3 +1,4 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -5,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<?php if ( ! current_theme_supports( 'title-tag' ) ) : ?>
 		<title>
-			<?php echo wp_get_document_title(); ?>
+			<?php echo esc_html( wp_get_document_title() ); ?>
 		</title>
 	<?php endif; ?>
 	<?php wp_head(); ?>
@@ -21,7 +22,7 @@
 	
 	// Display header if template exists
 	if ($header_template_id) {
-		echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($header_template_id);
+		echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content($header_template_id); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_elementor_content() returns sanitized Elementor/wp_kses_post markup
 	}
 ?>
 </div>

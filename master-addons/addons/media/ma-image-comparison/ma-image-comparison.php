@@ -264,7 +264,7 @@ class Image_Comparison extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -280,7 +280,7 @@ class Image_Comparison extends Master_Widget
 					'type'        => Controls_Manager::CHOOSE,
 					'options'     => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon'  => 'eicon-lock',
 						],
 					],
@@ -838,19 +838,19 @@ class Image_Comparison extends Master_Widget
 			]
 		); ?>
 
-		<div <?php echo $this->get_render_attribute_string('jltma_image_comparison'); ?>>
+		<div <?php echo $this->get_render_attribute_string('jltma_image_comparison'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string ?>>
 			<?php if ($settings['jltma_image_comparison_before_image']['url'] || $settings['jltma_image_comparison_before_image']['id']):
 				$this->add_render_attribute('jltma_before_image', 'src', $settings['jltma_image_comparison_before_image']['url']);
 				$this->add_render_attribute('jltma_before_image', 'alt', Control_Media::get_image_alt($settings['jltma_image_comparison_before_image']));
 				$this->add_render_attribute('jltma_before_image', 'title', Control_Media::get_image_title($settings['jltma_image_comparison_before_image']));
-				echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', 'jltma_image_comparison_before_image');
+				echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', 'jltma_image_comparison_before_image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Group_Control_Image_Size returns safe HTML
 			endif;
 
 			if ($settings['jltma_image_comparison_after_image']['url'] || $settings['jltma_image_comparison_after_image']['id']):
 				$this->add_render_attribute('jltma_after_image', 'src', $settings['jltma_image_comparison_after_image']['url']);
 				$this->add_render_attribute('jltma_after_image', 'alt', Control_Media::get_image_alt($settings['jltma_image_comparison_after_image']));
 				$this->add_render_attribute('jltma_after_image', 'title', Control_Media::get_image_title($settings['jltma_image_comparison_after_image']));
-				echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', 'jltma_image_comparison_after_image');
+				echo Group_Control_Image_Size::get_attachment_image_html($settings, 'thumbnail', 'jltma_image_comparison_after_image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Group_Control_Image_Size returns safe HTML
 			endif; ?>
 		</div>
 

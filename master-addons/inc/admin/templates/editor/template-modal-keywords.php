@@ -2,6 +2,9 @@
 /**
  * Template Library Keywords Filter
  */
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 ?>
 <div class="ma-el-keywords-filters-wrap">
     <button type="button" class="ma-el-keywords-filter-action">

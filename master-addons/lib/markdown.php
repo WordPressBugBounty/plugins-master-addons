@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 define( 'MARKDOWN_VERSION',  "1.0.2" ); # 29 Nov 2013
 
 
@@ -87,9 +89,9 @@ if (isset($wp_version)) {
 		global $mdwp_hidden_tags, $mdwp_placeholders;
 		$mdwp_hidden_tags = explode(' ',
 			'<p> </p> <pre> </pre> <ol> </ol> <ul> </ul> <li> </li>');
-		$mdwp_placeholders = explode(' ', str_rot13(
-			'pEj07ZbbBZ U1kqgh4w4p pre2zmeN6K QTi31t9pre ol0MP1jzJR '.
-			'ML5IjmbRol ulANi1NsGY J7zRLJqPul liA8ctl16T K9nhooUHli'));
+		$mdwp_placeholders = explode(' ',
+			'cRw07MooOM H1xdtu4j4c cer2mzrA6X DGv31g9cer by0ZC1wmWE '.
+			'ZY5VwzoEby hyNAv1AfTL W7mEYWdChy yvN8pgy16G X9aubbHUyv');
 	}
 
 	function mdwp_add_p($text) {
@@ -1620,10 +1622,12 @@ class Markdown_Parser {
 	# function that will loosely count the number of UTF-8 characters with a
 	# regular expression.
 	#
-		if (function_exists($this->utf8_strlen)) return;
-		$this->utf8_strlen = create_function('$text', 'return preg_match_all(
-			"/[\\\\x00-\\\\xBF]|[\\\\xC0-\\\\xFF][\\\\x80-\\\\xBF]*/",
-			$text, $m);');
+		if (is_callable($this->utf8_strlen)) return;
+		$this->utf8_strlen = function($text) {
+			return preg_match_all(
+				"/[\\x00-\\xBF]|[\\xC0-\\xFF][\\x80-\\xBF]*/",
+				$text, $m);
+		};
 	}
 
 

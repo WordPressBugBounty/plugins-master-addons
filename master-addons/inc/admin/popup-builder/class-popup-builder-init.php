@@ -37,6 +37,7 @@ class Popup_Builder_Init {
     }
 
     public function admin_redirects() {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only checks of WordPress-set admin query vars for redirect flow; no form data is processed.
         global $pagenow;
         $target_post_type = 'jltma_popup';
         $redirect_url = admin_url('edit.php?post_type=jltma_popup');
@@ -59,5 +60,6 @@ class Popup_Builder_Init {
                 exit;
             }
         }
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 }

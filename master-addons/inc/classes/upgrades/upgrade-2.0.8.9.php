@@ -1,6 +1,10 @@
 <?php
 namespace MasterAddons\Inc\Classes;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 function jltma_update_icon_libraries_settings_key()
 {
     $jltma_settings_key = get_option('jltma_icons_library_save_settings', '');

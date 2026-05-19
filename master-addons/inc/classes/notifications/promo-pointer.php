@@ -156,7 +156,7 @@ class Promo_Pointer
 ?>
 		<script>
 			jQuery(function($) {
-				$('<?php echo $selector; ?>').pointer({
+				$('<?php echo $selector; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $selector is already sanitized via esc_js() above ?>').pointer({
 					content: <?php echo wp_json_encode($pointer_content); ?>,
 					position: {
 						edge: 'left',
@@ -262,7 +262,7 @@ class Promo_Pointer
 
 		// Handle custom dismiss action
 		if (isset($_POST['action']) && 'jltma_dismiss_promo_pointer' === $_POST['action']) {
-			if (!wp_verify_nonce($_POST['_wpnonce'] ?? '', 'jltma_promo_pointer_dismiss')) {
+			if (!wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ?? '' ) ), 'jltma_promo_pointer_dismiss')) {
 				return;
 			}
 			set_transient($this->transient_key, true, DAY_IN_SECONDS * 30);

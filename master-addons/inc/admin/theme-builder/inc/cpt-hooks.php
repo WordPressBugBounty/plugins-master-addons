@@ -56,9 +56,12 @@ class CPT_Hooks
                 $active = get_post_meta($post_id, 'master_template_activation', true);
 
                 $display_type = empty($type) ? 'Unknown' : ucfirst($type);
-                echo esc_html($display_type) . (($active == 'yes')
-                    ? ('<span class="jltma-hf-status jltma-hf-status-active">' . esc_html__('Active', 'master-addons' ) . '</span>')
-                    : ('<span class="jltma-hf-status jltma-hf-status-inactive">' . esc_html__('Inactive', 'master-addons' ) . '</span>'));
+                echo esc_html($display_type);
+                if ($active == 'yes') {
+                    echo '<span class="jltma-hf-status jltma-hf-status-active">' . esc_html__('Active', 'master-addons' ) . '</span>';
+                } else {
+                    echo '<span class="jltma-hf-status jltma-hf-status-inactive">' . esc_html__('Inactive', 'master-addons' ) . '</span>';
+                }
 
                 break;
             case 'condition':
@@ -206,6 +209,7 @@ class CPT_Hooks
 
     public function  query_filter($query)
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only checks of admin list-table query vars to filter the templates list; no form data is processed.
         global $pagenow;
         $current_page = isset($_GET['post_type']) ? \sanitize_key($_GET['post_type']) : '';
 
@@ -222,6 +226,7 @@ class CPT_Hooks
             $query->query_vars['meta_value'] = $type;
             $query->query_vars['meta_compare'] = '=';
         }
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 
     /**
@@ -263,7 +268,7 @@ class CPT_Hooks
                     // Render using Elementor's document system
                     $document = \Elementor\Plugin::instance()->documents->get( $template_id );
                     if ( $document && $document->is_built_with_elementor() ) {
-                        echo $document->get_content();
+                        echo $document->get_content(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor document get_content() returns sanitized frontend markup
                     }
                 } else {
                     // Fallback to post content

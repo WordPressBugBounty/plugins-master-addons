@@ -36,7 +36,7 @@ class Activator {
      * Check if current request is an Elementor preview/editor context
      */
     private function is_elementor_preview() {
-        return isset( $_GET['elementor-preview'] ) || isset( $_GET['elementor_library'] ) ||
+        return isset( $_GET['elementor-preview'] ) || isset( $_GET['elementor_library'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only existence check for Elementor context detection
                ( class_exists( '\Elementor\Plugin' ) && (
                    \Elementor\Plugin::$instance->preview->is_preview_mode() ||
                    \Elementor\Plugin::$instance->editor->is_edit_mode()

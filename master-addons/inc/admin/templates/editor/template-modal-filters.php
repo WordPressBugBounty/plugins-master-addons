@@ -2,6 +2,9 @@
 /**
  * Template Library Filter
  */
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 ?>
 <div class="ma-el-modal-filters-wrap">
     <button type="button" class="ma-el-modal-filter-action">

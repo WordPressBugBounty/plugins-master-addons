@@ -157,11 +157,11 @@ class Timeline extends Master_Widget
 				'type'    => Controls_Manager::SELECT,
 				'options' => [
 					'M j, Y' => __('Default', 'master-addons'),
-					'M j, y'  => date('F j, Y'),
-					'M j, y'  => date('M j, y'),
-					'Y-m-d'   => date('Y-m-d'),
-					'm/d/Y'   => date('m/d/Y'),
-					'd/m/Y'   => date('d/m/Y'),
+					'M j, y'  => wp_date('F j, Y'),
+					'M j, y'  => wp_date('M j, y'),
+					'Y-m-d'   => wp_date('Y-m-d'),
+					'm/d/Y'   => wp_date('m/d/Y'),
+					'd/m/Y'   => wp_date('d/m/Y'),
 					'custom'  => __('Custom', 'master-addons'),
 				],
 				'default'   => 'M j, y',
@@ -211,7 +211,7 @@ class Timeline extends Master_Widget
 		);
 
 		$default_title     = '<h2>' . __('Nam commodo suscipit', 'master-addons') . '</h2>';
-		$default_paragraph = '<p>' . _x('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo', 'master-addons') . '</p>';
+		$default_paragraph = '<p>' . __('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo', 'master-addons') . '</p>';
 
 		$repeater->add_control(
 			'ma_el_custom_timeline_content',
@@ -1821,8 +1821,8 @@ class Timeline extends Master_Widget
 
 	protected function jltma_render_line()
 	{ ?>
-		<div <?php echo $this->get_render_attribute_string('line'); ?>>
-			<div <?php echo $this->get_render_attribute_string('line-inner'); ?>></div>
+		<div <?php echo $this->get_render_attribute_string('line'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+			<div <?php echo $this->get_render_attribute_string('line-inner'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>></div>
 		</div>
 	<?php
 	}
@@ -1861,7 +1861,7 @@ class Timeline extends Master_Widget
 			$posts = Helper::ma_el_blog_get_post_data($post_args, $paged, $new_offset);
 		}
 	?>
-		<div <?php echo $this->get_render_attribute_string('ma_el_timeline_wrapper'); ?>>
+		<div <?php echo $this->get_render_attribute_string('ma_el_timeline_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 
 			<?php
 			if ($settings['ma_el_timeline_design_type'] !== 'horizontal') {
@@ -2017,32 +2017,32 @@ class Timeline extends Master_Widget
 					$point_content = $this->ma_timeline_points_global_points();
 				}
 	?>
-		<div <?php echo $this->get_render_attribute_string($item_key); ?>>
-			<div <?php echo $this->get_render_attribute_string('point'); ?>>
-				<?php echo $this->parse_text_editor($point_content); ?>
+		<div <?php echo $this->get_render_attribute_string($item_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+			<div <?php echo $this->get_render_attribute_string('point'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+				<?php echo wp_kses_post( $this->parse_text_editor($point_content) ); ?>
 			</div>
-			<div <?php echo $this->get_render_attribute_string('card-wrapper'); ?>>
+			<div <?php echo $this->get_render_attribute_string('card-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 				<div class="jltma-timeline-post-inner">
-					<<?php echo esc_attr($card_tag); ?> <?php echo $this->get_render_attribute_string($card_key); ?>>
+					<<?php echo esc_attr($card_tag); ?> <?php echo $this->get_render_attribute_string($card_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 						<div class="timeline-item__content-wrapper">
 
 							<?php if ($item['ma_el_custom_timeline_image']['url']) { ?>
-								<div <?php echo $this->get_render_attribute_string('image'); ?>>
-									<?php echo Group_Control_Image_Size::get_attachment_image_html($item, 'ma_el_custom_timeline_image'); ?>
+								<div <?php echo $this->get_render_attribute_string('image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+									<?php echo Group_Control_Image_Size::get_attachment_image_html($item, 'ma_el_custom_timeline_image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_attachment_image_html returns safe Elementor HTML ?>
 								</div>
 							<?php } ?>
 
 							<?php $this->render_custom_card_meta($index, $item); ?>
 
-							<div <?php echo $this->get_render_attribute_string($wysiwyg_key); ?>>
-								<?php echo $this->parse_text_editor($item['ma_el_custom_timeline_content']); ?>
+							<div <?php echo $this->get_render_attribute_string($wysiwyg_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+								<?php echo wp_kses_post( $this->parse_text_editor($item['ma_el_custom_timeline_content']) ); ?>
 							</div>
 							<?php $this->render_card_arrow(); ?>
 						</div><!-- /.post -->
 					</<?php echo esc_attr($card_tag); ?>>
 				</div><!-- /.jltma-timeline-post-inner -->
 			</div> <!-- card-wrapper -->
-			<div <?php echo $this->get_render_attribute_string('meta-wrapper'); ?>>
+			<div <?php echo $this->get_render_attribute_string('meta-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 				<?php $this->render_custom_card_meta($index, $item); ?>
 			</div>
 		</div>
@@ -2062,16 +2062,16 @@ class Timeline extends Master_Widget
 				return;
 
 ?>
-	<div <?php echo $this->get_render_attribute_string('image'); ?>>
+	<div <?php echo $this->get_render_attribute_string('image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 		<?php
-			echo Group_Control_Image_Size::get_attachment_image_html($item);
+			echo Group_Control_Image_Size::get_attachment_image_html($item); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_attachment_image_html returns safe Elementor HTML
 		?></div>
 <?php
 		}
 
 		protected function render_card_arrow()
 		{ ?>
-	<div <?php echo $this->get_render_attribute_string('arrow'); ?>></div>
+	<div <?php echo $this->get_render_attribute_string('arrow'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>></div>
 <?php }
 
 		protected function render_custom_card_meta($index, $item)
@@ -2092,12 +2092,12 @@ class Timeline extends Master_Widget
 			]);
 
 ?>
-	<div <?php echo $this->get_render_attribute_string($meta_key); ?>>
+	<div <?php echo $this->get_render_attribute_string($meta_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 		<?php
 			// $item_date = $this->parse_text_editor($item['ma_el_custom_timeline_date']);
 			// echo date($settings['ma_el_timeline_date_format'], strtotime($item_date));
 			if ($item['ma_el_custom_timeline_date_type'] == 'custom') {
-				echo $this->parse_text_editor($item['ma_el_custom_timeline_label']);
+				echo wp_kses_post( $this->parse_text_editor($item['ma_el_custom_timeline_label']) );
 			} else {
 				$date = $this->get_date_formatted(true, $item['ma_el_custom_timeline_date_custom_format'], $item['ma_el_custom_timeline_date_format'], null, null, $item['ma_el_custom_timeline_date']);
 				echo wp_kses_post($date);
@@ -2146,10 +2146,10 @@ class Timeline extends Master_Widget
 ?>
 
 	<?php if ($settings['ma_el_timeline_design_type'] === 'horizontal') { ?>
-		<div <?php echo $this->get_render_attribute_string('carousel'); ?>>
+		<div <?php echo $this->get_render_attribute_string('carousel'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 		<?php } ?>
-		<div <?php echo $this->get_render_attribute_string('swiper_container'); ?>>
-			<div <?php echo $this->get_render_attribute_string('swiper_wrapper'); ?>>
+		<div <?php echo $this->get_render_attribute_string('swiper_container'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+			<div <?php echo $this->get_render_attribute_string('swiper_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 
 				<?php foreach ($settings['ma_el_custom_timeline_items'] as $index => $item) {
 
@@ -2240,16 +2240,16 @@ class Timeline extends Master_Widget
 
 				?>
 
-					<div <?php echo $this->get_render_attribute_string($slider_item); ?>>
-						<<?php echo esc_attr($card_tag); ?> <?php echo $this->get_render_attribute_string($item_key); ?>>
+					<div <?php echo $this->get_render_attribute_string($slider_item); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+						<<?php echo esc_attr($card_tag); ?> <?php echo $this->get_render_attribute_string($item_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 
 							<div class="jltma-timeline-post-top">
 
 								<div class="jltma-timeline-post-date">
 									<?php
 									if ($item['ma_el_custom_timeline_date_type'] == 'custom') {
-										echo '<time datetime="' . get_the_modified_date('c') . '">';
-										echo $this->parse_text_editor($item['ma_el_custom_timeline_label']);
+										echo '<time datetime="' . esc_attr( get_the_modified_date('c') ) . '">';
+										echo wp_kses_post( $this->parse_text_editor($item['ma_el_custom_timeline_label']) );
 										echo '</time>';
 									} else {
 										$date = $this->get_date_formatted(true, $item['ma_el_custom_timeline_date_custom_format'], $item['ma_el_custom_timeline_date_format'], null, null, $item['ma_el_custom_timeline_date']);
@@ -2261,7 +2261,7 @@ class Timeline extends Master_Widget
 							</div><!-- /.jltma-timeline-post-top -->
 
 							<div class="jltma-timeline-horz-pointer">
-								<?php echo $this->parse_text_editor($point_content); ?>
+								<?php echo wp_kses_post( $this->parse_text_editor($point_content) ); ?>
 							</div>
 
 							<div class="jltma-timeline-post-inner">
@@ -2269,15 +2269,15 @@ class Timeline extends Master_Widget
 								<article class="post post-type">
 
 									<?php if ($item['ma_el_custom_timeline_image']['url']) { ?>
-										<div <?php echo $this->get_render_attribute_string('image'); ?>>
-											<?php echo Group_Control_Image_Size::get_attachment_image_html($item, 'ma_el_custom_timeline_image'); ?>
+										<div <?php echo $this->get_render_attribute_string('image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+											<?php echo Group_Control_Image_Size::get_attachment_image_html($item, 'ma_el_custom_timeline_image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_attachment_image_html returns safe Elementor HTML ?>
 										</div>
 									<?php } ?>
 
 									<div class="jltma-timeline-entry-content">
 
-										<div <?php echo $this->get_render_attribute_string($wysiwyg_key); ?>>
-											<?php echo $this->parse_text_editor($item['ma_el_custom_timeline_content']); ?>
+										<div <?php echo $this->get_render_attribute_string($wysiwyg_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+											<?php echo wp_kses_post( $this->parse_text_editor($item['ma_el_custom_timeline_content']) ); ?>
 										</div>
 
 									</div><!-- /.jltma-timeline-entry-content -->
@@ -2482,9 +2482,9 @@ class Timeline extends Master_Widget
 			}
 ?>
 
-	<div <?php echo $this->get_render_attribute_string('ma_el_timeline_posts'); ?>>
-		<div <?php echo $this->get_render_attribute_string('point'); ?>><?php echo $this->parse_text_editor($point_content); ?></div>
-		<div <?php echo $this->get_render_attribute_string('card-wrapper'); ?>>
+	<div <?php echo $this->get_render_attribute_string('ma_el_timeline_posts'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+		<div <?php echo $this->get_render_attribute_string('point'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>><?php echo wp_kses_post( $this->parse_text_editor($point_content) ); ?></div>
+		<div <?php echo $this->get_render_attribute_string('card-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 			<div class="jltma-timeline-post-inner">
 				<?php
 				if ('yes' === $settings['ma_el_timeline_post_card_links']) {
@@ -2494,15 +2494,15 @@ class Timeline extends Master_Widget
 				<<?php echo esc_attr($card_tag);
 
 					if ('yes' === $settings['ma_el_timeline_post_card_links']) {
-						echo 'class="timeline-item__card ' . implode(' ', get_post_class()) . '" ';
-						echo "href=" . get_permalink(get_the_ID());
+						echo 'class="timeline-item__card ' . esc_attr( implode(' ', get_post_class()) ) . '" ';
+						echo 'href="' . esc_url( get_permalink(get_the_ID()) ) . '"';
 					}
 					?>>
 					<div class="timeline-item__content-wrapper">
 
 						<?php if (has_post_thumbnail() && (isset($settings['ma_el_timeline_post_thumbnail']) && !empty($settings['ma_el_timeline_post_thumbnail']))) { ?>
-							<div <?php echo $this->get_render_attribute_string('image'); ?>>
-								<?php echo $this->render_posts_thumbnail(); ?>
+							<div <?php echo $this->get_render_attribute_string('image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
+								<?php echo $this->render_posts_thumbnail(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_posts_thumbnail returns safe image HTML ?>
 							</div>
 						<?php } ?>
 
@@ -2527,7 +2527,7 @@ class Timeline extends Master_Widget
 				</<?php echo esc_attr($card_tag); ?>>
 			</div><!-- /.jltma-timeline-post-inner -->
 		</div> <!-- card-wrapper -->
-		<div <?php echo $this->get_render_attribute_string('meta-wrapper'); ?>>
+		<div <?php echo $this->get_render_attribute_string('meta-wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 			<?php $this->render_date(true, get_the_ID()); ?>
 		</div>
 	</div>
@@ -2548,14 +2548,14 @@ class Timeline extends Master_Widget
 			];
 
 ?>
-	<div <?php echo $this->get_render_attribute_string('image'); ?>>
+	<div <?php echo $this->get_render_attribute_string('image'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
 
 		<?php if ('' === $settings['ma_el_timeline_post_card_links']) { ?>
-			<a href="<?php echo the_permalink(); ?>">
+			<a href="<?php the_permalink(); ?>">
 
 			<?php }
 
-			echo Group_Control_Image_Size::get_attachment_image_html($settings, 'ma_el_timeline_post_thumbnail_size');
+			echo Group_Control_Image_Size::get_attachment_image_html($settings, 'ma_el_timeline_post_thumbnail_size'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_attachment_image_html returns safe Elementor HTML
 
 			if ('' === $settings['ma_el_timeline_post_card_links']) { ?>
 
@@ -2577,7 +2577,7 @@ class Timeline extends Master_Widget
 			//			$excerpt_src  = $settings['ma_el_post_grid_excerpt_content'];
 			$excerpt_length = $settings['ma_el_timeline_excerpt_length'] ? $settings['ma_el_timeline_excerpt_length'] : 25;
 			echo '<div class="timeline-item__excerpt">';
-			echo Helper::ma_el_get_excerpt_by_id(get_the_ID(), $excerpt_length, $excerpt_type, $this->parse_text_editor($excerpt_text), true, '', '', '');
+			echo wp_kses_post( Helper::ma_el_get_excerpt_by_id(get_the_ID(), (int) $excerpt_length, esc_attr($excerpt_type), $this->parse_text_editor($excerpt_text), true, '', '', '') );
 			echo '</div>';
 		}
 
@@ -2585,7 +2585,7 @@ class Timeline extends Master_Widget
 		{
 			if ($custom) {
 				$format = ($date_format != 'custom') ? $date_format : $custom_format;
-				$value = date($format, strtotime($date_picker_val));
+				$value = wp_date($format, strtotime($date_picker_val));
 			} else {
 				$date_format = $date_format;
 				$time_format = $time_format;

@@ -2,6 +2,10 @@
 
 namespace MasterAddons\Inc\Classes;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use Elementor\Utils;
 use Elementor\Icons_Manager;
 use MasterAddons\Inc\Classes\Pro_Upgrade;
@@ -128,7 +132,7 @@ class Helper {
 	 * @return string
 	 */
 	public static function api_endpoint() {
-		$api_endpoint_url = 'https://bo.jeweltheme.com';
+		$api_endpoint_url = 'https://pixarlabs.com';
 		$api_endpoint     = apply_filters( 'jltma_endpoint', $api_endpoint_url );
 
 		return trailingslashit( $api_endpoint );
@@ -140,22 +144,10 @@ class Helper {
 	 * @return string
 	 */
 	public static function crm_endpoint() {
-		$crm_endpoint_url = 'https://bo.jeweltheme.com/wp-json/jlt-api/v1/subscribe'; // Endpoint .
+		$crm_endpoint_url = self::api_endpoint() . 'api/plugin/subscribe';
 		$crm_endpoint     = apply_filters( 'jltma_crm_crm_endpoint', $crm_endpoint_url );
 
 		return trailingslashit( $crm_endpoint );
-	}
-
-	/**
-	 * CRM Endpoint
-	 *
-	 * @return string
-	 */
-	public static function crm_survey_endpoint() {
-		$crm_feedback_endpoint_url = 'https://bo.jeweltheme.com/wp-json/jlt-api/v1/survey'; // Endpoint .
-		$crm_feedback_endpoint     = apply_filters( 'jltma_crm_crm_endpoint', $crm_feedback_endpoint_url );
-
-		return trailingslashit( $crm_feedback_endpoint );
 	}
 
 	/**
@@ -1215,7 +1207,7 @@ class Helper {
 			$the_excerpt = ( $excerpt_src ) ? $the_post->post_content : $the_post->post_excerpt;
 		}
 
-		$the_excerpt = strip_tags( strip_shortcodes( $the_excerpt ) );
+		$the_excerpt = wp_strip_all_tags( strip_shortcodes( $the_excerpt ) );
 
 		$words = explode( ' ', $the_excerpt, $excerpt_length + 1 );
 
@@ -1269,10 +1261,10 @@ class Helper {
 
 		<div class="elementor-alert elementor-alert-danger" role="alert">
 			<span class="elementor-alert-title">
-				<?php /* translators: %s: Title */ printf( esc_html__( '%s !', 'master-addons' ), $title ); ?>
+				<?php /* translators: %s: Title */ printf( esc_html__( '%s !', 'master-addons' ), esc_html( $title ) ); ?>
 			</span>
 			<span class="elementor-alert-description">
-				<?php /* translators: %s: Content */ printf( esc_html__( '%s &nbsp;', 'master-addons' ), $content ); ?>
+				<?php /* translators: %s: Content */ printf( esc_html__( '%s &nbsp;', 'master-addons' ), esc_html( $content ) ); ?>
 			</span>
 		</div>
 
@@ -1282,7 +1274,7 @@ class Helper {
 	}
 
 	public static function jltma_render_alert( $message, $type = 'warning', $admin_only = true ) {
-		echo self::get_elementor_alert( $message, $type, $admin_only );
+		echo self::get_elementor_alert( $message, $type, $admin_only ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_elementor_alert returns plugin-constructed safe HTML
 	}
 
 	public static function get_elementor_alert( $message, $type = 'warning', $admin_only = true ) {
@@ -1430,7 +1422,7 @@ class Helper {
 
 			global $wpdb;
 
-			$result = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}fluentform_forms" );
+			$result = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}fluentform_forms" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for third-party plugin table; no core API available
 			if ( $result ) {
 				$options[0] = esc_html__( 'Select a Contact Form', 'master-addons' );
 				foreach ( $result as $form ) {
@@ -1454,7 +1446,7 @@ class Helper {
 				<i class="<?php echo esc_attr( $info_icon ); ?>"></i>
 				<div class="jltma-tooltip-text">
 					<a href="<?php echo esc_url( $info_url ); ?>" class="jltma-tooltip-content" target="_blank">
-						<?php /* translators: %s: Content */ printf( esc_html__( '%s &nbsp;', 'master-addons' ), $info_name ); ?>
+						<?php /* translators: %s: Content */ printf( esc_html__( '%s &nbsp;', 'master-addons' ), esc_html( $info_name ) ); ?>
 					</a>
 				</div>
 			</div>
@@ -1885,8 +1877,8 @@ class Helper {
 		);
 
 		foreach ( $server_ip_keys as $key ) {
-			if ( isset( $_SERVER[ $key ] ) && filter_var( $_SERVER[ $key ], FILTER_VALIDATE_IP ) ) {
-				$ip = $_SERVER[ $key ];
+			if ( isset( $_SERVER[ $key ] ) && filter_var( wp_unslash( $_SERVER[ $key ] ), FILTER_VALIDATE_IP ) ) {
+				$ip = sanitize_text_field( wp_unslash( $_SERVER[ $key ] ) );
 
 				break;
 			}
@@ -2190,6 +2182,7 @@ class Helper {
 			$term_list      = wp_get_post_terms( $post->ID, $taxonomy_names );
 			if ( $term_list ) {
 				foreach ( $term_list as $tax_term ) {
+					/* translators: %s: Taxonomy term name. */
 					$output .= '<a href="' . esc_attr( get_term_link( $tax_term, $posts_type ) ) . '" title="' . esc_attr( sprintf( __( 'View all posts in %s', 'master-addons' ), $tax_term->name ) ) . '" ' . $css_link . '>' . esc_html( $tax_term->name ) . '</a>' . esc_html( $separator );
 				}
 			}

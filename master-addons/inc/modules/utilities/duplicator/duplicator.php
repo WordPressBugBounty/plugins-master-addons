@@ -69,7 +69,9 @@ class Duplicator
 		$jltma_duplicate_link = admin_url('admin.php?action=jltma_duplicate&post=' . absint($post->ID));
 		$jltma_duplicate_link = wp_nonce_url($jltma_duplicate_link, 'jltma_post_duplicator_nonce');
 
-		$actions['jltma_duplicate'] = sprintf('<a href="%s" title="%s" rel="permalink">%s</a>', $jltma_duplicate_link,  __('Duplicate this item ' . $post->post_title, 'master-addons' ), esc_html__('MA Duplicator', 'master-addons' ));
+		/* translators: %s: the post title. */
+		$jltma_duplicate_title = sprintf( __( 'Duplicate this item %s', 'master-addons' ), $post->post_title );
+		$actions['jltma_duplicate'] = sprintf('<a href="%s" title="%s" rel="permalink">%s</a>', $jltma_duplicate_link,  esc_attr( $jltma_duplicate_title ), esc_html__('MA Duplicator', 'master-addons' ));
 		return $actions;
 	}
 
@@ -90,7 +92,7 @@ class Duplicator
 		 * Nonce verification
 		 * Return if nonce is not valid
 		 */
-		if (empty($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'], 'jltma_post_duplicator_nonce')) {
+		if (empty($_REQUEST['_wpnonce']) || !wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'jltma_post_duplicator_nonce')) {
 			return;
 		}
 
@@ -116,7 +118,8 @@ class Duplicator
 			 * new post data array
 			 */
 			$args = array(
-				'post_title'     => sprintf( __( '%s - [Duplicated #%d]', 'master-addons' ), $post->post_title, $post->ID ),
+				/* translators: %1$s: original post title, %2$d: original post ID */
+				'post_title'     => sprintf( __( '%1$s - [Duplicated #%2$d]', 'master-addons' ), $post->post_title, $post->ID ),
 				'post_type'      => $post->post_type,
 				'post_content'   => $post->post_content,
 				'post_excerpt'   => $post->post_excerpt,
@@ -148,7 +151,13 @@ class Duplicator
 			/*
 			 * duplicate all post meta just in two SQL queries
 			 */
-			$post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required to fetch all post meta for duplication
+			$post_meta_infos = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = %d",
+					(int) $post_id
+				)
+			);
 			if (count($post_meta_infos) != 0) {
 				$sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
 				foreach ($post_meta_infos as $meta_info) {
@@ -159,7 +168,8 @@ class Duplicator
 					$sql_query_sel[] = $wpdb->prepare("SELECT %d, %s, %s", $new_post_id, $meta_key, $meta_value);
 				}
 				$sql_query .= implode(" UNION ALL ", $sql_query_sel);
-				$wpdb->query($sql_query);
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- query is built from wpdb->prepare() fragments joined with UNION ALL; table name cannot be parameterized
+				$wpdb->query( $sql_query );
 			}
 
 			/*
@@ -170,7 +180,7 @@ class Duplicator
 
 			exit;
 		} else {
-			wp_die('Post creation failed, could not find original post: ' . $post_id);
+			wp_die( 'Post creation failed, could not find original post: ' . esc_html( $post_id ) );
 		}
 	}
 }

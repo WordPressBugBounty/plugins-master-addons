@@ -307,7 +307,7 @@ class Cards extends Master_Widget
 					<?php echo esc_html($settings['ma_el_card_tag']); ?>
 				</p>
 				<p class="ma-el-card-description">
-					<?php echo $this->parse_text_editor($settings['ma_el_card_description']); ?>
+					<?php echo wp_kses_post( $this->parse_text_editor($settings['ma_el_card_description']) ); ?>
 				</p>
 				<a href="<?php echo esc_url($settings['ma_el_card_action_link']['url']); ?>" class="ma-el-card-action">
 					<?php if ('two' === $settings['ma_el_card_preset']) { ?>

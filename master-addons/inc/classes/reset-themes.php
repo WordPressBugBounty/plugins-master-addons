@@ -2,6 +2,10 @@
 
 namespace MasterAddons\Inc\Classes;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use MasterAddons\Inc\Classes\Helper;
 
 /**

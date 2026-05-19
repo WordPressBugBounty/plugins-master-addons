@@ -268,7 +268,7 @@ class Local extends Base
 		$id = str_replace($this->id_prefix(), '', $template_id);
 
 		if (!$tab) {
-			$tab = isset($_REQUEST['tab']) ? sanitize_key($_REQUEST['tab']) : false;
+			$tab = isset($_REQUEST['tab']) ? sanitize_key($_REQUEST['tab']) : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only tab parameter for template display
 		}
 
 		$post = \get_post($id);

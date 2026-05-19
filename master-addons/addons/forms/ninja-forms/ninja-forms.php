@@ -1394,7 +1394,7 @@ class Ninja_Form extends Master_Widget
 
 		if (class_exists('Ninja_Forms')) {
 			if (!empty($settings['contact_form_list'])) { ?>
-				<div <?php echo $this->get_render_attribute_string('jltma-ninja-form'); ?>>
+				<div <?php echo $this->get_render_attribute_string('jltma-ninja-form'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 					<?php
 					$ma_el_form_id = $settings['contact_form_list'];
 					echo do_shortcode('[ninja_form id="' . esc_attr($ma_el_form_id) . '" ]');

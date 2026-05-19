@@ -2,6 +2,10 @@
 
 namespace MasterAddons\Inc\Classes\Notifications;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use MasterAddons\Inc\Classes\Notifications\Model\Popup;
 use MasterAddons\Inc\Classes\Pro_Upgrade;
 use MasterAddons\Inc\Classes\Helper;
@@ -112,7 +116,7 @@ if (!class_exists('Upgrade_Notice')) {
 
 			$this->data = Helper::get_merged_data($sheet_data, $today, $this->date_increment($today, 10));
 
-			$this->is_active = wp_validate_boolean($this->data['is_campaign']);
+			$this->is_active = wp_validate_boolean($this->data['is_live'] ?? false);
 		}
 	}
 }

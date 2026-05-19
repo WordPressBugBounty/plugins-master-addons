@@ -268,7 +268,7 @@ class Filterable_Image_Gallery extends Master_Widget
 						'title'                               => __('Example Title One', 'master-addons' ),
 						'subtitle'                            => __('Example Sub Title One', 'master-addons' ),
 						'gallery_category_name'               => __('Technology', 'master-addons' ),
-						'ma_el_image_gallery_ribbon'          => __('', 'master-addons' ),
+						'ma_el_image_gallery_ribbon'          => '',
 						'ma_el_image_gallery_button_one_text' => __('Details', 'master-addons' ),
 						'ma_el_image_gallery_link_one_url'    => "#",
 						'ma_el_image_gallery_button_two_text' => __('Demo', 'master-addons' ),
@@ -278,7 +278,7 @@ class Filterable_Image_Gallery extends Master_Widget
 						'title'                               => __('Example Title Two', 'master-addons' ),
 						'subtitle'                            => __('Example Sub Title Two', 'master-addons' ),
 						'gallery_category_name'               => __('Living', 'master-addons' ),
-						'ma_el_image_gallery_ribbon'          => __('', 'master-addons' ),
+						'ma_el_image_gallery_ribbon'          => '',
 						'ma_el_image_gallery_button_one_text' => __('Details', 'master-addons' ),
 						'ma_el_image_gallery_link_one_url'    => "#",
 						'ma_el_image_gallery_button_two_text' => __('Demo', 'master-addons' ),
@@ -288,7 +288,7 @@ class Filterable_Image_Gallery extends Master_Widget
 						'title'                               => __('Example Title Three', 'master-addons' ),
 						'subtitle'                            => __('Example Sub Title Three', 'master-addons' ),
 						'gallery_category_name'               => __('Workplace', 'master-addons' ),
-						'ma_el_image_gallery_ribbon'          => __('', 'master-addons' ),
+						'ma_el_image_gallery_ribbon'          => '',
 						'ma_el_image_gallery_button_one_text' => __('Details', 'master-addons' ),
 						'ma_el_image_gallery_link_one_url'    => "#",
 						'ma_el_image_gallery_button_two_text' => __('Demo', 'master-addons' ),
@@ -1867,7 +1867,7 @@ class Filterable_Image_Gallery extends Master_Widget
 			$gallery_categories = JltmaUtils::image_filter_gallery_categories($settings['ma_el_image_gallery_items']);
 		}
 
-		echo '<div ' . $this->get_render_attribute_string('gallery-wrapper') . '>';
+		echo '<div ' . $this->get_render_attribute_string('gallery-wrapper') . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
 
 		if ($settings['ma_el_image_gallery_filter_nav'] == "yes") {
 
@@ -1894,7 +1894,7 @@ class Filterable_Image_Gallery extends Master_Widget
 						$this->add_render_attribute('jltma_category_list', 'data-tippy-content', $settings['ma_el_image_gallery_all_cat_text'], true);
 					}
 					if ($settings['ma_el_image_gallery_tooltip'] == "yes") {
-						echo '<li data-filter="*" ' . $this->get_render_attribute_string('jltma_category_list') . '> <div class="jltma-tooltip-content">' . esc_html(
+						echo '<li data-filter="*" ' . $this->get_render_attribute_string('jltma_category_list') . '> <div class="jltma-tooltip-content">' . esc_html( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
 							$settings['ma_el_image_gallery_all_cat_text']
 						) . ' </div></li>';
 					} else {
@@ -1904,7 +1904,7 @@ class Filterable_Image_Gallery extends Master_Widget
 								'class' => 'active',
 							]
 						);
-						echo '<li data-filter="*" ' . $this->get_render_attribute_string('jltma_category_list') . '>' . esc_html($settings['ma_el_image_gallery_all_cat_text']) . ' </li>';
+						echo '<li data-filter="*" ' . $this->get_render_attribute_string('jltma_category_list') . '>' . esc_html($settings['ma_el_image_gallery_all_cat_text']) . ' </li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
 					}
 				}
 
@@ -1912,7 +1912,7 @@ class Filterable_Image_Gallery extends Master_Widget
 					if ($settings['ma_el_image_gallery_tooltip'] == "yes") {
 						$this->add_render_attribute('jltma_category_list', 'data-tippy-content', $gallery_category, true);
 						printf(
-							'<li ' . $this->get_render_attribute_string('jltma_category_list') . ' data-filter=".%s"><div class="jltma-tooltip-content">%s</div></li>',
+							'<li ' . $this->get_render_attribute_string('jltma_category_list') . ' data-filter=".%s"><div class="jltma-tooltip-content">%s</div></li>', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
 							esc_attr(sanitize_title($gallery_category) . '-' . $this->get_id()),
 							esc_html($gallery_category)
 						);
@@ -1986,7 +1986,7 @@ class Filterable_Image_Gallery extends Master_Widget
 								$image_url = wp_get_attachment_image_url($image['id'], 'full');
 							}
 
-							echo '<div ' . $this->get_render_attribute_string($gallery_item_key) . '>';
+							echo '<div ' . $this->get_render_attribute_string($gallery_item_key) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
 							echo '<div class="jltma-image-hover-thumb">';
 
 							if (!empty($image['id'])) {
@@ -1998,7 +1998,7 @@ class Filterable_Image_Gallery extends Master_Widget
 							echo '<div class="jltma-image-hover-item-info">';
 
 							if ($settings['ma_el_image_gallery_category'] == "yes") {
-								echo ma_el_image_filter_gallery_categories_parts($item['gallery_category_name']);
+								echo ma_el_image_filter_gallery_categories_parts($item['gallery_category_name']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- function returns safe HTML markup
 							}
 
 							if ($item['ma_el_image_gallery_show_ribbon'] == "yes") {
@@ -2016,7 +2016,7 @@ class Filterable_Image_Gallery extends Master_Widget
 							echo '<div class="jltma-image-hover-content ' . esc_attr($animation) . '">';
 
 							if ($item['ma_el_image_gallery_buttons'] == "popup") {
-								echo '<a ' . $this->get_render_attribute_string($images_setting_key) . ' href="' . esc_url($image_url) . '">';
+								echo '<a ' . $this->get_render_attribute_string($images_setting_key) . ' href="' . esc_url($image_url) . '">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
 
 								// Lightbox Icon
 								if ('yes' === $settings['ma_el_image_gallery_hover_icon'] && (!empty($settings['icon']) || !empty($settings['ma_el_image_gallery_popup_icon']['value']))) {
@@ -2041,7 +2041,7 @@ class Filterable_Image_Gallery extends Master_Widget
 									if ($is_new || $migrated) {
 										Icons_Manager::render_icon($settings['ma_el_image_gallery_popup_icon'], ['aria-hidden' => 'true']);
 									} else {
-										echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>';
+										echo '<i ' . $this->get_render_attribute_string('jltma-icon') . '></i>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
 									}
 								} else {
 									echo '<?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><g><g><path d="M210,229.236V90H90v150h90.935L272,369.004v-52.215L210,229.236z M180,210h-60v-90h60V210z"/></g></g><g><g><path d="M0,0v512h512V0H0z M482,482H30V30h452V482z"/></g></g><g><g><path d="M330.031,272L240,142.997v52.214l62,89.135V422h120V272H330.031z M392,392h-60v-90h60V392z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>';
@@ -2052,12 +2052,12 @@ class Filterable_Image_Gallery extends Master_Widget
 
 								if ($item['ma_el_image_gallery_link_one_url']['url'] != "") {
 									echo '<a class="button jltma-creative-button jltma-creative-button--default" href="' . esc_url($item['ma_el_image_gallery_link_one_url']['url']) . '" target="_blank">' .
-										$this->parse_text_editor($item['ma_el_image_gallery_button_one_text']) . '</a>';
+										$this->parse_text_editor($item['ma_el_image_gallery_button_one_text']) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns safe HTML
 								}
 
 								if ($item['ma_el_image_gallery_link_two_url']['url'] != "") {
 									echo '<a class="button jltma-creative-button jltma-creative-button--default" href="' . esc_url($item['ma_el_image_gallery_link_two_url']['url']) . '" target="_blank">' .
-										$this->parse_text_editor($item['ma_el_image_gallery_button_two_text']) . '</a>';
+										$this->parse_text_editor($item['ma_el_image_gallery_button_two_text']) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns safe HTML
 								}
 							}
 
@@ -2066,11 +2066,11 @@ class Filterable_Image_Gallery extends Master_Widget
 							echo '<div class="jltma-image-hover-content-details">';
 
 							if ($settings['ma_el_image_gallery_title'] == "yes") {
-								echo '<h3 class="jltma-image-hover-title">' . $this->parse_text_editor($item['title']) . '</h3>';
+								echo '<h3 class="jltma-image-hover-title">' . $this->parse_text_editor($item['title']) . '</h3>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns safe HTML
 							}
 
 							if ($settings['ma_el_image_gallery_subtitle'] == "yes") {
-								echo '<span class="jltma-image-hover-desc">' . $this->parse_text_editor($item['subtitle']) . '</span>';
+								echo '<span class="jltma-image-hover-desc">' . $this->parse_text_editor($item['subtitle']) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor returns safe HTML
 							}
 
 							echo '</div><!--.jltma-image-hover-content-details-->';

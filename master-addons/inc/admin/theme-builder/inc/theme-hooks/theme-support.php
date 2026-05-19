@@ -90,7 +90,7 @@ class Theme_Support {
 	 */
 	public function jltma_get_full_page_template( $template ) {
 		// Only run on frontend, skip Elementor preview/editor
-		if ( is_admin() || isset( $_GET['elementor-preview'] ) ) {
+		if ( is_admin() || isset( $_GET['elementor-preview'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only Elementor preview context detection
 			return $template;
 		}
 
@@ -145,7 +145,7 @@ class Theme_Support {
 
 		if ( $popup_template_id ) {
 			echo '<div class="jltma-template-content-markup jltma-template-content-popup jltma-template-content-theme-support">';
-			echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content( $popup_template_id );
+			echo \MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder::render_elementor_content( $popup_template_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_elementor_content returns safe Elementor-rendered HTML
 			echo '</div>';
 		}
 	}

@@ -873,6 +873,38 @@ const dialog = { confirmDialog, alertDialog, loadingDialog };
         JLTMA_Popup_Toaster.error(jltmaPopupAdmin.strings.popup_name_required);
         return false;
       }
+      var conditionSignatures = [];
+      var duplicateFound = false;
+      $(".jltma-validation-message").remove();
+      $("#jltma-popup-conditions-repeater .jltma-condition-row").removeClass(
+        "jltma-field-error"
+      );
+      $("#jltma-popup-conditions-repeater .jltma-condition-row").each(function() {
+        var $row = $(this);
+        var rowType = $row.find(".jltma-condition-type").val() || "";
+        var rowRule = $row.find(".jltma-condition-rule").val() || "";
+        var rowSpecific = $row.find(".jltma-condition-specific-select").val() || "";
+        var rowPosts = $row.find(".jltma-condition-sub-select").val() || [];
+        var signature = [
+          rowType,
+          rowRule,
+          rowSpecific,
+          [].concat(rowPosts).join(",")
+        ].join("|");
+        if (conditionSignatures.indexOf(signature) !== -1) {
+          duplicateFound = true;
+          $row.addClass("jltma-field-error");
+        }
+        conditionSignatures.push(signature);
+      });
+      if (duplicateFound) {
+        var duplicateMessage = jltmaPopupAdmin.strings.duplicate_condition || "Duplicate condition found. Each condition must be unique.";
+        $(".jltma-conditions-section").prepend(
+          '<div class="jltma-validation-message jltma-validation-message--error">' + duplicateMessage + "</div>"
+        );
+        $('.jltma-tab-button[data-tab="conditions"]').trigger("click");
+        return false;
+      }
       modal.addClass("loading");
       var formData = form.serialize() + "&popup_id=" + popupId;
       $.ajax({

@@ -163,7 +163,7 @@ class Advanced_Accordion extends Master_Widget
 					'type' => Controls_Manager::CHOOSE,
 					'options' => [
 						'1' => [
-							'title' => esc_html__('', 'master-addons'),
+							'title' => '',
 							'icon' => 'eicon-lock',
 						],
 					],
@@ -1123,8 +1123,8 @@ class Advanced_Accordion extends Master_Widget
 		]);
 		?>
 
-		<div <?php echo $this->get_render_attribute_string('jltma-accordion'); ?> 		<?php echo 'data-accordion-id="' . esc_attr($this->get_id()) . '"'; ?>>
-			<div <?php echo $this->get_render_attribute_string('jltma-accordion-wrap'); ?>">
+		<div <?php echo $this->get_render_attribute_string('jltma-accordion'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render attribute string is safe ?> 		<?php echo 'data-accordion-id="' . esc_attr($this->get_id()) . '"'; ?>>
+			<div <?php echo $this->get_render_attribute_string('jltma-accordion-wrap'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render attribute string is safe ?>">
 
 				<?php
 				foreach ($settings['tabs'] as $index => $tab) {
@@ -1165,8 +1165,8 @@ class Advanced_Accordion extends Master_Widget
 					?>
 
 					<div
-						class="jltma-accordion-item elementor-repeater-item-<?php echo esc_attr($tab['_id']); ?> <?php echo isset($single_item_class) ? $single_item_class : ''; ?>">
-						<<?php echo esc_html($title_html_tag); ?> <?php echo $this->get_render_attribute_string($tab_title_setting_key);
+						class="jltma-accordion-item elementor-repeater-item-<?php echo esc_attr($tab['_id']); ?> <?php echo isset($single_item_class) ? esc_attr($single_item_class) : ''; ?>">
+						<<?php echo esc_html($title_html_tag); ?> <?php echo $this->get_render_attribute_string($tab_title_setting_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render attribute string is safe
 
 											// Single tab styling - only apply if Pro control exists
 											if (isset($tab['single_tab_title_bg_color_show']) && $tab['single_tab_title_bg_color_show'] == 'yes') { ?>
@@ -1216,7 +1216,7 @@ class Advanced_Accordion extends Master_Widget
 								} ?>
 
 								<div class="jltma-accordion-title-text">
-									<?php echo $this->parse_text_editor(Helper::wp_kses_custom($tab['tab_title'])); ?>
+									<?php echo $this->parse_text_editor(Helper::wp_kses_custom($tab['tab_title'])); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- content passed through wp_kses_custom sanitiser ?>
 								</div>
 							</div>
 
@@ -1258,19 +1258,19 @@ class Advanced_Accordion extends Master_Widget
 
 						</<?php echo esc_html($title_html_tag); ?>>
 
-						<div <?php echo $this->get_render_attribute_string($tab_content_setting_key); ?>>
+						<div <?php echo $this->get_render_attribute_string($tab_content_setting_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render attribute string is safe ?>>
 							<?php
 							// Content type rendering - Pro content types filtered through Free_Addons.php
 							$pro_content_types = apply_filters('master_addons/addons/accordion/content_types', ['content']);
 
 							if ($tab['content_type'] == 'content') {
-								echo do_shortcode($tab['accordion_content']);
+								echo do_shortcode($tab['accordion_content']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- shortcode output is intentional HTML
 							} else if (in_array('section', $pro_content_types) && $tab['content_type'] == 'section' && !empty($tab['saved_section'])) {
-								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['saved_section']);
+								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['saved_section']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor builder content is safe
 							} else if (in_array('template', $pro_content_types) && $tab['content_type'] == 'template' && !empty($tab['templates'])) {
-								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['templates']);
+								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['templates']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor builder content is safe
 							} else if (in_array('widget', $pro_content_types) && $tab['content_type'] == 'widget' && !empty($tab['saved_widget'])) {
-								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['saved_widget']);
+								echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($tab['saved_widget']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor builder content is safe
 							}
 							?>
 						</div>

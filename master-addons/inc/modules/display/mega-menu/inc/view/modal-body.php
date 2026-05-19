@@ -1,8 +1,9 @@
+<?php if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 <?php
-// Ensure Font Awesome is loaded for icon preview
-if (!wp_style_is('jltma-font-awesome', 'enqueued') && !wp_style_is('font-awesome', 'enqueued') && !wp_style_is('font-awesome-5-all', 'enqueued')) {
-    $fa_url = defined('ELEMENTOR_ASSETS_URL') ? ELEMENTOR_ASSETS_URL . 'lib/font-awesome/css/all.min.css' : 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
-    echo '<link rel="stylesheet" href="' . esc_url($fa_url) . '" />';
+// Ensure Font Awesome is loaded for icon preview (uses the copy bundled with Elementor).
+if (!wp_style_is('jltma-font-awesome', 'enqueued') && !wp_style_is('font-awesome', 'enqueued') && !wp_style_is('font-awesome-5-all', 'enqueued') && defined('ELEMENTOR_ASSETS_URL')) {
+    // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet -- This view is an HTML fragment rendered inside an admin modal; wp_enqueue_style() does not apply at this stage.
+    echo '<link rel="stylesheet" href="' . esc_url(ELEMENTOR_ASSETS_URL . 'lib/font-awesome/css/all.min.css') . '" />';
 }
 
 // Pro features availability - filtered through Pro_Modules.php
@@ -53,22 +54,22 @@ $jltma_megamenu_pro_features = apply_filters('master_addons/modules/mega_menu/pr
                                 <div id="jltma-menu-builder-wrapper">
                                     <div class="jltma-custom-switch">
                                         <span class="jltma-switch-title jltma-menu-mega-submenu enabled_item">
-                                            <?php esc_html_e('Megamenu Enabled'); ?>
+                                            <?php esc_html_e('Megamenu Enabled', 'master-addons'); ?>
                                         </span>
                                         <span class="jltma-switch-title jltma-menu-mega-submenu disabled_item">
-                                            <?php esc_html_e('Megamenu Disabled'); ?>
+                                            <?php esc_html_e('Megamenu Disabled', 'master-addons'); ?>
                                         </span>
 
                                         <label for="jltma-menu-item-enable" class="jltma-switch">
                                             <input type="checkbox" value="1" id="jltma-menu-item-enable" />
                                             <span class="jltma-switch-slider round"></span>
-                                            <span class="jltma-absolute-no"><?php esc_html_e('NO'); ?></span>
+                                            <span class="jltma-absolute-no"><?php esc_html_e('NO', 'master-addons'); ?></span>
                                         </label>
                                     </div>
                                 </div>
 
                                 <button disabled type="button" id="jltma-menu-builder-trigger" class="jltma-menu-elementor-button content-edit-btn" data-toggle="modal" data-target="#jltma-mega-menu-builder-modal">
-                                    <?php esc_html_e('Edit Megamenu Content'); ?>
+                                    <?php esc_html_e('Edit Megamenu Content', 'master-addons'); ?>
                                 </button>
                             </div>
 
@@ -189,7 +190,7 @@ $jltma_megamenu_pro_features = apply_filters('master_addons/modules/mega_menu/pr
                                 </div>
                                 <div class="jltma-form-group mb-2 jltma-col-5 jtlma-mega-switcher <?php echo !$jltma_megamenu_pro_features['menu_label'] ? 'jltma-disabled' : ''; ?>">
                                     <input type='checkbox' id="mega-menu-hide-item-label" class='mega-menu-hide-item-label' name='mega-menu-hide-item-label' value='1' />
-                                    <label for="mega-menu-hide-item-label"><?php _e("NO", "master-addons"); ?></label>
+                                    <label for="mega-menu-hide-item-label"><?php esc_html_e("NO", "master-addons"); ?></label>
                                 </div>
                                 <?php if (!$jltma_megamenu_pro_features['menu_label']) : ?>
                                     <span class="jltma-pro-badge eicon-pro-icon"></span>
@@ -204,7 +205,7 @@ $jltma_megamenu_pro_features = apply_filters('master_addons/modules/mega_menu/pr
                                 </div>
                                 <div class="jltma-form-group mb-2 jltma-col-5 jtlma-mega-switcher <?php echo !$jltma_megamenu_pro_features['description'] ? 'jltma-disabled' : ''; ?>">
                                     <input type='checkbox' id="jltma-menu-disable-description" class='jltma-menu-disable-description' name='jltma-menu-disable-description' value='1' />
-                                    <label for="jltma-menu-disable-description"><?php _e("NO", "master-addons"); ?></label>
+                                    <label for="jltma-menu-disable-description"><?php esc_html_e("NO", "master-addons"); ?></label>
                                 </div>
                             </div>
                         </div>

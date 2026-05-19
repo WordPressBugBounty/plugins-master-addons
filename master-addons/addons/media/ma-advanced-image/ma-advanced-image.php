@@ -840,7 +840,7 @@ protected function register_controls()
 	public function ma_el_error($error)
 	{
 		if (WP_DEBUG && apply_filters('jltma_trigger_error_message', true)) {
-			trigger_error($error);
+			trigger_error( esc_html( $error ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error,WordPress.Security.EscapeOutput.OutputNotEscaped -- intentionally gated behind WP_DEBUG
 		}
 	}
 
@@ -1102,7 +1102,7 @@ protected function register_controls()
 		if (!empty($all_image_sizes[$size_name])) {
 			return $all_image_sizes[$size_name];
 		}
-		echo sprintf('Invalid image size name (%s) for "%s" function.', $size_name, __FUNCTION__);
+		echo sprintf('Invalid image size name (%s) for "%s" function.', esc_html( $size_name ), esc_html( __FUNCTION__ ) );
 		return false;
 	}
 
@@ -1410,15 +1410,15 @@ protected function register_controls()
 		$default_attr  = array(
 			'src'              => $src,
 			'class'            => "jltma-attachment jltma-featured-image attachment-$string_size jltma-attachment-id-$attachment_id $extra_class",
-			'alt'              => trim(strip_tags(get_post_meta($attachment_id, '_wp_attachment_image_alt', true))), // Use Alt field first
+			'alt'              => trim(wp_strip_all_tags(get_post_meta($attachment_id, '_wp_attachment_image_alt', true))), // Use Alt field first
 			'width_attr_name'  => '',
 			'height_attr_name' => ''
 		);
 
 		if (empty($default_attr['alt']))
-			$default_attr['alt'] = trim(strip_tags($attachment->post_excerpt)); // If not, Use the Caption
+			$default_attr['alt'] = trim(wp_strip_all_tags($attachment->post_excerpt)); // If not, Use the Caption
 		if (empty($default_attr['alt']))
-			$default_attr['alt'] = trim(strip_tags($attachment->post_title)); // Finally, use the title
+			$default_attr['alt'] = trim(wp_strip_all_tags($attachment->post_title)); // Finally, use the title
 
 		// parse the attr
 		$attr = wp_parse_args($attr, $default_attr);
@@ -1554,7 +1554,7 @@ protected function register_controls()
 		if (empty($caption))
 			$caption = get_post_meta($attach_id, '_wp_attachment_image_alt', true);
 		if ($stripe) {
-			$caption = strip_tags($caption);
+			$caption = wp_strip_all_tags($caption);
 		}
 
 		return trim($caption);
@@ -1800,6 +1800,6 @@ protected function register_controls()
 			'preload_bgcolor'  => !empty($settings['ma_el_adv_image_settings_preload_bgcolor']) ? esc_attr($settings['ma_el_adv_image_settings_preload_bgcolor']) : '',
 			'tilt'             => !empty($settings['ma_el_adv_image_tilt']) ? esc_attr($settings['ma_el_adv_image_tilt']) : false,
 		);
-		echo $this->jltma_adv_image_callback($args);
+		echo $this->jltma_adv_image_callback($args); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML content returned by jltma_adv_image_callback() method
 	}
 }

@@ -2,6 +2,10 @@
 
 namespace MasterAddons\Inc\Classes;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use \Elementor\Plugin;
 use \Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 
@@ -234,24 +238,24 @@ class Ajax_Queries
     public function jltma_restrict_content()
     {
 
-        parse_str($_POST['fields'], $output);
+        parse_str( isset( $_POST['fields'] ) ? sanitize_text_field( wp_unslash( $_POST['fields'] ) ) : '', $output ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
 
-        if (!empty($_POST['fields'])) {
+        if (!empty($_POST['fields'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
 
             // Math Captcha
-            if ($_POST['restrict_type'] == 'math_captcha') {
+            if ( isset( $_POST['restrict_type'] ) && $_POST['restrict_type'] == 'math_captcha' ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
                 if ($output['ma_el_rc_answer'] !== $output['ma_el_rc_answer_hd']) {
                     die(json_encode(array(
                         "result" => "validate",
-                        "output" => /* translators: %s: Error message */ sprintf(__('%1$s &nbsp;', 'master-addons' ), wp_kses_post($_POST['error_message']))
+                        "output" => /* translators: %s: Error message */ sprintf(__('%1$s &nbsp;', 'master-addons' ), wp_kses_post( wp_unslash( isset( $_POST['error_message'] ) ? $_POST['error_message'] : '' ) )) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
                     )));
                 }
             }
 
             // Password Protection
-            if ($_POST['restrict_type'] == 'password') {
-                if ($_POST['content_pass'] !== $output['ma_el_restrict_content_pass']) {
-                    $error_msg = isset($_POST['error_message']) ? stripslashes(sanitize_text_field($_POST['error_message'])) : __('Incorrect password.', 'master-addons');
+            if ( isset( $_POST['restrict_type'] ) && $_POST['restrict_type'] == 'password' ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
+                if ( ( isset( $_POST['content_pass'] ) ? sanitize_text_field( wp_unslash( $_POST['content_pass'] ) ) : '' ) !== $output['ma_el_restrict_content_pass'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
+                    $error_msg = isset($_POST['error_message']) ? stripslashes(sanitize_text_field( wp_unslash( $_POST['error_message'] ) )) : __('Incorrect password.', 'master-addons'); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
                     die(json_encode(array(
                         "result" => "validate",
                         "output" => $error_msg
@@ -261,42 +265,42 @@ class Ajax_Queries
 
 
             // Age Restrict
-            if ($_POST['restrict_type'] == 'age_restrict') {
+            if ( isset( $_POST['restrict_type'] ) && $_POST['restrict_type'] == 'age_restrict' ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
 
-                $min_age = (float) $_POST['restrict_age']['min_age'];
+                $min_age = isset( $_POST['restrict_age']['min_age'] ) ? (float) sanitize_text_field( wp_unslash( $_POST['restrict_age']['min_age'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
 
                 // Enter Age
-                if ($_POST['restrict_age']['age_type'] == "enter_age") {
+                if ( isset( $_POST['restrict_age']['age_type'] ) && sanitize_key( wp_unslash( $_POST['restrict_age']['age_type'] ) ) === "enter_age" ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
 
                     if (($output['ma_el_ra_year'] == "") || ($output['ma_el_ra_year'] < $min_age)) {
                         die(json_encode(array(
                             "result" => "validate",
-                            "output" => /* translators: %s: Error message */ sprintf(__('%1$s &nbsp;', 'master-addons' ), wp_kses_post($_POST['error_message']))
+                            "output" => /* translators: %s: Error message */ sprintf(__('%1$s &nbsp;', 'master-addons' ), wp_kses_post( wp_unslash( isset( $_POST['error_message'] ) ? $_POST['error_message'] : '' ) )) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
                         )));
                     }
                 }
 
-                if ($_POST['restrict_age']['age_type'] == "age_checkbox") {
+                if ( isset( $_POST['restrict_age']['age_type'] ) && sanitize_key( wp_unslash( $_POST['restrict_age']['age_type'] ) ) === "age_checkbox" ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
                     // Checkbox Age Restriction
                     if ($output['ma_el_rc_check'] != "on") {
                         die(json_encode(array(
                             "result" => "validate",
-                            "output" => /* translators: %s: Error message */ sprintf(__('%1$s &nbsp;', 'master-addons' ), wp_kses_post($_POST['error_message']))
+                            "output" => /* translators: %s: Error message */ sprintf(__('%1$s &nbsp;', 'master-addons' ), wp_kses_post( wp_unslash( isset( $_POST['error_message'] ) ? $_POST['error_message'] : '' ) )) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
                         )));
                     }
                 }
 
-                if ($_POST['restrict_age']['age_type'] == "input_age") {
+                if ( isset( $_POST['restrict_age']['age_type'] ) && sanitize_key( wp_unslash( $_POST['restrict_age']['age_type'] ) ) === "input_age" ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
 
                     if ($output['ma_el_ra_day'] == "" || $output['ma_el_ra_month'] == "" || $output['ma_el_ra_year'] == "") {
                         die(json_encode(array(
                             "result" => "validate",
-                            "output" => /* translators: %s: Restrict Age */ sprintf(__('%1$s &nbsp;&nbsp;', 'master-addons' ), sanitize_text_field($_POST['restrict_age']['empty_bday']))
+                            "output" => /* translators: %s: Restrict Age */ sprintf(__('%1$s &nbsp;&nbsp;', 'master-addons' ), sanitize_text_field( wp_unslash( isset( $_POST['restrict_age']['empty_bday'] ) ? $_POST['restrict_age']['empty_bday'] : '' ) )) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
                         )));
                     } else if (!checkdate($output['ma_el_ra_month'], $output['ma_el_ra_day'], $output['ma_el_ra_year'])) {
                         die(json_encode(array(
                             "result" => "validate",
-                            "output" => /* translators: %s: Restrict Age */ sprintf(__('%1$s &nbsp;&nbsp;', 'master-addons' ), sanitize_text_field($_POST['restrict_age']['non_exist_bday']))
+                            "output" => /* translators: %s: Restrict Age */ sprintf(__('%1$s &nbsp;&nbsp;', 'master-addons' ), sanitize_text_field( wp_unslash( isset( $_POST['restrict_age']['non_exist_bday'] ) ? $_POST['restrict_age']['non_exist_bday'] : '' ) )) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
                         )));
                     } else {
                         $birthday = sprintf("%04d-%02d-%02d", $output['ma_el_ra_year'], $output['ma_el_ra_month'], $output['ma_el_ra_day']);
@@ -307,7 +311,7 @@ class Ajax_Queries
                         if ($birthday > $min) {
                             die(json_encode(array(
                                 "result" => "validate",
-                                "output" => /* translators: %s: Error message */ sprintf(__('%1$s , minimum age %2$s', 'master-addons' ), sanitize_text_field($min_age), wp_kses_post($_POST['error_message']))
+                                "output" => /* translators: %s: Error message */ sprintf(__('%1$s , minimum age %2$s', 'master-addons' ), sanitize_text_field($min_age), wp_kses_post( wp_unslash( isset( $_POST['error_message'] ) ? $_POST['error_message'] : '' ) )) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
                             )));
                         }
                     }
@@ -327,20 +331,20 @@ class Ajax_Queries
     public function jltma_domain_checker()
     {
         // Check security field first
-        if (empty($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'jltma-domain-checker')) {
+        if (empty($_POST['nonce']) || !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'jltma-domain-checker')) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
             wp_send_json_error(__('Security Error.', 'master-addons'));
         }
 
-        $succes_msg = isset($_POST['succes_msg']) ? urldecode(html_entity_decode(wp_kses_post($_POST['succes_msg']))) : '';
-        $error_msg = isset($_POST['error_msg']) ? urldecode(html_entity_decode(wp_kses_post($_POST['error_msg']))) : '';
-        $not_found = isset($_POST['not_found']) ? urldecode(html_entity_decode(wp_kses_post($_POST['not_found']))) : '';
-        $not_entered_domain = isset($_POST['not_entered_domain']) ? sanitize_text_field($_POST['not_entered_domain']) : __('Please enter a domain name.', 'master-addons');
+        $succes_msg = isset($_POST['succes_msg']) ? urldecode(html_entity_decode(wp_kses_post( wp_unslash( $_POST['succes_msg'] ) ))) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
+        $error_msg = isset($_POST['error_msg']) ? urldecode(html_entity_decode(wp_kses_post( wp_unslash( $_POST['error_msg'] ) ))) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
+        $not_found = isset($_POST['not_found']) ? urldecode(html_entity_decode(wp_kses_post( wp_unslash( $_POST['not_found'] ) ))) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
+        $not_entered_domain = isset($_POST['not_entered_domain']) ? sanitize_text_field( wp_unslash( $_POST['not_entered_domain'] ) ) : __('Please enter a domain name.', 'master-addons'); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
 
         if (empty($_POST['domain'])) {
             wp_send_json_error($not_entered_domain);
         }
 
-        $domain = str_replace(array('www.', 'http://'), '', sanitize_text_field($_POST['domain']));
+        $domain = str_replace(array('www.', 'http://'), '', sanitize_text_field( wp_unslash( $_POST['domain'] ) )); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
         $split  = explode('.', $domain);
         if (count($split) == 1) {
             $domain = $domain . ".com";

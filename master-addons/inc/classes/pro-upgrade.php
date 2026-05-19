@@ -26,17 +26,6 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 
 		protected $data = array();
 
-		protected $modes = array(
-			'development' => array(
-				'sheet_id' => '1VLpfKspHHNM6JIFOQtohqDRyHR85J3KR5RLF4jqlz0Q',
-				'tab_id'   => 0,
-			),
-			'production'  => array(
-				'sheet_id' => '1VLpfKspHHNM6JIFOQtohqDRyHR85J3KR5RLF4jqlz0Q',
-				'tab_id'   => 0,
-			),
-		);
-
 		/**
 		 * Construct method
 		 */
@@ -65,32 +54,29 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 		 */
 		public function dashboard_widget()
 		{
+			
 			wp_add_dashboard_widget(
 				'jltma_dashboard_widget',
-				esc_html__('Master Addons Overview', 'master-addons'),
+				esc_html__('Master Addons - News & Updates', 'master-addons'),
 				array($this, 'dashboard_widget_render')
 			);
 
 			// Force widget to very first position on the dashboard
 			global $wp_meta_boxes;
 
-			if (!isset($wp_meta_boxes['dashboard']['normal']['core']['jltma_dashboard_widget'])) {
-				return;
-			}
+			// Get the regular dashboard widgets array
+			// (which already has our new widget but appended at the end).
+			$default_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
 
-			$widget = $wp_meta_boxes['dashboard']['normal']['core']['jltma_dashboard_widget'];
-			unset($wp_meta_boxes['dashboard']['normal']['core']['jltma_dashboard_widget']);
+			// Backup and delete our new dashboard widget from the end of the array.
+			$default_widget_backup = array( 'jltma_dashboard_widget' => $default_dashboard['jltma_dashboard_widget'] );
+			unset( $default_dashboard['jltma_dashboard_widget'] );
 
-			// Place in normal/high priority — renders before normal/core (Site Health, At a Glance, Activity)
-			if (!isset($wp_meta_boxes['dashboard']['normal']['high'])) {
-				$wp_meta_boxes['dashboard']['normal']['high'] = array();
-			}
+			// Merge the two arrays together so our widget is at the beginning.
+			$sorted_dashboard = array_merge( $default_widget_backup, $default_dashboard );
 
-			// Prepend to high priority so it's the very first widget
-			$wp_meta_boxes['dashboard']['normal']['high'] = array_merge(
-				array('jltma_dashboard_widget' => $widget),
-				$wp_meta_boxes['dashboard']['normal']['high']
-			);
+			// Save the sorted array back into the original metaboxes .
+			$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
 		}
 
 		/**
@@ -108,7 +94,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 			if (wp_validate_boolean($this->get_content('is_campaign'))) { ?>
 				<div class="jltma-dashboard-promo" style="--jltma-popup-color: <?php echo esc_attr($this->get_content('btn_color')); ?>;">
 					<a target="_blank" href="<?php echo esc_url($this->get_content('button_url')); ?>">
-						<img src="<?php echo esc_url($this->get_content('image_url')); ?>" alt="Master Addons Promo Image" style="width: 100%; height: auto;">
+						<img src="<?php echo esc_url($this->get_content('image_url')); ?>" alt="<?php esc_html__('Master Addons Promo Image', 'master-addons'); ?>" style="width: 100%; height: auto;">
 					</a>
 					<a class="jltma-popup-button" target="_blank" href="<?php echo esc_url($this->get_content('button_url')); ?>">
 						<?php echo esc_html($this->get_content('button_text')); ?>
@@ -116,7 +102,6 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 				</div>
 			<?php } ?>
 
-			<p class="jltma-overview-subtitle"><?php echo esc_html__('News & Updates', 'master-addons'); ?></p>
 
 			<?php if (!empty($feed_items)) { ?>
 				<ul class="jltma-overview-list">
@@ -125,9 +110,6 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 							<a href="<?php echo esc_url($feed_item['link']); ?>" target="_blank">
 								<?php echo esc_html($feed_item['title']); ?>
 							</a>
-							<?php if (!empty($feed_item['excerpt'])) { ?>
-								<p class="jltma-overview-excerpt"><?php echo esc_html($feed_item['excerpt']); ?></p>
-							<?php } ?>
 						</li>
 					<?php } ?>
 				</ul>
@@ -142,7 +124,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 						</a>
 					</li>
 					<li>
-						<a href="https://wpadminify.com/pricing" target="_blank">
+						<a href="https://master-addons.com/pricing" target="_blank">
 							<?php echo esc_html__('40% Off Bundle', 'master-addons'); ?>
 							<span aria-hidden="true" class="dashicons dashicons-external"></span>
 						</a>
@@ -177,15 +159,14 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 				}
 
 				.jltma-overview-list {
-					margin: 0;
+					margin: 12px 0;
 					padding: 0;
 					list-style: none;
 				}
 
 				.jltma-overview-list li {
-					padding: 12px;
+					padding: 6px 12px;
 					margin: 0;
-					border-bottom: 1px solid #f0f0f1;
 				}
 
 				.jltma-overview-list li:last-child {
@@ -329,7 +310,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 			// Fallback to jeweltheme feed (no descriptions)
 			if (empty($items)) {
 				include_once ABSPATH . WPINC . '/feed.php';
-				$rss = fetch_feed('https://jeweltheme.com/feed.xml');
+				$rss = fetch_feed('https://master-addons.com/feed/');
 
 				if (!is_wp_error($rss)) {
 					$rss_items = $rss->get_items(0, 10);
@@ -380,7 +361,8 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 		 */
 		public function get_content($key)
 		{
-			return $this->data[$key];
+			if( empty( $this->data ) ) return;
+			return $this->data[$key] ?? null;
 		}
 
 		/**
@@ -445,125 +427,94 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 		public function sheet_data_remote_sync()
 		{
 			$data  = self::get_data();
-			$force = false;
+			$force = empty( $data );
 
-			if (empty($data)) {
-				$force = true;
+			$remote_data = $this->get_update_remote_data();
+
+			// Don't clobber stored data when the API is unreachable / returned nothing.
+			if ( false === $remote_data ) {
+				return;
 			}
 
-			$sheet_hash_data = $this->get_data_hash();
-			$remote_data     = $this->get_sheet_promo_remote_data();
-			$sheet_data_hash = base64_encode(json_encode($remote_data));
+			$stored_hash = $this->get_data_hash();
+			$remote_hash = base64_encode( json_encode( $remote_data ) );
 
-			if ($force || $sheet_hash_data !== $sheet_data_hash) {
+			if ( $force || $stored_hash !== $remote_hash ) {
 				update_option('jltma_sheet_promo_data', $remote_data);
-				update_option('jltma_sheet_promo_data_hash', $sheet_data_hash);
+				update_option('jltma_sheet_promo_data_hash', $remote_hash);
 				do_action('jltma_sheet_promo_data_reset');
 			}
 		}
 
 		/**
-		 * Get Environment mode
+		 * Update endpoint URL for this plugin
 		 *
 		 * @author Jewel Theme <support@jeweltheme.com>
 		 */
-		public function get_mode()
-		{
-			return defined('WP_DEBUG') && WP_DEBUG ? 'development' : 'production';
+		public function get_update_url() {
+			return esc_url( Helper::api_endpoint() . 'api/plugin/update/' . Helper::jltma_slug_cleanup() );
 		}
 
 		/**
-		 * Get Sheet URL
+		 * Promotional remote data (REST API)
 		 *
+		 * Expects a single JSON object describing the update, e.g.
+		 * { product_name, product_slug, image_url, start_date, end_date,
+		 *   button_text, button_url, btn_color, notice, show_for_premium, is_live }
+		 *
+		 * @return array|false
 		 * @author Jewel Theme <support@jeweltheme.com>
 		 */
-		public function get_sheet_url()
-		{
-			$sheet_id = $this->modes[$this->get_mode()]['sheet_id'];
-			$tab_id   = $this->modes[$this->get_mode()]['tab_id'];
+		public function get_update_remote_data() {
+			$response = wp_remote_get(
+				$this->get_update_url(),
+				array(
+					'timeout' => 15,
+					'headers' => array( 'Accept' => 'application/json' ),
+				)
+			);
 
-			return "https://docs.google.com/spreadsheets/export?format=csv&id={$sheet_id}&gid={$tab_id}";
-		}
-
-		/**
-		 * Promotional remote data
-		 *
-		 * @author Jewel Theme <support@jeweltheme.com>
-		 */
-		public function get_sheet_promo_remote_data()
-		{
-			$transient_key = $this->slug . '_sheet_promo_data';
-
-			$data = get_transient($transient_key);
-			if ($data !== false) return $data;
-
-			$url = $this->get_sheet_url();
-
-			$response = wp_remote_get($url);
-
-			if (is_wp_error($response)) {
+			if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
 				return false;
 			}
 
-			$response = wp_remote_retrieve_body($response);
+			$body = wp_remote_retrieve_body( $response );
 
-			if (!$response) {
+			if ( ! $body ) {
 				return false;
 			}
 
-			$data = array_map(function ($line) {
-				return str_getcsv($line, ',', '"', '\\');
-			}, explode("\n", $response));
+			$data = json_decode( $body, true );
 
-			// Remove empty rows that can occur from trailing newlines
-			$data = array_filter($data, function ($row) {
-				return !empty($row) && !empty(array_filter($row));
-			});
-
-			$header = array_shift($data);
-
-			// Validate header exists
-			if (empty($header)) {
+			if ( ! is_array( $data ) || JSON_ERROR_NONE !== json_last_error() ) {
 				return false;
 			}
 
-			$data = array_map(function (array $row) use ($header) {
-				// Ensure row has same number of elements as header to prevent array_combine errors
-				$header_count = count($header);
-				$row_count = count($row);
+			// API may return the update directly, or wrapped (e.g. { data: {...} }) / as a list.
+			if ( isset( $data['data'] ) && is_array( $data['data'] ) ) {
+				$data = $data['data'];
+			}
 
-				if ($row_count < $header_count) {
-					// Pad row with empty strings if it has fewer elements than header
-					$row = array_pad($row, $header_count, '');
-				} elseif ($row_count > $header_count) {
-					// Truncate row if it has more elements than header
-					$row = array_slice($row, 0, $header_count);
+			if ( isset( $data[0] ) && is_array( $data[0] ) ) {
+				$data = wp_list_filter( $data, array( 'product_slug' => Helper::jltma_slug_cleanup() ) );
+				$data = $data ? array_values( $data )[0] : array();
+			}
+
+			if ( empty( $data ) || empty( $data['product_slug'] ) ) {
+				return false;
+			}
+
+			// Only accept a update that targets this plugin.
+			if ( Helper::jltma_slug_cleanup() !== $data['product_slug'] ) {
+				return false;
+			}
+
+			// API sends dates as "d/m/Y h:i a" — normalise so PHP/JS date parsers don't choke.
+			foreach ( array( 'start_date', 'end_date' ) as $key ) {
+				if ( ! empty( $data[ $key ] ) ) {
+					$data[ $key ] = $this->normalize_date( $data[ $key ] );
 				}
-
-				$result = array_combine($header, $row);
-
-				// Extra safety check
-				// if ($result === false) {
-				// 	error_log('Master Addons: array_combine failed. Header count: ' . count($header) . ', Row count: ' . count($row));
-				// 	return array();
-				// }
-
-				return $result;
-			}, $data);
-
-			// filter plugin is not empty .
-			$data = array_filter($data, function ($row) {
-				return !empty($row['name']);
-			});
-
-			$plugin_slug = Helper::jltma_slug_cleanup();
-			$data        = wp_list_filter($data, array('product_slug' => $plugin_slug));
-
-			if (!empty($data)) {
-				$data = array_values($data)[0];
 			}
-
-			set_transient($transient_key, $data, HOUR_IN_SECONDS);
 
 			return $data;
 		}
@@ -581,7 +532,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 				}
 			}
 
-			if ('FALSE' === $this->get_content('is_campaign')) {
+			if (empty( $this->get_content('is_live') )) {
 				$image_url = JLTMA_IMAGE_DIR . 'ma-fallback.png';
 				$notice = 'Use "SPECIAL40" to Get Flat 40% OFF';
 				$btn_url = 'https://master-addons.com/pricing/';
@@ -611,7 +562,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 						<div class="jltma-popup-countdown" style="display: none;">
 							<?php if (!empty($notice)) { ?>
 								<span data-counter="notice" style="color:#F4B740; font-size:14px; padding-bottom:20px; font-style:italic;">
-									<?php echo esc_html__('Notice:', 'master-addons'); ?> <?php echo $notice; ?>
+									<?php echo esc_html__('Notice:', 'master-addons'); ?> <?php echo esc_html( $notice ); ?>
 								</span>
 							<?php } ?>
 							<span class="jltma-popup-countdown-text"><?php echo esc_html__('Offer Ends In', 'master-addons'); ?></span>
@@ -646,7 +597,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 
 			<script>
 				var $container = jQuery('#jltma-popup'),
-					plugin_data = <?php echo json_encode($this->get_sheet_promo_remote_data(), true); ?>,
+					plugin_data = <?php echo wp_json_encode( $this->data ); ?>,
 					events = {}; //Events
 
 				// Update Counter
@@ -732,7 +683,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 				initCounter('<?php echo esc_attr($this->counter_date()); ?>');
 			</script>
 
-<?php
+			<?php
 		}
 
 		/**
@@ -751,6 +702,32 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 			}
 
 			return $this->date_increment($this->current_time(), 3);
+		}
+
+		/**
+		 * Normalise a update date string to 'Y-m-d H:i:s'
+		 *
+		 * Accepts d/m/Y (optionally with 12h time) and a few common fallbacks.
+		 * Returns the original value untouched if it cannot be parsed.
+		 *
+		 * @param string $value .
+		 * @author Jewel Theme <support@jeweltheme.com>
+		 */
+		public function normalize_date( $value ) {
+			$value   = trim( (string) $value );
+			$formats = array( 'd/m/Y h:i a', 'd/m/Y H:i', 'd/m/Y', 'd-m-Y H:i:s', 'd-m-Y' );
+
+			foreach ( $formats as $format ) {
+				$dt = \DateTime::createFromFormat( $format, $value );
+
+				if ( $dt instanceof \DateTime ) {
+					return $dt->format( 'Y-m-d H:i:s' );
+				}
+			}
+
+			$ts = strtotime( $value );
+
+			return $ts ? gmdate( 'Y-m-d H:i:s', $ts ) : $value;
 		}
 	} // End class Pro_Upgrade
 } // End class_exists check

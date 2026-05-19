@@ -34,6 +34,6 @@ class Post_ID extends Tag
 
 	public function render()
 	{
-		echo get_the_ID();
+		echo absint( get_the_ID() );
 	}
 }

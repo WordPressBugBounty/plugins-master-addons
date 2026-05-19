@@ -2,6 +2,10 @@
 
 namespace MasterAddons\Inc\Classes;
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 use MasterAddons\Inc\Classes\Helper;
 
 /**
@@ -118,8 +122,8 @@ if (!class_exists('MasterAddons\Inc\Classes\Freemius_Hooks')) {
     // Customize Opt-in Message for Existing Users
     public function jltma_custom_connect_message_on_update( $message, $user_first_name, $plugin_title, $user_login, $site_link, $freemius_link ){
       
-      /* translators: 1: First Name, 2: Plugin Title, 3: Freemius Link. */ 
       return sprintf(
+          /* translators: 1: First Name, 2: Plugin Title, 3: Freemius Link. */
           __( 'Hey %1$s,<br> Please help us improve %2$s! If you opt-in, some data about your usage of %2$s will be sent to %3$s. If you skip this, that\'s okay! %2$s will still work just fine.', 'master-addons' ),
           $user_first_name,
           '<b>' . $plugin_title . '</b>',

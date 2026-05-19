@@ -3,6 +3,10 @@
 * Master Addons : Welcome Screen by Jewel Theme
 */
 
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 // Check if PRO version is active and set constants accordingly
 if (\MasterAddons\Inc\Classes\Helper::jltma_premium() && defined('JLTMA_PRO') && defined('JLTMA_PRO_VER') && defined('JLTMA_PRO_PATH')) {
 	$jltma_prefix = JLTMA_PRO;
@@ -59,9 +63,11 @@ if ($is_premium) {
 
 			<h1 class="jltma-master-addons-title">
 				<?php if (!empty($jltma_white_label_setting['jltma_wl_plugin_menu_label'])) {
-					printf(__('%s <small>v %s</small>'), $jltma_white_label_setting['jltma_wl_plugin_menu_label'], $jltma_ver);
+					/* translators: 1: plugin name, 2: plugin version */
+					printf( esc_html__('%1$s v %2$s', 'master-addons'), esc_html( $jltma_white_label_setting['jltma_wl_plugin_menu_label'] ), esc_html( $jltma_ver ) );
 				} else {
-					printf(__('%s <small>v %s</small>'), $jltma_prefix, $jltma_ver);
+					/* translators: 1: plugin name, 2: plugin version */
+					printf( esc_html__('%1$s v %2$s', 'master-addons'), esc_html( $jltma_prefix ), esc_html( $jltma_ver ) );
 				}
 				?>
 			</h1>

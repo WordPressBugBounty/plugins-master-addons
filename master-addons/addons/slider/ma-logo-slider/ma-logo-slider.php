@@ -151,7 +151,7 @@ class Logo_Slider extends Master_Widget
 		$this->add_control(
 			'jltma_logo_slider_items',
 			[
-				'label' => esc_html__('', 'master-addons' ),
+				'label' => '',
 				'type' => Controls_Manager::REPEATER,
 				'fields' => $repeater->get_controls(),
 				'default' => [
@@ -614,9 +614,9 @@ class Logo_Slider extends Master_Widget
 
 		?>
 
-		<div <?php echo $this->get_render_attribute_string('carousel'); ?>>
-			<div <?php echo $this->get_render_attribute_string('jltma_logo_carousel_wrapper'); ?>>
-				<div <?php echo $this->get_render_attribute_string('logo_swiper_wrapper'); ?>>
+		<div <?php echo $this->get_render_attribute_string('carousel'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
+			<div <?php echo $this->get_render_attribute_string('jltma_logo_carousel_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
+				<div <?php echo $this->get_render_attribute_string('logo_swiper_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe HTML ?>>
 					<?php
 	}
 
@@ -739,7 +739,7 @@ class Logo_Slider extends Master_Widget
                             if ($is_new || $migrated){
                                 \Elementor\Icons_Manager::render_icon($settings['item_hover_icon'], ['aria-hidden' => 'true', 'class' => $icon_class]);
                             } else { ?>
-                                <i class="<?php echo esc_attr($settings['icon']) . ' ' . $icon_class; ?>" aria-hidden="true"></i>
+                                <i class="<?php echo esc_attr($settings['icon']) . ' ' . esc_attr($icon_class); ?>" aria-hidden="true"></i>
                             <?php }
 
 						// Hover Logo Image

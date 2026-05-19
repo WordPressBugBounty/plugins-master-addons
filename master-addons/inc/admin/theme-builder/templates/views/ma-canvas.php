@@ -33,7 +33,7 @@ do_action( 'wp_body_open' );
 
 // Render Master Addons template content
 if ( $template_id && class_exists( 'MasterAddons\Inc\Admin\Theme_Builder\Theme_Builder' ) ) {
-	echo Theme_Builder::render_elementor_content( $template_id );
+	echo Theme_Builder::render_elementor_content( $template_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- render_elementor_content() returns sanitized Elementor/wp_kses_post markup
 } else {
 	echo '<p>Master Addons template system not available.</p>';
 }

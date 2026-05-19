@@ -161,7 +161,7 @@ class Popup_Admin {
     public function get_popup_data() {
         check_ajax_referer('jltma_popup_nonce', '_nonce');
 
-        $popup_id = intval($_GET['popup_id']);
+        $popup_id = isset( $_GET['popup_id'] ) ? absint( $_GET['popup_id'] ) : 0;
 
         if (!$popup_id) {
             wp_send_json_error(['message' => 'Invalid popup ID']);
@@ -258,7 +258,7 @@ class Popup_Admin {
     public function delete_popup() {
         check_ajax_referer('jltma_popup_nonce', '_nonce');
 
-        $popup_id = intval($_POST['popup_id']);
+        $popup_id = isset( $_POST['popup_id'] ) ? absint( $_POST['popup_id'] ) : 0;
 
         if (!$popup_id) {
             wp_send_json_error(['message' => 'Invalid popup ID']);
@@ -284,7 +284,7 @@ class Popup_Admin {
                         <div class="jltma-header-top">
                             <div class="jltma-popup-head-content">
                                 <span>
-                                    <img src="<?php echo JLTMA_IMAGE_DIR . 'logo.svg'; ?>">
+                                    <img src="<?php echo esc_url( JLTMA_IMAGE_DIR . 'logo.svg' ); ?>">
                                 </span>
                                 <h3><?php echo esc_html__('Popup Templates', 'master-addons'); ?></h3>
                             </div>
@@ -383,7 +383,7 @@ class Popup_Admin {
         }
 
         $template_id = intval($_POST['template_id'] ?? 0);
-        $title = sanitize_text_field($_POST['title'] ?? '');
+        $title = sanitize_text_field( wp_unslash( $_POST['title'] ?? '' ) );
 
         if (!$template_id) {
             wp_send_json_error(['message' => 'Invalid template ID']);
@@ -455,7 +455,7 @@ class Popup_Admin {
         }
 
         // Set activation and default conditions
-        $activation = sanitize_text_field($_POST['activation'] ?? 'no');
+        $activation = sanitize_text_field( wp_unslash( $_POST['activation'] ?? 'no' ) );
         update_post_meta($popup_id, '_jltma_popup_activation', $activation);
 
         // Parse conditions if provided
@@ -510,10 +510,14 @@ class Popup_Admin {
 
     private function parse_conditions_from_post() {
         $conditions_data = [];
-        $condition_types = $_POST['jltma_condition_type'] ?? [];
-        $condition_rules = $_POST['jltma_condition_rule'] ?? [];
-        $condition_specifics = $_POST['jltma_condition_specific'] ?? [];
-        $condition_posts = $_POST['jltma_condition_posts'] ?? [];
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method (import_popup_template)
+        $condition_types = isset( $_POST['jltma_condition_type'] ) ? map_deep( wp_unslash( $_POST['jltma_condition_type'] ), 'sanitize_text_field' ) : []; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method (import_popup_template)
+        $condition_rules = isset( $_POST['jltma_condition_rule'] ) ? map_deep( wp_unslash( $_POST['jltma_condition_rule'] ), 'sanitize_text_field' ) : []; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method (import_popup_template)
+        $condition_specifics = isset( $_POST['jltma_condition_specific'] ) ? map_deep( wp_unslash( $_POST['jltma_condition_specific'] ), 'sanitize_text_field' ) : []; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method (import_popup_template)
+        $condition_posts = isset( $_POST['jltma_condition_posts'] ) ? map_deep( wp_unslash( $_POST['jltma_condition_posts'] ), 'sanitize_text_field' ) : []; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
         foreach ($condition_types as $index => $type) {
             $rule = $condition_rules[$index] ?? '';

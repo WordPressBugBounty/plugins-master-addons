@@ -172,12 +172,13 @@ if (!class_exists('MasterAddons\Inc\Classes\Extension_Prototype')) {
         $section_title = '';
         // If the extension is premium, add a badge to the section title
         if (Helper::jltma_premium() && $this->is_premium) {
-            $section_title = sprintf(__('%s ', 'master-addons'), $this->name );
+            $section_title = $this->name;
         } elseif( $this->is_premium ){
-            $section_title = sprintf(__('%s <span class="jltma_pro_text">%s<span>', 'master-addons'), $this->name, __('Pro', 'master-addons') );
+            /* translators: 1: Extension name, 2: Pro badge label */
+            $section_title = sprintf(__('%1$s <span class="jltma_pro_text">%2$s<span>', 'master-addons'), $this->name, __('Pro', 'master-addons') );
         } else {
             // If the extension is not premium, just show the name
-            $section_title = sprintf(__('%s ', 'master-addons'), $this->name );
+            $section_title = $this->name;
         }
 
         $element->start_controls_section(

@@ -777,7 +777,7 @@ class Contact_Form_7 extends Master_Widget
 
 		if (function_exists('wpcf7')) {
 			if (!empty($settings['ma_cf7_list'])) { ?>
-				<div <?php echo $this->get_render_attribute_string('master-addons-cf7'); ?>>
+				<div <?php echo $this->get_render_attribute_string('master-addons-cf7'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 					<?php echo do_shortcode('[contact-form-7 id="' . sanitize_text_field($settings['ma_cf7_list']) . '" ]'); ?>
 				</div>
 				<?php

@@ -276,7 +276,7 @@ class SettingsProxy
     {
         if (!in_array($this->group, self::GROUPABLE, true)) {
             throw new \BadMethodCallException(
-                sprintf('%s() is not available for the "%s" settings group.', $method, $this->group)
+                sprintf('%s() is not available for the "%s" settings group.', $method, $this->group) // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Exception message, not direct output
             );
         }
     }
