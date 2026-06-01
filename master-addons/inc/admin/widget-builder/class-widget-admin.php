@@ -795,11 +795,13 @@ class Widget_Admin {
     }
 
     /**
-     * Render widget preview with PHP execution
-     * Handles AJAX request to render widget HTML with PHP code executed
+     * Render a static widget preview.
+     * Handles the AJAX request to render widget HTML with mock control values.
+     * No user-supplied PHP or JavaScript is ever executed — placeholders are
+     * replaced with escaped default values and the markup is escaped on output.
      */
     public function render_preview() {
-        // Capability check: only administrators can execute widget previews (contains eval)
+        // Capability check: only administrators can request a widget preview.
         if (!current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'You do not have permission to perform this action.'], 403);
             return;
@@ -811,13 +813,25 @@ class Widget_Admin {
             return;
         }
 
-        $html_code = isset($_POST['html_code']) ? wp_kses_post( wp_unslash( $_POST['html_code'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
+        $html_code = isset($_POST['html_code']) ? wp_unslash( $_POST['html_code'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- nonce verified above; PHP/script stripped and output escaped below
         $css_code = isset($_POST['css_code']) ? sanitize_textarea_field( wp_unslash( $_POST['css_code'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
         $controls = isset($_POST['controls']) ? json_decode( sanitize_textarea_field( wp_unslash( $_POST['controls'] ) ), true ) : []; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
 
-        // Build mock settings array from controls
+        // Preview NEVER executes user code: strip PHP tags and inline <script>.
+        $html_code = str_replace(chr(0), '', $html_code);
+        $html_code = preg_replace('/<\?php/i', '', $html_code);
+        $html_code = str_replace(array('<?=', '<?', '?>'), '', $html_code);
+        $html_code = preg_replace('#<script\b[^>]*>.*?</script>#is', '', $html_code);
+        $html_code = preg_replace('#</?script\b[^>]*>#i', '', $html_code);
+
+        // Strip </style> and PHP from preview CSS so it cannot break out of <style>.
+        $css_code = preg_replace('#</?style\b[^>]*>#i', '', $css_code);
+        $css_code = preg_replace('/<\?php/i', '', $css_code);
+        $css_code = str_replace(array('<?=', '<?', '?>'), '', $css_code);
+
+        // Build mock settings array from control defaults.
         $settings = [];
-        if (!empty($controls)) {
+        if (!empty($controls) && is_array($controls)) {
             foreach ($controls as $control) {
                 if (isset($control['name']) && isset($control['default'])) {
                     $settings[$control['name']] = $control['default'];
@@ -825,86 +839,25 @@ class Widget_Admin {
             }
         }
 
-        // Replace placeholders with PHP variables using regex to handle dot notation
-        // Handles: {{field}}, {{field.property}}, {{field.property.subproperty}}
-        if (!empty($controls)) {
-            foreach ($controls as $control) {
-                if (isset($control['name'])) {
-                    $control_name = $control['name'];
-
-                    // Regex to match {{control_name}} or {{control_name.property}} or {{control_name.property.subproperty}}
-                    // Pattern: {{control_name}} followed by optional .property.property...
-                    $pattern = '/\{\{' . preg_quote($control_name, '/') . '((?:\.[a-zA-Z0-9_]+)*)\}\}/';
-
-                    $html_code = preg_replace_callback($pattern, function($matches) use ($control_name) {
-                        $properties = $matches[1]; // e.g., "" or ".tabs" or ".property.subproperty"
-
-                        if (empty($properties)) {
-                            // No properties, just {{control_name}}
-                            // Return: $settings['control_name']
-                            return "\$settings['" . $control_name . "']";
-                        } else {
-                            // Has properties like .tabs or .property.subproperty
-                            // Convert to: $settings['control_name']['tabs'] or $settings['control_name']['property']['subproperty']
-                            $props = explode('.', ltrim($properties, '.'));
-                            $result = "\$settings['" . $control_name . "']";
-                            foreach ($props as $prop) {
-                                if (!empty($prop)) {
-                                    $result .= "['" . $prop . "']";
-                                }
-                            }
-                            return $result;
-                        }
-                    }, $html_code);
+        // Substitute {{field}} / {{field.prop}} placeholders with the mock default
+        // VALUE (escaped). This is a static render — no PHP is evaluated.
+        $html_code = preg_replace_callback('/\{\{([^}]+)\}\}/', function($matches) use ($settings) {
+            $path = array_filter(array_map('trim', explode('.', trim($matches[1]))), 'strlen');
+            $value = $settings;
+            foreach ($path as $key) {
+                if (is_array($value) && isset($value[$key])) {
+                    $value = $value[$key];
+                } else {
+                    return '';
                 }
             }
-        }
-
-        // Execute PHP code in the HTML
-        ob_start();
-
-        // Make settings available in the PHP context
-        extract($settings, EXTR_SKIP);
-
-        // Render the code
-        if (strpos($html_code, '<?php') === false && strpos($html_code, '<?=') === false) {
-            // No PHP code, just output as is
-            echo wp_kses_post( $html_code );
-        } else {
-            // Has PHP code: write it to a temporary file in the uploads directory
-            // and include it. include is used instead of eval(), which is not
-            // permitted in WordPress.org hosted plugins.
-            $upload_dir = wp_upload_dir();
-            $tmp_dir    = trailingslashit($upload_dir['basedir']) . 'master-addons/widget-builder/tmp/';
-
-            if (!file_exists($tmp_dir)) {
-                wp_mkdir_p($tmp_dir);
-                file_put_contents($tmp_dir . 'index.php', "<?php\n// Silence is golden.\n");
+            if (is_array($value)) {
+                $value = isset($value['url']) ? $value['url'] : '';
             }
+            return esc_html((string) $value);
+        }, $html_code);
 
-            $tmp_file = $tmp_dir . 'preview-' . wp_generate_password(20, false) . '.php';
-
-            if (false !== file_put_contents($tmp_file, $html_code)) {
-                try {
-                    include $tmp_file;
-                } catch (ParseError $e) {
-                    echo '<div style="color:red;padding:20px;background:#fff3cd;border:1px solid #ffc107;">';
-                    echo '<h3>PHP Parse Error in Preview:</h3>';
-                    echo '<pre>' . esc_html($e->getMessage()) . '</pre>';
-                    echo '<h4>Line ' . absint( $e->getLine() ) . '</h4>';
-                    echo '</div>';
-                } catch (Exception $e) {
-                    echo '<div style="color:red;padding:20px;background:#fff3cd;border:1px solid #ffc107;">';
-                    echo '<h3>PHP Error in Preview:</h3>';
-                    echo '<pre>' . esc_html($e->getMessage()) . '</pre>';
-                    echo '</div>';
-                } finally {
-                    wp_delete_file($tmp_file);
-                }
-            }
-        }
-
-        $rendered_html = ob_get_clean();
+        $rendered_html = wp_kses_post($html_code);
 
         // Build full HTML document with CSS
         $output = '<!DOCTYPE html>

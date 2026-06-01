@@ -237,10 +237,14 @@ class Ajax_Queries
     // Restrict Content
     public function jltma_restrict_content()
     {
+        // Verify nonce first (localized to the frontend script as JLTMA_SCRIPTS.nonce).
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'master-addons-elementor' ) ) {
+            wp_send_json_error( __( 'Security check failed.', 'master-addons' ) );
+        }
 
-        parse_str( isset( $_POST['fields'] ) ? sanitize_text_field( wp_unslash( $_POST['fields'] ) ) : '', $output ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
+        parse_str( isset( $_POST['fields'] ) ? sanitize_text_field( wp_unslash( $_POST['fields'] ) ) : '', $output ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
 
-        if (!empty($_POST['fields'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
+        if (!empty($_POST['fields'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
 
             // Math Captcha
             if ( isset( $_POST['restrict_type'] ) && $_POST['restrict_type'] == 'math_captcha' ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler

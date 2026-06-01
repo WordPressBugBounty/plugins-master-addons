@@ -52,6 +52,10 @@ class Notifications
 	{
 		check_ajax_referer('jltma_notification_nonce');
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( [ 'message' => __( 'Insufficient permissions', 'master-addons' ) ] );
+		}
+
 		$action_type       = !empty($_REQUEST['action_type']) ? sanitize_key($_REQUEST['action_type']) : '';
 		$notification_type = !empty($_REQUEST['notification_type']) ? sanitize_key($_REQUEST['notification_type']) : '';
 		$trigger_time      = !empty($_REQUEST['trigger_time']) ? sanitize_text_field(wp_unslash($_REQUEST['trigger_time'])) : '';

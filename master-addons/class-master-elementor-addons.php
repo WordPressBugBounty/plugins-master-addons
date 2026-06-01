@@ -470,7 +470,6 @@ if (!class_exists('Master_Elementor_Addons')) {
 					'Shortcode_Manager' => 'class-shortcode-manager.php',
 					'Control_Manager' => 'class-control-manager.php',
 					'Icon_Library_Helper' => 'icon-library-helper.php',
-					'Widget_Builder' => 'widget-builder.php',
 					'Control_Base' => 'controls/class-control-base.php',
 				];
 				if (isset($wb_file_map[$wb_class])) {
@@ -1147,7 +1146,7 @@ if (!class_exists('Master_Elementor_Addons')) {
 
 			\MasterAddons\Inc\Admin\Theme_Builder\Loader::get_instance();
 			\MasterAddons\Inc\Admin\PopupBuilder\Popup_Builder_Init::get_instance();
-			// \MasterAddons\Inc\Admin\WidgetBuilder\Widget_Builder_Init::get_instance();
+			\MasterAddons\Inc\Admin\WidgetBuilder\Widget_Builder_Init::get_instance();
 			REST_API::get_instance();
 
 			\MasterAddons\Inc\Admin\Page_Importer::get_instance();

@@ -43,6 +43,10 @@ if (!class_exists('What_We_Collect')) {
 		{
 			check_ajax_referer('jltma_allow_collect_nonce');
 
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( [ 'message' => __( 'Insufficient permissions', 'master-addons' ) ] );
+			}
+
 			$this->jltma_collect_ajax_data();
 
 		}

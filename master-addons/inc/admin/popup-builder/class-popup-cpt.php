@@ -447,6 +447,10 @@ class Popup_CPT {
     public function get_shortcode_ajax() {
         check_ajax_referer('jltma_popup_nonce', '_nonce');
 
+        if ( ! current_user_can( 'edit_posts' ) ) {
+            wp_send_json_error( [ 'message' => __( 'Insufficient permissions', 'master-addons' ) ] );
+        }
+
         $post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
         $shortcode = '[jltma_popup id="' . $post_id . '"]';
 
@@ -538,6 +542,17 @@ class Popup_CPT {
         $post = get_post($post_id);
 
         if (!$post || $post->post_type !== $this->post_type) {
+            return $allcaps;
+        }
+
+        // Security: only grant the cap if the user already has a base editing
+        // capability through their role. Without this guard, any logged-in user
+        // (incl. subscribers) visiting the Elementor edit URL for a popup would be
+        // granted edit_post for that request — a privilege escalation. With
+        // capability_type='post' on the CPT, authors+ already have edit_posts
+        // natively, so the workaround stays a no-op for them and is fully off for
+        // lower-privileged users.
+        if (empty($user->allcaps['edit_posts']) && empty($user->allcaps['edit_pages'])) {
             return $allcaps;
         }
 

@@ -94,7 +94,7 @@ class Importer
      */
     public function activate_required_theme()
     {
-        $nonce = $_POST['nonce'];
+        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
         if (!wp_verify_nonce($nonce, 'jltma-template-kits-js') || !current_user_can('manage_options')) {
             exit;
@@ -130,9 +130,11 @@ class Importer
     public function sanitize_svg_on_upload($file)
     {
         if ($file['type'] === 'image/svg+xml') {
-            $file_content = file_get_contents($file['tmp_name']);
+            // Direct file ops on the PHP upload temp path, before WordPress moves it.
+            // WP_Filesystem (ftp/ssh methods) cannot reach the local upload temp file.
+            $file_content = file_get_contents($file['tmp_name']); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reading the PHP upload temp file for sanitization
             $sanitized_content = $this->sanitize_svg($file_content);
-            file_put_contents($file['tmp_name'], $sanitized_content);
+            file_put_contents($file['tmp_name'], $sanitized_content); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- writing back the sanitized SVG to the PHP upload temp file before WordPress moves it
         }
         return $file;
     }
@@ -1533,7 +1535,7 @@ class Importer
 
             $image_data = wp_remote_retrieve_body($response);
             $tmp = wp_tempnam();
-            file_put_contents($tmp, $image_data);
+            file_put_contents($tmp, $image_data); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- writing to a wp_tempnam() temp file that media_handle_sideload() then processes
 
             if (!file_exists($tmp) || filesize($tmp) === 0) {
                 wp_delete_file($tmp);

@@ -504,27 +504,24 @@ class Popup_Frontend {
         if ($expiration > 0) {
              $max_age = $expiration - time();
         
-            ?>
-            <script>
-                const cookieName = '<?php echo esc_js($cookie_name); ?>';
-                const value = '<?php echo absint( time() ); ?>';
-                const maxAge = <?php echo (int) $max_age; ?>;
-                const path = '/';
-
-                document.cookie = `${cookieName}=${value}; max-age=${maxAge}; path=${path};`;
-            </script>
-        <?php
-            // setcookie($cookie_name, time(), $expiration, '/');
+            $cookie_js = sprintf(
+                'document.cookie = "%1$s=%2$d; max-age=%3$d; path=/;";',
+                esc_js($cookie_name),
+                absint(time()),
+                (int) $max_age
+            );
+            $this->add_popup_inline_script($cookie_js);
         }
 
         if ($frequency === 'once_session') {
             // Session cookie (no max-age/expires) — cleared automatically when the browser closes.
             // Avoids PHP sessions, which break full-page caching on the frontend.
-            ?>
-            <script>
-                document.cookie = '<?php echo esc_js($cookie_name); ?>=<?php echo absint(time()); ?>; path=/;';
-            </script>
-            <?php
+            $session_js = sprintf(
+                'document.cookie = "%1$s=%2$d; path=/;";',
+                esc_js($cookie_name),
+                absint(time())
+            );
+            $this->add_popup_inline_script($session_js);
         }
     }
 
@@ -539,9 +536,24 @@ class Popup_Frontend {
         if ( is_feed() || is_admin() || isset($_COOKIE['ma_popup_visitor']) || isset($_GET['elementor-preview']) || ( defined('ELEMENTOR_VERSION') && \Elementor\Plugin::$instance->preview->is_preview_mode() ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only existence check, no data processed
             return;
         }
-        echo '<script>if (document.cookie.indexOf("ma_popup_visitor=") === -1) {
-            document.cookie = "ma_popup_visitor=1; max-age=31536000; path=/;";
-        }</script>';
+        $this->add_popup_inline_script('if (document.cookie.indexOf("ma_popup_visitor=") === -1) { document.cookie = "ma_popup_visitor=1; max-age=31536000; path=/;"; }');
+    }
+
+    /**
+     * Queue a small inline script through the enqueue API (printed in the footer)
+     * instead of echoing a hardcoded <script> tag. Multiple calls accumulate on the
+     * same inline-only handle.
+     *
+     * @param string $js
+     */
+    private function add_popup_inline_script($js) {
+        if (!wp_script_is('jltma-popup-inline', 'registered')) {
+            wp_register_script('jltma-popup-inline', false, array(), JLTMA_VER, true);
+        }
+        if (!wp_script_is('jltma-popup-inline', 'enqueued')) {
+            wp_enqueue_script('jltma-popup-inline');
+        }
+        wp_add_inline_script('jltma-popup-inline', $js);
     }
 
     private function get_popup_settings($popup_id) {

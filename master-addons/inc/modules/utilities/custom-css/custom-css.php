@@ -30,6 +30,87 @@ class CustomCss
 
 		// Render the custom CSS
 		add_action('elementor/element/parse_css', array($this, 'jltma_add_post_css'), 10, 2);
+
+		// Security: sanitize Custom CSS on save. The control is registered only for
+		// edit_posts users, but Elementor saves can be crafted directly via admin-ajax
+		// (elementor_ajax), so the stored value must be cleaned of tag-breakout vectors
+		// (e.g. "</style><script>") before it is persisted and later added to the
+		// (possibly inline) stylesheet.
+		add_filter('elementor/document/save/data', array($this, 'jltma_sanitize_custom_css_on_save'), 10, 2);
+	}
+
+	/**
+	 * Sanitize the 'custom_css' element settings in the data being saved.
+	 *
+	 * @param array $data     Document data ('settings' + 'elements').
+	 * @param mixed $document  Elementor document instance.
+	 * @return array
+	 */
+	public function jltma_sanitize_custom_css_on_save($data, $document)
+	{
+		if (isset($data['settings']['custom_css'])) {
+			$data['settings']['custom_css'] = $this->jltma_sanitize_css($data['settings']['custom_css']);
+		}
+
+		if (!empty($data['elements']) && is_array($data['elements'])) {
+			$data['elements'] = $this->jltma_sanitize_element_custom_css($data['elements']);
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Recursively sanitize the 'custom_css' setting in element data.
+	 *
+	 * @param array $elements
+	 * @return array
+	 */
+	private function jltma_sanitize_element_custom_css($elements)
+	{
+		foreach ($elements as &$element) {
+			if (isset($element['settings']['custom_css'])) {
+				$element['settings']['custom_css'] = $this->jltma_sanitize_css($element['settings']['custom_css']);
+			}
+			if (!empty($element['elements']) && is_array($element['elements'])) {
+				$element['elements'] = $this->jltma_sanitize_element_custom_css($element['elements']);
+			}
+		}
+		unset($element);
+
+		return $elements;
+	}
+
+	/**
+	 * Strip tag-breakout and active vectors from a CSS string. Valid CSS never needs
+	 * HTML tags, PHP tags, expression(), @import or javascript:/behavior: — removing
+	 * them prevents breaking out of an inline <style> block (XSS) while leaving normal
+	 * declarations intact.
+	 *
+	 * @param string $css
+	 * @return string
+	 */
+	private function jltma_sanitize_css($css)
+	{
+		if (!is_string($css) || '' === $css) {
+			return '';
+		}
+
+		$css = str_replace(chr(0), '', $css);
+
+		// PHP tags.
+		$css = preg_replace('/<\?php/i', '', $css);
+		$css = str_replace(array('<?=', '<?', '?>'), '', $css);
+
+		// Any HTML tag (kills </style>/<script> breakout).
+		$css = preg_replace('#</?[a-z!][^>]*>#i', '', $css);
+
+		// Dangerous CSS constructs.
+		$css = preg_replace('/expression\s*\(/i', '', $css);
+		$css = preg_replace('/(javascript|vbscript)\s*:/i', '', $css);
+		$css = preg_replace('/behavior\s*:/i', '', $css);
+		$css = preg_replace('/@import\b/i', '', $css);
+
+		return $css;
 	}
 
 
@@ -107,6 +188,10 @@ class CustomCss
 		}
 
 		$css = trim($element_settings['custom_css']);
+
+		// Defense in depth: strip tag-breakout/active vectors before adding the CSS to
+		// the (possibly inline) stylesheet — covers values saved before this fix.
+		$css = $this->jltma_sanitize_css($css);
 
 		if (empty($css)) {
 			return;

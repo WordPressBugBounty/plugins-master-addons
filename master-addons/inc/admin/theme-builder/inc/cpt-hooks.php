@@ -272,21 +272,21 @@ class CPT_Hooks
                     }
                 } else {
                     // Fallback to post content
-                    echo \do_shortcode( $template_post->post_content );
+                    echo \wp_kses_post( \do_shortcode( $template_post->post_content ) );
                 }
-                
+
                 $content = \ob_get_clean();
                 return $content;
-                
+
             } catch ( \Exception $e ) {
                 \ob_end_clean();
                 // Return post content as fallback if Elementor fails
-                return \do_shortcode( $template_post->post_content );
+                return \wp_kses_post( \do_shortcode( $template_post->post_content ) );
             }
         }
 
         // Fallback: Return post content if Elementor is not available
-        return \do_shortcode( $template_post->post_content );
+        return \wp_kses_post( \do_shortcode( $template_post->post_content ) );
     }
 
     public static function instance()

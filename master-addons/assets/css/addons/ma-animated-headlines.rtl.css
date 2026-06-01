@@ -99,7 +99,7 @@
 }
 .jltma-animated-headline.loading-bar .jltma-words-wrapper.is-loading::after {
   width: 100%;
-  transition: width 3s;
+  transition: width var(--jltma-bar-duration, 3s);
 }
 .jltma-animated-headline.loading-bar b {
   top: 0;

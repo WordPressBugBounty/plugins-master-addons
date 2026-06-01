@@ -26,6 +26,7 @@ class Widget_Builder_Init {
     private function __construct() {
         add_action('init', [$this, 'initialize'], 1);
         add_action('admin_init', [$this, 'admin_redirects']);
+        add_action('admin_init', [$this, 'maybe_migrate']);
     }
 
     public function initialize() {
@@ -145,5 +146,136 @@ class Widget_Builder_Init {
             }
         }
         // phpcs:enable WordPress.Security.NonceVerification.Recommended
+    }
+
+    /**
+     * One-time migration. Re-sanitizes stored widget code (strips any PHP/script that
+     * older versions may have persisted), purges stale generated files from current and
+     * legacy locations, and regenerates every widget from the now-clean data. Existing
+     * widget posts are never deleted — only their data is scrubbed and files rebuilt.
+     * Runs once per version (gated by an option) inside an authorised admin request.
+     */
+    public function maybe_migrate() {
+        $option_key = 'jltma_widget_builder_migrated';
+        $version    = '3.1.1';
+
+        if (get_option($option_key) === $version) {
+            return;
+        }
+
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+
+        // 1) Remove stale generated trees (current + legacy locations).
+        $upload = wp_upload_dir();
+        $base   = trailingslashit($upload['basedir']);
+        $this->delete_directory($base . 'master_addons/widgets');
+        $this->delete_directory($base . 'master-addons/widget-builder/generated');
+        $this->delete_directory($base . 'master-addons/widget-builder/tmp');
+
+        // 2) Scrub persisted widget data, then regenerate files from clean data.
+        $widget_ids = get_posts([
+            'post_type'      => 'jltma_widget',
+            'post_status'    => 'any',
+            'posts_per_page' => -1,
+            'fields'         => 'ids',
+        ]);
+
+        foreach ($widget_ids as $widget_id) {
+            $data = get_post_meta($widget_id, '_jltma_widget_data', true);
+            if (is_array($data)) {
+                if (isset($data['html_code'])) {
+                    $data['html_code'] = $this->scrub_html($data['html_code']);
+                }
+                if (isset($data['css_code'])) {
+                    $data['css_code'] = $this->scrub_css($data['css_code']);
+                }
+                if (isset($data['js_code'])) {
+                    $data['js_code'] = $this->scrub_js($data['js_code']);
+                }
+                update_post_meta($widget_id, '_jltma_widget_data', $data);
+            }
+
+            $generator = new Widget_Generator($widget_id);
+            $generator->generate();
+        }
+
+        // 3) Drop the orphaned option left by the old option-based builder.
+        delete_option('jltma_custom_widgets');
+
+        update_option($option_key, $version);
+    }
+
+    /**
+     * Strip PHP tags and inline <script> from widget HTML.
+     *
+     * @param string $code
+     * @return string
+     */
+    private function scrub_html($code) {
+        if (!is_string($code) || '' === $code) {
+            return '';
+        }
+        $code = str_replace(chr(0), '', $code);
+        $code = preg_replace('/<\?php/i', '', $code);
+        $code = str_replace(['<?=', '<?', '?>'], '', $code);
+        $code = preg_replace('#<script\b[^>]*>.*?</script>#is', '', $code);
+        $code = preg_replace('#</?script\b[^>]*>#i', '', $code);
+        return $code;
+    }
+
+    /**
+     * Strip PHP tags and <style>/<script> tags from widget CSS.
+     *
+     * @param string $code
+     * @return string
+     */
+    private function scrub_css($code) {
+        if (!is_string($code) || '' === $code) {
+            return '';
+        }
+        $code = str_replace(chr(0), '', $code);
+        $code = preg_replace('/<\?php/i', '', $code);
+        $code = str_replace(['<?=', '<?', '?>'], '', $code);
+        $code = preg_replace('#</?style\b[^>]*>#i', '', $code);
+        $code = preg_replace('#</?script\b[^>]*>#i', '', $code);
+        return $code;
+    }
+
+    /**
+     * Strip PHP tags and <script> tags from widget JS.
+     *
+     * @param string $code
+     * @return string
+     */
+    private function scrub_js($code) {
+        if (!is_string($code) || '' === $code) {
+            return '';
+        }
+        $code = str_replace(chr(0), '', $code);
+        $code = preg_replace('/<\?php/i', '', $code);
+        $code = str_replace(['<?=', '<?', '?>'], '', $code);
+        $code = preg_replace('#</?script\b[^>]*>#i', '', $code);
+        return $code;
+    }
+
+    /**
+     * Recursively delete a directory via WP_Filesystem.
+     *
+     * @param string $dir
+     */
+    private function delete_directory($dir) {
+        if (empty($dir) || !is_dir($dir)) {
+            return;
+        }
+        global $wp_filesystem;
+        if (empty($wp_filesystem)) {
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+            WP_Filesystem();
+        }
+        if (!empty($wp_filesystem)) {
+            $wp_filesystem->delete($dir, true);
+        }
     }
 }

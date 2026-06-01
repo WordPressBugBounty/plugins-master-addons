@@ -1183,12 +1183,23 @@ class Helper {
 			'category'            => '',
 			'orderby'             => '',
 			'posts_per_page'      => 1,
-			'paged'               => $paged,
-			'offset'              => $new_offset,
 			'ignore_sticky_posts' => 1,
 		);
 
 		$query_args = wp_parse_args( $args, $defaults );
+
+		// WordPress ignores 'paged' whenever 'offset' is set, and mixing the two breaks
+		// pagination (it can silently skip to older posts). $new_offset already encodes
+		// the current page, so use exactly one pagination source: offset when there is
+		// an offset to apply, otherwise paged.
+		if ( $new_offset > 0 ) {
+			$query_args['offset'] = $new_offset;
+			unset( $query_args['paged'] );
+		} else {
+			$query_args['paged'] = max( 1, (int) $paged );
+			unset( $query_args['offset'] );
+		}
+
 		$posts = get_posts( $query_args );
 		wp_reset_postdata();
 

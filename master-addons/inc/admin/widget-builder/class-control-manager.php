@@ -130,14 +130,27 @@ class Control_Manager {
     private function build_fallback_control($control_key, $field, $type) {
         $label = !empty($field['label']) ? esc_js($field['label']) : 'Control';
 
+        // Elementor control constants are upper-case (e.g. REPEATER, SELECT). Normalise
+        // the type to a safe constant name so the generated PHP is always valid.
+        $type_const = strtoupper(preg_replace('/[^A-Za-z0-9_]/', '', (string) $type));
+        if ('' === $type_const) {
+            $type_const = 'TEXT';
+        }
+
         $content = "\t\t\$this->add_control(\n";
         $content .= "\t\t\t'{$control_key}',\n";
         $content .= "\t\t\t[\n";
         $content .= "\t\t\t\t'label' => esc_html__('{$label}', 'master-addons'),\n";
-        $content .= "\t\t\t\t'type' => Controls_Manager::{$type},\n";
+        $content .= "\t\t\t\t'type' => Controls_Manager::{$type_const},\n";
+
+        // REPEATER must always carry a 'fields' array, otherwise Elementor's
+        // sanitize_settings() throws a TypeError when iterating null fields.
+        if ('REPEATER' === $type_const) {
+            $content .= "\t\t\t\t'fields' => array(),\n";
+        }
 
         if (isset($field['default'])) {
-            $default = is_string($field['default']) ? "'" . esc_js($field['default']) . "'" : $field['default'];
+            $default = $this->export_default_value($field['default']);
             $content .= "\t\t\t\t'default' => {$default},\n";
         }
 
@@ -145,5 +158,30 @@ class Control_Manager {
         $content .= "\t\t);\n\n";
 
         return $content;
+    }
+
+    /**
+     * Convert a control default value into a valid PHP literal for the generated file.
+     * Arrays (e.g. repeater/group-control defaults) must never be interpolated directly,
+     * which would emit the literal token "Array" and produce a fatal parse error.
+     *
+     * @param mixed $value
+     * @return string
+     */
+    private function export_default_value($value) {
+        if (is_array($value)) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export -- generating PHP source, not debug output
+            return var_export($value, true);
+        }
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+        if (is_int($value) || is_float($value)) {
+            return (string) $value;
+        }
+        if (null === $value) {
+            return "''";
+        }
+        return "'" . esc_js((string) $value) . "'";
     }
 }

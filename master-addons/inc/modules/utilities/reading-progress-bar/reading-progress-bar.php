@@ -217,7 +217,10 @@ class ReadingProgressBar
 					$jltma_r_p_b_custom_css .= '.ma-el-page-scroll-indicator{top:inherit !important; bottom:0;}';
 				}
 			}
-			echo '<style>' . wp_strip_all_tags( $jltma_r_p_b_custom_css ) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS value, tags stripped
+			// Inline CSS through the enqueue API (late-printed in the footer) instead of a hardcoded <style> tag.
+			wp_register_style('jltma-reading-progress-bar', false, array(), JLTMA_VER);
+			wp_enqueue_style('jltma-reading-progress-bar');
+			wp_add_inline_style('jltma-reading-progress-bar', wp_strip_all_tags($jltma_r_p_b_custom_css));
 		}
 	}
 
@@ -243,7 +246,7 @@ class ReadingProgressBar
 
 			if ($page_settings_model->get_settings('jltma_enable_reading_progress_bar') == 'yes') {
 
-				echo '<script>
+				$jltma_rpb_js = '
 					(function() {
 					    "use strict";
 						function initProgressBar() {
@@ -277,7 +280,11 @@ class ReadingProgressBar
 							initProgressBar();
 						}
 					})();
-				</script>';
+				';
+				// Output through the enqueue API (footer) instead of a hardcoded <script> tag.
+				wp_register_script('jltma-reading-progress-bar', false, array(), JLTMA_VER, true);
+				wp_enqueue_script('jltma-reading-progress-bar');
+				wp_add_inline_script('jltma-reading-progress-bar', $jltma_rpb_js);
 			} // Enable Progress Bar
 
 
@@ -309,7 +316,10 @@ class ReadingProgressBar
 				$jltma_r_p_b_custom_css .= '.logged-in.admin-bar .ma-el-page-scroll-indicator{top:32px;}';
 			}
 
-			echo '<style>' . wp_strip_all_tags( $jltma_r_p_b_custom_css ) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS value, tags stripped
+			// Inline CSS through the enqueue API (late-printed in the footer) instead of a hardcoded <style> tag.
+			wp_register_style('jltma-reading-progress-bar', false, array(), JLTMA_VER);
+			wp_enqueue_style('jltma-reading-progress-bar');
+			wp_add_inline_style('jltma-reading-progress-bar', wp_strip_all_tags($jltma_r_p_b_custom_css));
 		}
 	}
 

@@ -4,7 +4,7 @@ Tags: elementor, elementor addons, elementor widgets, elementor templates, widge
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,16 @@ Used for plugin licensing, updates and — only after the administrator opts in 
 
 
 == Changelog ==
+= Master Elementor Addons 3.1.1 (23-05-2026) =
+* Security: Widget Builder no longer accepts or executes arbitrary PHP. PHP tags are stripped from all widget HTML/CSS/JS on save and during generation, so generated widget files contain only plugin-authored code. Dynamic values use {{placeholders}} that are escaped on output.
+* Security: Removed the Widget Builder preview path that wrote user code to a temporary PHP file and included it. Previews now render statically with escaped mock values — no user PHP or JavaScript is executed.
+* Security: Fixed an authenticated (author+) Stored XSS via the 'jtlma_custom_js' page setting / 'custom_js' element setting of the Custom JS extension (reported in versions up to 3.1.0). The extension is removed from the free plugin entirely (no render path remains); in Master Addons Pro the unfiltered_html capability is now enforced on save (the value is stripped for unprivileged users via the elementor/document/save filter) and at render (output gated by the post author's capability), not only during control registration.
+* Security: Hardened the Custom CSS extension against tag-breakout XSS. The 'custom_css' element setting is now sanitized on save (via the elementor/document/save filter) and again on render before it is added to the stylesheet, stripping HTML/PHP tags (e.g. a "</style><script>" breakout), expression(), @import and javascript:/behavior: — closing the same direct-AJAX save bypass.
+* Security: Added a nonce check to the Content Restriction AJAX handler and a capability check to the popup shortcode and template plugin-status AJAX handlers.
+* Security: Sanitized the Select2 REST nonce flow (fail-closed) and tightened its capability to edit_posts; sanitized the template-data request and template-kit theme-activation nonce.
+* Security: The bundled Markdown library no longer hooks the_content/comment filters globally; the jltma_template shortcode now escapes its returned markup.
+* Maintenance: Updated @popperjs/core from 2.9.3 to 2.11.8. Removed the legacy option-based Widget Builder. Existing custom widgets are migrated automatically (data scrubbed and files regenerated; no widgets are deleted).
+
 = Master Elementor Addons 3.1.0 (19-05-2026) =
 * Compliance: Documented every external service the plugin contacts (Master Addons template API, Pixar Labs API, Google reCAPTCHA, Twitter/X, WhatsApp, Freemius) with terms and privacy links.
 * Compliance: Removed the Template Kit "fix compatibility" routine that rewrote the active_plugins option.

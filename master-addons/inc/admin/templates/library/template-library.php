@@ -280,6 +280,25 @@ class Template_Library {
     /**
      * Get cached kit categories
      */
+    /**
+     * Write a file through the WP_Filesystem API.
+     *
+     * @param string $file
+     * @param string $contents
+     * @return bool
+     */
+    private function fs_put_contents($file, $contents) {
+        global $wp_filesystem;
+        if (empty($wp_filesystem)) {
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+            WP_Filesystem();
+        }
+        if (empty($wp_filesystem)) {
+            return false;
+        }
+        return $wp_filesystem->put_contents($file, $contents, FS_CHMOD_FILE);
+    }
+
     private function get_cached_kit_categories($force_refresh = false) {
         $upload_dir = wp_upload_dir();
         $categories_file = $upload_dir['basedir'] . '/master_addons/templates_kits/kit-categories.json';
@@ -302,7 +321,7 @@ class Template_Library {
                 $cached = $cache_manager->get_cached_kit_categories($force_refresh);
                 if ($cached !== false) {
                     if (!file_exists($categories_file) && !empty($cached)) {
-                        @file_put_contents($categories_file, json_encode($cached));
+                        $this->fs_put_contents($categories_file, wp_json_encode($cached));
                     }
                     return $cached;
                 }
@@ -331,7 +350,7 @@ class Template_Library {
                 set_transient($transient_key, $fresh_categories, $cache_expiry);
 
                 // Save to local file
-                @file_put_contents($categories_file, json_encode($fresh_categories));
+                $this->fs_put_contents($categories_file, wp_json_encode($fresh_categories));
 
                 return $fresh_categories;
             }
@@ -1325,6 +1344,11 @@ class Template_Library {
 
         if (!$valid_nonce) {
             wp_send_json_error(['message' => 'Invalid nonce']);
+            return;
+        }
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'Insufficient permissions']);
             return;
         }
 

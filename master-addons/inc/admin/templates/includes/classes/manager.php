@@ -713,7 +713,20 @@ if (!class_exists(__NAMESPACE__ . '\\Manager')) {
 		public function get_template_data()
 		{
 
-			$template = $this->get_template_data_array($_REQUEST); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- no nonce available for this AJAX handler
+			// Extract and sanitize only the specific fields we need (never forward the whole superglobal).
+			$source = isset( $_REQUEST['source'] ) ? wp_unslash( $_REQUEST['source'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only fetch gated by edit_posts capability in get_template_data_array()
+			if ( is_array( $source ) ) {
+				$source = array_map( 'sanitize_text_field', $source );
+			} else {
+				$source = sanitize_text_field( $source );
+			}
+			$request_data = array(
+				'template_id' => isset( $_REQUEST['template_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['template_id'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only fetch gated by edit_posts capability in get_template_data_array()
+				'tab'         => isset( $_REQUEST['tab'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['tab'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only fetch gated by edit_posts capability in get_template_data_array()
+				'source'      => $source,
+			);
+
+			$template = $this->get_template_data_array($request_data);
 
 			if (!$template) {
 				wp_send_json_error();

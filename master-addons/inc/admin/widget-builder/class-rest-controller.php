@@ -627,33 +627,25 @@ class REST_Controller extends WP_REST_Controller {
         $css_code = '';
         $js_code = '';
 
-        // Sanitize HTML code - allow all HTML/PHP for widget development
+        // Sanitize HTML code. PHP is NEVER allowed (no arbitrary code execution),
+        // regardless of capability. Inline <script> is stripped — JavaScript belongs
+        // in the JS field, which is enqueued separately. Dynamic values use {{placeholders}}.
         if (isset($data['html_code'])) {
-            // For admin users with widget building capability, we allow unfiltered HTML
-            // This is necessary for Elementor widget development
-            if (current_user_can('unfiltered_html')) {
-                $html_code = $data['html_code'];
-            } else {
-                // For other users, use wp_kses_post which allows safe HTML
-                $html_code = wp_kses_post($data['html_code']);
-            }
+            $html_code = $this->strip_php_tags($data['html_code']);
+            $html_code = preg_replace('#<script\b[^>]*>.*?</script>#is', '', $html_code);
+            $html_code = preg_replace('#</?script\b[^>]*>#i', '', $html_code);
         }
 
-        // Sanitize CSS code - allow CSS but strip PHP/JS tags
+        // Sanitize CSS code - strip PHP/script/style tags and dangerous constructs.
         if (isset($data['css_code'])) {
-            // Remove any potential PHP/script tags from CSS
             $css_code = $this->sanitize_css($data['css_code']);
         }
 
-        // Sanitize JavaScript code - allow JS but validate syntax
+        // Sanitize JavaScript code. PHP is NEVER allowed; <script> tags are stripped so
+        // the value cannot break out of the generated/enqueued script context.
         if (isset($data['js_code'])) {
-            // For admin users, allow JavaScript for widget development
-            if (current_user_can('unfiltered_html')) {
-                $js_code = $data['js_code'];
-            } else {
-                // For other users, strip tags
-                $js_code = wp_strip_all_tags($data['js_code']);
-            }
+            $js_code = $this->strip_php_tags($data['js_code']);
+            $js_code = preg_replace('#</?script\b[^>]*>#i', '', $js_code);
         }
 
         // Also save data in unified format for widget generator
@@ -671,6 +663,23 @@ class REST_Controller extends WP_REST_Controller {
     }
 
     /**
+     * Strip every PHP open/close tag (and null bytes) from a string so user input
+     * can never become executable PHP once written into a generated widget file.
+     *
+     * @param string $code
+     * @return string
+     */
+    private function strip_php_tags($code) {
+        if (!is_string($code) || '' === $code) {
+            return '';
+        }
+        $code = str_replace(chr(0), '', $code);
+        $code = preg_replace('/<\?php/i', '', $code);
+        $code = str_replace(array('<?=', '<?', '?>'), '', $code);
+        return $code;
+    }
+
+    /**
      * Sanitize CSS code
      *
      * @param string $css
@@ -678,11 +687,19 @@ class REST_Controller extends WP_REST_Controller {
      */
     private function sanitize_css($css) {
         // Remove any PHP tags
-        $css = preg_replace('/<\?php.*?\?>/s', '', $css);
-        $css = preg_replace('/<\?.*?\?>/s', '', $css);
+        $css = $this->strip_php_tags($css);
 
-        // Remove any script tags
+        // Remove any <style>/<script> tags so the value cannot break out of the
+        // generated inline <style> block.
+        $css = preg_replace('#</?style\b[^>]*>#i', '', $css);
         $css = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $css);
+        $css = preg_replace('#</?script\b[^>]*>#i', '', $css);
+
+        // Remove dangerous CSS constructs.
+        $css = preg_replace('/@import\b/i', '', $css);
+        $css = preg_replace('/expression\s*\(/i', '', $css);
+        $css = preg_replace('/(javascript|vbscript)\s*:/i', '', $css);
+        $css = preg_replace('/behavior\s*:/i', '', $css);
 
         // Remove any JavaScript event handlers
         $css = preg_replace('/on\w+\s*=\s*["\'].*?["\']/i', '', $css);

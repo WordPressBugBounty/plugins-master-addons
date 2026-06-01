@@ -42,6 +42,10 @@ if (!class_exists('Subscribe')) {
 		{
 			check_ajax_referer('jltma_subscribe_nonce');
 
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( [ 'message' => __( 'Insufficient permissions', 'master-addons' ) ] );
+			}
+
 			$name  = !empty($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
 			$email = !empty($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
 

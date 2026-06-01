@@ -12,7 +12,7 @@ class Assets
     public function __construct()
     {
 
-        add_action('admin_print_scripts', [$this, 'jltma_admin_js']);
+        add_action('admin_enqueue_scripts', [$this, 'jltma_admin_js']);
 
         // enqueue scripts
         add_action('admin_enqueue_scripts', [$this, 'jltma_header_footer_enqueue_scripts']);
@@ -21,9 +21,11 @@ class Assets
     // Declare Variable for Rest API
     public function jltma_admin_js()
     {
-        echo "<script type='text/javascript'>\n";
-        echo $this->jltma_common_js(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- outputs safe JS built by jltma_common_js()
-        echo "\n</script>";
+        // Output the REST var through the enqueue API (inline-only handle) instead of a
+        // hardcoded <script> tag.
+        wp_register_script('jltma-theme-builder-vars', false, array(), JLTMA_VER, false);
+        wp_enqueue_script('jltma-theme-builder-vars');
+        wp_add_inline_script('jltma-theme-builder-vars', $this->jltma_common_js());
     }
 
 

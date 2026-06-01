@@ -14,7 +14,7 @@ class Megamenu_Assets
 
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('wp_enqueue_scripts', [$this, 'frontend_js']);
-        add_action('admin_print_scripts', [$this, 'admin_js']);
+        add_action('admin_enqueue_scripts', [$this, 'admin_js']);
     }
 
     public function common_js()
@@ -90,9 +90,11 @@ class Megamenu_Assets
     // Admin Rest API Variable
     public function admin_js()
     {
-        echo "<script type='text/javascript'>\n";
-        echo $this->common_js(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- common_js returns safe JS script content
-        echo "\n</script>";
+        // Output the REST var through the enqueue API (inline-only handle) instead of a
+        // hardcoded <script> tag.
+        wp_register_script('jltma-megamenu-vars', false, array(), JLTMA_VER, false);
+        wp_enqueue_script('jltma-megamenu-vars');
+        wp_add_inline_script('jltma-megamenu-vars', $this->common_js());
     }
 
 

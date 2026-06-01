@@ -63,6 +63,10 @@ if (!class_exists('MasterAddons\Inc\Classes\Feedback')) {
     {
         check_ajax_referer('jltma_deactivation_nonce');
 
+        if ( ! current_user_can( 'deactivate_plugins' ) ) {
+            wp_send_json_error( [ 'message' => __( 'Insufficient permissions', 'master-addons' ) ] );
+        }
+
         $deactivation_reason  = !empty($_POST['deactivation_reason']) ? sanitize_text_field(wp_unslash($_POST['deactivation_reason'])) : '';
 
         if (empty($deactivation_reason)) {

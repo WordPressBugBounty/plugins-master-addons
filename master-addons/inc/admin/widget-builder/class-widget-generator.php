@@ -154,9 +154,40 @@ class Widget_Generator {
      */
     private function create_directory() {
         if (!file_exists($this->widget_dir)) {
-            return wp_mkdir_p($this->widget_dir);
+            if (!wp_mkdir_p($this->widget_dir)) {
+                return false;
+            }
         }
+
+        // Defense in depth: drop a silence index.php into the base and per-widget
+        // directories so generated files cannot be listed/browsed directly. Generated
+        // PHP is plugin-authored and ABSPATH-guarded, so it is inert over the web.
+        $this->harden_directory($this->upload_dir);
+        $this->harden_directory($this->widget_dir);
+
         return true;
+    }
+
+    /**
+     * Write a silence index.php into a generated directory.
+     *
+     * @param string $dir
+     */
+    private function harden_directory($dir) {
+        if (empty($dir)) {
+            return;
+        }
+
+        global $wp_filesystem;
+        if (empty($wp_filesystem)) {
+            require_once(ABSPATH . '/wp-admin/includes/file.php');
+            WP_Filesystem();
+        }
+
+        $index = trailingslashit($dir) . 'index.php';
+        if (!file_exists($index)) {
+            $wp_filesystem->put_contents($index, "<?php\n// Silence is golden.\n", FS_CHMOD_FILE);
+        }
     }
 
     /**
@@ -397,6 +428,8 @@ class Widget_Generator {
      */
     private function build_get_icon() {
         $icon = !empty($this->widget_data['icon']) ? $this->widget_data['icon'] : 'eicon-code';
+        // Escape for safe interpolation into a single-quoted PHP string literal.
+        $icon = addslashes(sanitize_text_field($icon));
 
         $content = "\tpublic function get_icon() {\n";
         $content .= "\t\treturn '{$icon}';\n";
@@ -412,6 +445,8 @@ class Widget_Generator {
      */
     private function build_get_categories() {
         $category = !empty($this->widget_data['category']) ? $this->widget_data['category'] : 'master-addons';
+        // Escape for safe interpolation into a single-quoted PHP string literal.
+        $category = addslashes(sanitize_text_field($category));
 
         $content = "\tpublic function get_categories() {\n";
         $content .= "\t\treturn ['{$category}'];\n";
@@ -1020,7 +1055,7 @@ class Widget_Generator {
 
                     // For simple variable references, wrap in echo with appropriate escaping
                     if (in_array(strtolower($control_type), ['wysiwyg', 'code'])) {
-                        return '<' . '?php echo ' . $var_ref . '; ?' . '>';
+                        return '<' . '?php echo wp_kses_post(' . $var_ref . '); ?' . '>';
                     } else {
                         return '<' . '?php echo esc_html(' . $var_ref . '); ?' . '>';
                     }
@@ -1251,12 +1286,13 @@ class Widget_Generator {
             return '';
         }
 
-        // Ensure the HTML doesn't contain closing PHP tags that would break the context
-        // This is a security measure to prevent breaking out of the render method
-        // We replace any standalone PHP tag boundaries
-        $html = str_replace('?' . '><' . '?php', '<!-- php-boundary -->', $html);
-
-        // Ensure the html does not contain {{  }} template string
+        // Security: strip every PHP open/close tag so user-supplied markup can never
+        // execute as PHP once written into the generated widget file. Generated files
+        // contain only plugin-authored PHP; user HTML is treated as inert markup whose
+        // {{placeholders}} are converted to escaped echo statements elsewhere.
+        $html = str_replace(chr(0), '', $html);
+        $html = preg_replace('/<\?php/i', '', $html);
+        $html = str_replace(array('<?=', '<?', '?>'), '', $html);
 
         return $html;
     }
@@ -1419,9 +1455,9 @@ class Widget_Generator {
 
         $css = trim($css);
 
-        // Remove any PHP tags
-        $css = preg_replace('/<\?php.*?\?>/s', '', $css);
-        $css = preg_replace('/<\?.*?\?>/s', '', $css);
+        // Remove any PHP tags (balanced and bare) so nothing executes as PHP.
+        $css = preg_replace('/<\?php/i', '', $css);
+        $css = str_replace(array('<?=', '<?', '?>'), '', $css);
 
         // Remove any HTML script tags
         $css = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $css);
@@ -1452,15 +1488,16 @@ class Widget_Generator {
 
         $js = trim($js);
 
-        // Remove any PHP tags
-        $js = preg_replace('/<\?php.*?\?>/s', '', $js);
-        $js = preg_replace('/<\?.*?\?>/s', '', $js);
+        // Remove any PHP tags (balanced and bare) so nothing executes as PHP.
+        $js = preg_replace('/<\?php/i', '', $js);
+        $js = str_replace(array('<?=', '<?', '?>'), '', $js);
+
+        // Strip <script> tags so the value cannot break out of the enqueued/inline
+        // <script> context. JS string literals should not contain literal script tags.
+        $js = preg_replace('#</?script\b[^>]*>#i', '', $js);
 
         // Remove null bytes
         $js = str_replace(chr(0), '', $js);
-
-        // Note: We don't strip HTML tags from JS as they might be part of string literals
-        // The responsibility is on the admin user to write secure code
 
         return $js;
     }

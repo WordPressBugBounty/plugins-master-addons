@@ -2471,6 +2471,7 @@
             url: JLTMA_SCRIPTS.ajaxurl,
             data: {
               action: "jltma_restrict_content",
+              nonce: JLTMA_SCRIPTS.nonce,
               fields: form.serialize(),
               restrict_type: $restrict_type,
               error_message: $error_message,

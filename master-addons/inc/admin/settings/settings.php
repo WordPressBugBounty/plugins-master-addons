@@ -114,7 +114,7 @@ class Settings
         add_action('current_screen', [$this, 'jltma_set_page_title']);
         add_action('admin_enqueue_scripts', [$this, 'jltma_admin_settings_scripts'], 99);
         add_action('admin_body_class', [$this, 'jltma_admin_body_class']);
-        add_action('admin_head', [$this, 'jltma_global_admin_css']);
+        add_action('admin_enqueue_scripts', [$this, 'jltma_global_admin_css']);
         add_action('wp_ajax_jltma_subscribe', [$this, 'handle_subscribe_ajax']);
     }
 
@@ -151,7 +151,7 @@ class Settings
      */
     public function jltma_global_admin_css()
     {
-        echo '<style type="text/css">
+        $css = '
             /* Hide separator below Master Addons menu */
             #adminmenu #toplevel_page_master-addons-settings + .wp-menu-separator {
                 display: none !important;
@@ -236,10 +236,10 @@ class Settings
             .wrap .jltma-cpt-btn-youtube svg {
                 fill: #ff0000;
             }
-        </style>';
+        ';
 
         // JS to reorder submenu items and add separator/pricing classes
-        echo '<script type="text/javascript">
+        $js = '
             document.addEventListener("DOMContentLoaded", function() {
                 var menu = document.getElementById("toplevel_page_master-addons-settings");
                 if (!menu) return;
@@ -286,7 +286,17 @@ class Settings
                     }
                 });
             });
-        </script>';
+        ';
+
+        // Load the menu styling and ordering through the core enqueue APIs
+        // (inline-only handles) instead of hardcoded <style>/<script> tags.
+        wp_register_style('jltma-admin-menu', false, array(), JLTMA_VER);
+        wp_enqueue_style('jltma-admin-menu');
+        wp_add_inline_style('jltma-admin-menu', $css);
+
+        wp_register_script('jltma-admin-menu', false, array(), JLTMA_VER, true);
+        wp_enqueue_script('jltma-admin-menu');
+        wp_add_inline_script('jltma-admin-menu', $js);
     }
 
 	/**
@@ -331,9 +341,9 @@ class Settings
             remove_action('admin_notices', 'update_nag', 3);
             remove_action('admin_notices', 'maintenance_nag', 10);
 
-            // Hide any remaining notices via CSS
-            add_action('admin_head', function () {
-                echo '<style type="text/css">
+            // Hide any remaining admin notices on our settings screen. Attached to the
+            // settings stylesheet (enqueued below) instead of a hardcoded <style> tag.
+            $jltma_hide_notices_css = '
                     .notice, .error, .updated, .update-nag, .admin-notice,
                     .jltma-plugin-update-notice, .fs-notice, .fs-slug-master-addons,
                     #wpbody-content > .notice, #wpbody-content > .error, #wpbody-content > .updated,
@@ -345,9 +355,7 @@ class Settings
                     }
                     #wpfooter {
                         display: none !important;
-                    }
-                </style>';
-            });
+                    }';
 
             // Dequeue Spectra (UAG) zipwp-images style to prevent CSS conflicts on settings page
             add_action('admin_enqueue_scripts', function () {
@@ -368,6 +376,8 @@ class Settings
             // Only load React app on the React settings page to avoid Lucide icons conflicting with native Image constructor
             wp_enqueue_style('jltma-admin-settings');
             wp_enqueue_script('jltma-admin-settings');
+
+            wp_add_inline_style('jltma-admin-settings', $jltma_hide_notices_css);
 
             // White Label logo & Hidden Nav Menus
             $white_label_settings = jltma_settings()->get('jltma_white_label_settings');
@@ -460,13 +470,9 @@ class Settings
         remove_all_actions('network_admin_notices');
         remove_all_actions('user_admin_notices');
 
-        add_action('admin_head', function () {
-            echo '<style type="text/css">
-                #wpfooter {
-                    display: none !important;
-                }
-            </style>';
-        });
+        // Hide the footer for the full-screen wizard (attached to the wizard
+        // stylesheet below instead of a hardcoded <style> tag).
+        $jltma_wizard_css = '#wpfooter { display: none !important; }';
 
         // Elementor icons for addon card icons
         if (wp_style_is('elementor-icons', 'registered')) {
@@ -477,6 +483,8 @@ class Settings
 
         wp_enqueue_style('jltma-setup-wizard');
         wp_enqueue_script('jltma-setup-wizard');
+
+        wp_add_inline_style('jltma-setup-wizard', $jltma_wizard_css);
 
         // Build recommended plugins data with pre-computed install status.
         $recommended_instance = Recommended_Plugins::get_instance();

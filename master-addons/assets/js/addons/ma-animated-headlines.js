@@ -88,11 +88,14 @@ function filterFancyBox(element) {
     if (!$animatedHeaderContainer.length) {
       return;
     }
-    var animationDelay = elementSettings.anim_delay || 2500, barAnimationDelay = elementSettings.bar_anim_delay || 3800, barWaiting = barAnimationDelay - 3e3, lettersDelay = elementSettings.letters_anim_delay || 50, typeLettersDelay = elementSettings.type_anim_delay || 150, selectionDuration = elementSettings.type_selection_delay || 500, typeAnimationDelay = selectionDuration + 800, revealDuration = elementSettings.clip_reveal_delay || 600, revealAnimationDelay = elementSettings.clip_anim_duration || 1500;
+    var animationDelay = elementSettings.anim_delay || 2500, barAnimationDelay = elementSettings.bar_anim_delay || 3800, barWaiting = 400, lettersDelay = elementSettings.letters_anim_delay || 50, typeLettersDelay = elementSettings.type_anim_delay || 150, selectionDuration = elementSettings.type_selection_delay || 500, typeAnimationDelay = selectionDuration + 800, revealDuration = elementSettings.clip_reveal_delay || 600, revealAnimationDelay = elementSettings.clip_anim_duration || 1500;
     function singleLetters($words) {
       $words.each(function() {
         var word = $2(this), letters = word.text().trim().split(""), selected = word.hasClass("is-visible");
         for (var i = 0; i < letters.length; i++) {
+          if (letters[i] === " ") {
+            letters[i] = " ";
+          }
           if (word.parents(".rotate-2").length > 0) {
             letters[i] = "<em>" + letters[i] + "</em>";
           }
@@ -202,6 +205,9 @@ function filterFancyBox(element) {
         var headline = $2(this);
         if (headline.hasClass("loading-bar")) {
           duration = barAnimationDelay;
+          headline.find(".jltma-words-wrapper").each(function() {
+            this.style.setProperty("--jltma-bar-duration", (barAnimationDelay - barWaiting) / 1e3 + "s");
+          });
           setTimeout(function() {
             headline.find(".jltma-words-wrapper").addClass("is-loading");
           }, barWaiting);

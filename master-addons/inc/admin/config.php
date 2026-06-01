@@ -2010,7 +2010,7 @@ class Config
                         'custom-js' => [
                             'title'    => 'Custom JS',
                             'icon'     => 'eicon-code-bold',
-                            'class'    => 'MasterAddons\Modules\Utilities\CustomJs',
+                            'class'    => 'MasterAddons\Pro\Modules\Utilities\CustomJs',
                             'demo_url' => 'https://master-addons.com/extension/custom-js/',
                             'docs_url' => 'https://master-addons.com/docs/extensions/custom-js/',
                             'tuts_url' => 'https://www.youtube.com/watch?v=8G4JLw0s8sI',
@@ -2020,7 +2020,7 @@ class Config
                                 "Runs only on the target element",
                                 "No extra plugin or coding setup"
                             ],
-                            'is_pro'   => false,
+                            'is_pro'   => true,
                         ],
                         'duplicator' => [
                             'title'    => 'Post/Page Duplicator',

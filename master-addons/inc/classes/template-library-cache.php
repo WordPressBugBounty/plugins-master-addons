@@ -98,14 +98,14 @@ class Template_Library_Cache
 
             // Create .htaccess for security
             $htaccess_content = "Options -Indexes\n<Files \"*.json\">\nOrder allow,deny\nAllow from all\n</Files>";
-            file_put_contents($this->cache_dir . '.htaccess', $htaccess_content);
+            $this->fs_put_contents($this->cache_dir . '.htaccess', $htaccess_content);
 
             // Create index.php files
             $index_content = "<?php\n// Silence is golden.\n";
-            file_put_contents($this->cache_dir . 'index.php', $index_content);
+            $this->fs_put_contents($this->cache_dir . 'index.php', $index_content);
 
             foreach ($subdirs as $subdir) {
-                file_put_contents($this->cache_dir . $subdir . '/index.php', $index_content);
+                $this->fs_put_contents($this->cache_dir . $subdir . '/index.php', $index_content);
             }
         }
 
@@ -504,7 +504,7 @@ class Template_Library_Cache
 
         $image_data = wp_remote_retrieve_body($response);
 
-        if (file_put_contents($local_file, $image_data)) {
+        if ($this->fs_put_contents($local_file, $image_data)) {
             return $local_file;
         }
 
@@ -580,6 +580,26 @@ class Template_Library_Cache
     }
 
     /**
+     * Write a file through the WP_Filesystem API.
+     *
+     * @param string $file
+     * @param string $contents
+     * @return bool
+     */
+    private function fs_put_contents($file, $contents)
+    {
+        global $wp_filesystem;
+        if (empty($wp_filesystem)) {
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+            WP_Filesystem();
+        }
+        if (empty($wp_filesystem)) {
+            return false;
+        }
+        return $wp_filesystem->put_contents($file, $contents, FS_CHMOD_FILE);
+    }
+
+    /**
      * Write cache file
      */
     private function write_cache_file($file_path, $data)
@@ -590,7 +610,7 @@ class Template_Library_Cache
         }
 
         $json = wp_json_encode($data, JSON_PRETTY_PRINT);
-        return file_put_contents($file_path, $json) !== false;
+        return $this->fs_put_contents($file_path, $json) !== false;
     }
 
     /**
@@ -604,7 +624,7 @@ class Template_Library_Cache
             'expiry' => $this->cache_expiry
         ];
 
-        return file_put_contents($meta_file, wp_json_encode($meta)) !== false;
+        return $this->fs_put_contents($meta_file, wp_json_encode($meta)) !== false;
     }
 
     /**
