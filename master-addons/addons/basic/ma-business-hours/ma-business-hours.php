@@ -1531,23 +1531,13 @@ class Business_Hours extends Master_Widget
 						);
 					}
 
-					// Booking Button
-					$this->add_render_attribute('ma_el_bh_btn_link', [
-						'class'	=> ['jltma-business-hour-btn', 'float-right'],
-						'href'	=> esc_url($settings['ma_el_bh_table_btn_link']['url']),
-					]);
+					// Booking Button — add_link_attributes() handles href, target, rel and custom_attributes.
+					$this->add_render_attribute('ma_el_bh_btn_link', 'class', ['jltma-business-hour-btn', 'float-right']);
+					$this->add_render_attribute('ma_el_bh_normal_btn', 'class', ['jltma-business-hour-btn']);
 
-					$this->add_render_attribute('ma_el_bh_normal_btn', [
-						'class'	=> ['jltma-business-hour-btn'],
-						'href'	=> esc_url($settings['ma_el_bh_table_btn_link']['url']),
-					]);
-
-					if ($settings['ma_el_bh_table_btn_link']['is_external']) {
-						$this->add_render_attribute('ma_el_bh_btn_link', 'target', '_blank');
-					}
-
-					if ($settings['ma_el_bh_table_btn_link']['nofollow']) {
-						$this->add_render_attribute('ma_el_bh_btn_link', 'rel', 'nofollow');
+					if (!empty($settings['ma_el_bh_table_btn_link']['url'])) {
+						$this->add_link_attributes('ma_el_bh_btn_link', $settings['ma_el_bh_table_btn_link']);
+						$this->add_link_attributes('ma_el_bh_normal_btn', $settings['ma_el_bh_table_btn_link']);
 					}
 
 					?>

@@ -647,31 +647,24 @@ class Tooltip extends Master_Widget
 				],
 				'label_block' => true,
 				'selectors'   => [
-					// '{{WRAPPER}} .jltma-tooltip .jltma-tooltip-text' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .tippy-box' => 'max-width: calc({{SIZE}}{{UNIT}} - 10px) !important;',
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"]' => 'max-width: {{SIZE}}{{UNIT}} !important;',
 				]
 			]
 		);
 
 		$this->add_control(
-			Group_Control_Background::get_type(),
+			'ma_el_tooltip_bg_color',
 			[
-				'name'		=> 'ma_el_tooltip_bg_color',
 				'label'     => __('Background Color', 'master-addons'),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#826EFF',
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .jltma-tooltip .jltma-tooltip-item .jltma-tooltip-text' => 'background: {{VALUE}};'
-				// ],
-				'selector' => [
-					'{{WRAPPER}} .tippy-box' => 'background-color: {{VALUE}}',
-					// '{{WRAPPER}} .tippy-popper[data-tippy-popper-id="{{ID}}"] .tippy-tooltip, .tippy-popper[data-tippy-popper-id="{{ID}}"] .tippy-tooltip .tippy-backdrop' => 'background-color: {{VALUE}};',
-					// '{{WRAPPER}} .tippy-popper[data-tippy-popper-id="{{ID}}"][x-placement^=top] .tippy-tooltip .tippy-arrow' => 'border-top-color: {{VALUE}};',
-					// '{{WRAPPER}} .tippy-popper[data-tippy-popper-id="{{ID}}"][x-placement^=bottom] .tippy-tooltip .tippy-arrow' => 'border-bottom-color: {{VALUE}};',
-					// '{{WRAPPER}} .tippy-popper[data-tippy-popper-id="{{ID}}"][x-placement^=left] .tippy-tooltip .tippy-arrow' => 'border-left-color: {{VALUE}};',
-					// '{{WRAPPER}} .tippy-popper[data-tippy-popper-id="{{ID}}"][x-placement^=right] .tippy-tooltip .tippy-arrow' => 'border-right-color: {{VALUE}};',
-					// '{{WRAPPER}} .tippy-popper[data-tippy-popper-id="{{ID}}"] .tippy-tooltip .tippy-roundarrow' => 'fill: {{VALUE}};',
-				]
+				'selectors' => [
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"]' => 'background-color: {{VALUE}};',
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"][data-placement^="top"] .tippy-arrow::before'    => 'border-top-color: {{VALUE}};',
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"][data-placement^="bottom"] .tippy-arrow::before' => 'border-bottom-color: {{VALUE}};',
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"][data-placement^="left"] .tippy-arrow::before'   => 'border-left-color: {{VALUE}};',
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"][data-placement^="right"] .tippy-arrow::before'  => 'border-right-color: {{VALUE}};',
+				],
 			]
 		);
 
@@ -682,8 +675,7 @@ class Tooltip extends Master_Widget
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#ffffff',
 				'selectors' => [
-					// '{{WRAPPER}} .jltma-tooltip .jltma-tooltip-item .jltma-tooltip-text' => 'color: {{VALUE}};',
-					'{{WRAPPER}} .tippy-box' => 'color: {{VALUE}}',
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"]' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -718,8 +710,7 @@ class Tooltip extends Master_Widget
 				'global' => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
-				// 'selector' => '{{WRAPPER}} .jltma-tooltip .jltma-tooltip-text',
-				'selector'  => '.tippy-box',
+				'selector'  => '.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"]',
 			]
 		);
 
@@ -737,8 +728,7 @@ class Tooltip extends Master_Widget
 					'isLinked' => true,
 				],
 				'selectors' => [
-					// '{{WRAPPER}} .jltma-tooltip .jltma-tooltip-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-					'{{WRAPPER}} .tippy-box' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"] .tippy-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -751,7 +741,7 @@ class Tooltip extends Master_Widget
 				'label'       => esc_html__('Border', 'master-addons'),
 				'placeholder' => '1px',
 				'default'     => '1px',
-				'selector'    => '{{WRAPPER}} .tippy-box',
+				'selector'    => '.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"]',
 			]
 		);
 
@@ -762,8 +752,7 @@ class Tooltip extends Master_Widget
 				'type'    => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%'],
 				'selectors' => [
-					// '{{WRAPPER}} .jltma-tooltip .jltma-tooltip-text' => 'border-radius: {{TOP}}px {{RIGHT}}px {{BOTTOM}}px {{LEFT}}px !important;',
-					'{{WRAPPER}} .tippy-box' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"]' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -803,7 +792,7 @@ class Tooltip extends Master_Widget
 					],
 				],
 				'selectors' => [
-					'{{WRAPPER}} .tippy-box' => 'text-align: {{VALUE}};',
+					'.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"]' => 'text-align: {{VALUE}};',
 				],
 				'separator' => 'before',
 			]
@@ -813,7 +802,7 @@ class Tooltip extends Master_Widget
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name'      => 'jltma_tooltip_box_shadow',
-				'selector'  => '.tippy-box',
+				'selector'  => '.tippy-box[data-theme~="jltma-tooltip-tippy-{{ID}}"]',
 			]
 		);
 

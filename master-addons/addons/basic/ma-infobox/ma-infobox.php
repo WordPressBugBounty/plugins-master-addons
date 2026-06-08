@@ -1072,13 +1072,9 @@ class Infobox extends Master_Widget
 			}
 		}
 
-		// Infobox Link
-		if ($settings['ma_el_infobox_title_link']['is_external']) {
-			$this->add_render_attribute('ma_el_infobox_title_link_attr', 'target', '_blank');
-		}
-
-		if ($settings['ma_el_infobox_title_link']['nofollow']) {
-			$this->add_render_attribute('ma_el_infobox_title_link_attr', 'rel', 'nofollow');
+		// Infobox Link — add_link_attributes() handles href, target, rel and custom_attributes.
+		if (!empty($settings['ma_el_infobox_title_link']['url'])) {
+			$this->add_link_attributes('ma_el_infobox_title_link_attr', $settings['ma_el_infobox_title_link']);
 		}
 
 		$infobox_image = $this->get_settings_for_display('ma_el_infobox_image');
@@ -1138,7 +1134,7 @@ class Infobox extends Master_Widget
 							if ($settings['ma_el_infobox_preset'] == "nine") { ?>
 
 								<?php if ($settings['ma_el_infobox_title_link']['url']) { ?>
-									<a href="<?php echo esc_url_raw($settings['ma_el_infobox_title_link']['url']); ?>" <?php echo $this->get_render_attribute_string('ma_el_infobox_title_link_attr'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
+									<a <?php echo $this->get_render_attribute_string('ma_el_infobox_title_link_attr'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 										<h3 class="jltma-infobox-content-title">
 											<?php echo esc_html($this->parse_text_editor($settings['ma_el_infobox_title'])); ?>
 										</h3>

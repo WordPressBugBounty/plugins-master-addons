@@ -9,6 +9,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Load the User_Data trait with a case-exact path. The class autoloader
+// lowercases namespace paths, which breaks on case-sensitive (Linux) servers
+// if the folder casing ever differs. Requiring it here removes that dependency.
+if (!trait_exists('MasterAddons\Inc\Classes\Notifications\Base\User_Data', false)) {
+    require_once __DIR__ . '/notifications/base/user-data.php';
+}
+
 /**
  * Feedback
  *

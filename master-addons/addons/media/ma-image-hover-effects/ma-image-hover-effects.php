@@ -1160,17 +1160,10 @@ class Image_Hover_Effects extends Master_Widget
 
 		// Image Link
 		if ($settings['ma_el_image_hover_link_type'] == "links") {
-			$this->add_render_attribute('ma_el_image_hover_link', [
-				'class' => ['ma-image-hover-read-more'],
-				'href' => esc_url($settings['ma_el_main_image_more_link_url']['url']),
-			]);
-
-			if ($settings['ma_el_main_image_more_link_url']['is_external']) {
-				$this->add_render_attribute('ma_el_image_hover_link', 'target', '_blank');
-			}
-
-			if ($settings['ma_el_main_image_more_link_url']['nofollow']) {
-				$this->add_render_attribute('ma_el_image_hover_link', 'rel', 'nofollow');
+			$this->add_render_attribute('ma_el_image_hover_link', 'class', ['ma-image-hover-read-more']);
+			// add_link_attributes() handles href, target, rel and custom_attributes.
+			if (!empty($settings['ma_el_main_image_more_link_url']['url'])) {
+				$this->add_link_attributes('ma_el_image_hover_link', $settings['ma_el_main_image_more_link_url']);
 			}
 		}
 
@@ -1217,8 +1210,14 @@ class Image_Hover_Effects extends Master_Widget
 						$ma_el_main_image_socials_array = array("hera", "zoe", "winston", "terry", "phoebe", "kira");
 						if (in_array($ma_el_main_image_effect, $ma_el_main_image_socials_array)) { ?>
 							<p class="jltma-icon-links">
-								<?php foreach ($settings['ma_el_main_image_icon_tabs'] as $index => $tab) { ?>
-									<a href="<?php echo esc_url_raw($tab['ma_el_main_image_icon_link']['url']); ?>">
+								<?php foreach ($settings['ma_el_main_image_icon_tabs'] as $index => $tab) {
+									$icon_link_key = 'ma_el_icon_link_' . $index;
+									if (!empty($tab['ma_el_main_image_icon_link']['url'])) {
+										// add_link_attributes() handles href, target, rel and custom_attributes.
+										$this->add_link_attributes($icon_link_key, $tab['ma_el_main_image_icon_link']);
+									}
+									?>
+									<a <?php echo $this->get_render_attribute_string($icon_link_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes ?>>
 										<span>
 											<?php
 											$migrated = isset($tab['__fa4_migrated']['ma_el_main_image_icon']);

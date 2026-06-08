@@ -46,4 +46,8 @@ class Color extends Control_Base {
 
         return $content;
     }
+
+    protected function default_label() {
+        return 'Color';
+    }
 }

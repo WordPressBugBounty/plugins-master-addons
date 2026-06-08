@@ -280,7 +280,7 @@ class Progress_Bars extends Master_Widget
 				'label' => __('Color', 'master-addons' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .jltma-stats-bars .jltma-stats-bar .jltma-stats-title span' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .jltma-stats-bars .jltma-stats-bar span.jltma-stats-percentage' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -289,7 +289,7 @@ class Progress_Bars extends Master_Widget
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'stats_percentage_typography',
-				'selector' => '{{WRAPPER}} .jltma-stats-bars .jltma-stats-bar .jltma-stats-title span',
+				'selector' => '{{WRAPPER}} .jltma-stats-bars .jltma-stats-bar span.jltma-stats-percentage',
 			]
 		);
 

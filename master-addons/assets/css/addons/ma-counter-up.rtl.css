@@ -1,6 +1,7 @@
 /* Counter Up */
 .jltma-counterup-items {
   display: flex;
+  flex-wrap: wrap;
 }
 .jltma-counterup-items .jltma-counterup {
   background-color: #fff;
@@ -32,6 +33,10 @@
 .jltma-counterup-items .jltma-counterup h3 {
   display: inline-block;
   color: #333;
+  margin: 0;
+}
+.jltma-counterup-items .jltma-counterup h3 .jltma-counter-up-number {
+  display: inline-block;
 }
 .jltma-counterup-items .jltma-counterup h3.jltma-counterup-number {
   font-size: 24px;

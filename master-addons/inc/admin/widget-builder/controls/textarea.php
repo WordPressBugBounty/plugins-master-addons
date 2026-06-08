@@ -67,4 +67,16 @@ class Textarea extends Control_Base {
 
         return $content;
     }
+
+    protected function default_label() {
+        return 'Textarea';
+    }
+
+    protected function get_type_specific_config($field) {
+        $config = [];
+        if (isset($field['rows']) && $field['rows'] !== '' && $field['rows'] !== null) {
+            $config['rows'] = intval($field['rows']);
+        }
+        return $config;
+    }
 }

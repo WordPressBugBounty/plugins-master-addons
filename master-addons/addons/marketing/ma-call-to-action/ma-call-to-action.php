@@ -527,17 +527,10 @@ class Call_to_Action extends Master_Widget
 		$migrated  = isset($settings['__fa4_migrated']['ma_el_call_to_action_icon']);
 		$is_new    = empty($settings['icon']) && Icons_Manager::is_migration_allowed();
 
-		$this->add_render_attribute('jltma_cta_link', [
-			'class' => 'jltma-call-action-btn',
-			'href'  => esc_url_raw($settings['ma_el_call_to_action_button_link']['url']),
-		]);
-
-		if ($settings['ma_el_call_to_action_button_link']['is_external']) {
-			$this->add_render_attribute('jltma_cta_link', 'target', '_blank');
-		}
-
-		if ($settings['ma_el_call_to_action_button_link']['nofollow']) {
-			$this->add_render_attribute('jltma_cta_link', 'rel', 'nofollow');
+		$this->add_render_attribute('jltma_cta_link', 'class', 'jltma-call-action-btn');
+		// add_link_attributes() handles href, target, rel and custom_attributes.
+		if (!empty($settings['ma_el_call_to_action_button_link']['url'])) {
+			$this->add_link_attributes('jltma_cta_link', $settings['ma_el_call_to_action_button_link']);
 		}
 
 ?>

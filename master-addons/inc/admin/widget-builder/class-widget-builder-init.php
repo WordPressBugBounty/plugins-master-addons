@@ -68,22 +68,12 @@ class Widget_Builder_Init {
             return;
         }
 
-        $upload = wp_upload_dir();
-        $widgets_base_dir = $upload['basedir'] . '/master_addons/widgets';
+        // Widgets are rendered at runtime by Dynamic_Widget — no generated or
+        // executed PHP. (No user input is ever written to or required as PHP.)
+        require_once __DIR__ . '/class-dynamic-widget.php';
 
         foreach ($widgets as $widget_post) {
-            $widget_id = $widget_post->ID;
-            $widget_file = $widgets_base_dir . '/' . $widget_id . '/widget.php';
-
-            if (file_exists($widget_file)) {
-                require_once $widget_file;
-
-                $class_name = 'MasterAddons\\Addons\\JLTMA_WB_' . $widget_id;
-
-                if (class_exists($class_name)) {
-                    $widgets_manager->register(new $class_name());
-                }
-            }
+            $widgets_manager->register(new Dynamic_Widget([], ['jltma_post_id' => $widget_post->ID]));
         }
     }
 
@@ -157,7 +147,7 @@ class Widget_Builder_Init {
      */
     public function maybe_migrate() {
         $option_key = 'jltma_widget_builder_migrated';
-        $version    = '3.1.1';
+        $version    = '3.1.2-runtime';
 
         if (get_option($option_key) === $version) {
             return;

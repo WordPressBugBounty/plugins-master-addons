@@ -1042,12 +1042,9 @@ class Flipbox extends Master_Widget
 		$this->add_render_attribute('back-icon', 'class', $settings['back_icon']);
 
 		$this->add_render_attribute('button', 'class', 'jltma-flip-button');
+		// add_link_attributes() handles href, target, rel and custom_attributes.
 		if (!empty($settings['link']['url'])) {
-			$this->add_render_attribute('button', 'href', esc_url($settings['link']['url']));
-
-			if (!empty($settings['link']['is_external'])) {
-				$this->add_render_attribute('button', 'target', '_blank');
-			}
+			$this->add_link_attributes('button', $settings['link']);
 		}
 
 		$flip_box = $this->get_settings_for_display('front_box_image');

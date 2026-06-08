@@ -47,6 +47,23 @@ class Widget_Admin {
         add_action('wp_ajax_jltma_widget_render_preview', [$this, 'render_preview']);
         add_filter('submenu_file', [$this, 'highlight_widget_menu'], 10, 2);
         add_action('admin_print_styles', [$this, 'hide_admin_notices']);
+        add_action('current_screen', [$this, 'set_editor_page_title']);
+    }
+
+    /**
+     * Give the hidden editor page a title.
+     *
+     * The editor is a hidden submenu (parent ''), so WordPress can't resolve a
+     * title and leaves the global $title null — which trips a strip_tags(null)
+     * deprecation in wp-admin/admin-header.php on PHP 8.1+. current_screen fires
+     * before admin-header renders, so set it here.
+     *
+     * @param \WP_Screen $screen Current admin screen.
+     */
+    public function set_editor_page_title($screen) {
+        if ($screen && 'admin_page_jltma-widget-editor' === $screen->id && empty($GLOBALS['title'])) {
+            $GLOBALS['title'] = esc_html__('Edit Widget', 'master-addons');
+        }
     }
 
     public function add_admin_menu() {
@@ -68,6 +85,45 @@ class Widget_Admin {
             'jltma-widget-editor',
             [$this, 'render_widget_editor_page']
         );
+    }
+
+    /**
+     * Full catalog of Pro controls listed in the Widget Builder sidebar.
+     *
+     * Single source of truth. Each item is flagged `isPro => true` so the free
+     * UI shows every control with a Pro badge (locked). Pro unlocks them through
+     * the `jltma_widget_builder_pro_controls` filter (which flips isPro to false)
+     * — it must not redefine this list.
+     *
+     * @return array
+     */
+    public function get_pro_controls_catalog() {
+        return [
+            ['type' => 'number', 'label' => 'Number', 'icon' => 'eicon-number-field', 'category' => 'basic', 'description' => 'Numeric input field', 'isPro' => true],
+            ['type' => 'switcher', 'label' => 'Switcher', 'icon' => 'eicon-toggle', 'category' => 'basic', 'description' => 'Toggle switch (yes/no)', 'isPro' => true],
+            ['type' => 'select', 'label' => 'Select', 'icon' => 'eicon-select', 'category' => 'basic', 'description' => 'Dropdown select field', 'isPro' => true],
+            ['type' => 'select2', 'label' => 'Select2', 'icon' => 'eicon-select', 'category' => 'basic', 'description' => 'Advanced select with search', 'isPro' => true],
+            ['type' => 'choose', 'label' => 'Choose', 'icon' => 'eicon-checkbox', 'category' => 'basic', 'description' => 'Icon-based choice control', 'isPro' => true],
+            ['type' => 'wysiwyg', 'label' => 'WYSIWYG', 'icon' => 'eicon-editor-paragraph', 'category' => 'basic', 'description' => 'Rich text editor', 'isPro' => true],
+            ['type' => 'code', 'label' => 'Code', 'icon' => 'eicon-code', 'category' => 'basic', 'description' => 'Code editor field', 'isPro' => true],
+            ['type' => 'date_time', 'label' => 'Date Time', 'icon' => 'eicon-calendar', 'category' => 'basic', 'description' => 'Date and time picker', 'isPro' => true],
+            ['type' => 'media', 'label' => 'Media', 'icon' => 'eicon-image', 'category' => 'basic', 'description' => 'Image/video uploader', 'isPro' => true],
+            ['type' => 'gallery', 'label' => 'Gallery', 'icon' => 'eicon-gallery-grid', 'category' => 'basic', 'description' => 'Image gallery uploader', 'isPro' => true],
+            ['type' => 'icons', 'label' => 'Icons', 'icon' => 'eicon-star', 'category' => 'basic', 'description' => 'Icon picker control', 'isPro' => true],
+            ['type' => 'slider', 'label' => 'Slider', 'icon' => 'eicon-slider-device', 'category' => 'basic', 'description' => 'Range slider with min/max/step', 'isPro' => true],
+            ['type' => 'popover_toggle', 'label' => 'Popover Toggle', 'icon' => 'eicon-edit', 'category' => 'basic', 'description' => 'Popover toggle button', 'isPro' => true],
+            ['type' => 'visual_choice', 'label' => 'Visual Choice', 'icon' => 'eicon-photo-library', 'category' => 'basic', 'description' => 'Visual choice with images', 'isPro' => true],
+            ['type' => 'font', 'label' => 'Font', 'icon' => 'eicon-text', 'category' => 'style', 'description' => 'Font selector', 'isPro' => true],
+            ['type' => 'typography', 'label' => 'Typography', 'icon' => 'eicon-typography', 'category' => 'style', 'description' => 'Typography group control', 'isPro' => true],
+            ['type' => 'dimensions', 'label' => 'Dimensions', 'icon' => 'eicon-cursor-move', 'category' => 'style', 'description' => 'Margin/padding control', 'isPro' => true],
+            ['type' => 'box_shadow', 'label' => 'Box Shadow', 'icon' => 'eicon-lightbox', 'category' => 'style', 'description' => 'Box shadow control', 'isPro' => true],
+            ['type' => 'background', 'label' => 'Background', 'icon' => 'eicon-paint-brush', 'category' => 'style', 'description' => 'Background control', 'isPro' => true],
+            ['type' => 'border', 'label' => 'Border', 'icon' => 'eicon-border', 'category' => 'style', 'description' => 'Border group control', 'isPro' => true],
+            ['type' => 'text_shadow', 'label' => 'Text Shadow', 'icon' => 'eicon-typography', 'category' => 'style', 'description' => 'Text shadow control', 'isPro' => true],
+            ['type' => 'divider', 'label' => 'Divider', 'icon' => 'eicon-divider', 'category' => 'layout', 'description' => 'Visual divider between controls', 'isPro' => true],
+            ['type' => 'repeater', 'label' => 'Repeater', 'icon' => 'eicon-sync', 'category' => 'advanced', 'description' => 'Repeater for multiple items', 'isPro' => true],
+            ['type' => 'tabs', 'label' => 'Tabs', 'icon' => 'eicon-tabs', 'category' => 'advanced', 'description' => 'Tabs control', 'isPro' => true],
+        ];
     }
 
     public function highlight_widget_menu($submenu_file, $parent_file) {
@@ -501,8 +557,49 @@ class Widget_Admin {
             'rest_url' => rest_url('jltma/v1'),
             'apiBase' => rest_url('jltma/v1'),
             'pluginUrl' => JLTMA_URL,
+            'aceBaseUrl' => untrailingslashit(JLTMA_ASSETS) . '/vendor/ace',
             'isPro' => Helper::jltma_premium(),
-            'proControls' => [], // Pro controls added via filter
+            // Full Pro controls catalog (single source). Each item is flagged
+            // isPro => true so the free UI shows every control with a Pro badge
+            // (locked). Pro unlocks them via the jltma_widget_builder_pro_controls
+            // filter (sets isPro => false); it does not redefine the list.
+            'proControls' => apply_filters('jltma_widget_builder_pro_controls', $this->get_pro_controls_catalog()),
+            // Documentation links surfaced in the editor UI. docsUrl is the base
+            // (used for the sidebar "Documentation" link); each control type maps
+            // to its own page below. Edit any URL freely.
+            'docsUrl' => 'https://master-addons.com/docs/widget-builder',
+            'controlDocs' => [
+                'heading'        => 'https://master-addons.com/docs/widget-builder/heading/',
+                'hidden'         => 'https://master-addons.com/docs/widget-builder/hidden/',
+                'text'           => 'https://master-addons.com/docs/widget-builder/text/',
+                'textarea'       => 'https://master-addons.com/docs/widget-builder/text-area/',
+                'url'            => 'https://master-addons.com/docs/widget-builder/url/',
+                'color'          => 'https://master-addons.com/docs/widget-builder/color/',
+                'number'         => 'https://master-addons.com/docs/widget-builder/number/',
+                'switcher'       => 'https://master-addons.com/docs/widget-builder/switcher/',
+                'select'         => 'https://master-addons.com/docs/widget-builder/select/',
+                'select2'        => 'https://master-addons.com/docs/widget-builder/select2/',
+                'choose'         => 'https://master-addons.com/docs/widget-builder/choose/',
+                'wysiwyg'        => 'https://master-addons.com/docs/widget-builder/wysiwyg/',
+                'code'           => 'https://master-addons.com/docs/widget-builder/code/',
+                'date_time'      => 'https://master-addons.com/docs/widget-builder/date-time/',
+                'media'          => 'https://master-addons.com/docs/widget-builder/media/',
+                'gallery'        => 'https://master-addons.com/docs/widget-builder/gallery/',
+                'icons'          => 'https://master-addons.com/docs/widget-builder/icons/',
+                'slider'         => 'https://master-addons.com/docs/widget-builder/slider/',
+                'popover_toggle' => 'https://master-addons.com/docs/widget-builder/popover-toggle/',
+                'visual_choice'  => 'https://master-addons.com/docs/widget-builder/visual-choice/',
+                'font'           => 'https://master-addons.com/docs/widget-builder/font/',
+                'typography'     => 'https://master-addons.com/docs/widget-builder/typography/',
+                'dimensions'     => 'https://master-addons.com/docs/widget-builder/dimensions/',
+                'box_shadow'     => 'https://master-addons.com/docs/widget-builder/box-shadow/',
+                'background'     => 'https://master-addons.com/docs/widget-builder/background/',
+                'border'         => 'https://master-addons.com/docs/widget-builder/border/',
+                'text_shadow'    => 'https://master-addons.com/docs/widget-builder/text-shadow/',
+                'divider'        => 'https://master-addons.com/docs/widget-builder/divider/',
+                'repeater'       => 'https://master-addons.com/docs/widget-builder/repeater/',
+                'tabs'           => 'https://master-addons.com/docs/widget-builder/tabs/',
+            ],
         ];
 
         // Allow Pro version to add controls

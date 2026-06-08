@@ -21,18 +21,18 @@
 .jltma-widget-builder-wrap {
   padding: 0;
   background: var(--jltma-background-start);
-  min-height: 100vh;
+  min-height: calc(100vh - 48px);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 .jltma-widget-builder-wrap.wrap {
-  margin: 30px 0px 35px 25px;
+  margin: 12px 0px 12px 25px;
 }
 
 .jltma-widget-builder {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   background: var(--jltma-background-start);
-  min-height: 100vh;
+  min-height: calc(100vh - 48px);
   color: var(--jltma-text-primary);
 }
 
@@ -1291,7 +1291,7 @@
   justify-content: center;
   padding: 10px;
   margin: 0;
-  height: calc(100vh - 85px);
+  height: calc(100vh - 110px);
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -2069,7 +2069,7 @@
 }
 
 .jltma-widget-code-sidebar {
-  width: 45%;
+  width: 62%;
   background: #121212;
   color: #fff;
   display: -webkit-box;
@@ -2082,7 +2082,7 @@
   border-right: 2px solid var(--jltma-border-color);
   position: relative;
   min-width: 300px;
-  max-width: 800px;
+  max-width: calc(100vw - 320px);
 }
 
 .jltma-widget-code-sidebar .sidebar-resize-handle:hover {
@@ -2313,8 +2313,8 @@
 
 .jltma-widget-code-sidebar .code-preview .code-content.html .html-editor-layout {
   display: grid;
-  grid-template-columns: 1fr 250px;
-  gap: 24px;
+  grid-template-columns: 1fr 170px;
+  gap: 14px;
   height: 100%;
 }
 
@@ -5851,4 +5851,33 @@ body.jltma-modal-open {
   to {
     width: 0%;
   }
+}
+/* Thin, smooth scrollbars across the whole widget builder UI */
+.jltma-widget-builder,
+.jltma-widget-builder * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.55) transparent;
+  scroll-behavior: smooth;
+}
+
+.jltma-widget-builder *::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.jltma-widget-builder *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.jltma-widget-builder *::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.5);
+  border-radius: 10px;
+}
+
+.jltma-widget-builder *::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.8);
+}
+
+.jltma-widget-builder *::-webkit-scrollbar-corner {
+  background: transparent;
 }

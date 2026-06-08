@@ -421,10 +421,16 @@ class Animated_Headlines extends Master_Widget
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'ma_el_headlines_second_heading_typography',
-                'global' => [
-                    'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
-                ],
-				'selector' => '{{WRAPPER}} .jltma-animated-heading .jltma-animated-heading-wrapper .jltma-animated-heading-title .second-heading',
+				'global' => [
+						'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				// The letter-based presets (rotate-2, rotate-3, type, scale) split each
+				// letter into <i> wrappers - and rotate-2 also into <em> - which default
+				// to italic in the UA stylesheet. Target them directly so the Typography
+				// "Style" control reaches the letters. Same-element classes
+				// (.jltma-animated-headline.rotate-2) sit on the title node, so no
+				// descendant combinator there.
+				'selector' => '{{WRAPPER}} .jltma-animated-heading .jltma-animated-heading-wrapper .jltma-animated-heading-title .second-heading, {{WRAPPER}} .jltma-animated-headline.rotate-2 .second-heading i, {{WRAPPER}} .jltma-animated-headline.rotate-2 .second-heading i em, {{WRAPPER}} .jltma-animated-headline.rotate-3 .second-heading i, {{WRAPPER}} .jltma-animated-headline.type .second-heading i, {{WRAPPER}} .jltma-animated-headline.scale .second-heading i'
 			]
 		);
 

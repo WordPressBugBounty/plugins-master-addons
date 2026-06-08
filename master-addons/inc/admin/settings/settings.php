@@ -173,6 +173,7 @@ class Settings
                 margin-bottom: 6px;
             }
 
+
             /* Pricing submenu - full-width green button like Spectra */
             #toplevel_page_master-addons-settings .wp-submenu li.jltma-menu-pricing a {
                 background: #ffa500 !important;
@@ -269,13 +270,18 @@ class Settings
                 var separatorAfter = [
                     "page=master-addons-settings",
                     "jltma-template-kits",
-                    "post_type=jltma_popup"
-                    // "post_type=jltma_widget"
+                    "post_type=jltma_widget"
                 ];
                 submenu.querySelectorAll("li a").forEach(function(a) {
                     var href = a.getAttribute("href") || "";
                     for (var i = 0; i < separatorAfter.length; i++) {
-                        if (href.indexOf(separatorAfter[i]) !== -1) {
+                        var pos = href.indexOf(separatorAfter[i]);
+                        if (pos === -1) { continue; }
+                        // Require a param boundary after the match so
+                        // "page=master-addons-settings" does NOT also match
+                        // "page=master-addons-settings-account" (the Account item).
+                        var nextChar = href.charAt(pos + separatorAfter[i].length);
+                        if (nextChar === "" || nextChar === "&" || nextChar === "#" || nextChar === "\"") {
                             a.parentElement.classList.add("jltma-menu-separator");
                             break;
                         }

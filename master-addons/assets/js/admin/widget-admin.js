@@ -305,7 +305,7 @@ const dialog = { confirmDialog, alertDialog, loadingDialog };
       });
       $(document).on("click", ".jltma-delete-widget", this.deleteWidget.bind(this));
       $(document).on("click", ".jltma-copy-shortcode-widget", this.copyShortcode.bind(this));
-      $(document).on("click", ".jltma-widget-edit-cond", this.openModalFromConditions.bind(this));
+      $(document).on("click", ".jltma-widget-edit-category, .jltma-widget-edit-cond", this.openModalFromConditions.bind(this));
     },
     openModal: function(e) {
       e.preventDefault();
@@ -481,7 +481,7 @@ const dialog = { confirmDialog, alertDialog, loadingDialog };
               var $row = $("#post-" + widgetId);
               var $categoryColumn = $row.find("td.column-jltma_widget_category");
               $categoryColumn.html(
-                '<div style="text-align: center;"><span class="jltma-widget-category">' + categoryName + '</span><br><a href="#" class="jltma-widget-edit-cond" id="' + widgetId + '" style="font-size: 12px; color: #2271b1; text-decoration: none;">Edit Conditions <span class="dashicons dashicons-edit" style="font-size: 12px; vertical-align: middle;"></span></a></div>'
+                '<span class="jltma-widget-category">' + categoryName + '</span><br><a href="#" class="jltma-widget-edit-category" data-post-id="' + widgetId + '" data-category="' + category + '"><span class="dashicons dashicons-edit"></span> Edit Category</a>'
               );
               JLTMA_Toaster.success(jltmaWidgetAdmin.strings.saved);
             } else {
@@ -541,7 +541,7 @@ const dialog = { confirmDialog, alertDialog, loadingDialog };
     },
     openModalFromConditions: function(e) {
       e.preventDefault();
-      var widgetId = $(e.currentTarget).attr("id");
+      var widgetId = $(e.currentTarget).data("post-id") || $(e.currentTarget).attr("id");
       var modal = $("#jltma_widget_builder_modal");
       modal.addClass("loading");
       modal.addClass("active");
@@ -682,7 +682,8 @@ const dialog = { confirmDialog, alertDialog, loadingDialog };
               $("#jltma_import_widget_modal").fadeOut(300);
               $("body").removeClass("jltma-modal-open");
               setTimeout(function() {
-                var editUrl = jltmaWidgetAdmin.admin_url + "admin.php?page=jltma-widget-editor&widget_id=" + response.id;
+                var newId = response && response.data ? response.data.id : null;
+                var editUrl = response && response.data && response.data.edit_url ? response.data.edit_url : jltmaWidgetAdmin.admin_url + "admin.php?page=jltma-widget-editor&widget_id=" + newId;
                 window.location.href = editUrl;
               }, 300);
             }, 1500);

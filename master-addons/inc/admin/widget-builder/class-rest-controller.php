@@ -648,6 +648,15 @@ class REST_Controller extends WP_REST_Controller {
             $js_code = preg_replace('#</?script\b[^>]*>#i', '', $js_code);
         }
 
+        // Capability gate: only users who can post unfiltered HTML may store raw
+        // JavaScript or unrestricted HTML. Everyone else gets a strict allowlist
+        // and no raw JS. On multisite, unfiltered_html is granted to super admins
+        // only, so site admins there cannot persist raw code.
+        if (!current_user_can('unfiltered_html')) {
+            $html_code = wp_kses_post($html_code);
+            $js_code   = '';
+        }
+
         // Also save data in unified format for widget generator
         $widget_data = [
             'title' => get_the_title($widget_id),

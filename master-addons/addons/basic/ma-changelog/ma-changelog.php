@@ -12,6 +12,8 @@ namespace MasterAddons\Addons;
 use MasterAddons\Inc\Classes\Base\Master_Widget;
 use \Elementor\Controls_Manager;
 use \Elementor\Repeater;
+use \Elementor\Group_Control_Typography;
+use \Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 use MasterAddons\Inc\Admin\Config;
 
@@ -138,6 +140,111 @@ class Changelogs extends Master_Widget
 				],
 				'fields' 				=> $repeater->get_controls(),
 				'title_field'           => '{{ma_el_changelog_title}}',
+			]
+		);
+
+		$this->end_controls_section();
+
+		/**
+		 * Style Tab: Heading
+		 */
+		$this->start_controls_section(
+			'ma_el_changelog_heading_style',
+			[
+				'label' => esc_html__('Heading', 'master-addons' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'ma_el_changelog_heading_color',
+			[
+				'label'     => esc_html__('Color', 'master-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .jltma-changelog .jltma-changelog-heading' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'ma_el_changelog_heading_typography',
+				'selector' => '{{WRAPPER}} .jltma-changelog .jltma-changelog-heading',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		/**
+		 * Style Tab: Title
+		 */
+		$this->start_controls_section(
+			'ma_el_changelog_title_style',
+			[
+				'label' => esc_html__('Title', 'master-addons' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'ma_el_changelog_title_color',
+			[
+				'label'     => esc_html__('Color', 'master-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .jltma-changelog .jltma-changelog-title' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'ma_el_changelog_title_typography',
+				'selector' => '{{WRAPPER}} .jltma-changelog .jltma-changelog-title',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		/**
+		 * Style Tab: Content
+		 */
+		$this->start_controls_section(
+			'ma_el_changelog_content_style',
+			[
+				'label' => esc_html__('Content', 'master-addons' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'ma_el_changelog_content_color',
+			[
+				'label'     => esc_html__('Color', 'master-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .jltma-changelog ul li' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'ma_el_changelog_content_typography',
+				'selector' => '{{WRAPPER}} .jltma-changelog ul li',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
 			]
 		);
 

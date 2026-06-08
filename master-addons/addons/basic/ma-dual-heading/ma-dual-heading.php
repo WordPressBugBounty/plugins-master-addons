@@ -573,18 +573,11 @@ class Dual_Heading extends Master_Widget
 
 			<div class="jltma-sec-head-container">
 				<div class="jltma-sec-head-style">
-					<<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- print_validated_html_tag returns a whitelisted tag name ?> class="jltma-section-title">
-						<span>
-							<?php echo esc_html($settings['ma_el_dual_first_heading']); ?>
-						</span><br>
+					<<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- print_validated_html_tag returns a whitelisted tag name ?> class="jltma-section-title"><span><?php echo esc_html($settings['ma_el_dual_first_heading']); ?></span><br><?php echo esc_html($settings['ma_el_dual_second_heading']); ?></<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- print_validated_html_tag returns a whitelisted tag name ?>><!-- /.section-title -->
 
-						<?php echo esc_html($settings['ma_el_dual_second_heading']); ?>
-
-					</<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- print_validated_html_tag returns a whitelisted tag name ?>><!-- /.section-title -->
-
-					<div class="jltma-section-description">
-						<?php echo esc_html($settings['ma_el_dual_heading_description']); ?>
-					</div><!-- /.section-description -->
+					<?php if ($settings['ma_el_dual_heading_description'] != "") : ?>
+						<div class="jltma-section-description"><?php echo wp_kses_post($this->parse_text_editor($settings['ma_el_dual_heading_description'])); ?></div><!-- /.section-description -->
+					<?php endif; ?>
 				</div><!-- /.sec-head-style -->
 			</div><!-- /.sec-head-container -->
 
@@ -607,17 +600,12 @@ class Dual_Heading extends Master_Widget
 					<?php endif; ?>
 
 					<<?php echo Utils::print_validated_html_tag( $settings['title_html_tag'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- print_validated_html_tag returns a whitelisted tag name ?> class="jltma-dual-heading-title">
-						<?php if (isset($settings['ma_el_dual_heading_title_link']['url']) && $settings['ma_el_dual_heading_title_link']['url'] != "") { ?>
-							<a href="<?php echo esc_url($settings['ma_el_dual_heading_title_link']['url']); ?>">
+						<?php if (isset($settings['ma_el_dual_heading_title_link']['url']) && $settings['ma_el_dual_heading_title_link']['url'] != "") {
+							$this->add_link_attributes('ma_el_dual_heading_title_link', $settings['ma_el_dual_heading_title_link']); ?>
+							<a <?php echo $this->get_render_attribute_string('ma_el_dual_heading_title_link'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor get_render_attribute_string() returns safe HTML attributes ?>>
 							<?php } ?>
 
-							<span class="jltma-first-heading">
-								<?php echo esc_html($this->parse_text_editor($settings['ma_el_dual_first_heading'])); ?>
-							</span>
-
-							<span class="jltma-second-heading">
-								<?php echo esc_html($this->parse_text_editor($settings['ma_el_dual_second_heading'])); ?>
-							</span>
+							<span class="jltma-first-heading"><?php echo esc_html($this->parse_text_editor($settings['ma_el_dual_first_heading'])); ?></span><span class="jltma-second-heading"><?php echo esc_html($this->parse_text_editor($settings['ma_el_dual_second_heading'])); ?></span>
 
 							<?php if (isset($settings['ma_el_dual_heading_title_link']['url']) && $settings['ma_el_dual_heading_title_link']['url'] != "") { ?>
 							</a>
@@ -640,15 +628,14 @@ class Dual_Heading extends Master_Widget
 
 		<# if ( '-style1'==settings.ma_el_dual_heading_styles_preset ) { #>
 
+			<# var dhTitleTag = settings.title_html_tag || 'h2'; #>
 			<div class="jltma-sec-head-container">
 				<div class="jltma-sec-head-style">
-					<h2 class="jltma-section-title">
-						<span>{{{ settings.ma_el_dual_first_heading }}}</span> {{{ settings.ma_el_dual_second_heading }}}
-					</h2><!-- /.section-title -->
+					<{{ dhTitleTag }} class="jltma-section-title"><span>{{{ settings.ma_el_dual_first_heading }}}</span><br>{{{ settings.ma_el_dual_second_heading }}}</{{ dhTitleTag }}><!-- /.section-title -->
 
-					<div class="jltma-section-description">
-						{{{ settings.ma_el_dual_heading_description }}}
-					</div><!-- /.section-description -->
+					<# if ( settings.ma_el_dual_heading_description !== '' ) { #>
+						<div class="jltma-section-description">{{{ settings.ma_el_dual_heading_description }}}</div><!-- /.section-description -->
+					<# } #>
 				</div><!-- /.sec-head-style -->
 			</div><!-- /.sec-head-container -->
 
@@ -659,11 +646,30 @@ class Dual_Heading extends Master_Widget
 						<# if ( settings.ma_el_dual_heading_icon_show=='yes' ) { #>
 							<span class="jltma-dual-heading-icon"><i class="{{ settings.ma_el_dual_heading_icon.value }}"></i></span>
 							<# } #>
-								<h1 class="jltma-dual-heading-title">
-									<a href="{{{ settings.ma_el_dual_heading_title_link }}}">
+								<# var dhTitleTag = settings.title_html_tag || 'h1'; #>
+								<{{ dhTitleTag }} class="jltma-dual-heading-title">
+									<#
+										var dhLink = settings.ma_el_dual_heading_title_link || {};
+										var dhAttrs = '';
+										if ( dhLink.is_external ) { dhAttrs += ' target="_blank"'; }
+										if ( dhLink.nofollow ) { dhAttrs += ' rel="nofollow"'; }
+										if ( dhLink.custom_attributes ) {
+											dhLink.custom_attributes.split( ',' ).forEach( function( pair ) {
+												var kv = pair.split( '|' );
+												var key = ( kv[0] || '' ).trim().replace( /[^a-zA-Z0-9_-]/g, '' );
+												var val = ( kv[1] || '' ).trim();
+												if ( key ) { dhAttrs += ' ' + key + '="' + val + '"'; }
+											} );
+										}
+									#>
+									<# if ( dhLink.url ) { #>
+										<a href="{{ dhLink.url }}"{{{ dhAttrs }}}>
+									<# } #>
 										<span class="jltma-first-heading">{{{ settings.ma_el_dual_first_heading }}}</span><span class="jltma-second-heading">{{{ settings.ma_el_dual_second_heading }}}</span>
-									</a>
-								</h1>
+									<# if ( dhLink.url ) { #>
+										</a>
+									<# } #>
+								</{{ dhTitleTag }}>
 								<# if ( settings.ma_el_dual_heading_description !="" ) { #>
 									<p class="jltma-dual-heading-description">{{{ settings.ma_el_dual_heading_description }}}</p>
 									<# } #>

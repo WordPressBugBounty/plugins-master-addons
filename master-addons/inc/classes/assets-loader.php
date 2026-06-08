@@ -412,11 +412,14 @@ class Assets_Loader
                 $css_files = (array) $assets['css'];
                 $css_dependencies = [];
 
-                // Add vendor CSS as dependencies (vendors are registered by Assets_Manager)
+                // Add vendor CSS as dependencies (vendors are registered by Assets_Manager).
+                // Only add the dep if the vendor style was actually registered — a pro-only
+                // vendor (e.g. prism) keeps its config but is not registered when the license
+                // is inactive, which would otherwise produce an "unregistered dependency" notice.
                 if (!empty($assets['vendors'])) {
                     foreach ((array) $assets['vendors'] as $vendor) {
                         $vendor_config = Assets_Manager::get($vendor);
-                        if ($vendor_config && !empty($vendor_config['files']['css'])) {
+                        if ($vendor_config && !empty($vendor_config['files']['css']) && wp_style_is('jltma-' . $vendor, 'registered')) {
                             $css_dependencies[] = 'jltma-' . $vendor;
                         }
                     }
@@ -477,11 +480,13 @@ class Assets_Loader
                 $js_files = (array) $assets['js'];
                 $js_dependencies = ['jquery'];
 
-                // Add vendor JS as dependencies (vendors are registered by Assets_Manager)
+                // Add vendor JS as dependencies (vendors are registered by Assets_Manager).
+                // Skip vendors that aren't actually registered (e.g. pro-only prism on an
+                // inactive license) to avoid "unregistered dependency" notices.
                 if (!empty($assets['vendors'])) {
                     foreach ((array) $assets['vendors'] as $vendor) {
                         $vendor_config = Assets_Manager::get($vendor);
-                        if ($vendor_config && !empty($vendor_config['files']['js'])) {
+                        if ($vendor_config && !empty($vendor_config['files']['js']) && wp_script_is('jltma-' . $vendor, 'registered')) {
                             $js_dependencies[] = 'jltma-' . $vendor;
                         }
                     }
@@ -841,21 +846,27 @@ class Assets_Loader
             wp_localize_script('master-addons-data-table', 'JLTMA_DATA_TABLE', $jltma_data_table_vars);
         }
 
+        // JLTMA_SCRIPTS is a single shared JS global used by several scripts
+        // (bg-slider needs plugin_url; restrict-content needs ajaxurl + nonce).
+        // In the Elementor editor every widget script is loaded, so localizing
+        // only a subset per handle lets one script's data overwrite another's on
+        // the shared global (e.g. bg-slider wiping the restrict-content nonce ->
+        // "Security check failed"). Localize the FULL key set on every handle so
+        // whichever wins still has everything.
+        $jltma_shared_scripts_data = array(
+            'plugin_url' => defined('JLTMA_URL') ? JLTMA_URL : (defined('JLTMA_PRO_URL') ? untrailingslashit(JLTMA_PRO_URL) : ''),
+            'ajaxurl'    => admin_url('admin-ajax.php'),
+            'nonce'      => wp_create_nonce('master-addons-elementor'),
+        );
+
         // Background Slider localization (needs plugin_url for Vegas overlay images)
         if (wp_script_is('master-addons-bg-slider', 'enqueued') || wp_script_is('master-addons-bg-slider', 'registered')) {
-            $jltma_bg_slider_data = array(
-                'plugin_url' => defined('JLTMA_URL') ? JLTMA_URL : (defined('JLTMA_PRO_URL') ? untrailingslashit(JLTMA_PRO_URL) : ''),
-            );
-            wp_localize_script('master-addons-bg-slider', 'JLTMA_SCRIPTS', $jltma_bg_slider_data);
+            wp_localize_script('master-addons-bg-slider', 'JLTMA_SCRIPTS', $jltma_shared_scripts_data);
         }
 
-        // Restrict Content localization (needs ajaxurl for AJAX calls)
+        // Restrict Content localization (needs ajaxurl + nonce for AJAX calls)
         if (wp_script_is('master-addons-restrict-content', 'enqueued') || wp_script_is('master-addons-restrict-content', 'registered')) {
-            $jltma_restrict_content_data = array(
-                'ajaxurl' => admin_url('admin-ajax.php'),
-                'nonce'   => wp_create_nonce('master-addons-elementor'),
-            );
-            wp_localize_script('master-addons-restrict-content', 'JLTMA_SCRIPTS', $jltma_restrict_content_data);
+            wp_localize_script('master-addons-restrict-content', 'JLTMA_SCRIPTS', $jltma_shared_scripts_data);
         }
 
         // Allow extensions to add more localizations

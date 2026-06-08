@@ -114,36 +114,11 @@ class Widget_Generator {
      * @return bool|WP_Error
      */
     public function generate() {
-        // Reset used control keys for fresh generation
-        $this->used_control_keys = [];
-
-        // Create widget directory
-        if (!$this->create_directory()) {
-            return new \WP_Error('directory_failed', 'Failed to create widget directory');
-        }
-
-        // Generate PHP widget file
-        $php_result = $this->generate_php_file();
-        if (is_wp_error($php_result)) {
-            return $php_result;
-        }
-
-        // Generate CSS file if code exists
-        if (!empty($this->widget_data['css_code'])) {
-            $css_result = $this->generate_css_file();
-            if (is_wp_error($css_result)) {
-                return $css_result;
-            }
-        }
-
-        // Generate JS file if code exists
-        if (!empty($this->widget_data['js_code'])) {
-            $js_result = $this->generate_js_file();
-            if (is_wp_error($js_result)) {
-                return $js_result;
-            }
-        }
-
+        // No-op. Widgets are now rendered at runtime by Dynamic_Widget directly
+        // from post meta — no PHP/CSS/JS files are written under uploads and no
+        // user-derived PHP is ever executed. Retained as a no-op so existing call
+        // sites (REST save, admin save, migration) stay valid. The build_* methods
+        // below remain for reference/tests only.
         return true;
     }
 
@@ -952,6 +927,11 @@ class Widget_Generator {
             // Pass 2: Handle placeholders outside PHP tags
             $html = $this->replace_placeholders_outside_php_context($html, $control_mapping, $tab_structures);
         }
+
+        // Strip any leftover {{...}} placeholders that don't map to a value control
+        // (e.g. HEADING/DIVIDER controls store no value) so they never render
+        // literally on the frontend.
+        $html = preg_replace('/\{\{[^}]+\}\}/', '', $html);
 
         // Process CSS code if it contains template strings
         $css_code = !empty($this->widget_data['css_code']) ? $this->widget_data['css_code'] : '';

@@ -248,7 +248,10 @@ class Ajax_Queries
 
             // Math Captcha
             if ( isset( $_POST['restrict_type'] ) && $_POST['restrict_type'] == 'math_captcha' ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler
-                if ($output['ma_el_rc_answer'] !== $output['ma_el_rc_answer_hd']) {
+                // Field names match the rendered form inputs (jltma_rc_answer / _hd).
+                $rc_answer    = isset( $output['jltma_rc_answer'] ) ? trim( $output['jltma_rc_answer'] ) : '';
+                $rc_answer_hd = isset( $output['jltma_rc_answer_hd'] ) ? trim( $output['jltma_rc_answer_hd'] ) : '';
+                if ( $rc_answer === '' || $rc_answer !== $rc_answer_hd ) {
                     die(json_encode(array(
                         "result" => "validate",
                         "output" => /* translators: %s: Error message */ sprintf(__('%1$s &nbsp;', 'master-addons' ), wp_kses_post( wp_unslash( isset( $_POST['error_message'] ) ? $_POST['error_message'] : '' ) )) // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no nonce available for this AJAX handler

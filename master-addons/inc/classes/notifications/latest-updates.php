@@ -60,7 +60,7 @@ if (!class_exists('Latest_Updates')) {
         {
             $jltma_changelog_message = sprintf(
                 /* translators: 1: URL to changelogs page, 2: Link text for changelogs, 3: Plugin name and version heading HTML, 4: First changelog item HTML, 5: Second changelog item HTML */
-                __('%3$s %4$s %5$s <br> <strong>Check Changelogs for </strong> <a href="%1$s" target="__blank">%2$s</a>', 'master-addons'),
+                __('%3$s %4$s <br> <strong>Check Changelogs for </strong> <a href="%1$s" target="__blank">%2$s</a>', 'master-addons'),
                 esc_url_raw('https://master-addons.com/changelogs'),
                 __('More Details', 'master-addons'),
                 /** Changelog Items
@@ -69,8 +69,7 @@ if (!class_exists('Latest_Updates')) {
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
                 // Changelogs
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Added: Dynamic Table Addons table head show/hide option add. </span><br>', 'master-addons'),
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Dynamic Table mobile view warning issue fixed. </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Nonce issue fixed. </span><br>', 'master-addons'),
             );
             printf(wp_kses_post($jltma_changelog_message));
         }

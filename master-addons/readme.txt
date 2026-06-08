@@ -4,7 +4,7 @@ Tags: elementor, elementor addons, elementor widgets, elementor templates, widge
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,29 @@ Used for plugin licensing, updates and — only after the administrator opts in 
 
 
 == Changelog ==
+= Master Elementor Addons 3.1.2 (08-06-2026) =
+* Added: Custom Attributes support for the link/button controls in Creative Button, Creative Links, Dual Heading, Info Box, Business Hours, Flipbox, Advanced Image, Image Hover Effects, Call to Action, Pricing Table and Featured Product (Pro) widgets.
+* Added: Countdown Timer style presets (Card, Flip, Circle, Gradient, Neon, Glassmorphism, Minimal, Outline, Neumorphic) with the Layout and Style Preset options separated; the new presets are gated to Pro.
+* Added: Counter Up responsive column support and a Content Position control for placing the title around the number.
+* Added: Changelog widget Style tab controls (Heading, Title, Content) so the Style tab now appears before Advanced.
+* Added: Pricing Table individual Currency, Fractional and Period color controls.
+* Fixed: Dual Heading link showed "[object Object]" as the href in the editor and ignored Open in new window / Add nofollow / Custom Attributes; Style 1 markup, heading structure and extra-span spacing corrected.
+* Fixed: Tooltip Width, Background, Color, Padding, Border and Typography style controls now apply (scoped to the per-widget Tippy theme); Tooltip Text now updates live in the Elementor editor.
+* Fixed: Gradient Headline hover gradient colors now apply on hover only when set.
+* Fixed: Pricing Table price typography now targets the price amount only, and extra spacing around the price/currency is removed.
+* Fixed: Image Hover Effects border radius now rounds the image, border and hover overlays.
+* Fixed: Progress Bar percentage number typography/DOM controller styling.
+* Fixed: Contact Form 7 label margin now applies to the form labels.
+* Fixed: "Unregistered dependency" PHP notice (jltma-prism) for the Source Code widget when the Pro license is inactive.
+* Fixed: Nonce issue fixed.
+* Added: Widget Builder now lets you add conditions and loops in your widget code, so you can show or hide parts of a widget and repeat items based on your settings.
+* Added: Documentation links inside the Widget Builder — a quick link in the code panel and a help icon on every control.
+* Improved: A roomier Widget Builder code editor — a wider editing area, a draggable panel you can size yourself, and cleaner, thinner scrollbars.
+* Improved: Premium controls are now clearly locked on the free version and can no longer be added by mistake.
+* Fixed: Background, typography and text shadow styling now applies exactly where you choose instead of to the whole widget.
+* Fixed: Importing a widget now opens it correctly, and the Widget Builder menu appears in the right place.
+* Improved: Widgets you build are now shown in a safer, more reliable way.
+
 = Master Elementor Addons 3.1.1 (23-05-2026) =
 * Security: Widget Builder no longer accepts or executes arbitrary PHP. PHP tags are stripped from all widget HTML/CSS/JS on save and during generation, so generated widget files contain only plugin-authored code. Dynamic values use {{placeholders}} that are escaped on output.
 * Security: Removed the Widget Builder preview path that wrote user code to a temporary PHP file and included it. Previews now render statically with escaped mock values — no user PHP or JavaScript is executed.

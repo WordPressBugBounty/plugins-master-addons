@@ -850,7 +850,7 @@ class Pricing_Table extends Master_Widget
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'ma_el_pricing_table_price_typography',
-				'selector' => '{{WRAPPER}} .jltma-table-price-area',
+				'selector' => '{{WRAPPER}} .jltma-table-price-amount',
 				'global'   => [
 					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 				],
@@ -863,6 +863,20 @@ class Pricing_Table extends Master_Widget
 				'label'     => __('Currency Symbol', 'master-addons' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
+				'condition' => [
+					'ma_el_pricing_table_currency_symbol!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'ma_el_pricing_table_currency_color',
+			[
+				'label'     => __('Color', 'master-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .jltma-table-price-currency' => 'color: {{VALUE}}',
+				],
 				'condition' => [
 					'ma_el_pricing_table_currency_symbol!' => '',
 				],
@@ -929,6 +943,17 @@ class Pricing_Table extends Master_Widget
 				'label'     => __('Fractional Part', 'master-addons' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'ma_el_pricing_table_fractional_part_color',
+			[
+				'label'     => __('Color', 'master-addons' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .jltma-fraction-price' => 'color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -2186,9 +2211,7 @@ class Pricing_Table extends Master_Widget
 		<?php }
 
 		if (!empty($price_symbol) && is_numeric($intpart)) { ?>
-			<span class="jltma-table-price-currency">
-				<?php echo esc_attr($price_symbol); ?>
-			</span>
+			<span class="jltma-table-price-currency"><?php echo esc_attr($price_symbol); ?></span>
 		<?php }
 	}
 
@@ -2199,9 +2222,7 @@ class Pricing_Table extends Master_Widget
 		$intpart  = $price[0];
 
 		if (!empty($intpart) || 0 <= $intpart) { ?>
-			<span class="jltma-table-price-amount">
-				<?php echo esc_attr($intpart); ?>
-			</span>
+			<span class="jltma-table-price-amount"><?php echo esc_attr($intpart); ?></span>
 		<?php }
 
 		$this->jltma_pt_render_price_fraction_period();
@@ -2212,9 +2233,7 @@ class Pricing_Table extends Master_Widget
 		$settings = $this->get_settings();
 
 		if (!empty($settings['ma_el_pricing_table_period'])) { ?>
-			<span class="jltma-price-amount-duration">
-				<?php echo wp_kses_post($settings['ma_el_pricing_table_period']); ?>
-			</span>
+			<span class="jltma-price-amount-duration"><?php echo wp_kses_post($settings['ma_el_pricing_table_period']); ?></span>
 		<?php }
 	}
 
@@ -2238,15 +2257,11 @@ class Pricing_Table extends Master_Widget
 			0 < $fraction_part ||
 			(!empty($settings['ma_el_pricing_table_period']) && 'beside' === $period_position)
 		) { ?>
-			<span class="jltma-fraction-price">
-				<?php
-
+			<span class="jltma-fraction-price"><?php
 				if ($settings['ma_el_pricing_table_show_period'] == 'yes') {
 					echo '.';
 				}
-
-				echo wp_kses_post( $this->parse_text_editor($fraction_part) ); ?>
-			</span>
+				echo wp_kses_post( $this->parse_text_editor($fraction_part) ); ?></span>
 		<?php }
 	}
 
@@ -2419,12 +2434,9 @@ class Pricing_Table extends Master_Widget
 			]
 		);
 
+		// add_link_attributes() handles href, target, rel and custom_attributes.
 		if (!empty($settings['ma_el_pricing_table_link']['url'])) {
-			$this->add_render_attribute('button', 'href', esc_url_raw($settings['ma_el_pricing_table_link']['url']));
-
-			if (!empty($settings['ma_el_pricing_table_link']['is_external'])) {
-				$this->add_render_attribute('button', 'target', '_blank');
-			}
+			$this->add_link_attributes('button', $settings['ma_el_pricing_table_link']);
 		}
 
 		if (!empty($settings['ma_el_pricing_table_button_hover_animation'])) {

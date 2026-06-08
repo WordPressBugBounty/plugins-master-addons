@@ -618,17 +618,10 @@ class Creative_Button extends Master_Widget
 	{
 
 		$settings = $this->get_settings();
-		$this->add_render_attribute('ma_el_creative_button', [
-			'class' => ['jltma-button jltma-creative-button', esc_attr($settings['creative_button_effect'])],
-			'href'  => esc_url($settings['creative_button_link_url']['url']),
-		]);
+		$this->add_render_attribute('ma_el_creative_button', 'class', ['jltma-button jltma-creative-button', esc_attr($settings['creative_button_effect'])]);
 
-		if ($settings['creative_button_link_url']['is_external']) {
-			$this->add_render_attribute('ma_el_creative_button', 'target', '_blank');
-		}
-
-		if ($settings['creative_button_link_url']['nofollow']) {
-			$this->add_render_attribute('ma_el_creative_button', 'rel', 'nofollow');
+		if (!empty($settings['creative_button_link_url']['url'])) {
+			$this->add_link_attributes('ma_el_creative_button', $settings['creative_button_link_url']);
 		}
 
 		$this->add_render_attribute('ma_el_creative_button', 'data-text', esc_attr($settings['creative_alternative_button_text']));

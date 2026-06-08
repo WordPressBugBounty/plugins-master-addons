@@ -93,15 +93,52 @@ class Countdown_Timer extends Master_Widget
 		$this->add_control(
 			'ma_el_countdown_style',
 			[
-				'label'   => esc_html__('Style Preset', 'master-addons' ),
-				'type'    => Controls_Manager::SELECT,
+				'label'   => esc_html__('Layout', 'master-addons' ),
+				'type'    => Controls_Manager::CHOOSE,
 				'default' => 'block',
 				'options' => [
-					'block'         => esc_html__('Block', 'master-addons' ),
-					'inline'        => esc_html__('Inline', 'master-addons' ),
-					'block-table'   => esc_html__('Block Table', 'master-addons' ),
-					'inline-table+' => esc_html__('Inline Table', 'master-addons' ),
+					'block' => [
+						'title' => esc_html__('Block', 'master-addons' ),
+						'icon'  => 'eicon-div-block',
+					],
+					'inline' => [
+						'title' => esc_html__('Inline', 'master-addons' ),
+						'icon'  => 'eicon-inner-container',
+					],
+					'block-table' => [
+						'title' => esc_html__('Block Table', 'master-addons' ),
+						'icon'  => 'eicon-container-grid',
+					],
+					'inline-table' => [
+						'title' => esc_html__('Inline Table', 'master-addons' ),
+						'icon'  => 'eicon-bullet-list',
+					],
 				],
+			]
+		);
+
+		// Style presets - free includes Default & Card; Pro version overrides via filter to unlock the rest.
+		$countdown_skin_options = apply_filters('master_addons/addons/countdown/skins', [
+			'default'    => esc_html__('Default', 'master-addons' ),
+			'card'       => esc_html__('Card', 'master-addons' ),
+			'flip'       => esc_html__('Flip (Pro)', 'master-addons' ),
+			'circle'     => esc_html__('Circle (Pro)', 'master-addons' ),
+			'gradient'   => esc_html__('Gradient (Pro)', 'master-addons' ),
+			'neon'       => esc_html__('Neon (Pro)', 'master-addons' ),
+			'glass'      => esc_html__('Glassmorphism (Pro)', 'master-addons' ),
+			'minimal'    => esc_html__('Minimal (Pro)', 'master-addons' ),
+			'outline'    => esc_html__('Outline (Pro)', 'master-addons' ),
+			'neumorphic' => esc_html__('Neumorphic (Pro)', 'master-addons' ),
+		]);
+
+		$this->add_control(
+			'ma_el_countdown_skin',
+			[
+				'label'       => esc_html__('Style Preset', 'master-addons' ),
+				'type'        => Controls_Manager::SELECT,
+				'default'     => 'default',
+				'options'     => $countdown_skin_options,
+				'description' => Helper::upgrade_to_pro('More Style Presets available on'),
 			]
 		);
 
@@ -112,7 +149,7 @@ class Countdown_Timer extends Master_Widget
 				'type'    => Controls_Manager::TEXT,
 				'default' => '/',
 				'condition'   => [
-					'ma_el_countdown_style!' => 'inline-table+',
+					'ma_el_countdown_style!' => 'inline-table',
 				],
 			)
 		);
@@ -971,6 +1008,12 @@ class Countdown_Timer extends Master_Widget
 		$settings = $this->get_settings_for_display();
 
 		$countdown_style = $settings['ma_el_countdown_style'];
+		$countdown_skin  = $settings['ma_el_countdown_skin'] ?? 'default';
+		// Free build ships only the Default & Card skins; Pro unlocks the rest.
+		$free_skins = ['default', 'card'];
+		if (!in_array($countdown_skin, $free_skins, true) && !Helper::jltma_premium()) {
+			$countdown_skin = 'default';
+		}
 		$countdown_time  = $settings['ma_el_countdown_time'];
 		$seperator       = $settings['ma_el_seperator'];
 
@@ -1095,6 +1138,7 @@ class Countdown_Timer extends Master_Widget
 					'jltma-countdown-wrapper',
 					'jltma-countdown',
 					'jltma-countdown-' . esc_attr($countdown_style),
+					($countdown_skin && 'default' !== $countdown_skin) ? 'jltma-countdown-skin-' . esc_attr($countdown_skin) : '',
 				],
 				'id' => 'jltma-countdown-' . esc_attr($this->get_id()),
 			]

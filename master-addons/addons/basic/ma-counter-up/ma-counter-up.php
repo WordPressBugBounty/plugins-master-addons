@@ -191,9 +191,11 @@ class Counter_Up extends Master_Widget
 		$this->add_responsive_control(
 			'column',
 			[
-				'label'   => esc_html__('Columns', 'master-addons' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 4,
+				'label'          => esc_html__('Columns', 'master-addons' ),
+				'type'           => Controls_Manager::SELECT,
+				'default'        => 4,
+				'tablet_default' => 2,
+				'mobile_default' => 1,
 				'options' => [
 					'6' => esc_html__('6 Columns', 'master-addons' ),
 					'4' => esc_html__('4 Columns', 'master-addons' ),
@@ -203,6 +205,38 @@ class Counter_Up extends Master_Widget
 				],
 				'selectors' => [
 					'{{WRAPPER}} .jltma-counterup-column' => 'width: calc(100% / {{VALUE}});',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'jltma_counterup_content_direction',
+			[
+				'label'   => esc_html__('Content Position', 'master-addons' ),
+				'type'    => Controls_Manager::CHOOSE,
+				'options' => [
+					'column-reverse' => [
+						'title' => esc_html__('Top', 'master-addons' ),
+						'icon'  => 'eicon-v-align-top',
+					],
+					'row-reverse' => [
+						'title' => esc_html__('Left', 'master-addons' ),
+						'icon'  => 'eicon-h-align-left',
+					],
+					'row' => [
+						'title' => esc_html__('Right', 'master-addons' ),
+						'icon'  => 'eicon-h-align-right',
+					],
+					'column' => [
+						'title' => esc_html__('Bottom', 'master-addons' ),
+						'icon'  => 'eicon-v-align-bottom',
+					],
+				],
+				'default'   => 'column',
+				'toggle'    => false,
+				'description' => esc_html__('Position of the title relative to the number.', 'master-addons' ),
+				'selectors' => [
+					'{{WRAPPER}} .jltma-counterup-content' => 'display: flex; flex-direction: {{VALUE}}; align-items: center; justify-content: center; gap: 5px;',
 				],
 			]
 		);
@@ -450,8 +484,20 @@ class Counter_Up extends Master_Widget
 				],
 				'default'   => '#333',
 				'selectors' => [
-					'{{WRAPPER}} .jltma-counterup h3.jltma-counter-up-number' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .jltma-counterup .jltma-counter-up-number' => 'color: {{VALUE}};'
 				],
+			]
+		);
+
+		// counterup number typography
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'jltma_counterup_number_typography',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'selector' => '{{WRAPPER}} .jltma-counterup .jltma-counter-up-number'
 			]
 		);
 
@@ -476,8 +522,20 @@ class Counter_Up extends Master_Widget
 				],
 				'default'   => '#333',
 				'selectors' => [
-					'{{WRAPPER}} .jltma-counterup h3.jltma-counter-up-number-prefix' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .jltma-counterup .jltma-counter-up-number-prefix' => 'color: {{VALUE}};'
 				],
+			]
+		);
+
+		// counterup number prefix typography
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'jltma_counterup_number_prefix_typography',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
+				],
+				'selector' => '{{WRAPPER}} .jltma-counterup .jltma-counter-up-number-prefix'
 			]
 		);
 
@@ -488,7 +546,7 @@ class Counter_Up extends Master_Widget
 				'label'  => esc_html__('Size', 'master-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'selectors' => [ 
-					'{{WRAPPER}} .jltma-counterup h3.jltma-counter-up-number-prefix' => 'font-size: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}} .jltma-counterup .jltma-counter-up-number-prefix' => 'font-size: {{SIZE}}{{UNIT}};'
 				]
 			]
 		);
@@ -501,7 +559,7 @@ class Counter_Up extends Master_Widget
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', 'em', '%'],
 				'selectors'  => [
-					'{{WRAPPER}} .jltma-counterup h3.jltma-counter-up-number' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .jltma-counterup .jltma-counter-up-number' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -599,7 +657,7 @@ class Counter_Up extends Master_Widget
 				echo '</span>';
 				if (!empty($list['number']) || ($list['title'])) :
 					echo '<div class="jltma-counterup-content">';
-					$list['number'] ? printf('<div class="jltma-counter-up-number-section"><h3 class="jltma-counter-up-number-prefix">%1$s</h3><h3 class="jltma-counter-up-number">%2$s</h3><h3 class="jltma-counter-up-number-prefix">%3$s</h3></div>', wp_kses_post( $this->parse_text_editor($list['number_prefix']) ), esc_attr($list['number']), wp_kses_post( $this->parse_text_editor($list['number_suffix']) ) ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor output wrapped in wp_kses_post
+					$list['number'] ? printf('<div class="jltma-counter-up-number-section"><h3 class="jltma-counter-up-number-wrap"><span class="jltma-counter-up-number-prefix">%1$s</span><span class="jltma-counter-up-number">%2$s</span><span class="jltma-counter-up-number-prefix">%3$s</span></h3></div>', wp_kses_post( $this->parse_text_editor($list['number_prefix']) ), esc_attr($list['number']), wp_kses_post( $this->parse_text_editor($list['number_suffix']) ) ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor output wrapped in wp_kses_post
 					$list['title'] ? printf('<span class="jltma-counterup-title">%s</span>', wp_kses_post( $this->parse_text_editor($list['title']) ) ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parse_text_editor output wrapped in wp_kses_post
 					echo '</div>';
 				endif;

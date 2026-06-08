@@ -120,6 +120,62 @@ class Control_Manager {
     }
 
     /**
+     * Build control config ARRAY (runtime equivalent of build_control()).
+     * Consumed by Dynamic_Widget::register_controls() so no PHP file is generated.
+     *
+     * @param string $control_key Control key
+     * @param array  $field       Field configuration
+     * @param string $type        Control type
+     * @return array ['key' => string, 'responsive' => bool, 'args' => array]
+     */
+    public function build_control_config($control_key, $field, $type) {
+        $control = $this->get_control($type);
+
+        if (!$control || !method_exists($control, 'get_config')) {
+            return $this->build_fallback_control_config($control_key, $field, $type);
+        }
+
+        return $control->get_config($control_key, $field);
+    }
+
+    /**
+     * Fallback control config for unknown types (array equivalent of build_fallback_control()).
+     *
+     * @param string $control_key Control key
+     * @param array  $field       Field configuration
+     * @param string $type        Control type
+     * @return array
+     */
+    private function build_fallback_control_config($control_key, $field, $type) {
+        $type_const = strtoupper(preg_replace('/[^A-Za-z0-9_]/', '', (string) $type));
+        if ('' === $type_const) {
+            $type_const = 'TEXT';
+        }
+
+        $const = '\\Elementor\\Controls_Manager::' . $type_const;
+        $args  = [
+            // translators: dynamic user-defined control label.
+            'label' => esc_html(!empty($field['label']) ? $field['label'] : 'Control'),
+            'type'  => defined($const) ? constant($const) : 'text',
+        ];
+
+        // REPEATER must always carry a 'fields' array.
+        if ('REPEATER' === $type_const) {
+            $args['fields'] = [];
+        }
+
+        if (isset($field['default'])) {
+            $args['default'] = $field['default'];
+        }
+
+        return [
+            'key'        => $control_key,
+            'responsive' => !empty($field['responsive']),
+            'args'       => $args,
+        ];
+    }
+
+    /**
      * Build fallback control for unknown types
      *
      * @param string $control_key Control key

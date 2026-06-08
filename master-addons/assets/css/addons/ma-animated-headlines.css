@@ -33,6 +33,10 @@
 .jltma-animated-headline.rotate-1 .jltma-words-wrapper, .jltma-animated-headline.rotate-2 .jltma-words-wrapper, .jltma-animated-headline.rotate-3 .jltma-words-wrapper, .jltma-animated-headline.zoom .jltma-words-wrapper {
   perspective: 300px;
 }
+.jltma-animated-headline.letters .second-heading i,
+.jltma-animated-headline.letters .second-heading i em {
+  font-style: normal;
+}
 .jltma-animated-headline.rotate-1 b {
   opacity: 0;
   transform-origin: 50% 100%;

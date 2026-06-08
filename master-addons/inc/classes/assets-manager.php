@@ -708,7 +708,7 @@ class Assets_Manager
                     $wp_handle,
                     $css_url,
                     $css_deps,
-                    !empty($vendor['cdn']) ? null : $version
+                    !empty($vendor['cdn']) ? null : $this->resolve_asset_version($css_file, $vendor, $is_pro, $version)
                 );
             }
 
@@ -731,7 +731,7 @@ class Assets_Manager
                     $wp_handle,
                     $js_url,
                     $js_deps,
-                    !empty($vendor['cdn']) ? null : $version,
+                    !empty($vendor['cdn']) ? null : $this->resolve_asset_version($js_file, $vendor, $is_pro, $version),
                     $in_footer
                 );
             }
@@ -742,6 +742,44 @@ class Assets_Manager
 
         // Allow extensions to register additional assets
         do_action('jltma/assets/after_register_vendors');
+    }
+
+    /**
+     * Resolve the version string for an asset.
+     *
+     * Local, built assets (path override of '', non-CDN, non-external) are versioned
+     * by their file modification time so a rebuild or plugin update busts the browser
+     * cache automatically. Everything else falls back to the plugin version.
+     *
+     * @param string $relative_file Asset path relative to its assets base (already suffixed).
+     * @param array  $vendor        Registry entry for the asset.
+     * @param bool   $is_pro        Whether the asset lives in the premium assets folder.
+     * @param string $fallback      Version to use when mtime is unavailable.
+     * @return string
+     */
+    private function resolve_asset_version($relative_file, $vendor, $is_pro, $fallback)
+    {
+        $is_local = isset($vendor['path'])
+            && $vendor['path'] === ''
+            && empty($vendor['cdn'])
+            && !$this->is_external_url($relative_file);
+
+        if (!$is_local) {
+            return $fallback;
+        }
+
+        $base_dir = $is_pro
+            ? (defined('JLTMA_PRO_PATH') ? trailingslashit(JLTMA_PRO_PATH) . 'premium/assets/' : '')
+            : (defined('JLTMA_PATH') ? trailingslashit(JLTMA_PATH) . 'assets/' : '');
+
+        if ($base_dir) {
+            $file_path = $base_dir . $relative_file;
+            if (is_file($file_path)) {
+                return (string) filemtime($file_path);
+            }
+        }
+
+        return $fallback;
     }
 
     /**

@@ -1588,6 +1588,7 @@ protected function register_controls()
 			'link'             => '', // link on image
 			'target'           => '_self', // link target
 			'nofollow'         => '', // link nofollow
+			'custom_attrs'     => '', // pre-rendered custom link attributes string
 			'alt'              => '', // alternative text
 			'size'             => 'medium_large', // image size
 			'width'            => '', // final width of image
@@ -1723,7 +1724,7 @@ protected function register_controls()
 		<div class="jltma-adv-image-wrapper">
 			<div class="jltma-media-image <?php echo esc_attr($hover_class) . esc_attr($frame_classes) . esc_attr($overflow_class); ?>">
 				<?php if (!empty($anchor_link)) { ?>
-					<a class="<?php echo esc_attr($anchor_class); ?>" href="<?php echo esc_url($anchor_link); ?>" <?php echo esc_attr($lightbox_attrs . $nofollow); ?>>
+					<a class="<?php echo esc_attr($anchor_class); ?>" href="<?php echo esc_url($anchor_link); ?>" <?php echo $target . ' ' . $lightbox_attrs . $nofollow . ' ' . $custom_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $target/$nofollow are literal attribute strings, $lightbox_attrs is built internally, and $custom_attrs keys/values are sanitized + escaped in render() ?>>
 				<?php } ?>
 
 					<?php if ($this->ma_el_is_true($display_ribbon) && !empty($ribbon_text)) { ?>
@@ -1775,6 +1776,20 @@ protected function register_controls()
 
 		$link_target = $settings['ma_el_adv_image_link']['is_external'] ? '_blank' : '_self';
 
+		// Build custom link attributes (key|value, comma-separated) into a safe attribute string.
+		$link_custom_attrs = '';
+		if (!empty($settings['ma_el_adv_image_link']['custom_attributes'])) {
+			foreach (explode(',', $settings['ma_el_adv_image_link']['custom_attributes']) as $attribute) {
+				$parts = explode('|', $attribute, 2);
+				$attr_key = preg_replace('/[^a-zA-Z0-9_-]/', '', trim($parts[0]));
+				if ('' === $attr_key) {
+					continue;
+				}
+				$attr_val = isset($parts[1]) ? trim($parts[1]) : '';
+				$link_custom_attrs .= ' ' . esc_attr($attr_key) . '="' . esc_attr($attr_val) . '"';
+			}
+		}
+
 		$args        = array(
 			'image_html'       => Group_Control_Image_Size::get_attachment_image_html($settings, 'ma_el_adv_image'),
 			'attach_id'        => Helper::jltma_get_array_value($settings['ma_el_adv_image'], 'id'),
@@ -1784,6 +1799,7 @@ protected function register_controls()
 			'link'             => Helper::jltma_get_array_value($settings['ma_el_adv_image_link'], 'url'),
 			'nofollow'         => Helper::jltma_get_array_value($settings['ma_el_adv_image_link'], 'nofollow'),
 			'target'           => Helper::jltma_get_array_value($settings['ma_el_adv_image_link'], 'is_external', false) ? '_blank' : '_self',
+			'custom_attrs'     => $link_custom_attrs,
 			'align'            => !empty($settings['ma_el_adv_image_settings_alignment']) ? $settings['ma_el_adv_image_settings_alignment'] : '',
 
 			'attach_id_hover'  => Helper::jltma_get_array_value($settings['ma_el_adv_image_hover_image'], 'id'),

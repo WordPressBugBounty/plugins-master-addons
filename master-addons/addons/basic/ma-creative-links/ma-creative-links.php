@@ -620,17 +620,10 @@ class Creative_Links extends Master_Widget
 			'id' => 'ma-creative-link-' . esc_attr($link_id)
 		]);
 
-		$this->add_render_attribute('ma_el_creative_link', [
-			'class' => 'jltma-creative-link-item',
-			'href'  => esc_url_raw($settings['creative_link_url']['url']),
-		]);
+		$this->add_render_attribute('ma_el_creative_link', 'class', 'jltma-creative-link-item');
 
-		if ($settings['creative_link_url']['is_external']) {
-			$this->add_render_attribute('ma_el_creative_link', 'target', '_blank');
-		}
-
-		if ($settings['creative_link_url']['nofollow']) {
-			$this->add_render_attribute('ma_el_creative_link', 'rel', 'nofollow');
+		if (!empty($settings['creative_link_url']['url'])) {
+			$this->add_link_attributes('ma_el_creative_link', $settings['creative_link_url']);
 		}
 
 		// Add data-hover for effects that need it

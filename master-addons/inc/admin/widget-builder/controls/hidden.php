@@ -40,4 +40,8 @@ class Hidden extends Control_Base {
 
         return $content;
     }
+
+    protected function default_label() {
+        return 'Hidden';
+    }
 }
