@@ -804,86 +804,6 @@ class Timeline extends Master_Widget
 		$this->end_controls_section();
 
 		/*
-             * MA Timeline: Date
-             */
-
-		$this->start_controls_section(
-			'ma_el_timeline_section_date',
-			[
-				'label' => __('Date', 'master-addons'),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'ma_el_timeline_date_typography',
-				'selector' => '{{WRAPPER}} .jltma-timeline .jltma-timeline-post-date',
-				'global'   => [
-					'default' => Global_Typography::TYPOGRAPHY_TEXT,
-				],
-			]
-		);
-
-		$this->add_control(
-			'ma_el_timeline_date_color',
-			[
-				'label'     => __('Color', 'master-addons'),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .timeline-item__meta-wrapper' => 'color: {{VALUE}};',
-				],
-			]
-		);
-		$this->add_control(
-			'ma_el_timeline_date_bg_color',
-			[
-				'label'     => __('Background Color', 'master-addons'),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .timeline-item__meta-wrapper'                                                  => 'background-color: {{VALUE}};',
-					'{{WRAPPER}} .jltma-blog-timeline-post:nth-child(2n+2) .jltma-timeline-post-date:before' => 'border-right: 20px solid {{VALUE}};',
-					'{{WRAPPER}} .jltma-blog-timeline-post:nth-child(2n+1) .jltma-timeline-post-date:before' => 'border-left: 20px solid {{VALUE}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'ma_el_timeline_date_padding',
-			[
-				'label'      => __('Padding', 'master-addons'),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => ['px'],
-				'selectors'  => [
-					'{{WRAPPER}} .jltma-timeline .timeline-item__meta-wrapper' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'ma_el_timeline_date_vertical_spacing',
-			[
-				'label'   => __('Vertical Spacing', 'master-addons'),
-				'type'    => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => '',
-				],
-				'range' 		=> [
-					'px' 		=> [
-						'min' => 0,
-						'max' => 200,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}} .jltma-timeline .timeline-item__meta-wrapper' => 'margin-bottom: {{SIZE}}px;',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-
-		/*
 		* Timeline: Cards
 		*/
 
@@ -941,6 +861,91 @@ class Timeline extends Master_Widget
 				'selectors'  => [
 					'{{WRAPPER}} .jltma-timeline .timeline-item__content-wrapper,
 					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		// Title typography — applies to both post titles (.jltma-timeline-entry-title)
+		// and custom-content headings inside the WYSIWYG card body.
+		$this->add_control(
+			'jltma_timeline_title_heading',
+			[
+				'label'     => __('Title', 'master-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'jltma_timeline_title_color',
+			[
+				'label'     => __('Title Color', 'master-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-title,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h1,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h2,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h3,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h4,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h5,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h6' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'jltma_timeline_title_typography',
+				'label'    => __('Title Typography', 'master-addons'),
+				'selector' => '{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-title,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h1,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h2,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h3,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h4,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h5,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content h6',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
+				],
+			]
+		);
+
+		// Content typography — applies to post excerpts and custom-content body text.
+		$this->add_control(
+			'jltma_timeline_content_heading',
+			[
+				'label'     => __('Content', 'master-addons'),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'jltma_timeline_content_color',
+			[
+				'label'     => __('Content Color', 'master-addons'),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .jltma-timeline .timeline-item__excerpt,
+					{{WRAPPER}} .jltma-timeline .timeline-item__excerpt p,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content p' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'jltma_timeline_content_typography',
+				'label'    => __('Content Typography', 'master-addons'),
+				'selector' => '{{WRAPPER}} .jltma-timeline .timeline-item__excerpt,
+					{{WRAPPER}} .jltma-timeline .timeline-item__excerpt p,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content,
+					{{WRAPPER}} .jltma-timeline .jltma-timeline-entry-content p',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
 				],
 			]
 		);
@@ -1172,6 +1177,18 @@ class Timeline extends Master_Widget
 			]
 		);
 
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'ma_el_timeline_date_typography',
+				'selector' => '{{WRAPPER}} .jltma-timeline .jltma-timeline-post-date',
+				'global'   => [
+					'default' => Global_Typography::TYPOGRAPHY_TEXT,
+				],
+			]
+		);		
+
 		$this->add_responsive_control(
 			'dates_padding',
 			[
@@ -1230,6 +1247,11 @@ class Timeline extends Master_Widget
 			]
 		);
 
+
+		// Date background color (Default) is a Pro control, injected here via filter.
+		// See MasterAddons\Pro\Classes\Free_Addons::timeline_dates_default_bg_color().
+		apply_filters('master_addons/addons/timeline/dates_default_bg_color', $this);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab('tab_dates_hover', ['label' => __('Hover', 'master-addons')]);
@@ -1245,6 +1267,10 @@ class Timeline extends Master_Widget
 			]
 		);
 
+		// Date background color (Hover) is a Pro control, injected here via filter.
+		// See MasterAddons\Pro\Classes\Free_Addons::timeline_dates_hover_bg_color().
+		apply_filters('master_addons/addons/timeline/dates_hover_bg_color', $this);
+
 		$this->end_controls_tab();
 
 		$this->start_controls_tab('tab_dates_focused', ['label' => __('Focused', 'master-addons')]);
@@ -1259,6 +1285,9 @@ class Timeline extends Master_Widget
 				],
 			]
 		);
+		// Date background color (Focused) is a Pro control, injected here via filter.
+		// See MasterAddons\Pro\Classes\Free_Addons::timeline_dates_focused_bg_color().
+		apply_filters('master_addons/addons/timeline/dates_focused_bg_color', $this);
 
 		$this->end_controls_tab();
 
@@ -1746,7 +1775,7 @@ class Timeline extends Master_Widget
 		$this->upgrade_to_pro_message();
 	}
 
-	protected function ma_el_timeline_global_render_attributes()
+	protected function jltma_el_timeline_global_render_attributes()
 	{
 		$settings = $this->get_settings_for_display();
 
@@ -1831,7 +1860,7 @@ class Timeline extends Master_Widget
 	{
 		$settings = $this->get_settings_for_display();
 
-		$this->ma_el_timeline_global_render_attributes();
+		$this->jltma_el_timeline_global_render_attributes();
 
 		if (get_query_var('paged')) {
 			$paged = get_query_var('paged');
@@ -1856,9 +1885,9 @@ class Timeline extends Master_Widget
 
 			$new_offset = $offset + (($paged - 1) * $post_per_page);
 
-			$post_args = Helper::ma_el_blog_get_post_settings($settings);
+			$post_args = Helper::jltma_el_blog_get_post_settings($settings);
 
-			$posts = Helper::ma_el_blog_get_post_data($post_args, $paged, $new_offset);
+			$posts = Helper::jltma_el_blog_get_post_data($post_args, $paged, $new_offset);
 		}
 	?>
 		<div <?php echo $this->get_render_attribute_string('ma_el_timeline_wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
@@ -1921,9 +1950,9 @@ class Timeline extends Master_Widget
 
 				$new_offset = $offset + (($paged - 1) * $post_per_page);
 
-				$post_args = Helper::ma_el_blog_get_post_settings($settings);
+				$post_args = Helper::jltma_el_blog_get_post_settings($settings);
 
-				$posts = Helper::ma_el_blog_get_post_data($post_args, $paged, $new_offset);
+				$posts = Helper::jltma_el_blog_get_post_data($post_args, $paged, $new_offset);
 			}
 
 			if (count($posts)) {
@@ -1995,26 +2024,26 @@ class Timeline extends Master_Widget
 
 					switch ($point_content_type) {
 						case 'numbers':
-							$point_content = $this->ma_timeline_points_text($point_content_type, $index, $item);
+							$point_content = $this->jltma_timeline_points_text($point_content_type, $index, $item);
 							break;
 
 						case 'letters':
-							$point_content = $this->ma_timeline_points_text($point_content_type, $index, $item);
+							$point_content = $this->jltma_timeline_points_text($point_content_type, $index, $item);
 							break;
 
 						case 'image':
-							$point_content = $this->ma_timeline_points_image($item);
+							$point_content = $this->jltma_timeline_points_image($item);
 							break;
 
 						case 'icons':
-							$point_content = $this->ma_timeline_points_icon($item);
+							$point_content = $this->jltma_timeline_points_icon($item);
 							break;
 
 						default:
 							$point_content = '<div class="jltma-timeline-post-type-icon jltma-timeline__item__icon"><span class="jltma-timeline-circle"></span></div>';
 					}
 				} else {
-					$point_content = $this->ma_timeline_points_global_points();
+					$point_content = $this->jltma_timeline_points_global_points();
 				}
 	?>
 		<div <?php echo $this->get_render_attribute_string($item_key); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns safe Elementor HTML ?>>
@@ -2213,19 +2242,19 @@ class Timeline extends Master_Widget
 
 					switch ($point_content_type) {
 						case 'numbers':
-							$point_content = $this->ma_timeline_points_text($point_content_type, $index, $item);
+							$point_content = $this->jltma_timeline_points_text($point_content_type, $index, $item);
 							break;
 
 						case 'letters':
-							$point_content = $this->ma_timeline_points_text($point_content_type, $index, $item);
+							$point_content = $this->jltma_timeline_points_text($point_content_type, $index, $item);
 							break;
 
 						case 'image':
-							$point_content = $this->ma_timeline_points_image($item);
+							$point_content = $this->jltma_timeline_points_image($item);
 							break;
 
 						case 'icons':
-							$point_content = $this->ma_timeline_points_icon($item);
+							$point_content = $this->jltma_timeline_points_icon($item);
 							break;
 
 						default:
@@ -2233,7 +2262,7 @@ class Timeline extends Master_Widget
 					}
 
 					//                                        if($settings['ma_el_timeline_selected_global_icon']['value']){
-					//	                                            $point_content = $this->ma_timeline_points_global_points();
+					//	                                            $point_content = $this->jltma_timeline_points_global_points();
 					//                                        } else{
 					//            				                    $point_content = '<span class="hexagon"></span>';
 					//                                        }
@@ -2304,7 +2333,7 @@ class Timeline extends Master_Widget
 
 <?php }
 
-		protected function ma_timeline_points_text($type, $index = false, $item = false)
+		protected function jltma_timeline_points_text($type, $index = false, $item = false)
 		{
 
 			$settings  = $this->get_settings_for_display();
@@ -2330,7 +2359,7 @@ class Timeline extends Master_Widget
 			return $output;
 		}
 
-		protected function ma_timeline_points_image($item = false)
+		protected function jltma_timeline_points_image($item = false)
 		{
 			$settings = $this->get_settings_for_display();
 
@@ -2348,7 +2377,7 @@ class Timeline extends Master_Widget
 			return $output;
 		}
 
-		protected function ma_timeline_points_global_points()
+		protected function jltma_timeline_points_global_points()
 		{
 			$settings = $this->get_settings_for_display();
 
@@ -2357,19 +2386,19 @@ class Timeline extends Master_Widget
 			switch ($global_point_content_type) {
 
 				case 'numbers':
-					$point_content = $this->ma_timeline_points_text($global_point_content_type, true, false);
+					$point_content = $this->jltma_timeline_points_text($global_point_content_type, true, false);
 					break;
 
 				case 'letters':
-					$point_content = $this->ma_timeline_points_text($global_point_content_type, true, false);
+					$point_content = $this->jltma_timeline_points_text($global_point_content_type, true, false);
 					break;
 
 				case 'image':
-					$point_content = $this->ma_timeline_points_image($item = false);
+					$point_content = $this->jltma_timeline_points_image($item = false);
 					break;
 
 				case 'icons':
-					$point_content = $this->ma_timeline_points_icon($item = false);
+					$point_content = $this->jltma_timeline_points_icon($item = false);
 					break;
 
 				default:
@@ -2379,7 +2408,7 @@ class Timeline extends Master_Widget
 			return $point_content;
 		}
 
-		protected function ma_timeline_points_icon($item = false)
+		protected function jltma_timeline_points_icon($item = false)
 		{
 			$settings = $this->get_settings_for_display();
 
@@ -2458,19 +2487,19 @@ class Timeline extends Master_Widget
 
 				switch ($point_content_type) {
 					case 'numbers':
-						$point_content = $this->ma_timeline_points_text($point_content_type, $post_index, false);
+						$point_content = $this->jltma_timeline_points_text($point_content_type, $post_index, false);
 						break;
 
 					case 'letters':
-						$point_content = $this->ma_timeline_points_text($point_content_type, $post_index, false);
+						$point_content = $this->jltma_timeline_points_text($point_content_type, $post_index, false);
 						break;
 
 					case 'image':
-						$point_content = $this->ma_timeline_points_image(false);
+						$point_content = $this->jltma_timeline_points_image(false);
 						break;
 
 					case 'icons':
-						$point_content = $this->ma_timeline_points_icon(false);
+						$point_content = $this->jltma_timeline_points_icon(false);
 						break;
 
 					default:
@@ -2518,7 +2547,7 @@ class Timeline extends Master_Widget
 										<?php if ($settings['ma_el_timeline_post_title_link'] == "yes") { ?></a><?php } ?>
 								</<?php echo esc_html($title_html_tag); ?>>
 							<?php } ?>
-							<?php $this->ma_el_timeline_content(); ?>
+							<?php $this->jltma_el_timeline_content(); ?>
 						</div>
 
 						<?php $this->render_card_arrow(); ?>
@@ -2567,7 +2596,7 @@ class Timeline extends Master_Widget
 <?php
 		}
 
-		protected function ma_el_timeline_content()
+		protected function jltma_el_timeline_content()
 		{
 
 			$settings = $this->get_settings();
@@ -2577,7 +2606,7 @@ class Timeline extends Master_Widget
 			//			$excerpt_src  = $settings['ma_el_post_grid_excerpt_content'];
 			$excerpt_length = $settings['ma_el_timeline_excerpt_length'] ? $settings['ma_el_timeline_excerpt_length'] : 25;
 			echo '<div class="timeline-item__excerpt">';
-			echo wp_kses_post( Helper::ma_el_get_excerpt_by_id(get_the_ID(), (int) $excerpt_length, esc_attr($excerpt_type), $this->parse_text_editor($excerpt_text), true, '', '', '') );
+			echo wp_kses_post( Helper::jltma_el_get_excerpt_by_id(get_the_ID(), (int) $excerpt_length, esc_attr($excerpt_type), $this->parse_text_editor($excerpt_text), true, '', '', '') );
 			echo '</div>';
 		}
 

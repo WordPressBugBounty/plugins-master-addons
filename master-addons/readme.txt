@@ -4,7 +4,7 @@ Tags: elementor, elementor addons, elementor widgets, elementor templates, widge
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 3.1.2
+Stable tag: 3.1.3
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 **[Master Addons for Elementor](https://master-addons.com/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons)** is a complete Elementor addon plugin that gives you 55+ widgets, 20+ powerful extensions, a full Theme Builder, Popup Builder, Widget Builder, and a growing library of ready-made Template Kits – everything you need to design stunning WordPress websites without writing a single line of code.
 
-[Live Demo](https://demo.pixarlabs.com/?pl-product=master-addons) | [Docs](https://master-addons.com/docs/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [All Widgets](https://master-addons.com/widgets-and-extensions/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Support](https://master-addons.com/contact-us/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Upgrade to Pro](https://master-addons.com/pricing/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Rate us on WordPress ★](https://wordpress.org/support/plugin/master-addons/reviews/?filter=5#new-post) ★★★★★
+[Live Demo](https://demo.pixarlabs.com/?pl-product=master-addons) | [Docs](https://master-addons.com/docs/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [All Widgets](https://master-addons.com/widgets-and-extensions/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Support](https://master-addons.com/contact-us/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Upgrade to Pro](https://master-addons.com/pricing/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons) | [Rate us on WordPress ★](https://wordpress.org/support/plugin/master-addons/reviews/) ★★★★★
 
 From animated headlines and image hover effects to mega menus, display conditions, and full theme templates – Master Addons covers every layer of your website. Every widget ships with deep customization: margins, padding, typography, borders, responsive controls, and more. Download free today and start building the website your visitors deserve.
 
@@ -234,7 +234,7 @@ Increasing the PHP memory limit in `wp-config.php` or `php.ini` resolves this in
 
 [Great Plugin and Insane Support!](https://wordpress.org/support/topic/great-plugin-and-insane-support/)
 
-[Rate us on WordPress →](https://wordpress.org/support/plugin/master-addons/reviews/?filter=5#new-post) ⭐⭐⭐⭐⭐
+[Rate us on WordPress →](https://wordpress.org/support/plugin/master-addons/reviews/) ⭐⭐⭐⭐⭐
 
 == Want More? Check Our Other Plugins ==
 
@@ -385,6 +385,23 @@ Used for plugin licensing, updates and — only after the administrator opts in 
 
 
 == Changelog ==
+= Master Elementor Addons 3.1.3 (14-06-2026) =
+* Added: Timeline widget Title and Content typography and color controls (Cards section), applied to both Post and Custom timeline items.
+* Security: Hardened popup list sorting so it only accepts known sort options.
+* Security: Tightened permissions on the Mega Menu content editor so only menu managers can use it.
+* Improved: Custom CSS and JS in the Widget Builder are now a Pro feature; HTML stays available for everyone.
+* Improved: Template previews now open in a new browser tab instead of loading inside the dashboard.
+* Improved: Used unique name prefixes across the plugin for better compatibility with other plugins.
+* Improved: Updated the Select2 library to the latest stable version.
+* Improved: The setup wizard theme image now loads from within the plugin instead of an external site.
+* Improved: Review links now open the full reviews page.
+* Improved: Timeline date background colors (Default/Hover/Focused) are now a Pro feature.
+* Fixed: Template Live Preview link is now easy to read in Elementor's dark mode.
+* Fixed: Counter Up icons chosen from the icon library now match the font icons in size, color, and circle shape.
+* Fixed: Comments widget no longer triggers a PHP notice when reCAPTCHA keys are not configured.
+* Fixed: Domain Checker no longer reports available domains as already taken.
+* Fixed: Removed an empty duplicate Patterns section from the Advanced tab (it remains in the Style tab).
+
 = Master Elementor Addons 3.1.2 (08-06-2026) =
 * Added: Custom Attributes support for the link/button controls in Creative Button, Creative Links, Dual Heading, Info Box, Business Hours, Flipbox, Advanced Image, Image Hover Effects, Call to Action, Pricing Table and Featured Product (Pro) widgets.
 * Added: Countdown Timer style presets (Card, Flip, Circle, Gradient, Neon, Glassmorphism, Minimal, Outline, Neumorphic) with the Layout and Style Preset options separated; the new presets are gated to Pro.

@@ -1285,7 +1285,7 @@ class Advanced_Accordion extends Master_Widget
 	public function get_page_template_options($type = '')
 	{
 
-		$page_templates = Helper::ma_get_page_templates($type);
+		$page_templates = Helper::jltma_get_page_templates($type);
 
 		$options[-1] = __('Select', 'master-addons');
 

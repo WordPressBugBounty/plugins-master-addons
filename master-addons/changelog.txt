@@ -1,4 +1,16 @@
 == Changelog ==
+= Master Elementor Addons 3.1.3 (14-06-2026) =
+* Added: Timeline widget Title and Content typography and color controls (Cards section), applied to both Post and Custom timeline items.
+* Security: Hardened popup list sorting so it only accepts known sort options.
+* Security: Tightened permissions on the Mega Menu content editor so only menu managers can use it.
+* Improved: Custom CSS and JS in the Widget Builder are now a Pro feature; HTML stays available for everyone.
+* Improved: Template previews now open in a new browser tab instead of loading inside the dashboard.
+* Improved: Used unique name prefixes across the plugin for better compatibility with other plugins.
+* Improved: Updated the Select2 library to the latest stable version.
+* Improved: The setup wizard theme image now loads from within the plugin instead of an external site.
+* Improved: Review links now open the full reviews page.
+* Fixed: Template Live Preview link is now easy to read in Elementor's dark mode.
+
 = Master Elementor Addons 3.1.2 (08-06-2026) =
 * Added: Custom Attributes support for the link/button controls in Creative Button, Creative Links, Dual Heading, Info Box, Business Hours, Flipbox, Advanced Image, Image Hover Effects, Call to Action, Pricing Table and Featured Product (Pro) widgets.
 * Added: Countdown Timer style presets (Card, Flip, Circle, Gradient, Neon, Glassmorphism, Minimal, Outline, Neumorphic) with the Layout and Style Preset options separated; the new presets are gated to Pro.

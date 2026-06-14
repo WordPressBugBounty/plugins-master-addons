@@ -69,7 +69,16 @@ if (!class_exists('Latest_Updates')) {
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
                 // Changelogs
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Nonce issue fixed. </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Added: Timeline widget Title and Content typography and color controls. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Security: Hardened popup list sorting so it only accepts known sort options. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Security: Tightened permissions on the Mega Menu content editor so only menu managers can use it. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Improved: Custom CSS and JS in the Widget Builder are now a Pro feature; HTML stays available for everyone. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Improved: Template previews now open in a new browser tab instead of loading inside the dashboard. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Improved: Used unique name prefixes across the plugin for better compatibility with other plugins. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Improved: Updated the Select2 library to the latest stable version. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Improved: The setup wizard theme image now loads from within the plugin instead of an external site. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Improved: Review links now open the full reviews page. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Template Live Preview link is now easy to read in Elementor\'s dark mode. </span><br>', 'master-addons'),
             );
             printf(wp_kses_post($jltma_changelog_message));
         }

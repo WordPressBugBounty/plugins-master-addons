@@ -2575,9 +2575,11 @@ class Comments extends Master_Widget
 			// API Settings
 			$jltma_api_settings = get_option('jltma_api_save_settings');
 			$submit_field       = '';
+			$comment_spam_protection = (isset($settings['jltma_comment_spam_protection']) && $settings['jltma_comment_spam_protection'] == "yes") ? $settings['jltma_comment_spam_protection'] : '';
+
 			if (!is_user_logged_in()) {
-				if (isset($settings['jltma_comment_spam_protection']) && $settings['jltma_comment_spam_protection'] == "yes") {
-					$submit_field .= '<div class="g-recaptcha" data-sitekey="' . esc_attr($jltma_api_settings['recaptcha_site_key']) . '" data-badge="inline" render="explicit" style="padding-top:30px;"></div>';
+				if ( !empty( $comment_spam_protection ) ) {
+					$submit_field .= '<div class="g-recaptcha" data-sitekey="' . esc_attr(!empty( $jltma_api_settings['recaptcha_site_key'] ) ? $jltma_api_settings['recaptcha_site_key'] : '') . '" data-badge="inline" render="explicit" style="padding-top:30px;"></div>';
 				}
 			}
 
@@ -2806,7 +2808,7 @@ class Comments extends Master_Widget
 			$jltma_api_settings = get_option('jltma_api_save_settings');
 
 			$jltma_spam_protection = [
-				'sitekey' => $jltma_api_settings['recaptcha_site_key'] ? $jltma_api_settings['recaptcha_site_key'] : '',
+				'sitekey' => (is_array($jltma_api_settings) && !empty($jltma_api_settings['recaptcha_site_key'])) ? $jltma_api_settings['recaptcha_site_key'] : '',
 				'theme'   => "light"
 			];
 

@@ -73,13 +73,28 @@ class Popup_List_Table extends \WP_List_Table {
         $table_name = $wpdb->prefix . 'ma_popups';
         
         $sql = "SELECT * FROM $table_name";
-        
-        if (!empty($_REQUEST['orderby'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
-            $sql .= ' ORDER BY ' . esc_sql( sanitize_text_field( wp_unslash( $_REQUEST['orderby'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
-            $sql .= !empty($_REQUEST['order']) ? ' ' . esc_sql( sanitize_text_field( wp_unslash( $_REQUEST['order'] ) ) ) : ' ASC'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
-        } else {
-            $sql .= ' ORDER BY created_at DESC';
+
+        // ORDER BY column and direction cannot be bound via prepare(); resolve
+        // them to a fixed whitelist so no user-supplied string reaches the query.
+        $allowed_orderby = array_keys( $this->get_sortable_columns() );
+        $orderby = 'created_at';
+        if ( ! empty( $_REQUEST['orderby'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
+            $requested = sanitize_key( wp_unslash( $_REQUEST['orderby'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
+            if ( in_array( $requested, $allowed_orderby, true ) ) {
+                $orderby = $requested;
+            }
         }
+
+        $order = 'DESC';
+        if ( ! empty( $_REQUEST['order'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
+            $requested_order = strtoupper( sanitize_key( wp_unslash( $_REQUEST['order'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list table ordering
+            if ( in_array( $requested_order, array( 'ASC', 'DESC' ), true ) ) {
+                $order = $requested_order;
+            }
+        }
+
+        // $orderby and $order are now guaranteed whitelist values, not raw input.
+        $sql .= " ORDER BY {$orderby} {$order}";
         
         $offset = ( $page_number - 1 ) * $per_page;
         // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- custom popups table: LIMIT/OFFSET bound via prepare(); ORDER BY sanitized with esc_sql(); table name cannot be parameterized

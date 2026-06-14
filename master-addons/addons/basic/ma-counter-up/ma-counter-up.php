@@ -290,7 +290,7 @@ class Counter_Up extends Master_Widget
 					'size' => 30,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .jltma-counterup .jltma-counterup-icon i'   => 'font-size: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .jltma-counterup .jltma-counterup-icon i, {{WRAPPER}} .jltma-counterup .jltma-counterup-icon svg' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .jltma-counterup .jltma-counterup-icon img' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -311,8 +311,7 @@ class Counter_Up extends Master_Widget
 					'size' => 70,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .jltma-counterup .jltma-counterup-icon i'   => 'height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .jltma-counterup i'                         => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .jltma-counterup .jltma-counterup-icon.jltma-counterup-icon--icon'   => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .jltma-counterup .jltma-counterup-icon img' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -445,7 +444,8 @@ class Counter_Up extends Master_Widget
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#fff',
 				'selectors' => [
-					'{{WRAPPER}} .jltma-counterup i' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .jltma-counterup i'   => 'color: {{VALUE}};',
+					'{{WRAPPER}} .jltma-counterup svg' => 'fill: {{VALUE}}; color: {{VALUE}};',
 				],
 			]
 		);
@@ -458,7 +458,7 @@ class Counter_Up extends Master_Widget
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#4b00e7',
 				'selectors' => [
-					'{{WRAPPER}} .jltma-counterup-icon i' => 'background-color: {{VALUE}};',
+					'{{WRAPPER}} .jltma-counterup-icon.jltma-counterup-icon--icon' => 'background-color: {{VALUE}};',
 				],
 			]
 		);
@@ -645,7 +645,8 @@ class Counter_Up extends Master_Widget
 
 				echo '<div class="jltma-counterup-column">';
 				echo '<div class="jltma-counterup jltma-counterup-icon-' . esc_attr($settings['jltma_counterup_icon_align']) . '"  ' . $this->get_render_attribute_string($title_settings_key) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get_render_attribute_string returns sanitized HTML attributes
-				echo '<span class="jltma-counterup-icon counterup-icon-text-' . esc_attr($settings['jltma_counterup_icon_align']) . '">';
+				$cup_icon_type = !empty($list['icon_type']) ? $list['icon_type'] : 'icon';
+				echo '<span class="jltma-counterup-icon jltma-counterup-icon--' . esc_attr($cup_icon_type) . ' counterup-icon-text-' . esc_attr($settings['jltma_counterup_icon_align']) . '">';
 
 				if (!empty($list['icon']) && ($list['icon_type'] == 'icon')) {
 					$this->render_icon($list['icon'], ['aria-hidden' => 'true']);

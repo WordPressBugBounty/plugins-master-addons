@@ -590,7 +590,7 @@ class Helper {
 
 	public static function get_page_template_options( $type = '' ) {
 
-		$page_templates = self::ma_get_page_templates( $type );
+		$page_templates = self::jltma_get_page_templates( $type );
 
 		$options[-1] = __( 'Select', 'master-addons' );
 
@@ -606,7 +606,7 @@ class Helper {
 	}
 
 
-	public static function ma_get_page_templates( $type = '' ) {
+	public static function jltma_get_page_templates( $type = '' ) {
 		$args = array(
 			'post_type'      => 'elementor_library',
 			'posts_per_page' => -1,
@@ -636,7 +636,7 @@ class Helper {
 
 
 	// Get all forms of Ninja Forms plugin
-	public static function ma_el_get_ninja_forms() {
+	public static function jltma_el_get_ninja_forms() {
 		if ( class_exists( 'Ninja_Forms' ) ) {
 			$options = array();
 
@@ -663,7 +663,7 @@ class Helper {
 
 
 	// Get all forms of WPForms plugin
-	public static function ma_el_get_wpforms_forms() {
+	public static function jltma_el_get_wpforms_forms() {
 		if ( class_exists( 'WPForms' ) ) {
 			$options = array();
 
@@ -695,7 +695,7 @@ class Helper {
 
 
 	// get weForms
-	public static function ma_el_get_weforms() {
+	public static function jltma_el_get_weforms() {
 		$wpuf_form_list = get_posts(
 			array(
 				'post_type' => 'wpuf_contact_form',
@@ -718,7 +718,7 @@ class Helper {
 	}
 
 	// Get forms of Caldera plugin
-	public static function ma_el_get_caldera_forms() {
+	public static function jltma_el_get_caldera_forms() {
 		if ( class_exists( 'Caldera_Forms' ) ) {
 			$options = array();
 
@@ -745,7 +745,7 @@ class Helper {
 
 
 	// Get forms of Gravity Forms plugin
-	public static function ma_el_get_gravity_forms() {
+	public static function jltma_el_get_gravity_forms() {
 		if ( class_exists( 'GFCommon' ) ) {
 			$options = array();
 
@@ -915,7 +915,7 @@ class Helper {
 
 
 	// Master Addons Position
-	public static function ma_el_content_positions() {
+	public static function jltma_el_content_positions() {
 		$position_options = array(
 			''              => esc_html__( 'Default', 'master-addons' ),
 			'top-left'      => esc_html__( 'Top Left', 'master-addons' ),
@@ -935,7 +935,7 @@ class Helper {
 
 
 	// Master Addons Transition
-	public static function ma_el_transition_options() {
+	public static function jltma_el_transition_options() {
 		$transition_options = array(
 			''                    => __( 'None', 'master-addons' ),
 			'fade'                => __( 'Fade', 'master-addons' ),
@@ -1070,7 +1070,7 @@ class Helper {
 	}
 
 
-	public static function ma_el_get_post_types() {
+	public static function jltma_el_get_post_types() {
 		$post_type_args = array(
 			'public'            => true,
 			'show_in_nav_menus' => true,
@@ -1085,7 +1085,7 @@ class Helper {
 	}
 
 
-	public static function ma_el_blog_post_type_categories() {
+	public static function jltma_el_blog_post_type_categories() {
 		$terms = get_terms(
 			array(
 				'taxonomy'   => 'category',
@@ -1105,7 +1105,7 @@ class Helper {
 	}
 
 
-	public static function ma_el_blog_post_type_tags() {
+	public static function jltma_el_blog_post_type_tags() {
 		$tags = get_tags();
 
 		$options = array();
@@ -1119,7 +1119,7 @@ class Helper {
 		return $options;
 	}
 
-	public static function ma_el_blog_post_type_users() {
+	public static function jltma_el_blog_post_type_users() {
 		$users = get_users();
 
 		$options = array();
@@ -1135,7 +1135,7 @@ class Helper {
 		return $options;
 	}
 
-	public static function ma_el_blog_posts_list() {
+	public static function jltma_el_blog_posts_list() {
 		$list = get_posts(
 			array(
 				'post_type'      => 'post',
@@ -1155,7 +1155,7 @@ class Helper {
 	}
 
 
-	public static function ma_el_blog_get_post_settings( $settings ) {
+	public static function jltma_el_blog_get_post_settings( $settings ) {
 
 		$post_args = array();
 
@@ -1177,7 +1177,7 @@ class Helper {
 		return $post_args;
 	}
 
-	public static function ma_el_blog_get_post_data( $args, $paged, $new_offset ) {
+	public static function jltma_el_blog_get_post_data( $args, $paged, $new_offset ) {
 		$defaults = array(
 			'author'              => '',
 			'category'            => '',
@@ -1208,7 +1208,7 @@ class Helper {
 
 
 
-	public static function ma_el_get_excerpt_by_id( $post_id, $excerpt_length, $excerpt_type, $exceprt_text, $excerpt_src, $excerpt_icon, $excerpt_icon_align, $read_more_link ) {
+	public static function jltma_el_get_excerpt_by_id( $post_id, $excerpt_length, $excerpt_type, $exceprt_text, $excerpt_src, $excerpt_icon, $excerpt_icon_align, $read_more_link ) {
 
 		$the_post = get_post( $post_id );
 

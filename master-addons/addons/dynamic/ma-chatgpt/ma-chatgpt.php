@@ -628,11 +628,11 @@ class CHATGPT extends Master_Widget {
 		$expiration = constant($request_by);
 
 		$IP = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
-		$cache = get_transient( 'liquid_chatgpt__' . $IP );
+		$cache = get_transient( 'jltma_chatgpt_' . $IP );
 
 		if ( false === $cache ) {
 			$cache = [ 'limit' => $request_limit, 'expiration' => $request_by ];
-			set_transient( 'liquid_chatgpt__' . $IP, $cache, $expiration );
+			set_transient( 'jltma_chatgpt_' . $IP, $cache, $expiration );
 		}
 
 	}

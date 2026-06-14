@@ -231,7 +231,7 @@ class Blog extends Master_Widget
 			[
 				'label' => __('Post Type', 'master-addons'),
 				'type' => Controls_Manager::SELECT2,
-				'options' => Helper::ma_el_get_post_types(),
+				'options' => Helper::jltma_el_get_post_types(),
 				'default' => 'post',
 
 			]
@@ -638,7 +638,7 @@ class Blog extends Master_Widget
 		);
 
 		$this->add_control(
-			'ma_el_blog_post_format_icon',
+			'jltma_el_blog_post_format_icon',
 			[
 				'label' => __('Post Format Icon', 'master-addons'),
 				'type' => Controls_Manager::SWITCHER,
@@ -875,7 +875,7 @@ class Blog extends Master_Widget
 				'description' => __('Get posts for specific category(s)', 'master-addons'),
 				'label_block' => true,
 				'multiple' => true,
-				'options' => Helper::ma_el_blog_post_type_categories(),
+				'options' => Helper::jltma_el_blog_post_type_categories(),
 			]
 		);
 
@@ -917,7 +917,7 @@ class Blog extends Master_Widget
 				'description' => __('Get posts for specific tag(s)', 'master-addons'),
 				'label_block' => true,
 				'multiple' => true,
-				'options' => Helper::ma_el_blog_post_type_tags(),
+				'options' => Helper::jltma_el_blog_post_type_tags(),
 			]
 		);
 
@@ -929,7 +929,7 @@ class Blog extends Master_Widget
 				'description' => __('Get posts for specific author(s)', 'master-addons'),
 				'label_block' => true,
 				'multiple' => true,
-				'options' => Helper::ma_el_blog_post_type_users(),
+				'options' => Helper::jltma_el_blog_post_type_users(),
 			]
 		);
 
@@ -941,7 +941,7 @@ class Blog extends Master_Widget
 				'description' => __('Add post(s) to exclude', 'master-addons'),
 				'label_block' => true,
 				'multiple' => true,
-				'options' => Helper::ma_el_blog_posts_list(),
+				'options' => Helper::jltma_el_blog_posts_list(),
 			]
 		);
 
@@ -1423,7 +1423,7 @@ class Blog extends Master_Widget
 				'label' => __('Post Format Icon', 'master-addons'),
 				'tab' => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'ma_el_blog_post_format_icon' => 'yes',
+					'jltma_el_blog_post_format_icon' => 'yes',
 				]
 			]
 		);
@@ -1975,7 +1975,7 @@ class Blog extends Master_Widget
 	 * Renders Post Format Icon
 	 * @since 1.1.5
 	 */
-	protected function ma_el_blog_post_format_icon()
+	protected function jltma_el_blog_post_format_icon()
 	{
 
 		$post_format = get_post_format();
@@ -2054,12 +2054,12 @@ class Blog extends Master_Widget
 
 		?>
 		<div class="jltma-blog-post-content-wrap" style="<?php if (
-			$settings['ma_el_blog_post_format_icon'] !== 'yes'
+			$settings['jltma_el_blog_post_format_icon'] !== 'yes'
 		):
 			echo 'margin-left:0px;';
 		endif; ?>">
 			<?php if ($settings['ma_el_post_grid_excerpt'] === 'yes') {
-				echo Helper::ma_el_get_excerpt_by_id(get_the_ID(), $settings['ma_el_blog_excerpt_length'], $excerpt_type, $excerpt_text, $excerpt_src, $excerpt_icon = "", $excerpt_icon_align = "", $read_more_link); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- ma_el_get_excerpt_by_id returns plugin-constructed HTML with sanitized values
+				echo Helper::jltma_el_get_excerpt_by_id(get_the_ID(), $settings['ma_el_blog_excerpt_length'], $excerpt_type, $excerpt_text, $excerpt_src, $excerpt_icon = "", $excerpt_icon_align = "", $read_more_link); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- jltma_el_get_excerpt_by_id returns plugin-constructed HTML with sanitized values
 			} else {
 				if ($settings['ma_el_blog_show_content'] == 'yes') {
 					the_content();
@@ -2073,7 +2073,7 @@ class Blog extends Master_Widget
 	 * Renders Post Title
 	 * @since 1.1.5
 	 */
-	protected function ma_el_get_post_meta($link_target)
+	protected function jltma_el_get_post_meta($link_target)
 	{
 
 		$settings = $this->get_settings();
@@ -2088,7 +2088,7 @@ class Blog extends Master_Widget
 		) {
 			?>
 
-			<div class="jltma-post-entry-meta" style="<?php if ($settings['ma_el_blog_post_format_icon'] !== 'yes'):
+			<div class="jltma-post-entry-meta" style="<?php if ($settings['jltma_el_blog_post_format_icon'] !== 'yes'):
 				echo 'margin-left:0px';
 			endif; ?>">
 
@@ -2153,7 +2153,7 @@ class Blog extends Master_Widget
 	 * Renders Blog Layout
 	 * @since 1.1.5
 	 */
-	public function ma_el_get_post_meta_media_format($link_target)
+	public function jltma_el_get_post_meta_media_format($link_target)
 	{
 
 		$settings = $this->get_settings();
@@ -2213,7 +2213,7 @@ class Blog extends Master_Widget
 	 * Renders Blog Layout
 	 * @since 1.1.5
 	 */
-	protected function ma_el_blog_layout()
+	protected function jltma_el_blog_layout()
 	{
 
 		$settings = $this->get_settings();
@@ -2391,7 +2391,7 @@ class Blog extends Master_Widget
 
 													<div class="jltma-blog-inner-container">
 
-														<?php if ($settings['ma_el_blog_post_format_icon'] === 'yes'): ?>
+														<?php if ($settings['jltma_el_blog_post_format_icon'] === 'yes'): ?>
 															<div class="jltma-blog-format-container">
 																<a class="jltma-blog-format-link" href="<?php the_permalink(); ?>" title="<?php if (
 																		get_post_format() === ' '
@@ -2401,7 +2401,7 @@ class Blog extends Master_Widget
 																		echo esc_attr( get_post_format() );
 																	endif; ?>" target="<?php echo esc_attr($target); ?>">
 
-																	<?php $this->ma_el_blog_post_format_icon(); ?>
+																	<?php $this->jltma_el_blog_post_format_icon(); ?>
 																</a>
 															</div>
 														<?php endif; ?>
@@ -2413,20 +2413,20 @@ class Blog extends Master_Widget
 																($settings['ma_el_post_grid_layout'] == "list" && $settings['ma_el_post_list_layout'] == "thumbnail_hover") ||
 																($settings['ma_el_post_grid_layout'] == "list" && $settings['ma_el_post_list_layout'] == "thumbnail_bg")
 															) {
-																$this->ma_el_get_post_meta($target);
+																$this->jltma_el_get_post_meta($target);
 															}
 
 															$this->jltma_get_post_title($target);
 
 															if ('classic' === $skin) {
 																if ($settings['ma_el_blog_author_avatar'] === 'yes') {
-																	$this->ma_el_get_post_meta_media_format($target);
+																	$this->jltma_el_get_post_meta_media_format($target);
 																} elseif (
 																	($settings['ma_el_post_grid_layout'] != "list" && $settings['ma_el_post_list_layout'] != "thumbnail_hover") ||
 																	($settings['ma_el_post_grid_layout'] != "list" && $settings['ma_el_post_list_layout'] != "thumbnail_bg")
 																) {
 																	//                                            if( $settings['ma_el_post_list_layout'] !='thumbnail_hover'){
-																	$this->ma_el_get_post_meta($target);
+																	$this->jltma_el_get_post_meta($target);
 																	//                                            }
 																}
 															}
@@ -2449,13 +2449,13 @@ class Blog extends Master_Widget
 															($settings['ma_el_post_grid_layout'] != "list" && $settings['ma_el_post_list_layout'] != "thumbnail_hover_nav") ||
 															($settings['ma_el_post_grid_layout'] != "list" && $settings['ma_el_post_list_layout'] != "thumbnail_bg")
 														) {
-															$this->ma_el_get_post_meta($target);
+															$this->jltma_el_get_post_meta($target);
 														}
 													}
 													?>
 
 													<?php if ($settings['ma_el_post_grid_tags_meta'] === 'yes' && has_tag()): ?>
-														<div class="jltma-blog-post-tags-container" style="<?php if ($settings['ma_el_blog_post_format_icon'] !== 'yes'):
+														<div class="jltma-blog-post-tags-container" style="<?php if ($settings['jltma_el_blog_post_format_icon'] !== 'yes'):
 															echo 'margin-left:0px;';
 														endif; ?>">
 															<span class="jltma-blog-post-tags">
@@ -2558,9 +2558,9 @@ class Blog extends Master_Widget
 
 		$new_offset = $offset + (($paged - 1) * $post_per_page);
 
-		$post_args = Helper::ma_el_blog_get_post_settings($settings);
+		$post_args = Helper::jltma_el_blog_get_post_settings($settings);
 
-		$posts = Helper::ma_el_blog_get_post_data($post_args, $paged, $new_offset);
+		$posts = Helper::jltma_el_blog_get_post_data($post_args, $paged, $new_offset);
 
 		$posts_number = intval(100 / substr($settings['ma_el_blog_cols'], 0, strpos($settings['ma_el_blog_cols'], '%')));
 
@@ -2674,7 +2674,7 @@ class Blog extends Master_Widget
 										if ($carousel) {
 											echo '<div ' . $this->get_render_attribute_string('swiper-item') . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor render_attribute_string returns sanitized HTML attributes
 										}
-										$this->ma_el_blog_layout();
+										$this->jltma_el_blog_layout();
 										if ($carousel) {
 											echo '</div>';
 										}

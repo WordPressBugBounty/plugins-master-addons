@@ -423,7 +423,7 @@ class Business_Hours extends Master_Widget
 		);
 
 		$this->add_control(
-			'ma_el_business_hours',
+			'jltma_el_business_hours',
 			[
 				'type'                  => Controls_Manager::REPEATER,
 				'default'               => [
@@ -1244,7 +1244,7 @@ class Business_Hours extends Master_Widget
 
 	}
 
-	public function ma_el_business_hours()
+	public function jltma_el_business_hours()
 	{
 		$settings = $this->get_settings();
 		$i = 1; ?>
@@ -1266,7 +1266,7 @@ class Business_Hours extends Master_Widget
 						</h2>
 				<?php } ?>
 
-				<?php foreach ($settings['ma_el_business_hours'] as $index => $item) : ?>
+				<?php foreach ($settings['jltma_el_business_hours'] as $index => $item) : ?>
 					<?php
 					$this->add_render_attribute(
 						'jltma-row' . $i,
@@ -1335,12 +1335,12 @@ class Business_Hours extends Master_Widget
 				<?php
 			}
 
-			public function ma_el_minimal_business_hours()
+			public function jltma_el_minimal_business_hours()
 			{
 
 				$settings = $this->get_settings();
 
-				foreach ($settings['ma_el_business_hours'] as $index => $item) :
+				foreach ($settings['jltma_el_business_hours'] as $index => $item) :
 
 					$this->add_render_attribute('jltma-row', 'class', 'jltma-business-hour-item clearfix elementor-repeater-item-' . esc_attr($item['_id']));
 				?>
@@ -1422,7 +1422,7 @@ class Business_Hours extends Master_Widget
 				return sprintf('<img src="%s" alt="%s" />', esc_url($image_src), esc_html(get_post_meta($image_id, '_wp_attachment_image_alt', true)));
 			}
 
-			public function ma_el_custom_business_hours()
+			public function jltma_el_custom_business_hours()
 			{
 				$settings = $this->get_settings();
 				$i = 1;
@@ -1498,7 +1498,7 @@ class Business_Hours extends Master_Widget
 				{
 					$settings = $this->get_settings();
 					$this->add_render_attribute(
-						'ma_el_business_hours',
+						'jltma_el_business_hours',
 						'class',
 						[
 							'jltma-business-hour',
@@ -1541,7 +1541,7 @@ class Business_Hours extends Master_Widget
 					}
 
 					?>
-						<div <?php echo $this->get_render_attribute_string('ma_el_business_hours'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
+						<div <?php echo $this->get_render_attribute_string('jltma_el_business_hours'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor's get_render_attribute_string() returns safely escaped HTML attributes ?>>
 
 							<?php if (($settings['ma_el_business_hours_style'] == 'content-corner-btn') || ($settings['ma_el_business_hours_style'] == 'table-reservation')) { ?>
 								<div class="jltma-row">
@@ -1560,11 +1560,11 @@ class Business_Hours extends Master_Widget
 											<ul class="jltma-business-hour-list">
 												<?php
 												if ($settings['ma_el_business_timings'] == 'default') {
-													$this->ma_el_business_hours();
+													$this->jltma_el_business_hours();
 												} elseif ($settings['ma_el_business_timings'] == 'custom') {
-													$this->ma_el_custom_business_hours();
+													$this->jltma_el_custom_business_hours();
 												} elseif ($settings['ma_el_business_hours_style'] == 'content-bg-image') {
-													$this->ma_el_minimal_business_hours();
+													$this->jltma_el_minimal_business_hours();
 												}
 												?>
 											</ul>

@@ -539,6 +539,7 @@ class Settings
             'nonce'      => wp_create_nonce('wp_rest'),
             'adminUrl'   => admin_url(),
             'ajaxUrl'    => admin_url('admin-ajax.php'),
+            'assetsUrl'  => JLTMA_ASSETS,
             'recommended_nonce'   => wp_create_nonce('jltma_recommended_nonce'),
             'recommended_plugins' => $recommended_plugins,
             'logo'       => array(

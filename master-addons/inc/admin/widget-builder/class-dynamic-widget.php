@@ -302,12 +302,19 @@ class Dynamic_Widget extends Master_Widget {
         return $field;
     }
 
-    /** Register a TABS structural control (ports Tabs::build to runtime calls). */
-    private function jltma_register_tabs($tabs_key, $field, $tab, $tab_prefix) {
-        $tabs = [];
+    /**
+     * Normalize a TABS control descriptor into a list of tabs, each:
+     *   ['name' => string, 'label' => string, 'controls' => [ <child field defs> ]].
+     * Accepts the processed shape ('tabs' array) or the raw UI shape
+     * ('fields' + 'tab_fields'). Used by both registration and context building
+     * so the two stay in lockstep.
+     */
+    private function jltma_extract_tabs($field) {
         if (!empty($field['tabs']) && is_array($field['tabs'])) {
-            $tabs = $field['tabs'];
-        } elseif (!empty($field['fields']) && is_array($field['fields'])) {
+            return $field['tabs'];
+        }
+        $tabs = [];
+        if (!empty($field['fields']) && is_array($field['fields'])) {
             $tab_fields = (!empty($field['tab_fields']) && is_array($field['tab_fields'])) ? $field['tab_fields'] : [];
             foreach ($field['fields'] as $td) {
                 if (empty($td['name'])) {
@@ -321,6 +328,12 @@ class Dynamic_Widget extends Master_Widget {
                 ];
             }
         }
+        return $tabs;
+    }
+
+    /** Register a TABS structural control (ports Tabs::build to runtime calls). */
+    private function jltma_register_tabs($tabs_key, $field, $tab, $tab_prefix) {
+        $tabs = $this->jltma_extract_tabs($field);
 
         if (empty($tabs)) {
             return;
@@ -461,21 +474,37 @@ class Dynamic_Widget extends Master_Widget {
         $mapping = $this->jltma_build_control_mapping();
         $context = $this->jltma_build_context($settings, $mapping);
 
+        // TABS values: nested so templates read {{ <tabs>.<tab>.<field> }}
+        // e.g. {{ tabs.tab_1.person }}. Overwrites the scalar placeholder the
+        // TABS control name would otherwise hold (a structural control has no value).
+        foreach ($this->jltma_build_tabs_data($settings) as $tabs_key => $tabs_value) {
+            $context[$tabs_key] = $tabs_value;
+        }
+
         $html = isset($this->jltma_data['html_code']) ? (string) $this->jltma_data['html_code'] : '';
         $css  = isset($this->jltma_data['css_code']) ? (string) $this->jltma_data['css_code'] : '';
         $js   = isset($this->jltma_data['js_code']) ? (string) $this->jltma_data['js_code'] : '';
 
-        // Inline CSS (template rendered, values escaped).
-        if ('' !== trim($css)) {
-            echo '<style>' . $this->jltma_render_template($css, $context) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- value substitution escaped per-output; CSS body is plugin-sanitized data
+        // Emitting custom CSS/JS is a premium-only capability. The free build
+        // outputs the HTML body only; the Pro build returns the <style>/<script>
+        // markup via these filters — see MasterAddons\Pro\Classes\Pro_Modules.
+        // Values are pre-rendered here (placeholder substitution, escaped per
+        // output) but the wrapping markup is emitted only by Pro, so no inline
+        // CSS/JS ships in the free plugin.
+        $css_rendered = ('' !== trim($css)) ? $this->jltma_render_template($css, $context) : '';
+        $css_output   = apply_filters('master_addons/widget_builder/render_css', '', $css_rendered, $context);
+        if ('' !== $css_output) {
+            echo $css_output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- premium-rendered markup; value substitution escaped per-output
         }
 
         // HTML body.
         echo $this->jltma_render_template($html, $context); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- value substitution escaped per-output; HTML body is plugin-sanitized data
 
         // Inline JS.
-        if ('' !== trim($js)) {
-            echo '<script>' . $this->jltma_render_template($js, $context) . '</script>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- value substitution escaped per-output; JS body is plugin-sanitized data
+        $js_rendered = ('' !== trim($js)) ? $this->jltma_render_template($js, $context) : '';
+        $js_output   = apply_filters('master_addons/widget_builder/render_js', '', $js_rendered, $context);
+        if ('' !== $js_output) {
+            echo $js_output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- premium-rendered markup; value substitution escaped per-output
         }
     }
 
@@ -524,7 +553,135 @@ class Dynamic_Widget extends Master_Widget {
         return $mapping;
     }
 
+    /**
+     * Build the nested TABS context, keyed by tabs-control name:
+     *   [ <tabs_name> => [ <tab_name> => [ <field_name> => value ] ] ]
+     * Templates read a single value with {{ <tabs_name>.<tab_name>.<field_name> }}
+     * (e.g. {{ tabs.tab_1.person }}) — no looping required.
+     *
+     * Tab-child control keys are counter-deduped at registration time
+     * (jltma_make_control_key), so two tabs that reuse a field name — e.g. the
+     * default "field" — resolve to ..._field_ and ..._field_1_. We replay that
+     * exact counter, walking controls in register_controls() order, so the keys
+     * we read from $settings match the ones that were registered.
+     */
+    private function jltma_build_tabs_data($settings) {
+        $data = [];
+        if (empty($this->jltma_data['sections']) || !is_array($this->jltma_data['sections'])) {
+            return $data;
+        }
+
+        // Mirror of jltma_make_control_key()'s dedup, with its own counter state.
+        $used     = [];
+        $make_key = function ($label, $tab_prefix) use (&$used) {
+            $slug = $this->jltma_sanitize_key($label);
+            $key  = $tab_prefix . $slug . '_' . $this->jltma_post_id;
+            $c    = 1;
+            while (in_array($key, $used, true)) {
+                $key = $tab_prefix . $slug . '_' . $c . '_' . $this->jltma_post_id;
+                $c++;
+            }
+            $used[] = $key;
+            return $key;
+        };
+
+        foreach ($this->jltma_sort_sections($this->jltma_data['sections']) as $section) {
+            if (!is_array($section)) {
+                continue;
+            }
+            $tab        = !empty($section['tab']) ? $section['tab'] : 'content';
+            $tab_prefix = $this->jltma_tab_prefix($tab);
+            $controls   = !empty($section['controls']) ? $section['controls'] : (!empty($section['fields']) ? $section['fields'] : []);
+
+            foreach ($controls as $field_id => $control) {
+                if (empty($control['type'])) {
+                    continue;
+                }
+                $type = strtoupper($control['type']);
+
+                if ('TABS' === $type) {
+                    $tabs_key = !empty($control['name']) ? $control['name'] : 'tabs_' . $field_id;
+                    $entry    = [];
+                    foreach ($this->jltma_extract_tabs($control) as $tabdef) {
+                        // Same skip as jltma_register_tabs(): unregistered tabs
+                        // must not advance the shared dedup counter.
+                        if (empty($tabdef['name']) || empty($tabdef['label'])) {
+                            continue;
+                        }
+                        $fields = [];
+                        if (!empty($tabdef['controls']) && is_array($tabdef['controls'])) {
+                            foreach ($tabdef['controls'] as $child) {
+                                if (empty($child['name']) || empty($child['type'])) {
+                                    continue;
+                                }
+                                // Mirrors jltma_register_child_control()'s label fallback + key.
+                                $child_label             = !empty($child['label']) ? $child['label'] : $child['name'];
+                                $child_key               = $make_key($child_label, $tab_prefix);
+                                $fields[$child['name']]  = array_key_exists($child_key, $settings) ? $settings[$child_key] : '';
+                            }
+                        }
+                        $entry[$tabdef['name']] = $fields;
+                    }
+                    $data[$tabs_key] = $entry;
+                    continue;
+                }
+
+                // Non-tab control: advance the counter to mirror registration order
+                // (jltma_register_control() uses a 'Control' label fallback).
+                $label = !empty($control['label']) ? $control['label'] : 'Control';
+                $make_key($label, $tab_prefix);
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * Resolve a tab-child field type from a dotted path (<tabs>.<tab>.<field>),
+     * so {{ tabs.tab_1.person }} escapes per the child's own control type.
+     * Returns null when the path is not a known tab-child.
+     */
+    private function jltma_tab_field_type($path) {
+        $parts = explode('.', $path);
+        if (count($parts) < 3) {
+            return null;
+        }
+        list($tabs_name, $tab_name, $field_name) = [$parts[0], $parts[1], $parts[2]];
+        if (empty($this->jltma_data['sections']) || !is_array($this->jltma_data['sections'])) {
+            return null;
+        }
+        foreach ($this->jltma_data['sections'] as $section) {
+            if (!is_array($section)) {
+                continue;
+            }
+            $controls = !empty($section['controls']) ? $section['controls'] : (!empty($section['fields']) ? $section['fields'] : []);
+            foreach ($controls as $control) {
+                if (empty($control['type']) || 'TABS' !== strtoupper($control['type']) || ($control['name'] ?? '') !== $tabs_name) {
+                    continue;
+                }
+                foreach ($this->jltma_extract_tabs($control) as $tabdef) {
+                    if (($tabdef['name'] ?? '') !== $tab_name) {
+                        continue;
+                    }
+                    foreach (($tabdef['controls'] ?? []) as $child) {
+                        if (($child['name'] ?? '') === $field_name) {
+                            return $child['type'] ?? 'text';
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private function jltma_control_type($control_name) {
+        // Tab-child path (<tabs>.<tab>.<field>) resolves to the child's own type.
+        if (false !== strpos($control_name, '.')) {
+            $tab_type = $this->jltma_tab_field_type($control_name);
+            if (null !== $tab_type) {
+                return $tab_type;
+            }
+            $control_name = explode('.', $control_name)[0];
+        }
         if (empty($this->jltma_data['sections']) || !is_array($this->jltma_data['sections'])) {
             return 'text';
         }
@@ -844,8 +1001,7 @@ class Dynamic_Widget extends Master_Widget {
         if ($raw) {
             return $value;
         }
-        $name = explode('.', $base)[0];
-        $type = strtolower($this->jltma_control_type($name));
+        $type = strtolower($this->jltma_control_type($base));
         return $this->jltma_escape_value($value, $type);
     }
 

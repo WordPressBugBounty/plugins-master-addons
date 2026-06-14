@@ -200,7 +200,7 @@ class Calendar extends Master_Widget
                 'condition'        => [
                     'source'    => 'posts',
                 ],
-                'options'    => Helper::ma_el_get_post_types(),
+                'options'    => Helper::jltma_el_get_post_types(),
             ]
         );
 
@@ -222,7 +222,7 @@ class Calendar extends Master_Widget
             ]
         );
 
-        foreach (Helper::ma_el_get_post_types() as $post_type => $label) {
+        foreach (Helper::jltma_el_get_post_types() as $post_type => $label) {
             $post_type_label = $label;
             foreach ($customfields->get_field_types() as $field_type => $label) {
 

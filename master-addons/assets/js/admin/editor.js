@@ -119,7 +119,6 @@
             var e2 = "";
             -1 !== this.getOption("notice").indexOf("facebook") ? e2 += "<p>Please login with your Facebook account in order to get your Facebook Reviews.</p>" : -1 !== this.getOption("notice").indexOf("google") ? e2 += "<p>You need to add your Google API key from Dashboard -> Master Addons for Elementor -> Google Maps</p>" : -1 !== this.getOption("notice").indexOf("form") && (e2 += "<p>You need to have <a href='https://wordpress.org/plugins/contact-form-7/' target='_blank'>Contact Form 7 plugin</a> installed and active.</p>"), this.ui.notice.html("<div><p><strong>Important!</strong></p>" + e2 + "</div>");
           }
-          this.ui.iframe.attr("src", this.getOption("url"));
         }
       }), a2.ModalHeaderBack = Marionette.ItemView.extend({
         template: "#views-ma-el-template-modal-header-back",
@@ -226,7 +225,10 @@
           };
         },
         onPreviewButtonClick: function() {
-          "" !== this.model.get("url") && t.setPreview(this.model);
+          var previewUrl = this.model.get("url");
+          if ("" !== previewUrl) {
+            window.open(previewUrl, "_blank", "noopener");
+          }
         },
         behaviors: {
           insertTemplate: {

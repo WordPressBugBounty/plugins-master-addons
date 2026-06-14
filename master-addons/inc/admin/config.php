@@ -2054,6 +2054,21 @@ class Config
                             'is_pro'   => false,
                             'ribbons' => [ 'featured' ]
                         ],
+                        'magic-copy' => [
+                            'title'    => 'Magic Copy',
+                            'icon'     => 'eicon-clone',
+                            'class'    => 'MasterAddons\Pro\Modules\Utilities\MagicCopy',
+                            'demo_url' => 'https://master-addons.com/extension/magic-copy/',
+                            'docs_url' => 'https://master-addons.com/docs/extensions/magic-copy/',
+                            'tuts_url' => '',
+                            'tuts_features' => [
+                                "Copy any element across two sites",
+                                "Carries source global colors and fonts",
+                                "Imports media into the destination",
+                                "Does not change destination globals"
+                            ],
+                            'is_pro'   => true,
+                        ],
                         // 'image-optimizer' => [
                         //     'title'    => 'Image Optimizer',
                         //     'icon'     => 'eicon-image-rollover',

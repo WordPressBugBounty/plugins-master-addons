@@ -479,8 +479,10 @@ class Domain_Checker
         fclose($con);
         // phpcs:enable WordPress.WP.AlternativeFunctions
 
-        // Check the Whois server response
-        if (strpos(strtolower($response), strtolower($find_text)))
+        // Check the Whois server response. strpos() can return 0 (match at the
+        // very start) which is falsy, so compare against false explicitly —
+        // otherwise an available domain can be misreported as taken.
+        if (strpos(strtolower($response), strtolower($find_text)) !== false)
             return '1';
         else
             return '0';

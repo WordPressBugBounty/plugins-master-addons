@@ -15,7 +15,12 @@ class Patterns extends \MasterAddons\Inc\Classes\Extension_Prototype
 {
     private static $instance = null;
     public  $name = 'Patterns';
-    public  $has_controls = true;
+    // Patterns registers its own section in the Style tab (see add_controls()).
+    // Keep has_controls false so Extension_Prototype does NOT also add an empty
+    // common section in the Advanced tab. (The base reads its own private
+    // $is_common, so setting $is_common here cannot suppress that — has_controls
+    // is the effective switch.)
+    public  $has_controls = false;
     private $is_common = false; // Only apply to section/column/container, not all widgets
 
     private function add_controls($element, $args)

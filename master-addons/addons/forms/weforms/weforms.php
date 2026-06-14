@@ -57,7 +57,7 @@ class Weforms extends Master_Widget
 				'description' => esc_html__('Please save and refresh the page after selecting the form', 'master-addons' ),
 				'label_block' => true,
 				'type'        => Controls_Manager::SELECT,
-				'options'     => Helper::ma_el_get_weforms(),
+				'options'     => Helper::jltma_el_get_weforms(),
 				'default'     => '0',
 			]
 		);

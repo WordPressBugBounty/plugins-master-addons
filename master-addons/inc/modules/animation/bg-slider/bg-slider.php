@@ -31,11 +31,11 @@ class BgSlider
 		add_action('elementor/container/print_template', [$this, '_print_template'], 10, 2);
 
 		// Enqueue scripts in editor preview
-		add_action('elementor/preview/enqueue_scripts', [$this, 'ma_el_add_js_css']);
+		add_action('elementor/preview/enqueue_scripts', [$this, 'jltma_el_add_js_css']);
 	}
 
 
-	public static function ma_el_add_js_css()
+	public static function jltma_el_add_js_css()
 	{
 		// CSS - Vendor (registered with jltma- prefix by Assets_Manager)
 		wp_enqueue_style('jltma-vegas');
@@ -361,7 +361,7 @@ class BgSlider
 		}
 
 		// Enqueue scripts when element is rendered
-		self::ma_el_add_js_css();
+		self::jltma_el_add_js_css();
 
 		// Add data attributes for JavaScript to read
 		$images_string = implode(',', $slides);

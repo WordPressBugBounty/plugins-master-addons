@@ -233,7 +233,7 @@ body.elementor-device-mobile #ma-el-template-modal-header-tabs #views-ma-el-temp
 }
 #ma-el-template-modal-header .jltma-live-preview-link {
   margin-right: 25px;
-  color: #4b00e7 !important;
+  color: light-dark(#4b00e7, #b794ff) !important;
   font-size: 16px;
   font-weight: 500;
   transition: color 0.3s;

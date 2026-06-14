@@ -785,7 +785,7 @@ protected function register_controls()
 		$this->end_controls_section();
 	}
 
-	public function ma_el_is_true($var)
+	public function jltma_el_is_true($var)
 	{
 		if (is_bool($var)) {
 			return $var;
@@ -805,7 +805,7 @@ protected function register_controls()
 		return false;
 	}
 
-	public function ma_el_random_token($length = 32)
+	public function jltma_el_random_token($length = 32)
 	{
 		$length = !is_numeric($length) ? 4 : $length;
 		$length = $length < 1 ? 32 : $length;
@@ -821,7 +821,7 @@ protected function register_controls()
 		}
 	}
 
-	public function ma_el_merge_css_classes($classes = array(), $class = '')
+	public function jltma_el_merge_css_classes($classes = array(), $class = '')
 	{
 
 		if (empty($classes) && empty($class))
@@ -837,14 +837,14 @@ protected function register_controls()
 		return $classes;
 	}
 
-	public function ma_el_error($error)
+	public function jltma_el_error($error)
 	{
 		if (WP_DEBUG && apply_filters('jltma_trigger_error_message', true)) {
 			trigger_error( esc_html( $error ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error,WordPress.Security.EscapeOutput.OutputNotEscaped -- intentionally gated behind WP_DEBUG
 		}
 	}
 
-	public function ma_el_get_widget_scafold($atts, $default_atts, $shortcode_content = '')
+	public function jltma_el_get_widget_scafold($atts, $default_atts, $shortcode_content = '')
 	{
 
 		$result = array(
@@ -867,7 +867,7 @@ protected function register_controls()
 			$default_atts['content'] = '';
 		}
 		if (empty($default_atts['universal_id'])) {
-			$default_atts['universal_id'] = 'au' . $this->ma_el_random_token(4);
+			$default_atts['universal_id'] = 'au' . $this->jltma_el_random_token(4);
 		}
 		if (!isset($default_atts['skip_wrappers'])) {
 			$default_atts['skip_wrappers'] = false;
@@ -1022,7 +1022,7 @@ protected function register_controls()
 			}
 		}
 
-		$_widget_classes = $this->ma_el_merge_css_classes($_css_classes, $result['parsed_atts']['extra_classes']);
+		$_widget_classes = $this->jltma_el_merge_css_classes($_css_classes, $result['parsed_atts']['extra_classes']);
 		$_widget_classes = esc_attr(trim(join(' ', array_unique($_widget_classes))));
 
 		// Generate the opening tags for widget or shortcode element
@@ -1063,7 +1063,7 @@ protected function register_controls()
 		// We can modify the ajax args using "jltma_widget_scafold_params" filter
 		if (!empty($result['parsed_atts']['loadmore_type'])) {
 			// echo js dependencies
-			$this->ma_el_print_script_object(
+			$this->jltma_el_print_script_object(
 				"jltma.content.loadmore." . $result['parsed_atts']['universal_id'],
 				$result['ajax_data']
 			);
@@ -1072,7 +1072,7 @@ protected function register_controls()
 		return $result;
 	}
 
-	public function ma_el_get_all_image_sizes()
+	public function jltma_el_get_all_image_sizes()
 	{
 		global $_wp_additional_image_sizes;
 
@@ -1095,9 +1095,9 @@ protected function register_controls()
 		return apply_filters('jltma_all_image_sizes', $all_image_sizes);
 	}
 
-	public function ma_el_wp_get_image_size($size_name)
+	public function jltma_el_wp_get_image_size($size_name)
 	{
-		$all_image_sizes = $this->ma_el_get_all_image_sizes();
+		$all_image_sizes = $this->jltma_el_get_all_image_sizes();
 
 		if (!empty($all_image_sizes[$size_name])) {
 			return $all_image_sizes[$size_name];
@@ -1106,7 +1106,7 @@ protected function register_controls()
 		return false;
 	}
 
-	public function ma_el_print_script_object($object_name, $object_value = array())
+	public function jltma_el_print_script_object($object_name, $object_value = array())
 	{
 
 		if (empty($object_name)) {
@@ -1128,12 +1128,12 @@ protected function register_controls()
 	 *
 	 * @return array   the list of default image sizes
 	 */
-	public function ma_el_base_image_sizes()
+	public function jltma_el_base_image_sizes()
 	{
-		return apply_filters('ma_el_base_image_sizes', array('thumbnail', 'medium', 'medium_large', 'large'));
+		return apply_filters('jltma_el_base_image_sizes', array('thumbnail', 'medium', 'medium_large', 'large'));
 	}
 
-	public function ma_el_get_the_resized_attachment_src(
+	public function jltma_el_get_the_resized_attachment_src(
 		$attach_id = null,
 		$width = null,
 		$height = null,
@@ -1176,7 +1176,7 @@ protected function register_controls()
 		return false;
 	}
 
-	function ma_el_generate_image_sizes($image_sizes)
+	function jltma_el_generate_image_sizes($image_sizes)
 	{
 		if ('auto' === $image_sizes) {
 			return $image_sizes;
@@ -1232,7 +1232,7 @@ protected function register_controls()
 
 		// Throw error if $size is not defined
 		if (empty($size)) {
-			$this->ma_el_error(sprintf('"size" option for "%s" function is not defined.', __FUNCTION__));
+			$this->jltma_el_error(sprintf('"size" option for "%s" function is not defined.', __FUNCTION__));
 		}
 
 		$attachment  = get_post($attachment_id);
@@ -1242,7 +1242,7 @@ protected function register_controls()
 		$original_image_width = $original_image['1'];
 
 		// Check crop value
-		$crop = empty($crop) ? $crop : $this->ma_el_is_true($crop);
+		$crop = empty($crop) ? $crop : $this->jltma_el_is_true($crop);
 
 		// Make sure there is a valid $size value passed
 		if (is_array($size)) {
@@ -1263,7 +1263,7 @@ protected function register_controls()
 			$srcset = null;
 			$sizes  = null;
 		} elseif (is_string($dimensions)) {
-			$dimensions = $this->ma_el_wp_get_image_size($dimensions);
+			$dimensions = $this->jltma_el_wp_get_image_size($dimensions);
 			$dimensions = array('width' => $dimensions['width'], 'height' => $dimensions['height']);
 		}
 
@@ -1287,7 +1287,7 @@ protected function register_controls()
 			}
 			$src = $main_image['0'];
 		} else {
-			$src = $this->ma_el_get_the_resized_attachment_src($attachment_id, $dimensions['width'], $dimensions['height'], $crop, $quality, $upscale);
+			$src = $this->jltma_el_get_the_resized_attachment_src($attachment_id, $dimensions['width'], $dimensions['height'], $crop, $quality, $upscale);
 		}
 
 		if (empty($src)) return '';
@@ -1315,7 +1315,7 @@ protected function register_controls()
 					}
 					$srcset_size['height'] = empty($srcset_size['height']) ? null : $srcset_size['height'];
 
-					if (empty($srcset_image_url = $this->ma_el_get_the_resized_attachment_src($attachment_id, $srcset_size['width'], $srcset_size['height'], $crop, $quality, $upscale))) {
+					if (empty($srcset_image_url = $this->jltma_el_get_the_resized_attachment_src($attachment_id, $srcset_size['width'], $srcset_size['height'], $crop, $quality, $upscale))) {
 						continue;
 					}
 					$attr_srcset .= $srcset_image_url;
@@ -1324,12 +1324,12 @@ protected function register_controls()
 
 				// generate image sizes based on the default WordPress image sizes
 			} elseif ('wp' == $srcset || ((is_string($size) || empty($image_aspect_ratio)) && 'auto' === $srcset)) {
-				$default_image_sizes = $this->ma_el_base_image_sizes();
+				$default_image_sizes = $this->jltma_el_base_image_sizes();
 
 				foreach ($default_image_sizes as $image_size) {
 					// Check if the image size is defined before
 					if (!$current_image_dimensions = wp_get_attachment_image_src($attachment_id, $image_size)) {
-						$this->ma_el_error(sprintf('Intermediate image size name not found in "%s" function.', __FUNCTION__));
+						$this->jltma_el_error(sprintf('Intermediate image size name not found in "%s" function.', __FUNCTION__));
 						continue;
 					}
 					// dont generate image src bigger than original image
@@ -1338,7 +1338,7 @@ protected function register_controls()
 					}
 
 					if (is_array($size)) {
-						if (empty($srcset_image_url = $this->ma_el_get_the_resized_attachment_src($attachment_id, $current_image_dimensions['1'], $current_image_dimensions['2'], $crop, $quality, $upscale))) {
+						if (empty($srcset_image_url = $this->jltma_el_get_the_resized_attachment_src($attachment_id, $current_image_dimensions['1'], $current_image_dimensions['2'], $crop, $quality, $upscale))) {
 							continue;
 						}
 						$attr_srcset .= $srcset_image_url;
@@ -1351,7 +1351,7 @@ protected function register_controls()
 
 				// automatically generate general image sizes based on the aspect ratio of the main image according the dimensions in $size
 			} elseif (is_array($size) && 'auto' === $srcset && $image_aspect_ratio) {
-				$default_image_sizes = $this->ma_el_base_image_sizes();
+				$default_image_sizes = $this->jltma_el_base_image_sizes();
 
 				foreach ($default_image_sizes as $image_size) {
 					$current_image_width = get_option($image_size . '_size_w');
@@ -1360,7 +1360,7 @@ protected function register_controls()
 					if ($current_image_width >= $original_image_width) {
 						break;
 					}
-					if (empty($srcset_image_url = $this->ma_el_get_the_resized_attachment_src($attachment_id, $current_image_width, $current_image_width / $image_aspect_ratio, $crop, $quality, $upscale))) {
+					if (empty($srcset_image_url = $this->jltma_el_get_the_resized_attachment_src($attachment_id, $current_image_width, $current_image_width / $image_aspect_ratio, $crop, $quality, $upscale))) {
 						continue;
 					}
 					$attr_srcset .= $srcset_image_url;
@@ -1378,7 +1378,7 @@ protected function register_controls()
 					if ($image_aspect_ratio) {
 						$full_width  = (int) ($original_image[1] - 10);
 						$full_height = (int) ($full_width / $image_aspect_ratio);
-						$attr_srcset .= $this->ma_el_get_the_resized_attachment_src($attachment_id, $full_width, $full_height, true, $quality, true);
+						$attr_srcset .= $this->jltma_el_get_the_resized_attachment_src($attachment_id, $full_width, $full_height, true, $quality, true);
 						$attr_srcset .= ' ' . round($full_width) . 'w';
 					} else {
 						$attr_srcset .= $original_image[0] . ' ' . $original_image[1] . 'w';
@@ -1393,7 +1393,7 @@ protected function register_controls()
 	        /*-------------------------------------*/
 
 		// Check preloadable value
-		$preloadable = empty($preloadable) ? $preloadable : $this->ma_el_is_true($preloadable);
+		$preloadable = empty($preloadable) ? $preloadable : $this->jltma_el_is_true($preloadable);
 
 		// Force to add width and height attributes if lazyloading is enabled
 		if ($preloadable && $preload_preview) {
@@ -1448,7 +1448,7 @@ protected function register_controls()
 		/*   Calculate sizes
 	        /*-------------------------------------*/
 		if (!empty($sizes)) {
-			$attr_sizes  = $this->ma_el_generate_image_sizes($sizes);
+			$attr_sizes  = $this->jltma_el_generate_image_sizes($sizes);
 
 			if (empty($attr['sizes']) && $attr_sizes) {
 				$attr['sizes'] = $attr_sizes;
@@ -1488,7 +1488,7 @@ protected function register_controls()
 			if ($dimensions['width']) {
 				$auto_sizes[] = array('min' => '', 'max' => '', 'width' => $default_image_width . 'px');
 			}
-			$attr['sizes']  = $this->ma_el_generate_image_sizes($auto_sizes);
+			$attr['sizes']  = $this->jltma_el_generate_image_sizes($auto_sizes);
 		}
 
 		// Display a blurred preview of the main image
@@ -1504,9 +1504,9 @@ protected function register_controls()
 
 			if (in_array($preload_preview, array('progress-box', 'simple-spinner', 'simple-spinner-light', 'simple-spinner-dark'))) {
 				$attr['class'] .= ' jltma-' . esc_attr($preload_preview); // the class name to add style and transition to the progress animation
-			} elseif ($this->ma_el_is_true($preload_preview)) {
+			} elseif ($this->jltma_el_is_true($preload_preview)) {
 				$preload_ratio = null === $image_aspect_ratio ? null : 40 / $image_aspect_ratio;
-				$attr['src'] = $this->ma_el_get_the_resized_attachment_src($attachment_id, 40, $preload_ratio, $crop, 100, false);
+				$attr['src'] = $this->jltma_el_get_the_resized_attachment_src($attachment_id, 40, $preload_ratio, $crop, 100, false);
 				$attr['class'] .= ' jltma-has-preview'; // the class name to add style and transition to the preview image
 			} else {
 				$attr['class'] .= ' jltma-blank';
@@ -1539,7 +1539,7 @@ protected function register_controls()
 		return $html;
 	}
 
-	public function ma_el_attachment_caption($attach_id = null, $stripe = true)
+	public function jltma_el_attachment_caption($attach_id = null, $stripe = true)
 	{
 
 		$attachment_post = get_post($attach_id);
@@ -1612,7 +1612,7 @@ protected function register_controls()
 			'base_class'       => 'jltma-advanced-image'  // base class name for container
 		);
 
-		$result = $this->ma_el_get_widget_scafold($atts, $default_atts, $shortcode_content);
+		$result = $this->jltma_el_get_widget_scafold($atts, $default_atts, $shortcode_content);
 
 		extract($result['parsed_atts']);
 
@@ -1634,11 +1634,11 @@ protected function register_controls()
 			$frame_classes .= 'jltma-image-box-widget-bg-cover';
 		}
 
-		if ($this->ma_el_is_true($tilt)) {
+		if ($this->jltma_el_is_true($tilt)) {
 			$frame_classes .= ' jltma-tilt-box';
 		}
 
-		if ($this->ma_el_is_true($colorized_shadow) && empty($attach_id_hover)) {
+		if ($this->jltma_el_is_true($colorized_shadow) && empty($attach_id_hover)) {
 			$image_classes .= ' jltma-img-dynamic-dropshadow';
 		}
 
@@ -1647,7 +1647,7 @@ protected function register_controls()
 				$attach_id,
 				array(
 					'quality'         => 100,
-					'preloadable'     => $this->ma_el_is_true($preloadable),
+					'preloadable'     => $this->jltma_el_is_true($preloadable),
 					'preload_preview' => $preload_preview,
 					'preload_bgcolor' => $preload_bgcolor,
 					'size'            => $size,
@@ -1671,7 +1671,7 @@ protected function register_controls()
 			if (!empty($image_primary_meta['height'])) {
 				$lightbox_attrs .= 'data-original-height="' . esc_attr($image_primary_meta['height']) . '" ';
 			}
-			$lightbox_attrs     .= 'data-description="' . esc_attr($this->ma_el_attachment_caption($attach_id)) . '"';
+			$lightbox_attrs     .= 'data-description="' . esc_attr($this->jltma_el_attachment_caption($attach_id)) . '"';
 		} elseif (!empty($image_html)) {
 			$image_primary = $image_html;
 		}
@@ -1681,7 +1681,7 @@ protected function register_controls()
 				$attach_id_hover,
 				array(
 					'quality'         => 100,
-					'preloadable'     => $this->ma_el_is_true($preloadable),
+					'preloadable'     => $this->jltma_el_is_true($preloadable),
 					'preload_preview' => $preload_preview,
 					'preload_bgcolor' => $preload_bgcolor,
 					'size'            => $size,
@@ -1693,11 +1693,11 @@ protected function register_controls()
 			);
 		}
 
-		$anchor_link    = $this->ma_el_is_true($lightbox) ? $image_primary_full_src : esc_attr($link);
-		$anchor_class   = $this->ma_el_is_true($lightbox) ? 'jltma-lightbox-btnss elementor-clickable' : '';
-		$frame_classes .= $this->ma_el_is_true($lightbox) ? ' jltma-media-frame jltma-lightbox-frame' : '';
+		$anchor_link    = $this->jltma_el_is_true($lightbox) ? $image_primary_full_src : esc_attr($link);
+		$anchor_class   = $this->jltma_el_is_true($lightbox) ? 'jltma-lightbox-btnss elementor-clickable' : '';
+		$frame_classes .= $this->jltma_el_is_true($lightbox) ? ' jltma-media-frame jltma-lightbox-frame' : '';
 		$target         = $target !== '_blank' ? 'target="_self"' : 'target="_blank"';
-		$nofollow       = $this->ma_el_is_true($nofollow) ? ' rel="nofollow"' : '';
+		$nofollow       = $this->jltma_el_is_true($nofollow) ? ' rel="nofollow"' : '';
 
 		// Hover Effect
 		$hover_class = '';
@@ -1727,13 +1727,13 @@ protected function register_controls()
 					<a class="<?php echo esc_attr($anchor_class); ?>" href="<?php echo esc_url($anchor_link); ?>" <?php echo $target . ' ' . $lightbox_attrs . $nofollow . ' ' . $custom_attrs; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $target/$nofollow are literal attribute strings, $lightbox_attrs is built internally, and $custom_attrs keys/values are sanitized + escaped in render() ?>>
 				<?php } ?>
 
-					<?php if ($this->ma_el_is_true($display_ribbon) && !empty($ribbon_text)) { ?>
+					<?php if ($this->jltma_el_is_true($display_ribbon) && !empty($ribbon_text)) { ?>
 						<div class="jltma-ribbon-wrapper jltma-<?php echo esc_attr($ribbon_style); ?>-ribbon <?php echo esc_attr($ribbon_position); ?>">
 							<span><?php echo esc_html($ribbon_text); ?></span>
 						</div>
 					<?php } ?>
 
-           <?php if ($this->ma_el_is_true($lightbox)) { ?>
+           <?php if ($this->jltma_el_is_true($lightbox)) { ?>
 					<?php if ('plus' == $icon && empty($image_secondary)) { ?>
 						<div class='jltma-hover-scale-circle-plus'>
 							<span class='jltma-symbol-plus'></span>
@@ -1748,7 +1748,7 @@ protected function register_controls()
 							<?php echo wp_kses_post($image_secondary); ?>
 						</div>
 						<?php } else {
-						if ($this->ma_el_is_true($lightbox)) { ?>
+						if ($this->jltma_el_is_true($lightbox)) { ?>
 							<div class="jltma-frame-mask jltma-frame-darken">
 								<?php echo wp_kses_post($image_primary); ?>
 							</div>

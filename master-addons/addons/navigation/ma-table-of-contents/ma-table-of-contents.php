@@ -258,7 +258,7 @@ class Table_of_Contents extends Master_Widget
 			[
 				'label'   => __('Dropdown Position', 'master-addons' ),
 				'type'    => Controls_Manager::SELECT,
-				'options' => Helper::ma_el_content_positions(),
+				'options' => Helper::jltma_el_content_positions(),
 				'default' => 'top-left'
 			]
 		);
@@ -282,7 +282,7 @@ class Table_of_Contents extends Master_Widget
 		//					'label'     => __( 'Animation', 'master-addons' ),
 		//					'type'      => Controls_Manager::SELECT,
 		//					'default'   => 'fade',
-		//					'options'   => Helper::ma_el_transition_options(),
+		//					'options'   => Helper::jltma_el_transition_options(),
 		//					'separator' => 'before',
 		//				]
 		//			);
@@ -1098,10 +1098,10 @@ class Table_of_Contents extends Master_Widget
 
 	protected function render()
 	{
-		$this->ma_el_toc_table_of_content();
+		$this->jltma_el_toc_table_of_content();
 	}
 
-	public function ma_el_toc_table_of_content()
+	public function jltma_el_toc_table_of_content()
 	{
 		$settings = $this->get_settings_for_display();
 

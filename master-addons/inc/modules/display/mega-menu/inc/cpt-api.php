@@ -27,12 +27,16 @@ class Megamenu_Cpt_Api
 
     public function get_jltma_content_editor()
     {
-        // Permission check handled by is_user_logged_in() callback
-        // Elementor editor will enforce its own permissions
+        // This action creates and edits mega menu content posts, so it needs a
+        // stricter capability than the shared route's edit_posts gate. Mega menu
+        // content is part of nav-menu management, which maps to edit_theme_options.
+        if ( ! current_user_can( 'edit_theme_options' ) ) {
+            wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'master-addons' ), 403 );
+        }
 
-        $content_key = $this->request['key'];
-        $content_type = $this->request['type'];
-        $menuitemId = $this->request['id'];
+        $content_key  = isset( $this->request['key'] ) ? sanitize_key( $this->request['key'] ) : '';
+        $content_type = isset( $this->request['type'] ) ? sanitize_key( $this->request['type'] ) : '';
+        $menuitemId   = isset( $this->request['id'] ) ? absint( $this->request['id'] ) : 0;
 
         $builder_post_title = 'mastermega-content-' . $content_type . '-' . $content_key . $menuitemId;
         

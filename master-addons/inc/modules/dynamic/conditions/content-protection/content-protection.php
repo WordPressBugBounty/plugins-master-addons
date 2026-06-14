@@ -1,9 +1,10 @@
 <?php
 
-namespace Elementor;
+namespace MasterAddons\Inc\Modules\Dynamic\Conditions\ContentProtection;
 
 if (!defined('ABSPATH')) exit;
 
+// Elementor classes used in this file are imported below (before the classes).
 use MasterAddons\Inc\Classes\Helper;
 
 class JLTMA_Protected_Content

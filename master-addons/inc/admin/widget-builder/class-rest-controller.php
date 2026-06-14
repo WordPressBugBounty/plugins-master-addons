@@ -657,6 +657,15 @@ class REST_Controller extends WP_REST_Controller {
             $js_code   = '';
         }
 
+        // Persisting custom CSS/JavaScript is a premium-only capability. The free
+        // build drops both (default ''); the Pro build re-enables saving by
+        // returning the candidate value on these filters — see
+        // MasterAddons\Pro\Classes\Pro_Modules. Candidates are already
+        // PHP-/script-stripped above. Custom HTML (an allowlisted content field)
+        // remains available to everyone.
+        $css_code = apply_filters('master_addons/widget_builder/persist_css', '', $css_code, $data);
+        $js_code  = apply_filters('master_addons/widget_builder/persist_js', '', $js_code, $data);
+
         // Also save data in unified format for widget generator
         $widget_data = [
             'title' => get_the_title($widget_id),

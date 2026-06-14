@@ -976,7 +976,7 @@ class Tabs extends Master_Widget
 	public function get_page_template_options($type = '')
 	{
 
-		$page_templates = Helper::ma_get_page_templates($type);
+		$page_templates = Helper::jltma_get_page_templates($type);
 
 		$options[-1]   = esc_html__('Select', 'master-addons' );
 

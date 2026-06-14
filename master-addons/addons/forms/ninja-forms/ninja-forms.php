@@ -63,7 +63,7 @@ class Ninja_Form extends Master_Widget
 				'label'       => esc_html__('Contact Form', 'master-addons' ),
 				'type'        => Controls_Manager::SELECT,
 				'label_block' => true,
-				'options'     => Helper::ma_el_get_ninja_forms(),
+				'options'     => Helper::jltma_el_get_ninja_forms(),
 				'default'     => '0',
 			]
 		);

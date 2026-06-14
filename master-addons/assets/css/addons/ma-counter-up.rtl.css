@@ -11,23 +11,32 @@
   padding: 30px 20px;
   transition: 0.3s;
 }
-.jltma-counterup-items .jltma-counterup i {
+.jltma-counterup-items .jltma-counterup .jltma-counterup-icon.jltma-counterup-icon--icon {
   background-color: #4b00e7;
   border-radius: 50%;
-  color: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 30px;
   height: 70px;
   width: 70px;
+}
+.jltma-counterup-items .jltma-counterup .jltma-counterup-icon i, .jltma-counterup-items .jltma-counterup .jltma-counterup-icon svg {
+  color: #fff;
+  fill: #fff;
+  font-size: 30px;
+  line-height: 1;
+}
+.jltma-counterup-items .jltma-counterup .jltma-counterup-icon i {
+  height: 1em;
+  width: 1em;
+}
+.jltma-counterup-items .jltma-counterup .jltma-counterup-icon svg {
+  height: 0.8em;
+  width: 0.8em;
 }
 .jltma-counterup-items .jltma-counterup .counterup-icon-text-center {
   text-align: center;
   display: block;
-}
-.jltma-counterup-items .jltma-counterup .counterup-icon-text-center i,
-.jltma-counterup-items .jltma-counterup .counterup-icon-text-center img {
   margin-bottom: 25px;
 }
 .jltma-counterup-items .jltma-counterup h3 {

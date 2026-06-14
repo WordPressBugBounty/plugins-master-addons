@@ -114,15 +114,58 @@ window.XdUtils = window.XdUtils || {
               title: "MA Copy",
               callback: function() {
                 var e2 = {};
-                e2.elementType = "widget" === a ? o2.model.get("widgetType") : null, e2.elementCode = o2.model.toJSON(), jltmaXdLocalStorage.setItem(
-                  t.storageKey,
-                  JSON.stringify(e2),
-                  function() {
-                    elementor.notifications.showToast({
-                      message: elementor.translate(t.msg.copy)
-                    });
-                  }
-                );
+                e2.elementType = "widget" === a ? o2.model.get("widgetType") : null;
+                var code = o2.model.toJSON();
+                var store = function(finalCode) {
+                  e2.elementCode = finalCode;
+                  jltmaXdLocalStorage.setItem(
+                    t.storageKey,
+                    JSON.stringify(e2),
+                    function() {
+                      elementor.notifications.showToast({
+                        message: elementor.translate(t.msg.copy)
+                      });
+                    }
+                  );
+                };
+                if (!window.jltmaFlattenGlobals) {
+                  store(code);
+                  return;
+                }
+                try {
+                  var colors = $e.data.get("globals/colors");
+                  var typography = $e.data.get("globals/typography");
+                  Promise.all([
+                    Promise.resolve(colors),
+                    Promise.resolve(typography)
+                  ]).then(function(res) {
+                    try {
+                      code = window.jltmaFlattenGlobals(
+                        code,
+                        res[0],
+                        res[1]
+                      );
+                    } catch (err) {
+                      console.warn(
+                        "[MagicCopy] globals flatten failed; copying raw.",
+                        err
+                      );
+                    }
+                    store(code);
+                  }).catch(function(err) {
+                    console.warn(
+                      "[MagicCopy] globals unavailable; copying raw.",
+                      err
+                    );
+                    store(code);
+                  });
+                } catch (err) {
+                  console.warn(
+                    "[MagicCopy] globals lookup threw; copying raw.",
+                    err
+                  );
+                  store(code);
+                }
               }
             },
             {
@@ -181,7 +224,8 @@ window.XdUtils = window.XdUtils || {
                             {
                               data: {
                                 type: "single",
-                                template: o4
+                                template: o4,
+                                nonce: jltma_cp_xd.nonce
                               },
                               success: function(a4) {
                                 var s2 = a4;

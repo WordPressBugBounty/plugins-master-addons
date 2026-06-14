@@ -6,5 +6,5 @@
 ?>
 <div class="ma-el-item-notice"></div>
 <div class="ma-el-item-preview-iframe">
-    <iframe></iframe>
+    <?php // Live preview opens in a new tab; external pages are not embedded here. ?>
 </div>
