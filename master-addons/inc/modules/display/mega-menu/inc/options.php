@@ -185,7 +185,11 @@ class Megamenu_Options
     public function jltma_save_megamenu_options()
     {
         if (!current_user_can('manage_options')) {
-            return;
+            wp_send_json_error(array('message' => esc_html__('Invalid access', 'master-addons')));
+        }
+
+        if (!check_ajax_referer('jltma_megamenu_nonce', 'nonce', false)) {
+            wp_send_json_error(array('message' => esc_html__('Invalid nonce', 'master-addons')));
         }
 
         $menu_id = $this->current_menu_id();

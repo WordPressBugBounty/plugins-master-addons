@@ -70,7 +70,7 @@ class Popup_List_Table extends \WP_List_Table {
     private function get_popups($per_page = 20, $page_number = 1) {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'ma_popups';
+        $table_name = $wpdb->prefix . 'jltma_popups';
         
         $sql = "SELECT * FROM $table_name";
 
@@ -109,7 +109,7 @@ class Popup_List_Table extends \WP_List_Table {
     
     private function get_popups_count() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ma_popups';
+        $table_name = $wpdb->prefix . 'jltma_popups';
         
         return (int) $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- custom popups table count; table name from $wpdb->prefix, not user input
     }
@@ -237,7 +237,7 @@ class Popup_List_Table extends \WP_List_Table {
 
             if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'delete_popup_' . $popup_id ) ) {
                 global $wpdb;
-                $table_name = $wpdb->prefix . 'ma_popups';
+                $table_name = $wpdb->prefix . 'jltma_popups';
                 
                 $wpdb->delete( $table_name, [ 'id' => $popup_id ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct query required for custom table delete
                 
@@ -261,7 +261,7 @@ class Popup_List_Table extends \WP_List_Table {
         $popup_ids = array_map('intval', $_POST['popup']);
         
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ma_popups';
+        $table_name = $wpdb->prefix . 'jltma_popups';
         
         switch ($action) {
             case 'bulk-delete':

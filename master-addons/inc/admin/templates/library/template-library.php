@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
  *
  * Handles the Template Library functionality for Master Addons
  */
-class Template_Library {
+class JLTMA_Template_Library {
 
     private static $instance = null;
 
@@ -1667,4 +1667,4 @@ class Template_Library {
 }
 
 // Initialize the Template Library
-Template_Library::get_instance();
+JLTMA_Template_Library::get_instance();

@@ -29,8 +29,32 @@ class Utils
         return isset($option_name) ? esc_attr($option_name) : false;
     }
 
+    /**
+     * Allowed option-name prefixes for plugin writes. Prevents this generic
+     * wrapper from being used to write arbitrary WordPress options.
+     *
+     * @var string[]
+     */
+    private static $jltma_allowed_option_prefixes = array('jltma_', 'ma_el_', 'master_addons', 'master-addons');
+
     public static function update_options($option_name, $option_value)
     {
+        if (!is_string($option_name) || '' === $option_name) {
+            return false;
+        }
+
+        $is_allowed = false;
+        foreach (self::$jltma_allowed_option_prefixes as $prefix) {
+            if (0 === strpos($option_name, $prefix)) {
+                $is_allowed = true;
+                break;
+            }
+        }
+
+        if (!$is_allowed) {
+            return false;
+        }
+
         if (JLTMA_NETWORK_ACTIVATED == true) {
             return update_site_option($option_name, $option_value);
         } else {

@@ -31,12 +31,12 @@ class Popup_Frontend {
     private function init_hooks() {
         add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_assets']);
         add_action('wp_footer', [$this, 'render_popups']);
-        add_action('wp_ajax_ma_popup_track_view', [$this, 'track_popup_view']);
-        add_action('wp_ajax_nopriv_ma_popup_track_view', [$this, 'track_popup_view']);
-        add_action('wp_ajax_ma_popup_track_conversion', [$this, 'track_popup_conversion']);
-        add_action('wp_ajax_nopriv_ma_popup_track_conversion', [$this, 'track_popup_conversion']);
-        add_action('wp_ajax_ma_popup_disable_expired', [$this, 'disable_expired_popup']);
-        add_action('wp_ajax_nopriv_ma_popup_disable_expired', [$this, 'disable_expired_popup']);
+        add_action('wp_ajax_jltma_popup_track_view', [$this, 'track_popup_view']);
+        add_action('wp_ajax_nopriv_jltma_popup_track_view', [$this, 'track_popup_view']);
+        add_action('wp_ajax_jltma_popup_track_conversion', [$this, 'track_popup_conversion']);
+        add_action('wp_ajax_nopriv_jltma_popup_track_conversion', [$this, 'track_popup_conversion']);
+        add_action('wp_ajax_jltma_popup_disable_expired', [$this, 'disable_expired_popup']);
+        add_action('wp_ajax_nopriv_jltma_popup_disable_expired', [$this, 'disable_expired_popup']);
         add_action('wp_head', [$this, 'set_visitor_cookie']);
     }
 
@@ -46,9 +46,9 @@ class Popup_Frontend {
         // Enqueue popup builder frontend assets via Assets Manager
         Assets_Manager::enqueue('popup-builder-frontend');
 
-        wp_localize_script('jltma-popup-builder-frontend', 'ma_popup_frontend', [
+        wp_localize_script('jltma-popup-builder-frontend', 'jltma_popup_frontend', [
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('ma_popup_frontend'),
+            'nonce' => wp_create_nonce('jltma_popup_frontend'),
             'popups' => $this->prepare_popups_data($popups)
         ]);
 
@@ -130,11 +130,19 @@ class Popup_Frontend {
             $conditions_data = maybe_unserialize($conditions_data);
         }
 
+        // Exclude conditions always win, regardless of their order relative to
+        // includes, so includes only resolve after the whole set is scanned.
+        $has_include     = false;
+        $include_matched = false;
+
         // Check each condition
         foreach ($conditions_data as $condition) {
             $type = $condition['type'] ?? 'include';
             $rule = $condition['rule'] ?? '';
             $specific = $condition['specific'] ?? '';
+            // Pro "Singular/Archive" schema stores target IDs in a separate `posts` array,
+            // with `specific` holding the sub-type (page/post/CPT slug).
+            $posts = isset($condition['posts']) ? (array) $condition['posts'] : [];
 
             $condition_met = false;
 
@@ -142,6 +150,34 @@ class Popup_Frontend {
             switch ($rule) {
                 case 'entire_site':
                     $condition_met = true;
+                    break;
+
+                // Pro condition schema: rule=singular, specific=<page|post|CPT>, posts=<IDs|empty=all>
+                case 'singular':
+                    $target_ids = array_filter(array_map('intval', $posts));
+                    if ($specific === 'page') {
+                        $condition_met = empty($target_ids) ? is_page() : is_page($target_ids);
+                    } elseif ($specific === 'post') {
+                        $condition_met = empty($target_ids) ? is_single() : is_single($target_ids);
+                    } elseif (!empty($specific)) {
+                        $condition_met = empty($target_ids)
+                            ? is_singular($specific)
+                            : (is_singular($specific) && in_array((int) get_the_ID(), $target_ids, true));
+                    } else {
+                        $condition_met = is_singular();
+                    }
+                    break;
+
+                case 'archive':
+                    $condition_met = is_archive();
+                    break;
+
+                case 'search':
+                    $condition_met = is_search();
+                    break;
+
+                case '404':
+                    $condition_met = is_404();
                     break;
 
                 case 'front_page':
@@ -227,21 +263,21 @@ class Popup_Frontend {
 
             // Handle include/exclude logic
             if ($type === 'exclude') {
-                // If excluded and condition met, don't display
+                // An exclude match wins immediately and hides the popup.
                 if ($condition_met) {
                     return false;
                 }
             } else {
-                // If included and condition met, display
+                // Defer the include decision until every exclude has been checked.
+                $has_include = true;
                 if ($condition_met) {
-                    return true;
+                    $include_matched = true;
                 }
             }
         }
 
-        // If no include conditions were met, don't display
-        // (Only display if at least one include condition is met)
-        return false;
+        // Only display if at least one include condition was defined and met.
+        return $has_include && $include_matched;
     }
 
     private function render_single_popup($popup_id) {
@@ -433,12 +469,17 @@ class Popup_Frontend {
     }
 
     public function track_popup_view() {
-        check_ajax_referer('ma_popup_frontend', 'nonce');
+        check_ajax_referer('jltma_popup_frontend', 'nonce');
 
         $popup_id = isset( $_POST['popup_id'] ) ? intval( $_POST['popup_id'] ) : 0;
 
         if (!$popup_id) {
             wp_send_json_error();
+        }
+
+        $popup = get_post($popup_id);
+        if (!$popup || $popup->post_type !== 'jltma_popup' || 'publish' !== $popup->post_status) {
+            wp_send_json_error(['message' => esc_html__('Invalid popup', 'master-addons')]);
         }
 
         // Update views count in post meta
@@ -450,18 +491,23 @@ class Popup_Frontend {
         $this->set_popup_cookie($popup_id);
 
         // Track in analytics if enabled
-        do_action('ma_popup_view_tracked', $popup_id);
+        do_action('jltma_popup_view_tracked', $popup_id);
 
         wp_send_json_success();
     }
 
     public function track_popup_conversion() {
-        check_ajax_referer('ma_popup_frontend', 'nonce');
+        check_ajax_referer('jltma_popup_frontend', 'nonce');
 
         $popup_id = isset( $_POST['popup_id'] ) ? intval( $_POST['popup_id'] ) : 0;
 
         if (!$popup_id) {
             wp_send_json_error();
+        }
+
+        $popup = get_post($popup_id);
+        if (!$popup || $popup->post_type !== 'jltma_popup' || 'publish' !== $popup->post_status) {
+            wp_send_json_error(['message' => esc_html__('Invalid popup', 'master-addons')]);
         }
 
         // Update conversions count in post meta
@@ -470,7 +516,7 @@ class Popup_Frontend {
         update_post_meta($popup_id, '_jltma_popup_conversions', $current_conversions + 1);
 
         // Track in analytics if enabled
-        do_action('ma_popup_conversion_tracked', $popup_id);
+        do_action('jltma_popup_conversion_tracked', $popup_id);
 
         wp_send_json_success();
     }
@@ -486,7 +532,7 @@ class Popup_Frontend {
         $settings = is_string($popup['settings']) ? json_decode($popup['settings'], true) : $popup['settings'];
         $frequency = $settings['show_frequency'] ?? 'always';
 
-        $cookie_name = 'ma_popup_shown_' . $popup_id;
+        $cookie_name = 'jltma_popup_shown_' . $popup_id;
         $expiration = 0;
 
         switch ($frequency) {
@@ -526,17 +572,17 @@ class Popup_Frontend {
     }
 
     // public function set_visitor_cookie() {
-    //     if (!isset($_COOKIE['ma_popup_visitor'])) {
-    //         setcookie('ma_popup_visitor', '1', time() + (365 * DAY_IN_SECONDS), '/');
+    //     if (!isset($_COOKIE['jltma_popup_visitor'])) {
+    //         setcookie('jltma_popup_visitor', '1', time() + (365 * DAY_IN_SECONDS), '/');
     //     }
     // }
     
     public function set_visitor_cookie() {
         // Skip on admin, Elementor preview/editor, and if cookie already set
-        if ( is_feed() || is_admin() || isset($_COOKIE['ma_popup_visitor']) || isset($_GET['elementor-preview']) || ( defined('ELEMENTOR_VERSION') && \Elementor\Plugin::$instance->preview->is_preview_mode() ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only existence check, no data processed
+        if ( is_feed() || is_admin() || isset($_COOKIE['jltma_popup_visitor']) || isset($_GET['elementor-preview']) || ( defined('ELEMENTOR_VERSION') && \Elementor\Plugin::$instance->preview->is_preview_mode() ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only existence check, no data processed
             return;
         }
-        $this->add_popup_inline_script('if (document.cookie.indexOf("ma_popup_visitor=") === -1) { document.cookie = "ma_popup_visitor=1; max-age=31536000; path=/;"; }');
+        $this->add_popup_inline_script('if (document.cookie.indexOf("jltma_popup_visitor=") === -1) { document.cookie = "jltma_popup_visitor=1; max-age=31536000; path=/;"; }');
     }
 
     /**
@@ -580,7 +626,7 @@ class Popup_Frontend {
     // private function create_database_table() {
     //     global $wpdb;
 
-    //     $table_name = $wpdb->prefix . 'ma_popups';
+    //     $table_name = $wpdb->prefix . 'jltma_popups';
     //     $charset_collate = $wpdb->get_charset_collate();
 
     //     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
@@ -603,7 +649,7 @@ class Popup_Frontend {
 
     public function disable_expired_popup() {
         // Verify nonce for security
-        if (!isset($_POST['nonce']) || !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'ma_popup_frontend')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'jltma_popup_frontend')) {
             wp_die('Security check failed');
         }
 
@@ -612,6 +658,14 @@ class Popup_Frontend {
         }
 
         $popup_id = intval($_POST['popup_id']);
+
+        // Validate target is a real popup post. The publish status is intentionally
+        // not enforced here because this handler disables expired popups, which may
+        // already be in a non-publish state.
+        $popup = get_post($popup_id);
+        if (!$popup || $popup->post_type !== 'jltma_popup') {
+            wp_send_json_error(['message' => esc_html__('Invalid popup', 'master-addons')]);
+        }
 
         // Deactivate the popup
         update_post_meta($popup_id, '_jltma_popup_activation', 'no');

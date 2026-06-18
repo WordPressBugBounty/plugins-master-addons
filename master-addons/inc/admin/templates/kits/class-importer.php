@@ -675,8 +675,9 @@ class Importer
     {
         $page_prefix = 'New';
 
+        // Nonce is verified upstream in import_templates_kit() before this private helper runs.
         if (isset($_POST['parentTemplate'])) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method
-            $parent_template = sanitize_text_field( wp_unslash( $_POST['parentTemplate'] ) );
+            $parent_template = sanitize_text_field( wp_unslash( $_POST['parentTemplate'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling method
             $upload_dir = wp_upload_dir();
 
             $manifest_path = $upload_dir['basedir'] . '/master_addons/purchased_kits/kits/kit_' . $parent_template . '/manifest.json';
@@ -1344,6 +1345,12 @@ class Importer
      */
     public function search_query_results()
     {
+        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+
+        if (!wp_verify_nonce($nonce, 'jltma-template-kits-js') || !current_user_can('manage_options')) {
+            exit;
+        }
+
         $search_query = isset($_POST['search_query']) ? sanitize_text_field(wp_unslash($_POST['search_query'])) : '';
         // Log search queries for analytics (optional)
     }

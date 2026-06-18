@@ -403,6 +403,13 @@ if (!class_exists(__NAMESPACE__ . '\Comments_Builder')) {
 
                 $comment_id = isset( $_POST['comment_id'] ) ? intval( wp_unslash( $_POST['comment_id'] ) ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
                 if (!empty($comment_id)) {
+                    $comment = get_comment($comment_id);
+                    $post_id = $comment ? (int) $comment->comment_post_ID : 0;
+                    $post    = $post_id ? get_post($post_id) : null;
+                    if (!$post || 'publish' !== $post->post_status) {
+                        echo json_encode(array('success' => false, 'message' => esc_html__('Invalid post', 'master-addons')));
+                        die();
+                    }
                     $type = isset( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
 
                     $jltma_like_cookie = isset( $_POST['jltma_like_cookie'] ) ? sanitize_text_field( wp_unslash( $_POST['jltma_like_cookie'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above

@@ -178,9 +178,9 @@ class Popup_Conditions {
             case 'logged_out':
                 return !is_user_logged_in();
             case 'first_time':
-                return !isset($_COOKIE['ma_popup_visitor']);
+                return !isset($_COOKIE['jltma_popup_visitor']);
             case 'returning':
-                return isset($_COOKIE['ma_popup_visitor']);
+                return isset($_COOKIE['jltma_popup_visitor']);
         }
         
         return false;
@@ -299,7 +299,7 @@ class Popup_Conditions {
         }
         
         $frequency = $conditions['show_frequency'];
-        $cookie_name = 'ma_popup_shown_' . $popup_id;
+        $cookie_name = 'jltma_popup_shown_' . $popup_id;
         
         switch ($frequency) {
             case 'always':

@@ -500,6 +500,11 @@ class Popup_CPT {
         }
 
         $post_id = intval($_GET['post']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only redirect check, no form submission
+
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+
         $post = get_post($post_id);
 
         if (!$post || $post->post_type !== $this->post_type) {

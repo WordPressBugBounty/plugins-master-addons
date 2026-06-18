@@ -26,10 +26,10 @@ class Popup_Builder {
     private function init_hooks() {
         add_action('admin_menu', [$this, 'add_admin_menu'], 55);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
-        add_action('wp_ajax_ma_popup_save', [$this, 'save_popup']);
-        add_action('wp_ajax_ma_popup_delete', [$this, 'delete_popup']);
-        add_action('wp_ajax_ma_popup_duplicate', [$this, 'duplicate_popup']);
-        add_action('wp_ajax_ma_popup_toggle_status', [$this, 'toggle_popup_status']);
+        add_action('wp_ajax_jltma_popup_save', [$this, 'save_popup']);
+        add_action('wp_ajax_jltma_popup_delete', [$this, 'delete_popup']);
+        add_action('wp_ajax_jltma_popup_duplicate', [$this, 'duplicate_popup']);
+        add_action('wp_ajax_jltma_popup_toggle_status', [$this, 'toggle_popup_status']);
     }
     
     private function includes() {
@@ -152,8 +152,8 @@ class Popup_Builder {
                     </div>
                 </div>
                 
-                <?php wp_nonce_field('ma_popup_save', 'ma_popup_nonce'); ?>
-                <input type="hidden" name="action" value="ma_popup_save">
+                <?php wp_nonce_field('jltma_popup_save', 'jltma_popup_nonce'); ?>
+                <input type="hidden" name="action" value="jltma_popup_save">
             </form>
         </div>
         <?php
@@ -232,8 +232,8 @@ class Popup_Builder {
                     </div>
                 </div>
                 
-                <?php wp_nonce_field('ma_popup_save', 'ma_popup_nonce'); ?>
-                <input type="hidden" name="action" value="ma_popup_save">
+                <?php wp_nonce_field('jltma_popup_save', 'jltma_popup_nonce'); ?>
+                <input type="hidden" name="action" value="jltma_popup_save">
                 <input type="hidden" name="popup_id" value="<?php echo absint( $popup_id ); ?>">
             </form>
         </div>
@@ -490,9 +490,9 @@ class Popup_Builder {
 
         \MasterAddons\Inc\Classes\Assets_Manager::enqueue('popup-builder-admin');
 
-        wp_localize_script('jltma-popup-builder-admin', 'ma_popup_builder', [
+        wp_localize_script('jltma-popup-builder-admin', 'jltma_popup_builder', [
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('ma_popup_builder'),
+            'nonce' => wp_create_nonce('jltma_popup_builder'),
             'strings' => [
                 'confirm_delete' => __('Are you sure you want to delete this popup?', 'master-addons'),
                 'saving' => __('Saving...', 'master-addons'),
@@ -503,10 +503,14 @@ class Popup_Builder {
     }
     
     public function save_popup() {
-        if (!check_ajax_referer('ma_popup_save', 'ma_popup_nonce', false)) {
+        if (!check_ajax_referer('jltma_popup_save', 'jltma_popup_nonce', false)) {
             wp_die( esc_html__('Security check failed', 'master-addons') );
         }
-        
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(['message' => esc_html__('Invalid access', 'master-addons')]);
+        }
+
         $popup_id = isset( $_POST['popup_id'] ) ? absint( $_POST['popup_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
         $popup_data = [
             'name' => isset( $_POST['popup_name'] ) ? sanitize_text_field( wp_unslash( $_POST['popup_name'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
@@ -535,7 +539,7 @@ class Popup_Builder {
         ];
         
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ma_popups';
+        $table_name = $wpdb->prefix . 'jltma_popups';
         
         if ($popup_id) {
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct update required for custom popup table, no WP core API equivalent
@@ -579,14 +583,18 @@ class Popup_Builder {
     }
     
     public function delete_popup() {
-        if (!check_ajax_referer('ma_popup_builder', 'nonce', false)) {
+        if (!check_ajax_referer('jltma_popup_builder', 'nonce', false)) {
             wp_die( esc_html__('Security check failed', 'master-addons') );
         }
-        
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(['message' => esc_html__('Invalid access', 'master-addons')]);
+        }
+
         $popup_id = isset( $_POST['popup_id'] ) ? absint( $_POST['popup_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
 
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ma_popups';
+        $table_name = $wpdb->prefix . 'jltma_popups';
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- direct delete required for custom popup table, no WP core API equivalent
         $result = $wpdb->delete($table_name, ['id' => $popup_id]);
@@ -599,14 +607,18 @@ class Popup_Builder {
     }
     
     public function duplicate_popup() {
-        if (!check_ajax_referer('ma_popup_builder', 'nonce', false)) {
+        if (!check_ajax_referer('jltma_popup_builder', 'nonce', false)) {
             wp_die( esc_html__('Security check failed', 'master-addons') );
         }
-        
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(['message' => esc_html__('Invalid access', 'master-addons')]);
+        }
+
         $popup_id = isset( $_POST['popup_id'] ) ? absint( $_POST['popup_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
 
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ma_popups';
+        $table_name = $wpdb->prefix . 'jltma_popups';
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table_name is a safe prefixed table name, value is prepared with %d
         $popup = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $popup_id));
@@ -635,14 +647,18 @@ class Popup_Builder {
     }
     
     public function toggle_popup_status() {
-        if (!check_ajax_referer('ma_popup_builder', 'nonce', false)) {
+        if (!check_ajax_referer('jltma_popup_builder', 'nonce', false)) {
             wp_die( esc_html__('Security check failed', 'master-addons') );
         }
-        
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(['message' => esc_html__('Invalid access', 'master-addons')]);
+        }
+
         $popup_id = isset( $_POST['popup_id'] ) ? absint( $_POST['popup_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified above
 
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ma_popups';
+        $table_name = $wpdb->prefix . 'jltma_popups';
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table_name is a safe prefixed table name, value is prepared with %d
         $popup = $wpdb->get_row($wpdb->prepare("SELECT status FROM $table_name WHERE id = %d", $popup_id));
@@ -670,7 +686,7 @@ class Popup_Builder {
     
     private function get_popup($id) {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'ma_popups';
+        $table_name = $wpdb->prefix . 'jltma_popups';
         
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- $table_name is a safe prefixed table name, value is prepared with %d
         $popup = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $id));
@@ -685,7 +701,7 @@ class Popup_Builder {
     public static function create_database_table() {
         global $wpdb;
         
-        $table_name = $wpdb->prefix . 'ma_popups';
+        $table_name = $wpdb->prefix . 'jltma_popups';
         $charset_collate = $wpdb->get_charset_collate();
         
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (

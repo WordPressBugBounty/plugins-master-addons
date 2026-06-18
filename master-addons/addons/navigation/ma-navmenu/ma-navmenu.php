@@ -20,6 +20,7 @@ use MasterAddons\Inc\Classes\Helper;
 use MasterAddons\Inc\Classes\Animation;
 use MasterAddons\Inc\Classes\Utils as JLTMA_Utils;
 use MasterAddons\Inc\Admin\Config;
+use MasterAddons\Inc\Admin\Settings\Settings;
 
 /**
  * Author Name: Liton Arefin
@@ -5003,7 +5004,10 @@ class Nav_Menu extends Master_Widget
     {
         $settings                 = $this->get_active_settings();
         if(!isset($settings['dropdown_menu_type'])) $settings['dropdown_menu_type'] = 'icon';
-        $jltma_extensions_setting = JLTMA_Utils::get_options('ma_el_extensions_save_settings');
+        $jltma_extensions_setting = Settings::get_extensions();
+        if (!is_array($jltma_extensions_setting)) {
+            $jltma_extensions_setting = array();
+        }
 
         $layout                   = $settings['layout'];
         $dropdown_menu_type       = $settings['dropdown_menu_type'];
@@ -5142,7 +5146,10 @@ class Nav_Menu extends Master_Widget
     protected function render()
     {
         $available_menus          = $this->get_available_menus();
-        $jltma_extensions_setting = JLTMA_Utils::get_options('ma_el_extensions_save_settings');
+        $jltma_extensions_setting = Settings::get_extensions();
+        if (!is_array($jltma_extensions_setting)) {
+            $jltma_extensions_setting = array();
+        }
 
         if (!$available_menus) {
             return;

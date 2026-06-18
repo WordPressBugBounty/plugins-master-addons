@@ -70,9 +70,12 @@ class JLTMA_Protected_Content
 					return false;
 				}
 			} elseif ($settings['jltma_protected_content_type'] == 'password') {
-				if (!isset($_GET['password'])) {
+				// Public front-end content gate: read-only password comparison with no
+				// state change, so a nonce is not applicable (mirrors core post-password).
+				$submitted_password = isset($_GET['password']) ? sanitize_text_field(wp_unslash($_GET['password'])) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				if (null === $submitted_password) {
 					return false;
-				} elseif ($_GET['password'] !== $settings['jltma_protected_content_password']) {
+				} elseif ($submitted_password !== $settings['jltma_protected_content_password']) {
 					return false;
 				} else {
 					return true;
@@ -89,7 +92,10 @@ class JLTMA_Protected_Content
 	{
 		$settings = $element->get_settings();
 		if ($settings['jltma_protected_content_enable']) {
-			if (!isset($_GET['password']) || $_GET['password'] !== $settings['jltma_protected_content_password']) {
+			// Public front-end content gate: read-only password comparison, no state
+			// change, so a nonce is not applicable (mirrors core post-password).
+			$submitted_password = isset($_GET['password']) ? sanitize_text_field(wp_unslash($_GET['password'])) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if (null === $submitted_password || $submitted_password !== $settings['jltma_protected_content_password']) {
 				if ($settings['jltma_protected_content_type'] == 'password') { ?>
 					<form class="tmea-password-protection" action="<?php the_permalink(); ?>" style="display:flex;flex-direction:column;width:100%;max-width:<?php echo esc_attr($settings['jltma_protected_content_password_width']['size']) . esc_attr($settings['jltma_protected_content_password_width']['unit']); ?>;margin:<?php echo esc_attr($settings['jltma_protected_content_password_spacing']['size']) . esc_attr($settings['jltma_protected_content_password_spacing']['unit']); ?> auto;">
 						<?php
@@ -1213,8 +1219,11 @@ class Extension_Content_Protection extends Extension_Prototype
             <input type="submit" value="' . esc_attr($settings['jltma_content_protection_password_submit_btn_txt']) . '" class="neb-submit">
             </form>';
 
-		if (isset($_POST['jltma_content_protection_password'])) {
-			if ($settings['jltma_content_protection_password'] !== $_POST['jltma_content_protection_password']) {
+		// Public front-end content gate: read-only password comparison, no state
+		// change, so a nonce is not applicable (mirrors core post-password).
+		$submitted_password = isset($_POST['jltma_content_protection_password']) ? sanitize_text_field(wp_unslash($_POST['jltma_content_protection_password'])) : null; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if (null !== $submitted_password) {
+			if ($settings['jltma_content_protection_password'] !== $submitted_password) {
 				/* translators: %s is Incorrect password message */
 				$html .= sprintf(
 					'<p class="">%s</p>',
@@ -1259,8 +1268,11 @@ class Extension_Content_Protection extends Extension_Prototype
 			$html     = '';
 			$unlocked = false;
 
-			if (isset($_POST['jltma_content_protection_password'])) {
-				if ($settings['jltma_content_protection_password'] === $_POST['jltma_content_protection_password']) {
+			// Public front-end content gate: read-only password comparison, no state
+			// change, so a nonce is not applicable (mirrors core post-password).
+			$submitted_password = isset($_POST['jltma_content_protection_password']) ? sanitize_text_field(wp_unslash($_POST['jltma_content_protection_password'])) : null; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			if (null !== $submitted_password) {
+				if ($settings['jltma_content_protection_password'] === $submitted_password) {
 					$unlocked = true;
 
 					$html .= "<script>

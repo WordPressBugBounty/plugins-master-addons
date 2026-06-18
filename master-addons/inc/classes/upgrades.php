@@ -18,8 +18,9 @@ class Upgrades
 	 * @var string[] $upgrades
 	 */
 	protected $upgrades = [
-		'2.0.8.9'   => 'Upgrades/upgrade-2.0.8.9.php',
-		'3.0.0'     => 'Upgrades/upgrade-3.0.0.php',
+		'2.0.8.9'   => 'upgrades/upgrade-2.0.8.9.php',
+		'3.0.0'     => 'upgrades/upgrade-3.0.0.php',
+		'3.1.4'     => 'upgrades/upgrade-3.1.4.php',
 	];
 
 	/**

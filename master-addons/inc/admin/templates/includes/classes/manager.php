@@ -32,18 +32,13 @@ if (!class_exists(__NAMESPACE__ . '\\Manager')) {
 			add_action('wp_ajax_jltma_get_templates', array($this, 'get_templates'));
 			add_action('wp_ajax_nopriv_jltma_get_templates', array($this, 'get_templates'));
 
-			add_action('wp_ajax_ma_el_get_templates', array($this, 'get_paginated_templates'));
-			add_action('wp_ajax_nopriv_ma_el_get_templates', array($this, 'get_paginated_templates'));
+			add_action('wp_ajax_jltma_get_paginated_templates', array($this, 'get_paginated_templates'));
 
 			add_action('wp_ajax_jltma_inner_template', array($this, 'jltma_insert_inner_template'));
 			add_action('wp_ajax_nopriv_jltma_inner_template', array($this, 'jltma_insert_inner_template'));
 
 
-			if (defined('ELEMENTOR_VERSION') && version_compare(ELEMENTOR_VERSION, '2.2.8', '>')) {
-				add_action('elementor/ajax/register_actions', array($this, 'jltma_register_ajax_actions'), 20);
-			} else {
-				add_action('wp_ajax_elementor_get_template_data', array($this, 'get_template_data'), -1);
-			}
+			add_action('elementor/ajax/register_actions', array($this, 'jltma_register_ajax_actions'), 20);
 
 			$this->register_sources();
 
@@ -656,6 +651,10 @@ if (!class_exists(__NAMESPACE__ . '\\Manager')) {
 
 
 		public function save_template_data_array($data) {
+				if (!current_user_can('edit_posts')) {
+						return new \WP_Error('forbidden', 'You are not allowed to save templates.');
+				}
+
 				$post_id = sanitize_text_field($data['template_id'] ?? '');
 				$template_data = wp_unslash($data['template_data'] ?? '');
 

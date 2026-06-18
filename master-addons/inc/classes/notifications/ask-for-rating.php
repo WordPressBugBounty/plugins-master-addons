@@ -2,6 +2,8 @@
 
 namespace MasterAddons\Inc\Classes\Notifications;
 
+defined('ABSPATH') || exit;
+
 use MasterAddons\Inc\Classes\Notifications\Model\Notice;
 
 if (!class_exists('Ask_For_Rating')) {

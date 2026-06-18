@@ -51,6 +51,12 @@ class Popup_Shortcode {
             return '';
         }
 
+        // Respect the popup activation toggle. An inactive popup must never render,
+        // even when explicitly placed via shortcode. Only display conditions are bypassed.
+        if (get_post_meta($popup_id, '_jltma_popup_activation', true) !== 'yes') {
+            return '';
+        }
+
         // Queue this popup for footer rendering (bypasses conditions since user explicitly placed it)
         $this->queued_popups[$popup_id] = true;
 

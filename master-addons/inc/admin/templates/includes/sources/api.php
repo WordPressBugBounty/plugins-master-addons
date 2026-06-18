@@ -21,7 +21,7 @@ class Api extends Base
 	public function get_version()
 	{
 
-		$key     = $this->get_slug() . '_version';
+		$key     = 'jltma_' . $this->get_slug() . '_version';
 		$version = get_transient($key);
 		$version = false;
 

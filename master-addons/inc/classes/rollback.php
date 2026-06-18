@@ -50,6 +50,10 @@ class Rollback
 
 		check_admin_referer('master_addons_rollback');
 
+		if (!current_user_can('update_plugins')) {
+			wp_die(esc_html__('You are not allowed to roll back this plugin.', 'master-addons'));
+		}
+
 		$rollback_versions = $this->get_rollback_versions();
 
 		if (empty($_GET['version']) || !in_array($_GET['version'], $rollback_versions)) {

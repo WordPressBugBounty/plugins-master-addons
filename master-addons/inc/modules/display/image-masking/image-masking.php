@@ -3,17 +3,17 @@
 /**
  * Add image masking support to some specific widgets
  *
- * @package Happy_Addons_Pro
+ * @package Master_Addons
  */
 
-namespace Happy_Addons_Pro\Extension;
+namespace MasterAddons\Modules\Display;
 
 use Elementor\Widget_Base;
-use Happy_Addons_Pro\Controls\Group_Control_Mask_Image;
+use MasterAddons\Inc\Controls\Group_Control_Mask_Image;
 
 defined('ABSPATH') || die();
 
-if (!class_exists('MasterAddons\Modules\Image_Masking')) {
+if (!class_exists('MasterAddons\Modules\Display\Image_Masking')) {
 class Image_Masking
     {
 

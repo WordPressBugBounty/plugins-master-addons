@@ -1,10 +1,10 @@
 === Master Addons For Elementor – Widgets, Extensions, Theme Builder, Popup Builder & Template Kits ===
 Contributors: jwthemeltd, litonice13, masteraddons
 Tags: elementor, elementor addons, elementor widgets, elementor templates, widgets for elementor
-Requires at least: 5.0
-Tested up to: 6.9
+Requires at least: 6.0
+Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 3.1.3
+Stable tag: 3.1.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,14 @@ Used for plugin licensing, updates and — only after the administrator opts in 
 
 
 == Changelog ==
+= Master Elementor Addons v3.1.4 (18-06-2026) =
+* Security: moved the Custom CSS editor to the Pro build (no arbitrary CSS insertion in the free plugin).
+* Security: added nonce verification to Mega Menu options save.
+* Security: added capability checks to popup, template-save, white-label, and rollback handlers.
+* Security: whitelisted option-name prefixes in the internal options helper.
+* Compliance: renamed short/reserved identifiers to the unique jltma prefix; migrated popup table/option to prefixed names.
+* Maintenance: removed unused bundled readme/markdown libraries; dropped a legacy Elementor (< 2.2.8) AJAX hook.
+
 = Master Elementor Addons 3.1.3 (14-06-2026) =
 * Added: Timeline widget Title and Content typography and color controls (Cards section), applied to both Post and Custom timeline items.
 * Security: Hardened popup list sorting so it only accepts known sort options.

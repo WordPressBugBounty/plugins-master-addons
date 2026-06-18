@@ -1,104 +1,107 @@
 (function(){
+//#region dev/js/common/utils.js
+/**
+* Master Addons - Shared Utilities
+*
+* Common helper functions used across all widget handlers.
+*/
+/**
+* Get element settings from Elementor
+*
+* @param {jQuery} $element - The jQuery element
+* @param {string} setting - Optional specific setting key
+* @returns {*} Settings object or specific setting value
+*/
 function getElementSettings($element, setting) {
-  var elementSettings = {}, modelCID = $element.data("model-cid");
-  if (typeof elementorFrontend !== "undefined" && elementorFrontend.isEditMode() && modelCID) {
-    var settings = elementorFrontend.config.elements.data[modelCID], type = settings.attributes.widgetType || settings.attributes.elType, settingsKeys = elementorFrontend.config.elements.keys[type];
-    if (!settingsKeys) {
-      settingsKeys = elementorFrontend.config.elements.keys[type] = [];
-      jQuery.each(settings.controls, function(name, control) {
-        if (control.frontend_available) {
-          settingsKeys.push(name);
-        }
-      });
-    }
-    jQuery.each(settings.getActiveControls(), function(controlKey) {
-      if (-1 !== settingsKeys.indexOf(controlKey)) {
-        elementSettings[controlKey] = settings.attributes[controlKey];
-      }
-    });
-  } else {
-    elementSettings = $element.data("settings") || {};
-  }
-  return getItems(elementSettings, setting);
+	var elementSettings = {}, modelCID = $element.data("model-cid");
+	if (typeof elementorFrontend !== "undefined" && elementorFrontend.isEditMode() && modelCID) {
+		var settings = elementorFrontend.config.elements.data[modelCID], type = settings.attributes.widgetType || settings.attributes.elType, settingsKeys = elementorFrontend.config.elements.keys[type];
+		if (!settingsKeys) {
+			settingsKeys = elementorFrontend.config.elements.keys[type] = [];
+			jQuery.each(settings.controls, function(name, control) {
+				if (control.frontend_available) settingsKeys.push(name);
+			});
+		}
+		jQuery.each(settings.getActiveControls(), function(controlKey) {
+			if (-1 !== settingsKeys.indexOf(controlKey)) elementSettings[controlKey] = settings.attributes[controlKey];
+		});
+	} else elementSettings = $element.data("settings") || {};
+	return getItems(elementSettings, setting);
 }
+/**
+* Get nested items from an object
+*
+* @param {Object} items - The items object
+* @param {string} itemKey - Dot-notation key path
+* @returns {*} The value at the key path
+*/
 function getItems(items, itemKey) {
-  if (itemKey) {
-    var keyStack = itemKey.split("."), currentKey = keyStack.splice(0, 1);
-    if (!keyStack.length) {
-      return items[currentKey];
-    }
-    if (!items[currentKey]) {
-      return;
-    }
-    return getItems(items[currentKey], keyStack.join("."));
-  }
-  return items;
+	if (itemKey) {
+		var keyStack = itemKey.split("."), currentKey = keyStack.splice(0, 1);
+		if (!keyStack.length) return items[currentKey];
+		if (!items[currentKey]) return;
+		return getItems(items[currentKey], keyStack.join("."));
+	}
+	return items;
 }
+/**
+* Get unique loop scope ID
+*
+* @param {jQuery} $scope - The scope element
+* @returns {string} The unique ID
+*/
 function getUniqueLoopScopeId($scope) {
-  if ($scope.data("jltma-template-widget-id")) {
-    return $scope.data("jltma-template-widget-id");
-  }
-  return $scope.data("id");
+	if ($scope.data("jltma-template-widget-id")) return $scope.data("jltma-template-widget-id");
+	return $scope.data("id");
 }
+/**
+* Observe target element with IntersectionObserver
+*
+* @param {Element} target - The target element to observe
+* @param {Function} callback - Callback when element intersects
+* @param {Object} options - IntersectionObserver options
+*/
 function jltMAObserveTarget(target, callback, options = {}) {
-  var observer = new IntersectionObserver(function(entries, observer2) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        callback(entry);
-      }
-    });
-  }, options);
-  observer.observe(target);
+	new IntersectionObserver(function(entries, observer) {
+		entries.forEach(function(entry) {
+			if (entry.isIntersecting) callback(entry);
+		});
+	}, options).observe(target);
 }
-function sanitizeTooltipText(text) {
-  const tempDiv = document.createElement("div");
-  tempDiv.textContent = text;
-  return tempDiv.innerHTML;
-}
+/**
+* Strip HTML tags from text
+*
+* @param {string} text - Text to strip
+* @returns {string} Text without HTML tags
+*/
 function stripTags(text) {
-  return text.replace(/<\/?[^>]+(>|$)/g, "");
+	return text.replace(/<\/?[^>]+(>|$)/g, "");
 }
+/**
+* Check if in Elementor edit mode
+*
+* @returns {boolean} True if in edit mode
+*/
 function isEditMode() {
-  return typeof elementorFrontend !== "undefined" && elementorFrontend.isEditMode();
+	return typeof elementorFrontend !== "undefined" && elementorFrontend.isEditMode();
 }
-function decodeEntities(str) {
-  if (!str) return "";
-  const txt = document.createElement("textarea");
-  txt.innerHTML = str;
-  return txt.value;
-}
-function filterFancyBox(element) {
-  jQuery(element).find(".jltma-fancybox").each(function() {
-    const rawCaption = jQuery(this).data("caption");
-    const caption = decodeEntities(rawCaption);
-    const hasDangerousAttr = /\son\w+\s*=/i.test(caption);
-    const hasScriptTag = /<\s*script/i.test(caption);
-    const hasJsProto = /javascript:/i.test(caption);
-    if (caption && (hasDangerousAttr || hasScriptTag || hasJsProto)) {
-      jQuery(this).attr("data-caption", "");
-      jQuery(this).closest(".elementor-element").remove();
-    }
-  });
-}
+//#endregion
+//#region dev/js/addons/free/ma-comments.js
+/**
+* Comments widget script
+*/
 (function($, elementor) {
-  "use strict";
-  var JLTMA_Comments = function($scope, $2) {
-    var elementSettings = getElementSettings($scope);
-    var $commentsWrapper = $scope.find(".jltma-comments-wrap"), $comments_recaptcha_data = $commentsWrapper.data("recaptcha"), $recaptcha_protected = $commentsWrapper.data("jltma-comment-settings"), jltma_comment_form;
-    if ($recaptcha_protected && $recaptcha_protected.reCaptchaprotected == "yes") {
-      var onloadCallback = function() {
-        if (typeof grecaptcha !== "undefined") {
-          jltma_comment_form = grecaptcha.render("jltma_comment_form", {
-            "sitekey": $comments_recaptcha_data.sitekey,
-            "theme": $comments_recaptcha_data.theme
-          });
-          grecaptcha.reset(jltma_comment_form);
-        }
-      };
-    }
-  };
-  $(window).on("elementor/frontend/init", function() {
-    elementorFrontend.hooks.addAction("frontend/element_ready/jltma-comments.default", JLTMA_Comments);
-  });
+	"use strict";
+	var JLTMA_Comments = function($scope, $) {
+		getElementSettings($scope);
+		var $commentsWrapper = $scope.find(".jltma-comments-wrap");
+		$commentsWrapper.data("recaptcha");
+		var $recaptcha_protected = $commentsWrapper.data("jltma-comment-settings");
+		if ($recaptcha_protected && $recaptcha_protected.reCaptchaprotected == "yes") {}
+	};
+	$(window).on("elementor/frontend/init", function() {
+		elementorFrontend.hooks.addAction("frontend/element_ready/jltma-comments.default", JLTMA_Comments);
+	});
 })(jQuery, window.elementorFrontend);
+//#endregion
 })();

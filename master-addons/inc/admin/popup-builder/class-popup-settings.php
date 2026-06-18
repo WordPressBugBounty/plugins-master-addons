@@ -63,7 +63,7 @@ class Popup_Settings {
     }
     
     public function get_settings($section = null) {
-        $saved_settings = get_option('ma_popup_settings', []);
+        $saved_settings = get_option('jltma_popup_settings', []);
         $settings = wp_parse_args($saved_settings, $this->default_settings);
         
         if ($section && isset($settings[$section])) {
@@ -77,12 +77,12 @@ class Popup_Settings {
         $current_settings = $this->get_settings();
         $updated_settings = wp_parse_args($settings, $current_settings);
         
-        return update_option('ma_popup_settings', $updated_settings);
+        return update_option('jltma_popup_settings', $updated_settings);
     }
     
     public function render_settings_page() {
-        if (isset($_POST['ma_popup_settings_nonce'])) {
-            if (wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ma_popup_settings_nonce'] ) ), 'ma_popup_settings')) {
+        if (isset($_POST['jltma_popup_settings_nonce'])) {
+            if (wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['jltma_popup_settings_nonce'] ) ), 'jltma_popup_settings')) {
                 $this->process_settings_save();
             }
         }
@@ -113,7 +113,7 @@ class Popup_Settings {
                     </div>
                 </div>
                 
-                <?php wp_nonce_field('ma_popup_settings', 'ma_popup_settings_nonce'); ?>
+                <?php wp_nonce_field('jltma_popup_settings', 'jltma_popup_settings_nonce'); ?>
                 <p class="submit">
                     <button type="submit" class="button button-primary">
                         <?php esc_html_e('Save Settings', 'master-addons'); ?>

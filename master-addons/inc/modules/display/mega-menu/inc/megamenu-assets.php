@@ -80,7 +80,8 @@ class Megamenu_Assets
             $localize_menu_data = array(
                 'resturl'       => get_rest_url() . 'masteraddons/v2/',
                 'iconLibrary'   => $icon_config,
-                'pluginUrl'     => JLTMA_URL
+                'pluginUrl'     => JLTMA_URL,
+                'nonce'         => wp_create_nonce('jltma_megamenu_nonce')
             );
             wp_localize_script('master-addons-mega-script', 'masteraddons_megamenu', $localize_menu_data);
         }
