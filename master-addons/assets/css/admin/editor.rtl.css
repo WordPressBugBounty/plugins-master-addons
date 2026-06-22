@@ -816,16 +816,10 @@ body.elementor-device-mobile #ma-el-template-modal-header-tabs #views-ma-el-temp
 #ma-el-modal-templates-container {
   position: relative;
   padding: 20px;
-}
-#ma-el-modal-templates-container::after {
-  content: "";
-  display: table;
-  clear: both;
+  column-width: 240px;
+  column-gap: 20px;
 }
 #ma-el-modal-templates-container .elementor-template-library-template {
-  float: right;
-  width: calc(20% - 20px);
-  margin: 10px;
   position: relative;
   overflow: hidden;
   border-radius: 6px;
@@ -833,6 +827,12 @@ body.elementor-device-mobile #ma-el-template-modal-header-tabs #views-ma-el-temp
   background: #fff;
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
   box-sizing: border-box;
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 20px;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
 }
 #ma-el-modal-templates-container .elementor-template-library-template:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -844,11 +844,40 @@ body.elementor-device-mobile #ma-el-template-modal-header-tabs #views-ma-el-temp
 #ma-el-modal-templates-container .elementor-template-library-template-screenshot {
   position: relative;
   overflow: hidden;
+  background: #f1f3f5;
+  min-height: 80px;
 }
 #ma-el-modal-templates-container .elementor-template-library-template-screenshot img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: auto;
   display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#ma-el-modal-templates-container .elementor-template-library-template-screenshot img.is-loaded {
+  opacity: 1;
+}
+#ma-el-modal-templates-container .elementor-template-library-template-screenshot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(-100deg, #eef1f4 30%, #f7f9fb 50%, #eef1f4 70%);
+  background-size: 200% 100%;
+  animation: jltma-tpl-shimmer 1.4s ease-in-out infinite;
+  z-index: 0;
+}
+#ma-el-modal-templates-container .elementor-template-library-template-screenshot.is-loaded::before {
+  display: none;
+}
+@keyframes jltma-tpl-shimmer {
+  0% {
+    background-position: -50% 0;
+  }
+  100% {
+    background-position: 150% 0;
+  }
 }
 #ma-el-modal-templates-container .ma-el-modal-template-pro::before {
   position: absolute;
@@ -918,6 +947,10 @@ body.elementor-device-mobile #ma-el-template-modal-header-tabs #views-ma-el-temp
   font-weight: 700;
 }
 #ma-el-template-library-content #ma-el-modal-templates-container .elementor-template-library-template-name {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
   padding: 8px 10px;
   text-align: right;
   display: block !important;
@@ -927,8 +960,10 @@ body.elementor-device-mobile #ma-el-template-modal-header-tabs #views-ma-el-temp
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
   box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid #e5e7eb;
+  transition: opacity 0.2s ease;
 }
 #ma-el-template-library-content #ma-el-modal-templates-container .elementor-template-library-template-name-holder {
   height: auto;

@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
         <div class="elementor-template-library-template-preview">
             <i class="fa fa-search-plus"></i>
         </div>
-        <img src="{{ thumbnail }}" alt="{{ title }}" class="ma-el-template-image" onerror="this.src='<?php echo esc_url( JLTMA_IMAGE_DIR . 'placeholder.png' ); ?>'">
+        <img src="{{ thumbnail }}" alt="{{ title }}" class="ma-el-template-image" loading="lazy" onload="this.classList.add('is-loaded');this.closest('.elementor-template-library-template-screenshot').classList.add('is-loaded');" onerror="this.src='<?php echo esc_url( JLTMA_IMAGE_DIR . 'placeholder.png' ); ?>';this.classList.add('is-loaded');this.closest('.elementor-template-library-template-screenshot').classList.add('is-loaded');">
         <div class="elementor-template-library-template-name">{{{ title }}}</div>
     </div>
 </div>

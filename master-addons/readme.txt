@@ -4,7 +4,7 @@ Tags: elementor, elementor addons, elementor widgets, elementor templates, widge
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 3.1.4
+Stable tag: 3.1.5
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -385,6 +385,15 @@ Used for plugin licensing, updates and — only after the administrator opts in 
 
 
 == Changelog ==
+= Master Elementor Addons v3.1.5 (18-06-2026) =
+* Security: Made the Recommended Plugins screen safer so only the plugins we list can be installed or activated.
+* Security: Tightened the Mega Menu so it only responds to its own known actions.
+* Security: Added safety checks when importing Template Kits to block unsafe files.
+* Fixed: Some admin screens (Settings, Template Kits, Template Library, Setup Wizard) could show up blank — they now load correctly.
+* Improved: Mega Menu now works smoothly with Elementor's new Atomic Elements, and only loads its styles on the pages that use a Mega Menu — so menus look right everywhere and your pages stay fast.
+* Improved: General compatibility and code-quality tidy-up for the WordPress.org review.
+* Maintenance: Updated the licensing library and removed unused files.
+
 = Master Elementor Addons v3.1.4 (18-06-2026) =
 * Security: moved the Custom CSS editor to the Pro build (no arbitrary CSS insertion in the free plugin).
 * Security: added nonce verification to Mega Menu options save.

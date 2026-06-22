@@ -10,11 +10,20 @@ trait Rest_API
     public $param = '';
     public $request = null;
 
+    /**
+     * Explicit allowlist of dispatchable REST handler method names.
+     * Only methods listed here may be invoked by jltma_rest_api_action().
+     *
+     * @var string[]
+     */
+    public $rest_actions = array();
 
-    public function config($prefix, $param)
+
+    public function config($prefix, $param, $rest_actions = array())
     {
-        $this->prefix = $prefix;
-        $this->param  = $param;
+        $this->prefix       = $prefix;
+        $this->param        = $param;
+        $this->rest_actions = $rest_actions;
     }
 
     public function init()
@@ -37,8 +46,13 @@ trait Rest_API
         $this->request = $request;
         $action_class = strtolower($this->request->get_method()) . '_' . sanitize_key($this->request['action']);
 
-        if (method_exists($this, $action_class)) {
+        // Dispatch only to handlers on the explicit allowlist. Without this,
+        // method_exists() alone would let a request invoke any get_*/post_*
+        // method on the class (e.g. get_instance), creating a dynamic-call surface.
+        if (in_array($action_class, $this->rest_actions, true) && method_exists($this, $action_class)) {
             return $this->{$action_class}();
         }
+
+        return new \WP_Error('jltma_invalid_action', __('Invalid action', 'master-addons'), array('status' => 400));
     }
 }

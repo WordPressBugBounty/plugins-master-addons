@@ -689,15 +689,11 @@ class Assets_Manager
                 }
             }
 
-            // Apply .min suffix for local built assets (path === '')
-            $use_suffix = ($suffix && isset($vendor['path']) && $vendor['path'] === '' && empty($vendor['cdn']));
-
             // Register CSS
             if (!empty($vendor['files']['css'])) {
-                $css_file = $vendor['files']['css'];
-                if ($use_suffix) {
-                    $css_file = preg_replace('/\.css$/', $suffix . '.css', $css_file);
-                }
+                // Resolve to the built variant that exists on disk (.min in production,
+                // source in debug) so a missing variant never 404s.
+                $css_file = $this->resolve_built_file($vendor['files']['css'], $suffix, $vendor, $is_pro, '.css');
 
                 // Check if it's a CDN/full URL or relative path
                 $css_url = $this->is_external_url($vendor['files']['css'])
@@ -714,10 +710,7 @@ class Assets_Manager
 
             // Register JS
             if (!empty($vendor['files']['js'])) {
-                $js_file = $vendor['files']['js'];
-                if ($use_suffix) {
-                    $js_file = preg_replace('/\.js$/', $suffix . '.js', $js_file);
-                }
+                $js_file = $this->resolve_built_file($vendor['files']['js'], $suffix, $vendor, $is_pro, '.js');
 
                 // Check if it's a CDN/full URL or relative path
                 $js_url = $this->is_external_url($vendor['files']['js'])
@@ -757,6 +750,55 @@ class Assets_Manager
      * @param string $fallback      Version to use when mtime is unavailable.
      * @return string
      */
+    /**
+     * Resolve a locally-built asset to the variant that actually exists on disk.
+     *
+     * Production zips ship only the minified (.min) build; debug/dev trees may have
+     * only the unminified source. Picking by file existence (preferring .min in
+     * production, source in debug) guarantees the registered URL never 404s — a
+     * missing variant otherwise returns the HTML error page, which the browser then
+     * parses as JS ("Unexpected token '<'") and the React panel never mounts.
+     *
+     * Non-local assets (vendors, CDN, external, custom path) are returned unchanged.
+     *
+     * @param string $relative Asset path relative to its assets base.
+     * @param string $suffix   '.min' in production, '' in debug.
+     * @param array  $vendor   Registry entry.
+     * @param bool   $is_pro   Whether the asset lives in the premium assets folder.
+     * @param string $ext      File extension including dot (e.g. '.js', '.css').
+     * @return string
+     */
+    private function resolve_built_file($relative, $suffix, $vendor, $is_pro, $ext)
+    {
+        $is_local = isset($vendor['path'])
+            && $vendor['path'] === ''
+            && empty($vendor['cdn'])
+            && !$this->is_external_url($relative);
+
+        if (!$is_local) {
+            return $relative;
+        }
+
+        $base_dir = $is_pro
+            ? (defined('JLTMA_PRO_PATH') ? trailingslashit(JLTMA_PRO_PATH) . 'premium/assets/' : '')
+            : (defined('JLTMA_PATH') ? trailingslashit(JLTMA_PATH) . 'assets/' : '');
+
+        $min = preg_replace('/' . preg_quote($ext, '/') . '$/', '.min' . $ext, $relative);
+
+        // Prefer minified in production; prefer source in debug.
+        $candidates = ($suffix === '.min') ? array($min, $relative) : array($relative, $min);
+
+        if ($base_dir) {
+            foreach ($candidates as $candidate) {
+                if (is_file($base_dir . $candidate)) {
+                    return $candidate;
+                }
+            }
+        }
+
+        return $candidates[0];
+    }
+
     private function resolve_asset_version($relative_file, $vendor, $is_pro, $fallback)
     {
         $is_local = isset($vendor['path'])

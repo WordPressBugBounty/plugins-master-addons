@@ -56,7 +56,7 @@ class Recommended_Plugins extends Recommended
 			),
 			array(
 				'key'   => 'featured', // key should be used as category to the plugin list.
-				'label' => 'Featured Item',
+				'label' => 'Featured',
 			),
 			array(
 				'key'   => 'popular',

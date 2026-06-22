@@ -60,6 +60,34 @@ if (!class_exists('Recommended')) {
 		}
 
 		/**
+		 * Exact allowlist of installed plugin files that belong to our known slugs.
+		 *
+		 * Returns real plugin basenames (e.g. "elementor/elementor.php") taken from the
+		 * actual installed plugin set, filtered to the slugs we manage. Used to validate
+		 * any $_POST plugin-file value before it reaches activate_plugin()/upgrade(), so
+		 * arbitrary input can never select an unrelated plugin file.
+		 *
+		 * @return string[]
+		 */
+		protected function get_allowed_plugin_files()
+		{
+			if (!function_exists('get_plugins')) {
+				require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			}
+
+			$known_slugs = array_values(wp_list_pluck($this->plugins_list, 'slug'));
+			$allowed     = array();
+
+			foreach (array_keys(get_plugins()) as $plugin_file) {
+				if (in_array(dirname($plugin_file), $known_slugs, true)) {
+					$allowed[] = $plugin_file;
+				}
+			}
+
+			return $allowed;
+		}
+
+		/**
 		 * Menu Items
 		 *
 		 * @author Jewel Theme <support@jeweltheme.com>
@@ -289,11 +317,13 @@ if (!class_exists('Recommended')) {
 						wp_send_json_error(array('mess' => __('Invalid access', 'master-addons')));
 					}
 
-					$file   = sanitize_text_field(wp_unslash($_POST['file']));
-					$known_slugs = array_values(wp_list_pluck($this->plugins_list, 'slug'));
-					$file_slug   = dirname($file);
+					$file = sanitize_text_field(wp_unslash($_POST['file']));
 
-					if (!in_array($file_slug, $known_slugs)) {
+					// Enforce an exact allowlist of real installed plugin files that
+					// belong to our known slugs. Arbitrary input (or a crafted basename
+					// whose dirname happens to match a slug) must never reach
+					// activate_plugin(); only an exact installed plugin file passes.
+					if (!in_array($file, $this->get_allowed_plugin_files(), true)) {
 						wp_send_json_error(array('mess' => __('Invalid plugin', 'master-addons')));
 					}
 
@@ -351,17 +381,27 @@ if (!class_exists('Recommended')) {
 						wp_send_json_error(array('mess' => __('Invalid access', 'master-addons')));
 					}
 
-					$plugin       = sanitize_text_field(wp_unslash($_POST['plugin']));
-					$plugin_links = array_values(wp_list_pluck($this->plugins_list, 'download_link'));
-					$known_slugs  = array_values(wp_list_pluck($this->plugins_list, 'slug'));
-					$plugin_slug  = dirname($plugin);
-					$is_valid     = in_array($plugin, $plugin_links) || ($plugin_slug !== '.' && in_array($plugin_slug, $known_slugs));
+					$plugin = sanitize_text_field(wp_unslash($_POST['plugin']));
+					$type   = isset($_POST['type']) ? sanitize_text_field(wp_unslash($_POST['type'])) : 'install';
 
-					if (!$is_valid) {
-						wp_send_json_error(array('mess' => __('Invalid plugin', 'master-addons')));
+					// Validate against an exact allowlist that depends on the operation:
+					//  - install: $plugin is a package source; must be exactly one of our
+					//    known download links.
+					//  - upgrade: $plugin is a plugin file; must be exactly one of the real
+					//    installed plugin files under our known slugs.
+					// dirname()-based matching is intentionally NOT used — it would accept a
+					// crafted value whose directory merely resembles a known slug.
+					if ('install' === $type) {
+						$plugin_links = array_values(wp_list_pluck($this->plugins_list, 'download_link'));
+						if (!in_array($plugin, $plugin_links, true)) {
+							wp_send_json_error(array('mess' => __('Invalid plugin', 'master-addons')));
+						}
+					} else {
+						if (!in_array($plugin, $this->get_allowed_plugin_files(), true)) {
+							wp_send_json_error(array('mess' => __('Invalid plugin', 'master-addons')));
+						}
 					}
 
-					$type     = isset($_POST['type']) ? sanitize_text_field(wp_unslash($_POST['type'])) : 'install';
 					$skin     = new \WP_Ajax_Upgrader_Skin();
 					$upgrader = new \Plugin_Upgrader($skin);
 

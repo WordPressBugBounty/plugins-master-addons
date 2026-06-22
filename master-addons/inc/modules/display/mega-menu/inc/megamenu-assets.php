@@ -15,6 +15,13 @@ class Megamenu_Assets
         add_action('admin_enqueue_scripts', [$this, 'admin_enqueue_scripts']);
         add_action('wp_enqueue_scripts', [$this, 'frontend_js']);
         add_action('admin_enqueue_scripts', [$this, 'admin_js']);
+
+        // NOTE: Atomic Widgets CSS for mega menu content posts is registered by the
+        // nav walker itself (Megamenu_Nav_Walker::end_el -> queue_megamenu_styles),
+        // in the exact scope of each rendered mega menu item. The previous global
+        // wp_enqueue_scripts scan that walked every menu location on every request
+        // was removed -- it re-discovered what the walker already knows and ran even
+        // on pages with no mega menu.
     }
 
     public function common_js()

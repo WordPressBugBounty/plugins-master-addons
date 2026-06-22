@@ -96,6 +96,7 @@ window.XdUtils = window.XdUtils || { extend: function(e, t) {
 		elementor.notifications.showToast({ message: elementor.translate(t.msg.paste) });
 	}
 	function jltmaRelayUrl() {
+		if (typeof jltma_cp_xd !== "undefined" && jltma_cp_xd.clipboard_url) return jltma_cp_xd.clipboard_url;
 		return (typeof jltma_cp_xd !== "undefined" && jltma_cp_xd.relay_url ? jltma_cp_xd.relay_url : "").replace(/\/+$/, "") + "/wp-json/masteraddons/v1/magic-copy";
 	}
 	t.elementTypes.forEach(function(i, o) {
@@ -110,6 +111,11 @@ window.XdUtils = window.XdUtils || { extend: function(e, t) {
 						var e = {};
 						e.elementType = "widget" === a ? o.model.get("widgetType") : null;
 						var code = o.model.toJSON();
+						try {
+							if (window.jltmaCaptureComputedStyles && elementor.$previewContents) code = window.jltmaCaptureComputedStyles(code, elementor.$previewContents[0]);
+						} catch (err) {
+							console.warn("[MagicCopy] computed-style capture failed; copying raw.", err);
+						}
 						var store = function(finalCode) {
 							e.elementCode = finalCode;
 							fetch(jltmaRelayUrl(), {
@@ -182,8 +188,8 @@ window.XdUtils = window.XdUtils || { extend: function(e, t) {
 								case "section": t.container = o.children.findByIndex(0).getContainer();
 							}
 							(function(i) {
-								var o = JSON.stringify(i), a = /\.(gif|jpg|jpeg|svg|png|tiff|bmp|pdf)/gi.test(o);
-								if (e.isEmptyObject(t.lastPastedModel) || o !== t.lastCopiedJson) if (a && !t.sameServer) {
+								var o = JSON.stringify(i), hasMedia = /\.(gif|jpg|jpeg|svg|png|tiff|bmp|pdf)/gi.test(o) || /"id":\s*\d+/.test(o) || /"url":"https?:\/\//i.test(o);
+								if (e.isEmptyObject(t.lastPastedModel) || o !== t.lastCopiedJson) if (hasMedia && (t.needsImport || !t.sameServer)) {
 									let e = elementor.notifications.getToast(), i = e.getSettings();
 									"hide" in i && (i = Object.assign(i.hide, { auto: !1 }), e.setSettings(i)), elementor.notifications.showToast({ message: elementor.translate(t.msg.import_wait) }), elementorCommon.ajax.addRequest("jltma_copy_paste", {
 										data: {
@@ -233,9 +239,14 @@ window.XdUtils = window.XdUtils || { extend: function(e, t) {
 							}
 							jltmaHandlePaste(parsed, o);
 						};
-						fetch(jltmaRelayUrl(), { method: "GET" }).then(function(r) {
+						fetch(jltmaRelayUrl(), {
+							method: "GET",
+							headers: { "X-WP-Nonce": typeof jltma_cp_xd !== "undefined" && jltma_cp_xd.rest_nonce ? jltma_cp_xd.rest_nonce : "" },
+							credentials: "include"
+						}).then(function(r) {
 							return r.json();
 						}).then(function(res) {
+							t.needsImport = !!(res && res.needs_import);
 							jltmaReadAndPaste(res && res.data ? res.data : "");
 						}).catch(function() {
 							elementor.notifications.showToast({ message: elementor.translate(t.msg.error) });
@@ -244,6 +255,98 @@ window.XdUtils = window.XdUtils || { extend: function(e, t) {
 				}]
 			}), i;
 		});
+	});
+	function jltmaInsertAtRoot(parsed, view) {
+		var code = parsed && parsed.elementCode;
+		if (!code || !code.elType) {
+			elementor.notifications.showToast({ message: elementor.translate(t.msg.empty_copy) });
+			return;
+		}
+		var model = code;
+		if ("widget" === code.elType) {
+			if (parsed.elementType) code.widgetType = parsed.elementType;
+			model = {
+				elType: "container",
+				settings: {},
+				elements: [code]
+			};
+		} else if ("column" === code.elType) model = {
+			elType: "section",
+			settings: {},
+			elements: [code]
+		};
+		var options = {};
+		if (view && typeof view.getOption === "function") {
+			var at = view.getOption("at");
+			if (typeof at !== "undefined") options.at = at;
+		}
+		$e.run("document/elements/create", {
+			model,
+			container: elementor.getPreviewContainer(),
+			options
+		});
+		n();
+	}
+	function jltmaInsertParsed(parsed, view) {
+		if (!t.needsImport) {
+			jltmaInsertAtRoot(parsed, view);
+			return;
+		}
+		elementorCommon.ajax.addRequest("jltma_copy_paste", {
+			data: {
+				type: "single",
+				template: JSON.stringify(parsed.elementCode),
+				nonce: jltma_cp_xd.nonce
+			},
+			success: function(resp) {
+				parsed.elementCode = (resp && resp.hasOwnProperty("data") ? resp.data : resp) || parsed.elementCode;
+				jltmaInsertAtRoot(parsed, view);
+			},
+			error: function() {
+				jltmaInsertAtRoot(parsed, view);
+			}
+		});
+	}
+	function jltmaPasteAtRoot(view) {
+		fetch(jltmaRelayUrl(), {
+			method: "GET",
+			headers: { "X-WP-Nonce": typeof jltma_cp_xd !== "undefined" && jltma_cp_xd.rest_nonce ? jltma_cp_xd.rest_nonce : "" },
+			credentials: "include"
+		}).then(function(r) {
+			return r.json();
+		}).then(function(res) {
+			t.needsImport = !!(res && res.needs_import);
+			var text = res && res.data ? res.data : "";
+			if (text == null || "" === text) {
+				elementor.notifications.showToast({ message: elementor.translate(t.msg.empty_copy) });
+				return;
+			}
+			var parsed;
+			try {
+				parsed = JSON.parse(text);
+			} catch (err) {
+				elementor.notifications.showToast({ message: elementor.translate(t.msg.empty_copy) });
+				return;
+			}
+			jltmaInsertParsed(parsed, view);
+		}).catch(function() {
+			elementor.notifications.showToast({ message: elementor.translate(t.msg.error) });
+		});
+	}
+	elementor.hooks.addFilter("views/add-section/behaviors", function(behaviors, view) {
+		try {
+			if (behaviors && behaviors.contextMenu && Array.isArray(behaviors.contextMenu.groups)) behaviors.contextMenu.groups.push({
+				name: "jltma_xd_root",
+				actions: [{
+					name: "jltma_paste_root",
+					title: "MA Paste",
+					callback: function() {
+						jltmaPasteAtRoot(view);
+					}
+				}]
+			});
+		} catch (err) {}
+		return behaviors;
 	});
 })(jQuery);
 //#endregion

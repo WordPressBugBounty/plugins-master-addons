@@ -17,7 +17,7 @@ class Megamenu_Cpt_Api
 
     public function __construct()
     {
-        $this->config("/mastermega-content", "/(?P<type>\w+)/(?P<key>[\w-]+)?(?:/(?P<id>\d+))?/?");
+        $this->config("/mastermega-content", "/(?P<type>\w+)/(?P<key>[\w-]+)?(?:/(?P<id>\d+))?/?", array('get_jltma_content_editor'));
         // $this->config("/mastermega-content", "/(?P<type>\w+)/(?P<key>[\w-]+)(?:/(?P<id>\d+))?/?"); 2 
         // $this->config("/mastermega-content", "/(?P<type>\w+)/(?P<key>\w+(|[-]\w+))/"); 1 
         $this->init();

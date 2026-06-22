@@ -351,7 +351,22 @@ class Megamenu_Nav_Walker extends \Walker_Nav_Menu
                     $output .= '<ul class="dropdown-menu jltma-megamenu ' . esc_attr($menu_transition) . '" style="' . esc_attr($megamenu_style) . '">';
                     if ($builder_post != null) {
                         $elementor = \Elementor\Plugin::instance();
-                        $output .= $elementor->frontend->get_builder_content_for_display($builder_post->ID);
+                        // Pass $with_css = true so the mega menu content's Elementor CSS is
+                        // printed inline with the markup. The walker runs in <body> after
+                        // wp_head has fired, so the external post-{id}.css enqueue is too late;
+                        // inline CSS keeps styling correct on every render regardless of cache state.
+                        $output .= $elementor->frontend->get_builder_content_for_display($builder_post->ID, true);
+
+                        // Register this mega menu content post with Elementor's Atomic Widgets
+                        // styles manager. Atomic Elements render class-based CSS as external
+                        // file handles enqueued on `elementor/frontend/after_enqueue_post_styles`,
+                        // collecting post IDs from `elementor/post/render`. Elementor fires both
+                        // only for the main queried post -- never for mega menu CPT posts. We are
+                        // already in the exact scope of an active, rendered mega menu item, so we
+                        // register it here (no global scan) and trigger the styles pass once in
+                        // the footer (see queue_megamenu_styles()).
+                        do_action('elementor/post/render', $builder_post->ID);
+                        self::queue_megamenu_styles();
                     } else {
                         $output .= esc_html__('Menu content not found', 'master-addons' );
                     }
@@ -363,6 +378,35 @@ class Megamenu_Nav_Walker extends \Walker_Nav_Menu
         }
     }
 
+
+    /**
+     * Trigger Elementor's Atomic Widgets styles pass for the mega menu content
+     * posts collected via `elementor/post/render` during the walk.
+     *
+     * The walker runs in <body>, after Elementor's head-time styles pass
+     * (wp_enqueue_scripts priority 20) has already fired -- too late to enqueue
+     * into <head>. So we re-fire `after_enqueue_post_styles` once on wp_footer
+     * at priority 5, before WordPress prints late styles (wp_print_footer_scripts
+     * at priority 20). The atomic styles manager renders the collected posts'
+     * class-based CSS and enqueues it as late styles. No FOUC: the mega menu
+     * dropdown is display:none until hover, so the CSS lands before any reveal.
+     *
+     * Hooked once per request, and only when an active mega menu actually
+     * rendered -- pages without a mega menu do zero extra work.
+     */
+    private static $styles_queued = false;
+
+    private static function queue_megamenu_styles()
+    {
+        if (self::$styles_queued) {
+            return;
+        }
+        self::$styles_queued = true;
+
+        add_action('wp_footer', function () {
+            do_action('elementor/frontend/after_enqueue_post_styles');
+        }, 5);
+    }
 
     public static function get_instance()
     {

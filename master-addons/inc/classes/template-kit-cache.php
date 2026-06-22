@@ -1932,7 +1932,26 @@ class Template_Kit_Cache
             if (class_exists('ZipArchive')) {
                 $zip = new \ZipArchive();
                 if ($zip->open($zip_file) === true) {
-                    $zip->extractTo($destination);
+                    // ZipArchive::extractTo() does not validate entry paths, so a
+                    // crafted archive could write outside $destination ("Zip Slip").
+                    // Validate every entry and only extract the explicit safe list;
+                    // bail out entirely if any entry is absolute or traverses upward.
+                    $safe_entries = array();
+                    for ($i = 0; $i < $zip->numFiles; $i++) {
+                        $entry = $zip->getNameIndex($i);
+                        if (false === $entry) {
+                            continue;
+                        }
+                        $normalized = str_replace('\\', '/', $entry);
+                        if (false !== strpos($entry, "\0")
+                            || preg_match('#(^/|^[A-Za-z]:|(^|/)\.\.(/|$))#', $normalized)) {
+                            $zip->close();
+                            return false;
+                        }
+                        $safe_entries[] = $entry;
+                    }
+
+                    $zip->extractTo($destination, $safe_entries);
                     $zip->close();
 
                     // Process manifest after extraction

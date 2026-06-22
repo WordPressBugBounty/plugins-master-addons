@@ -20,6 +20,13 @@ class Megamenu_Cpt
         // Auto-enable post type in Elementor settings
         add_filter('elementor/utils/get_public_post_types', [$this, 'add_to_elementor_post_types']);
 
+        // When mega menu content is saved, bust Elementor's cache so every page
+        // that embeds it via the Nav Menu widget re-renders with fresh markup and
+        // CSS. Saving the content only clears its own post cache, leaving the
+        // embedding page's element cache stale -- which is why a manual page
+        // re-save was previously needed to see updates on the frontend.
+        add_action('save_post_mastermega_content', [$this, 'clear_elementor_cache_on_save']);
+
         // If Elementor is already loaded, register immediately
         if (did_action('elementor/init')) {
             $this->register_with_elementor();
@@ -64,6 +71,21 @@ class Megamenu_Cpt
         if (!in_array($post_type, $cpt_support)) {
             $cpt_support[] = $post_type;
             update_option('elementor_cpt_support', $cpt_support);
+        }
+    }
+
+    /**
+     * Clear Elementor's generated cache (CSS files + element cache) after a mega
+     * menu content post is saved, so embedding pages render the latest content.
+     */
+    public function clear_elementor_cache_on_save($post_id)
+    {
+        if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+            return;
+        }
+
+        if (class_exists('\Elementor\Plugin') && isset(\Elementor\Plugin::$instance->files_manager)) {
+            \Elementor\Plugin::$instance->files_manager->clear_cache();
         }
     }
 

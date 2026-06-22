@@ -64,6 +64,10 @@ class Nav_Menu extends Master_Widget
     {
         return '.' . $this->get_widget_class();
     }
+    
+    protected function is_dynamic_content(): bool {
+        return true;
+    }
 
     public function get_widget_class()
     {

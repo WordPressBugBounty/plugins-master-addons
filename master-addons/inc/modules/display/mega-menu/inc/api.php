@@ -15,7 +15,7 @@ class Megamenu_Api
 
     public function __construct()
     {
-        $this->config('/megamenu', '');
+        $this->config('/megamenu', '', array('get_jltma_save_menuitem_settings', 'get_get_menuitem_settings'));
         $this->init();
     }
 
