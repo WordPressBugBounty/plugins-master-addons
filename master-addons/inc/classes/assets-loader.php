@@ -855,6 +855,7 @@ class Assets_Loader
         // whichever wins still has everything.
         $jltma_shared_scripts_data = array(
             'plugin_url' => defined('JLTMA_URL') ? JLTMA_URL : (defined('JLTMA_PRO_URL') ? untrailingslashit(JLTMA_PRO_URL) : ''),
+            'assets_url' => defined('JLTMA_ASSETS') ? untrailingslashit(JLTMA_ASSETS) : (defined('JLTMA_PRO_ASSETS') ? untrailingslashit(JLTMA_PRO_ASSETS) : ''),
             'ajaxurl'    => admin_url('admin-ajax.php'),
             'nonce'      => wp_create_nonce('master-addons-elementor'),
         );

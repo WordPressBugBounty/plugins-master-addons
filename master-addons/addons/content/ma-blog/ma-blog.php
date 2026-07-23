@@ -196,10 +196,16 @@ class Blog extends Master_Widget
 					'25%' => __('4 Columns', 'master-addons')
 				],
 				'default' => '25%',
+				// Columns stacked below the tablet breakpoint before this control was
+				// responsive, so keep one column on mobile unless it is set otherwise.
+				'mobile_default' => '100%',
 				'render_type' => 'template',
 				'label_block' => true,
 				'selectors' => [
-					'{{WRAPPER}} .jltma-blog-post-outer-container' => 'width: {{VALUE}};'
+					// The grid items are flex children of .jltma-blog-wrapper, so their width
+					// comes from flex-basis and max-width, not from width alone. Carousel
+					// slides live in a different wrapper and keep the swiper sizing.
+					'{{WRAPPER}} .jltma-blog-wrapper > .jltma-post-outer-container' => 'flex: 0 0 {{VALUE}}; max-width: {{VALUE}}; width: {{VALUE}};'
 				],
 			]
 		);
@@ -322,8 +328,10 @@ class Blog extends Master_Widget
 			'ma_el_blog_total_posts_number',
 			[
 				'label' => __('Total Number of Posts', 'master-addons'),
+				'description' => __('Maximum number of posts pagination spans. Leave empty to use every post matching the query.', 'master-addons'),
 				'type' => Controls_Manager::NUMBER,
-				'default' => wp_count_posts()->publish
+				'min' => 1,
+				'default' => ''
 			]
 		);
 
@@ -2073,6 +2081,168 @@ class Blog extends Master_Widget
 	 * Renders Post Title
 	 * @since 1.1.5
 	 */
+	protected function jltma_el_get_archive_link($archive_url)
+	{
+		$post_type = get_post_type();
+
+		// Core posts are the default of every archive query, no query var needed.
+		if ('post' === $post_type || empty($archive_url)) {
+			return $archive_url;
+		}
+
+		// Custom post types keep their archive filtered as long as they are publicly queryable,
+		// since WP only accepts the post_type query var for publicly queryable types.
+		$post_type_object = get_post_type_object($post_type);
+
+		if ($post_type_object && !empty($post_type_object->publicly_queryable)) {
+			return add_query_arg('post_type', $post_type, $archive_url);
+		}
+
+		return $archive_url;
+	}
+
+	protected function jltma_el_get_post_date_link()
+	{
+		$year  = get_the_time('Y');
+		$month = get_the_time('m');
+		$day   = get_the_time('d');
+
+		if (empty($year)) {
+			return get_permalink();
+		}
+
+		$post_type        = get_post_type();
+		$post_type_object = get_post_type_object($post_type);
+
+		// A date archive only resolves for posts or publicly queryable custom post types.
+		if ('post' !== $post_type && (!$post_type_object || empty($post_type_object->publicly_queryable))) {
+			return get_permalink();
+		}
+
+		return $this->jltma_el_get_archive_link(get_day_link($year, $month, $day));
+	}
+
+	protected function jltma_el_get_post_author_link()
+	{
+		$author_id   = (int) get_the_author_meta('ID');
+		$author_name = get_the_author();
+
+		if (!$author_id) {
+			return esc_html($author_name);
+		}
+
+		return sprintf(
+			'<a href="%1$s" rel="author">%2$s</a>',
+			esc_url($this->jltma_el_get_archive_link(get_author_posts_url($author_id))),
+			esc_html($author_name)
+		);
+	}
+
+	/**
+	 * Pagination link template.
+	 *
+	 * On singular pages (a normal Elementor page) WordPress reserves the "paged" query var
+	 * for archives, so get_pagenum_link() builds links that redirect straight back to page 1.
+	 * Singular requests must use the post paging form (/page-slug/2/ or ?page=2) instead,
+	 * which is exactly what redirect_canonical() normalises to.
+	 */
+	protected function jltma_el_get_pagination_args()
+	{
+		global $wp_rewrite;
+
+		// On archives paginate_links() already builds the right base and format itself.
+		if (!is_singular() || is_front_page()) {
+			return [];
+		}
+
+		// The queried object, not the global $post: pagination is rendered after the loop,
+		// where the global still points at the last post the widget printed.
+		$post = get_post(get_queried_object_id());
+
+		if (!$post) {
+			return [];
+		}
+
+		$url = get_permalink($post);
+
+		// '%_%' is dropped by paginate_links() on page 1, keeping that link clean.
+		if ('' === get_option('permalink_structure') || in_array($post->post_status, ['draft', 'pending'], true)) {
+			return [
+				'base' => $url . '%_%',
+				'format' => (false === strpos($url, '?') ? '?' : '&') . 'page=%#%',
+			];
+		}
+
+		// A static front page keeps using the archive style pagination base.
+		if ('page' === get_option('show_on_front') && (int) get_option('page_on_front') === (int) $post->ID) {
+			return [
+				'base' => trailingslashit($url) . '%_%',
+				'format' => user_trailingslashit($wp_rewrite->pagination_base . '/%#%', 'single_paged'),
+			];
+		}
+
+		return [
+			'base' => trailingslashit($url) . '%_%',
+			'format' => user_trailingslashit('%#%', 'single_paged'),
+		];
+	}
+
+	protected function jltma_el_get_post_terms_links($taxonomy, $separator)
+	{
+		$terms = get_the_terms(get_the_ID(), $taxonomy);
+
+		if (empty($terms) || is_wp_error($terms)) {
+			return '';
+		}
+
+		$links = [];
+
+		foreach ($terms as $term) {
+			$term_link = get_term_link($term);
+
+			if (is_wp_error($term_link)) {
+				continue;
+			}
+
+			$links[] = sprintf(
+				'<a href="%1$s" rel="tag">%2$s</a>',
+				esc_url($this->jltma_el_get_archive_link($term_link)),
+				esc_html($term->name)
+			);
+		}
+
+		return implode($separator, $links);
+	}
+
+	/**
+	 * Tag-style term links for a post, covering post_tag plus every other public taxonomy
+	 * that is not the hierarchical category shown in the categories meta. This is what makes
+	 * custom post type taxonomies registered by ACF and similar plugins show up in the
+	 * bottom tag list of the widget.
+	 */
+	protected function jltma_el_get_post_tag_links($separator = ', ')
+	{
+		$taxonomies = get_object_taxonomies(get_post_type(), 'objects');
+
+		$links = [];
+
+		foreach ($taxonomies as $taxonomy) {
+
+			// Category is shown in its own meta, and non-public taxonomies have no archive.
+			if ('category' === $taxonomy->name || empty($taxonomy->public)) {
+				continue;
+			}
+
+			$term_links = $this->jltma_el_get_post_terms_links($taxonomy->name, $separator);
+
+			if ('' !== $term_links) {
+				$links[] = $term_links;
+			}
+		}
+
+		return implode($separator, $links);
+	}
+
 	protected function jltma_el_get_post_meta($link_target)
 	{
 
@@ -2097,7 +2267,7 @@ class Blog extends Master_Widget
 						<?php if ($settings['ma_el_blog_post_meta_icon'] === 'yes') { ?>
 							<i class="fa fa-user fa-fw"></i>
 						<?php } ?>
-						<?php the_author_posts_link(); ?>
+						<?php echo wp_kses_post($this->jltma_el_get_post_author_link()); ?>
 					</span>
 				<?php endif; ?>
 
@@ -2117,7 +2287,7 @@ class Blog extends Master_Widget
 								</span>
 							</time>
 						<?php } else { ?>
-							<a href="<?php the_permalink(); ?>"
+							<a href="<?php echo esc_url($this->jltma_el_get_post_date_link()); ?>"
 								target="<?php echo esc_attr($link_target); ?>"><?php the_time($date_format); ?></a>
 						<?php } ?>
 					</span>
@@ -2128,7 +2298,7 @@ class Blog extends Master_Widget
 						<?php if ($settings['ma_el_blog_post_meta_icon'] === 'yes') { ?>
 							<i class="fa fa-tags fa-fw"></i>
 						<?php } ?>
-						<?php the_category(', '); ?>
+						<?php echo wp_kses_post($this->jltma_el_get_post_terms_links('category', ', ')); ?>
 					</span>
 				<?php endif; ?>
 
@@ -2172,7 +2342,7 @@ class Blog extends Master_Widget
 							<?php if ($settings['ma_el_blog_post_meta_icon'] === 'yes') { ?>
 								<i class="fa fa-user fa-fw"></i>
 							<?php } ?>
-							<?php the_author_posts_link(); ?>
+							<?php echo wp_kses_post($this->jltma_el_get_post_author_link()); ?>
 						</span>
 					<?php endif; ?>
 
@@ -2181,7 +2351,7 @@ class Blog extends Master_Widget
 							<?php if ($settings['ma_el_blog_post_meta_icon'] === 'yes') { ?>
 								<i class="fa fa-calendar fa-fw"></i>
 							<?php } ?>
-							<a href="<?php the_permalink(); ?>"
+							<a href="<?php echo esc_url($this->jltma_el_get_post_date_link()); ?>"
 								target="<?php echo esc_attr($link_target); ?>"><?php the_time($date_format); ?></a></span>
 					<?php endif; ?>
 
@@ -2190,7 +2360,7 @@ class Blog extends Master_Widget
 							<?php if ($settings['ma_el_blog_post_meta_icon'] === 'yes') { ?>
 								<i class="fa fa-tags fa-fw"></i>
 							<?php } ?>
-							<?php the_category(', '); ?>
+							<?php echo wp_kses_post($this->jltma_el_get_post_terms_links('category', ', ')); ?>
 						</span>
 					<?php endif; ?>
 
@@ -2283,13 +2453,21 @@ class Blog extends Master_Widget
 
 		if ('yes' === $settings['ma_el_blog_cat_tabs'] && 'yes' !== $settings['ma_el_blog_carousel']) {
 
-			$categories = get_the_category($post_id);
+			// Tag every taxonomy the post belongs to, so filter tabs also match
+			// custom taxonomies used by custom post types.
+			$taxonomies = get_object_taxonomies(get_post_type($post_id));
 
-			foreach ($categories as $index => $category) {
+			foreach ($taxonomies as $taxonomy) {
 
-				$category = str_replace(' ', '-', $category->cat_name);
+				$terms = get_the_terms($post_id, $taxonomy);
 
-				$this->add_render_attribute($tax_key, 'class', strtolower($category));
+				if (empty($terms) || is_wp_error($terms)) {
+					continue;
+				}
+
+				foreach ($terms as $term) {
+					$this->add_render_attribute($tax_key, 'class', Helper::jltma_el_blog_get_term_filter_class($term));
+				}
 			}
 		}
 
@@ -2454,7 +2632,12 @@ class Blog extends Master_Widget
 													}
 													?>
 
-													<?php if ($settings['ma_el_post_grid_tags_meta'] === 'yes' && has_tag()): ?>
+													<?php
+													$jltma_post_grid_tag_separetor = ($settings['jltma_post_grid_tag_separetor']) ? $settings['jltma_post_grid_tag_separetor'] : ' ';
+													// Tags plus every other custom taxonomy (e.g. ACF taxonomies) the post has.
+													$jltma_post_grid_tag_links = $this->jltma_el_get_post_tag_links($jltma_post_grid_tag_separetor);
+													?>
+													<?php if ($settings['ma_el_post_grid_tags_meta'] === 'yes' && '' !== $jltma_post_grid_tag_links): ?>
 														<div class="jltma-blog-post-tags-container" style="<?php if ($settings['jltma_el_blog_post_format_icon'] !== 'yes'):
 															echo 'margin-left:0px;';
 														endif; ?>">
@@ -2464,10 +2647,7 @@ class Blog extends Master_Widget
 																	<i class="fa fa-tags fa-fw"></i>
 																<?php } ?>
 
-																<?php
-																$jltma_post_grid_tag_separetor = ($settings['jltma_post_grid_tag_separetor']) ? $settings['jltma_post_grid_tag_separetor'] : ' ';
-																the_tags(' ', $jltma_post_grid_tag_separetor);
-																?>
+																<?php echo ' ' . wp_kses_post($jltma_post_grid_tag_links); ?>
 															</span>
 														</div>
 													<?php endif; ?>
@@ -2635,13 +2815,16 @@ class Blog extends Master_Widget
 												</span>
 											</a>
 										</li>
-										<?php foreach ($settings['ma_el_blog_categories'] as $index => $id) {
+										<?php
+										// Selected values are term IDs of any taxonomy, not only core categories.
+										$filter_terms = Helper::jltma_el_blog_get_terms_by_ids($settings['ma_el_blog_categories']);
+
+										foreach ($filter_terms as $index => $term) {
 											$cat_list_key = 'blog_category_' . $index;
 
-											$name = get_cat_name($id);
+											$name = $term->name;
 
-											$name_filter = str_replace(' ', '-', $name);
-											$name_lower = strtolower($name_filter);
+											$name_lower = Helper::jltma_el_blog_get_term_filter_class($term);
 
 											$this->add_render_attribute(
 												$cat_list_key,
@@ -2703,18 +2886,14 @@ class Blog extends Master_Widget
 
 						<div class="jltma-blog-pagination">
 							<?php
-							$count_posts = wp_count_posts();
-							$published_posts = $count_posts->publish;
+							// Pages are counted from the posts this widget actually queries
+							// (post type, author, taxonomies, exclusions), not from every
+							// published post on the site.
+							$page_tot = Helper::jltma_el_blog_get_total_pages($settings);
 
-							$total_posts = !empty($settings['ma_el_blog_total_posts_number']) ? $settings['ma_el_blog_total_posts_number'] : $published_posts;
-
-							$page_tot = ceil(($total_posts - $offset) / $settings['ma_el_blog_posts_per_page']);
 							if ($page_tot > 1) {
-								$big = 999999999;
 								echo paginate_links( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- paginate_links returns WordPress-generated pagination HTML
-									array(
-										'base' => str_replace($big, '%#%', get_pagenum_link(999999999, false)),
-										'format' => '?paged=%#%',
+									array_merge($this->jltma_el_get_pagination_args(), array(
 										'current' => max(1, $paged),
 										'total' => $page_tot,
 										'prev_next' => true,
@@ -2723,7 +2902,7 @@ class Blog extends Master_Widget
 										'end_size' => 1,
 										'mid_size' => 2,
 										'type' => 'list'
-									)
+									))
 								);
 							}
 							?>

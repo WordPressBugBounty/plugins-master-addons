@@ -84,6 +84,9 @@ if (!class_exists('Master_Elementor_Addons')) {
 			//Body Class
 			add_action('body_class', [$this, 'jltma_body_class']);
 
+			// Keep paged requests alive for widgets that paginate on singular pages
+			add_filter('pre_handle_404', [$this, 'jltma_allow_widget_pagination'], 10, 2);
+
 			// AJAX handler for plugin install/activate
 			add_action('wp_ajax_jltma_plugin_action', [$this, 'jltma_ajax_plugin_action']);
 
@@ -100,6 +103,72 @@ if (!class_exists('Master_Elementor_Addons')) {
 
 			// Run pending upgrade migrations (e.g. legacy option key migration)
 			add_action('admin_init', [$this, 'jltma_maybe_run_upgrades'], 5);
+		}
+
+		/**
+		 * Stops WordPress from turning a paged singular request into a 404.
+		 *
+		 * WP::handle_404() only accepts the "page" query var when the post content is split
+		 * with <!--nextpage-->, so pagination rendered by a widget is answered with a 404 and
+		 * then canonically redirected back to page 1. Allow the request when the document
+		 * really does contain a widget that paginates that far.
+		 *
+		 * @see \WP::handle_404()
+		 */
+		public function jltma_allow_widget_pagination($handled, $wp_query)
+		{
+			if (false !== $handled || empty($wp_query->query_vars['page']) || !is_singular() || empty($wp_query->post)) {
+				return $handled;
+			}
+
+			if (!did_action('elementor/loaded') || !class_exists('\Elementor\Plugin')) {
+				return $handled;
+			}
+
+			$page = (int) trim($wp_query->query_vars['page'], '/');
+
+			if ($page < 2) {
+				return $handled;
+			}
+
+			$document = \Elementor\Plugin::$instance->documents->get($wp_query->post->ID);
+
+			if (!$document) {
+				return $handled;
+			}
+
+			$max_pages = $this->jltma_get_widget_max_pages($document->get_elements_data());
+
+			return ($page <= $max_pages) ? true : $handled;
+		}
+
+		/**
+		 * Highest pagination page any paginating widget in the document can render.
+		 */
+		private function jltma_get_widget_max_pages($elements)
+		{
+			$max_pages = 0;
+
+			foreach ((array) $elements as $element) {
+
+				if (!empty($element['elements'])) {
+					$max_pages = max($max_pages, $this->jltma_get_widget_max_pages($element['elements']));
+				}
+
+				if (empty($element['widgetType']) || 'ma-blog-post' !== $element['widgetType']) {
+					continue;
+				}
+
+				$settings = $element['settings'] ?? [];
+
+				if ('yes' !== ($settings['ma_el_blog_pagination'] ?? '') || 'yes' === ($settings['ma_el_blog_carousel'] ?? '')) {
+					continue;
+				}
+
+				$max_pages = max($max_pages, Helper::jltma_el_blog_get_total_pages($settings));
+			}
+
+			return $max_pages;
 		}
 
 		/**

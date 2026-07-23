@@ -27,11 +27,11 @@
 			ma_el_cover = $scope.attr("data-ma-el-bg-slider-cover");
 			ma_el_delay = $scope.attr("data-ma-el-bs-slider-delay");
 			ma_el_timer = $scope.attr("data-ma-el-bs-slider-timer");
-			if (ma_el_custom_overlay == "yes") ma_el_overlay = JLTMA_SCRIPTS.plugin_url + "/assets/vendor/vegas/overlays/00.png";
+			if (ma_el_custom_overlay == "yes") ma_el_overlay = JLTMA_SCRIPTS.assets_url + "/assets/vendor/vegas/overlays/00.png";
 			else {
 				var overlay_file = $scope.attr("data-ma-el-bg-slider-overlay");
-				if (overlay_file) ma_el_overlay = JLTMA_SCRIPTS.plugin_url + "/assets/vendor/vegas/overlays/" + overlay_file + ".png";
-				else ma_el_overlay = JLTMA_SCRIPTS.plugin_url + "/assets/vendor/vegas/overlays/00.png";
+				if (overlay_file) ma_el_overlay = JLTMA_SCRIPTS.assets_url + "/assets/vendor/vegas/overlays/" + overlay_file + ".png";
+				else ma_el_overlay = JLTMA_SCRIPTS.assets_url + "/assets/vendor/vegas/overlays/00.png";
 			}
 		} else {
 			var slider_wrapper = $scope.find(".ma-el-section-bs-inner");
@@ -41,11 +41,11 @@
 			ma_el_cover = slider_wrapper.attr("data-ma-el-bg-slider-cover");
 			ma_el_delay = slider_wrapper.attr("data-ma-el-bs-slider-delay");
 			ma_el_timer = slider_wrapper.attr("data-ma-el-bs-slider-timer");
-			if (ma_el_custom_overlay == "yes") ma_el_overlay = JLTMA_SCRIPTS.plugin_url + "/assets/vendor/vegas/overlays/00.png";
+			if (ma_el_custom_overlay == "yes") ma_el_overlay = JLTMA_SCRIPTS.assets_url + "/assets/vendor/vegas/overlays/00.png";
 			else {
 				var overlay_file = slider_wrapper.attr("data-ma-el-bg-slider-overlay");
-				if (overlay_file && overlay_file !== "00.png") ma_el_overlay = JLTMA_SCRIPTS.plugin_url + "/assets/vendor/vegas/overlays/" + overlay_file;
-				else ma_el_overlay = JLTMA_SCRIPTS.plugin_url + "/assets/vendor/vegas/overlays/00.png";
+				if (overlay_file && overlay_file !== "00.png") ma_el_overlay = JLTMA_SCRIPTS.assets_url + "/assets/vendor/vegas/overlays/" + overlay_file;
+				else ma_el_overlay = JLTMA_SCRIPTS.assets_url + "/assets/vendor/vegas/overlays/00.png";
 			}
 		}
 		ma_el_slides = slider_images.split(",");

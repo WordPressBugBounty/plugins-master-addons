@@ -1,4 +1,13 @@
 == Changelog ==
+= Master Elementor Addons 3.1.6 (23-07-2026) =
+* Fixed: Blog Posts widget date, author, category, and tag links now open the correct archive, including for custom post types (the post type is kept in the link).
+* Fixed: Blog Posts pagination now counts only the posts the widget actually queries, so an extra empty page no longer appears — and the Next/page links now work when the widget is placed on a normal page.
+* Fixed: Blog Posts responsive "Number of Columns" for tablet and mobile now applies correctly.
+* Added: Blog Posts filter tabs and query now support custom taxonomies, so custom post types (e.g. from ACF) can be filtered.
+* Added: Blog Posts now shows custom taxonomy terms in the bottom tag list.
+* Fixed: Background Slider overlay images now load from the correct assets URL, so overlays show up on both the free and Pro builds.
+* Maintenance: Updated the Freemius licensing library to 2.13.4.
+
 = Master Elementor Addons 3.1.5 (18-06-2026) =
 * Security: Made the Recommended Plugins screen safer so only the plugins we list can be installed or activated.
 * Security: Tightened the Mega Menu so it only responds to its own known actions.

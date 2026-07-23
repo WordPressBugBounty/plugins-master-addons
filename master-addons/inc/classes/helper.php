@@ -1086,22 +1086,134 @@ class Helper {
 
 
 	public static function jltma_el_blog_post_type_categories() {
-		$terms = get_terms(
+		// Core categories first so existing selections keep their familiar labels,
+		// then every other public taxonomy so custom post types can be filtered too.
+		$taxonomies = get_taxonomies(
+			array(
+				'public' => true,
+			),
+			'objects'
+		);
+
+		unset( $taxonomies['category'], $taxonomies['post_tag'] );
+
+		$options = array();
+
+		$category_terms = get_terms(
 			array(
 				'taxonomy'   => 'category',
 				'hide_empty' => true,
 			)
 		);
 
-		$options = array();
-
-		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-			foreach ( $terms as $term ) {
+		if ( ! empty( $category_terms ) && ! is_wp_error( $category_terms ) ) {
+			foreach ( $category_terms as $term ) {
 				$options[ $term->term_id ] = $term->name;
 			}
 		}
 
+		foreach ( $taxonomies as $taxonomy ) {
+			$terms = get_terms(
+				array(
+					'taxonomy'   => $taxonomy->name,
+					'hide_empty' => true,
+				)
+			);
+
+			if ( empty( $terms ) || is_wp_error( $terms ) ) {
+				continue;
+			}
+
+			foreach ( $terms as $term ) {
+				/* translators: 1: taxonomy label, 2: term name. */
+				$options[ $term->term_id ] = sprintf( '%1$s: %2$s', $taxonomy->labels->singular_name, $term->name );
+			}
+		}
+
 		return $options;
+	}
+
+	/**
+	 * Resolves saved control values (term IDs) into term objects of any taxonomy.
+	 */
+	public static function jltma_el_blog_get_terms_by_ids( $term_ids ) {
+
+		$terms = array();
+
+		foreach ( (array) $term_ids as $term_id ) {
+
+			$term_id = (int) $term_id;
+
+			if ( ! $term_id ) {
+				continue;
+			}
+
+			$term = get_term( $term_id );
+
+			if ( ! $term || is_wp_error( $term ) ) {
+				continue;
+			}
+
+			$terms[] = $term;
+		}
+
+		return $terms;
+	}
+
+	/**
+	 * CSS class used by the isotope filter tabs. Tabs and posts must agree on it.
+	 */
+	public static function jltma_el_blog_get_term_filter_class( $term ) {
+
+		$class = sanitize_html_class( strtolower( str_replace( ' ', '-', $term->name ) ) );
+
+		if ( '' === $class ) {
+			$class = sanitize_html_class( $term->slug, 'term-' . $term->term_id );
+		}
+
+		// Core categories keep their historical class, other taxonomies are prefixed so
+		// same named terms of different taxonomies do not filter each other in.
+		if ( 'category' !== $term->taxonomy ) {
+			$class = sanitize_html_class( $term->taxonomy ) . '-' . $class;
+		}
+
+		return $class;
+	}
+
+	/**
+	 * Builds a tax_query from term IDs, grouped per taxonomy, so custom taxonomies work.
+	 *
+	 * The old 'category' / 'tag__in' arguments only ever matched the core taxonomies.
+	 */
+	public static function jltma_el_blog_build_tax_query( $term_ids ) {
+
+		$terms = self::jltma_el_blog_get_terms_by_ids( $term_ids );
+
+		if ( empty( $terms ) ) {
+			return array();
+		}
+
+		$grouped = array();
+
+		foreach ( $terms as $term ) {
+			$grouped[ $term->taxonomy ][] = $term->term_id;
+		}
+
+		$tax_query = array();
+
+		foreach ( $grouped as $taxonomy => $ids ) {
+			$tax_query[] = array(
+				'taxonomy' => $taxonomy,
+				'field'    => 'term_id',
+				'terms'    => $ids,
+			);
+		}
+
+		if ( count( $tax_query ) > 1 ) {
+			$tax_query['relation'] = 'OR';
+		}
+
+		return $tax_query;
 	}
 
 
@@ -1165,9 +1277,21 @@ class Helper {
 			$post_args['author'] = implode( ',', $authors );
 		}
 
-		$post_args['post_type']           = $settings['ma_el_post_grid_type'] ?? $settings['ma_el_timeline_post_type'] ?? 'post';
-		$post_args['category']            = $settings['ma_el_blog_categories'] ?? $settings['ma_el_timeline_categories'] ?? '';
-		$post_args['tag__in']             = $settings['ma_el_blog_tags'] ?? $settings['ma_el_timeline_tags'] ?? '';
+		$post_args['post_type'] = $settings['ma_el_post_grid_type'] ?? $settings['ma_el_timeline_post_type'] ?? 'post';
+
+		// Categories and tags are stored as term IDs of any taxonomy, so they are resolved
+		// into a tax_query instead of the core-only 'category' and 'tag__in' arguments.
+		$selected_terms = array_merge(
+			(array) ( $settings['ma_el_blog_categories'] ?? $settings['ma_el_timeline_categories'] ?? array() ),
+			(array) ( $settings['ma_el_blog_tags'] ?? $settings['ma_el_timeline_tags'] ?? array() )
+		);
+
+		$tax_query = self::jltma_el_blog_build_tax_query( $selected_terms );
+
+		if ( ! empty( $tax_query ) ) {
+			$post_args['tax_query'] = $tax_query;
+		}
+
 		$post_args['post__not_in']        = $settings['ma_el_blog_posts_exclude'] ?? $settings['ma_el_timeline_posts_exclude'] ?? '';
 		$post_args['order']               = $settings['ma_el_blog_order'] ?? $settings['ma_el_timeline_order'] ?? 'DESC';
 		$post_args['orderby']             = $settings['ma_el_blog_order_by'] ?? $settings['ma_el_timeline_order_by'] ?? 'date';
@@ -1204,6 +1328,61 @@ class Helper {
 		wp_reset_postdata();
 
 		return $posts;
+	}
+
+	/**
+	 * Counts every post matching the widget query, ignoring pagination.
+	 *
+	 * get_posts() forces no_found_rows, so the render query cannot report a total.
+	 * This mirrors the same arguments through WP_Query to get a reliable found_posts.
+	 */
+	public static function jltma_el_blog_get_post_count( $args ) {
+
+		$count_args = $args;
+
+		unset( $count_args['numberposts'], $count_args['paged'], $count_args['offset'] );
+
+		// get_posts() maps 'category' to the 'cat' query var, WP_Query does not.
+		if ( ! empty( $count_args['category'] ) ) {
+			$count_args['cat'] = $count_args['category'];
+		}
+
+		unset( $count_args['category'] );
+
+		if ( empty( $count_args['post_status'] ) ) {
+			$count_args['post_status'] = ( 'attachment' === ( $count_args['post_type'] ?? 'post' ) ) ? 'inherit' : 'publish';
+		}
+
+		$count_args['posts_per_page']      = 1;
+		$count_args['fields']              = 'ids';
+		$count_args['no_found_rows']       = false;
+		$count_args['ignore_sticky_posts'] = true;
+
+		$count_query = new \WP_Query( $count_args );
+
+		return (int) $count_query->found_posts;
+	}
+
+	/**
+	 * Number of pagination pages a blog widget produces for its own query.
+	 */
+	public static function jltma_el_blog_get_total_pages( $settings ) {
+
+		$per_page = (int) ( $settings['ma_el_blog_posts_per_page'] ?? 0 );
+
+		if ( $per_page < 1 ) {
+			return 0;
+		}
+
+		$offset = (int) ( $settings['ma_el_blog_post_offset'] ?? 0 );
+
+		$found_posts = self::jltma_el_blog_get_post_count( self::jltma_el_blog_get_post_settings( $settings ) );
+
+		$total_posts = ! empty( $settings['ma_el_blog_total_posts_number'] )
+			? min( (int) $settings['ma_el_blog_total_posts_number'], $found_posts )
+			: $found_posts;
+
+		return (int) ceil( max( 0, $total_posts - $offset ) / $per_page );
 	}
 
 
