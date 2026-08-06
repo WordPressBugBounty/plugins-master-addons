@@ -1269,6 +1269,13 @@ class Helper {
 
 	public static function jltma_el_blog_get_post_settings( $settings ) {
 
+		// "Current Query" hands the archive being viewed straight to the widget, so a
+		// category, tag, date or author archive lists that archive's posts instead of
+		// the widget's own selection.
+		if ( 'current' === ( $settings['ma_el_blog_query_source'] ?? 'latest' ) ) {
+			return self::jltma_el_blog_get_current_query_settings( $settings );
+		}
+
 		$post_args = array();
 
 		$authors = $settings['ma_el_blog_users'] ?? [];
@@ -1299,6 +1306,52 @@ class Helper {
 		$post_args['ignore_sticky_posts'] = $settings['ma_el_post_grid_ignore_sticky'] ?? $settings['ma_el_timeline_ignore_sticky'] ?? 1;
 
 		return $post_args;
+	}
+
+	/**
+	 * Query arguments taken from the archive the visitor is looking at.
+	 *
+	 * The widget keeps control of how many posts a page shows; everything that decides
+	 * WHICH posts (taxonomy term, date, author, search) comes from the main query.
+	 *
+	 * @param array $settings Widget settings.
+	 * @return array
+	 */
+	public static function jltma_el_blog_get_current_query_settings( $settings ) {
+
+		global $wp_query;
+
+		$query_args = ( $wp_query instanceof \WP_Query ) ? $wp_query->query_vars : array();
+
+		// Pagination is re-applied by jltma_el_blog_get_post_data() from the widget's
+		// own per-page value, and these would fight it or skew the count.
+		unset(
+			$query_args['paged'],
+			$query_args['offset'],
+			$query_args['nopaging'],
+			$query_args['fields'],
+			$query_args['no_found_rows']
+		);
+
+		// get_posts() falls back to 'post' when post_type is empty. That is right for a
+		// date or author archive, but wrong for a taxonomy attached to a custom post
+		// type — the term archive would then return nothing.
+		if ( empty( $query_args['post_type'] ) ) {
+			$queried = get_queried_object();
+
+			if ( $queried instanceof \WP_Term ) {
+				$taxonomy = get_taxonomy( $queried->taxonomy );
+
+				if ( $taxonomy && ! empty( $taxonomy->object_type ) ) {
+					$query_args['post_type'] = $taxonomy->object_type;
+				}
+			}
+		}
+
+		$query_args['posts_per_page']      = $settings['ma_el_blog_posts_per_page'] ?? 10;
+		$query_args['ignore_sticky_posts'] = $settings['ma_el_post_grid_ignore_sticky'] ?? 1;
+
+		return $query_args;
 	}
 
 	public static function jltma_el_blog_get_post_data( $args, $paged, $new_offset ) {

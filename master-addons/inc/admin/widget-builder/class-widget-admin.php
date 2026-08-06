@@ -936,23 +936,21 @@ class Widget_Admin {
             }
         }
 
-        // Substitute {{field}} / {{field.prop}} placeholders with the mock default
-        // VALUE (escaped). This is a static render — no PHP is evaluated.
-        $html_code = preg_replace_callback('/\{\{([^}]+)\}\}/', function($matches) use ($settings) {
-            $path = array_filter(array_map('trim', explode('.', trim($matches[1]))), 'strlen');
-            $value = $settings;
-            foreach ($path as $key) {
-                if (is_array($value) && isset($value[$key])) {
-                    $value = $value[$key];
-                } else {
-                    return '';
+        // Render through the same Twig-subset engine the front end uses, so
+        // {% if %} / {% for %} behave here instead of printing as literal text.
+        // Still a static render: the engine evaluates no PHP.
+        $control_types = [];
+        if (!empty($controls) && is_array($controls)) {
+            foreach ($controls as $control) {
+                if (!empty($control['name'])) {
+                    $control_types[$control['name']] = $control['type'] ?? 'text';
                 }
             }
-            if (is_array($value)) {
-                $value = isset($value['url']) ? $value['url'] : '';
-            }
-            return esc_html((string) $value);
-        }, $html_code);
+        }
+
+        $engine     = new Widget_Template_Engine($control_types);
+        $html_code  = $engine->render($html_code, $settings);
+        $css_code   = $engine->render($css_code, $settings);
 
         $rendered_html = wp_kses_post($html_code);
 

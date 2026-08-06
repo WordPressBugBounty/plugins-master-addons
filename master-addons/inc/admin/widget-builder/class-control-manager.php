@@ -165,7 +165,10 @@ class Control_Manager {
         }
 
         if (isset($field['default'])) {
-            $args['default'] = $field['default'];
+            $default = $this->normalize_fallback_default($field['default'], $args['type']);
+            if (null !== $default) {
+                $args['default'] = $default;
+            }
         }
 
         return [
@@ -173,6 +176,55 @@ class Control_Manager {
             'responsive' => !empty($field['responsive']),
             'args'       => $args,
         ];
+    }
+
+    /**
+     * Reconcile a stored default with the shape Elementor expects for the control type.
+     *
+     * Data controls such as MEDIA, ICONS, GALLERY or DIMENSIONS declare an ARRAY
+     * default. Elementor merges our value into it (array_merge), so handing it the
+     * scalar '' the builder stores for an untouched field raises a TypeError and
+     * fatals the editor's controls-config ajax request. Wrap a usable scalar into
+     * the array shape when we can infer it, otherwise drop the key and let
+     * Elementor fall back to its own default.
+     *
+     * @param mixed  $default      Stored default value.
+     * @param string $control_type Resolved Elementor control type.
+     * @return mixed|null Normalized default, or null when it must be omitted.
+     */
+    private function normalize_fallback_default($default, $control_type) {
+        if (is_array($default) || !class_exists('\\Elementor\\Plugin')) {
+            return $default;
+        }
+
+        $elementor = \Elementor\Plugin::instance();
+        if (empty($elementor->controls_manager)) {
+            return $default;
+        }
+
+        $instance = $elementor->controls_manager->get_control($control_type);
+        if (!$instance || !($instance instanceof \Elementor\Base_Data_Control)) {
+            return $default;
+        }
+
+        $control_default = $instance->get_default_value();
+        if (!is_array($control_default)) {
+            return $default;
+        }
+
+        $value = is_scalar($default) ? (string) $default : '';
+        if ('' === $value) {
+            return null;
+        }
+
+        // Single-value shapes we can safely infer (MEDIA/IMAGE -> url, ICONS -> value).
+        foreach (['url', 'value'] as $key) {
+            if (array_key_exists($key, $control_default)) {
+                return array_merge($control_default, [$key => $value]);
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -206,8 +258,13 @@ class Control_Manager {
         }
 
         if (isset($field['default'])) {
-            $default = $this->export_default_value($field['default']);
-            $content .= "\t\t\t\t'default' => {$default},\n";
+            $const_name  = '\\Elementor\\Controls_Manager::' . $type_const;
+            $native_type = defined($const_name) ? constant($const_name) : 'text';
+            $normalized  = $this->normalize_fallback_default($field['default'], $native_type);
+            if (null !== $normalized) {
+                $default  = $this->export_default_value($normalized);
+                $content .= "\t\t\t\t'default' => {$default},\n";
+            }
         }
 
         $content .= "\t\t\t]\n";

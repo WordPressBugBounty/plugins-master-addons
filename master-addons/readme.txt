@@ -4,7 +4,7 @@ Tags: elementor addons, elementor widgets, mega menu builder, popup builder, ele
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 3.1.6
+Stable tag: 3.1.7
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -369,6 +369,9 @@ This plugin connects to a few external services from inside the WordPress admin.
 
 
 == Changelog ==
+= Master Elementor Addons v3.1.7 (06-08-2026) =
+* Fixed: Imported widget builder json file infinite loading in elementor editor issue fixed.
+* Fixed: Widget Builder CSS & JS unlock Pro & Includes lock to pro badge.
 
 = Master Elementor Addons v3.1.6 (23-07-2026) =
 * Fixed: Blog Posts widget date, author, category, and tag links now open the correct archive, including for custom post types (the post type is kept in the link).
