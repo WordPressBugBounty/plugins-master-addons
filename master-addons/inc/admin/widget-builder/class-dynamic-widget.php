@@ -79,6 +79,8 @@ class Dynamic_Widget extends Master_Widget {
 
     private function jltma_load_data() {
         $data = get_post_meta($this->jltma_post_id, '_jltma_widget_data', true);
+        
+        // Fallback to default values if no data is found or if the data is not an array.
         if (empty($data) || !is_array($data)) {
             $data = [
                 'title'     => get_the_title($this->jltma_post_id),
@@ -93,10 +95,8 @@ class Dynamic_Widget extends Master_Widget {
         $sections = get_post_meta($this->jltma_post_id, '_jltma_widget_sections', true);
         $data['sections'] = (!empty($sections) && is_array($sections)) ? $sections : [];
 
-        $includes = get_post_meta($this->jltma_post_id, '_jltma_widget_includes', true);
-        $data['includes'] = (!empty($includes) && is_array($includes))
-            ? $includes
-            : ['css_libraries' => [], 'js_libraries' => []];
+        // Premium-gated and normalised; free builds resolve to an empty set.
+        $data['includes'] = Widget_Builder_Init::get_widget_includes($this->jltma_post_id);
 
         $this->jltma_data = $data;
     }
@@ -126,42 +126,47 @@ class Dynamic_Widget extends Master_Widget {
     }
 
     public function get_style_depends() {
-        $handles = [];
-        foreach (($this->jltma_data['includes']['css_libraries'] ?? []) as $lib) {
-            if (!empty($lib['handle'])) {
-                $handles[] = sanitize_text_field($lib['handle']);
-            }
-        }
-        return $handles;
+        return wp_list_pluck($this->jltma_data['includes']['css_libraries'], 'handle');
     }
 
     public function get_script_depends() {
-        $handles = [];
-        foreach (($this->jltma_data['includes']['js_libraries'] ?? []) as $lib) {
-            if (!empty($lib['handle'])) {
-                $handles[] = sanitize_text_field($lib['handle']);
-            }
-        }
-        return $handles;
+        return wp_list_pluck($this->jltma_data['includes']['js_libraries'], 'handle');
     }
 
     /**
-     * Register external CSS/JS libraries declared via the widget's includes.
-     * Only URL sources are registered; the widget's own CSS/JS is emitted inline
-     * in render() (no files written).
+     * Opt out of Elementor's static element cache.
+     *
+     * A cached element is stored as finished HTML and its render() is never run
+     * again, which would silently drop the custom JS this widget queues for the
+     * footer. Reporting the widget as dynamic makes Elementor cache it as a
+     * re-rendered [elementor-element] placeholder instead, so render() runs on
+     * every request — the same treatment core gives Counter, Tabs and the other
+     * stateful widgets.
+     *
+     * Frontend only. Document::print_elements() turns the placeholder path on
+     * for the editor and preview too, but nothing expands the shortcode there,
+     * so the widget would render as an empty canvas while editing.
+     *
+     * @return bool
+     */
+    protected function is_dynamic_content(): bool {
+        return !Widget_Builder_Init::is_editor_context();
+    }
+
+    /**
+     * Register the external CSS/JS libraries declared via the widget's includes.
+     *
+     * The list is already premium-gated, normalised and URL-validated by
+     * Widget_Builder_Init::get_widget_includes(), so free builds register
+     * nothing here. The widget's own CSS/JS is emitted by render(), not from a
+     * file.
      */
     private function jltma_register_external_libraries() {
-        foreach (($this->jltma_data['includes']['css_libraries'] ?? []) as $lib) {
-            if (!empty($lib['handle']) && !empty($lib['src']) && filter_var($lib['src'], FILTER_VALIDATE_URL)) {
-                $deps = (!empty($lib['dependencies']) && is_array($lib['dependencies'])) ? array_map('sanitize_text_field', $lib['dependencies']) : [];
-                wp_register_style(sanitize_text_field($lib['handle']), esc_url_raw($lib['src']), $deps, '1.0.0');
-            }
+        foreach ($this->jltma_data['includes']['css_libraries'] as $lib) {
+            wp_register_style($lib['handle'], $lib['src'], $lib['dependencies'], '1.0.0');
         }
-        foreach (($this->jltma_data['includes']['js_libraries'] ?? []) as $lib) {
-            if (!empty($lib['handle']) && !empty($lib['src']) && filter_var($lib['src'], FILTER_VALIDATE_URL)) {
-                $deps = (!empty($lib['dependencies']) && is_array($lib['dependencies'])) ? array_map('sanitize_text_field', $lib['dependencies']) : [];
-                wp_register_script(sanitize_text_field($lib['handle']), esc_url_raw($lib['src']), $deps, '1.0.0', true);
-            }
+        foreach ($this->jltma_data['includes']['js_libraries'] as $lib) {
+            wp_register_script($lib['handle'], $lib['src'], $lib['dependencies'], '1.0.0', true);
         }
     }
 
@@ -237,6 +242,16 @@ class Dynamic_Widget extends Master_Widget {
     private function jltma_register_control($field_id, $field, $tab) {
         $type       = !empty($field['type']) ? strtoupper($field['type']) : 'TEXT';
         $tab_prefix = $this->jltma_tab_prefix($tab);
+        $locked     = $this->control_manager->is_locked_type($type);
+
+        // Locked TABS: the container itself holds no value, but its children do,
+        // and they consume control keys from the same counter. Walk them in the
+        // same order so every later control keeps the key its value is stored
+        // under — just hidden instead of editable.
+        if ($locked && 'TABS' === $type) {
+            $this->jltma_register_locked_tabs($field_id, $field, $tab, $tab_prefix);
+            return;
+        }
 
         // TABS: structural container keyed by its own name (matches generator).
         if ('TABS' === $type) {
@@ -251,6 +266,13 @@ class Dynamic_Widget extends Master_Widget {
 
         // POPOVER_TOGGLE: a normal toggle control followed by a popover of child fields.
         if ('POPOVER_TOGGLE' === $type) {
+            // Locked: no popover to open, so the children are registered hidden
+            // (keys are derived from the toggle's key, not the shared counter).
+            if ($locked) {
+                $this->jltma_apply_control($this->control_manager->build_locked_control_config($control_key, $field, $type));
+                $this->jltma_register_locked_popover_fields($control_key, $field);
+                return;
+            }
             $this->jltma_apply_control($this->control_manager->build_control_config($control_key, $field, $type));
             if (!empty($field['popover_fields']) && is_array($field['popover_fields'])) {
                 $this->jltma_register_popover_fields($control_key, $field, $tab, $tab_prefix);
@@ -384,6 +406,50 @@ class Dynamic_Widget extends Master_Widget {
         $this->jltma_apply_control($this->control_manager->build_control_config($key, $child, strtoupper($child['type'])));
     }
 
+    /**
+     * Register a locked TABS control: one notice, then every child as a hidden
+     * control, walked in the same order jltma_register_tabs() would use so the
+     * shared key counter advances identically.
+     */
+    private function jltma_register_locked_tabs($field_id, $field, $tab, $tab_prefix) {
+        $notice_key = $tab_prefix . 'jltma_pro_locked_' . $this->jltma_sanitize_key((string) $field_id) . '_' . $this->jltma_post_id;
+        $descriptor = $this->control_manager->build_locked_control_config($notice_key, $field, 'TABS');
+
+        if (!empty($descriptor['notice'])) {
+            $this->add_control($descriptor['notice']['key'], $descriptor['notice']['args']);
+        }
+
+        foreach ($this->jltma_extract_tabs($field) as $tab_def) {
+            foreach (($tab_def['controls'] ?? []) as $child) {
+                if (empty($child['type']) || empty($child['name'])) {
+                    continue;
+                }
+                $label = !empty($child['label']) ? $child['label'] : $child['name'];
+                $key   = $this->jltma_make_control_key($label, $tab_prefix);
+                $this->jltma_apply_control(
+                    $this->control_manager->build_locked_control_config($key, $child, strtoupper($child['type']), false)
+                );
+            }
+        }
+    }
+
+    /** Register a locked popover's child fields as hidden value carriers. */
+    private function jltma_register_locked_popover_fields($control_key, $field) {
+        if (empty($field['popover_fields']) || !is_array($field['popover_fields'])) {
+            return;
+        }
+
+        foreach ($field['popover_fields'] as $pf) {
+            if (empty($pf['name']) || empty($pf['type'])) {
+                continue;
+            }
+            $pf_key = $control_key . '_' . $this->jltma_sanitize_key($pf['name']);
+            $this->jltma_apply_control(
+                $this->control_manager->build_locked_control_config($pf_key, $pf, strtoupper($pf['type']), false)
+            );
+        }
+    }
+
     /** Register popover child fields (start_popover / children / end_popover). */
     private function jltma_register_popover_fields($control_key, $field, $tab, $tab_prefix) {
         $this->start_popover();
@@ -409,6 +475,18 @@ class Dynamic_Widget extends Master_Widget {
      */
     private function jltma_apply_control($descriptor) {
         if (empty($descriptor) || empty($descriptor['key']) || !isset($descriptor['args'])) {
+            return;
+        }
+
+        // Locked premium control: the "(Pro)" lock badge, then a hidden control
+        // that keeps the stored value flowing to render().
+        if (!empty($descriptor['method']) && 'locked' === $descriptor['method']) {
+            if (!empty($descriptor['notice'])) {
+                $notice = $descriptor['notice'];
+                $method = !empty($notice['responsive']) ? 'add_responsive_control' : 'add_control';
+                $this->{$method}($notice['key'], $notice['args']);
+            }
+            $this->add_control($descriptor['key'], $descriptor['args']);
             return;
         }
 
@@ -488,26 +566,36 @@ class Dynamic_Widget extends Master_Widget {
         $css  = isset($this->jltma_data['css_code']) ? (string) $this->jltma_data['css_code'] : '';
         $js   = isset($this->jltma_data['js_code']) ? (string) $this->jltma_data['js_code'] : '';
 
-        // Emitting custom CSS/JS is a premium-only capability. The free build
-        // outputs the HTML body only; the Pro build returns the <style>/<script>
-        // markup via these filters — see MasterAddons\Pro\Classes\Pro_Modules.
-        // Values are pre-rendered here (placeholder substitution, escaped per
-        // output) but the wrapping markup is emitted only by Pro, so no inline
-        // CSS/JS ships in the free plugin.
+        // Inline CSS. The stored body is PHP-/tag-stripped on save; placeholder
+        // substitution is escaped per output by the template renderer, so only
+        // the <style> wrapper is added here.
         $css_rendered = ('' !== trim($css)) ? $this->jltma_render_template($css, $context) : '';
-        $css_output   = apply_filters('master_addons/widget_builder/render_css', '', $css_rendered, $context);
-        if ('' !== $css_output) {
-            echo $css_output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- premium-rendered markup; value substitution escaped per-output
+        if ('' !== trim($css_rendered)) {
+            echo '<style>' . $css_rendered . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- plugin-sanitized CSS body; value substitution escaped per-output
         }
 
         // HTML body.
         echo $this->jltma_render_template($html, $context); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- value substitution escaped per-output; HTML body is plugin-sanitized data
 
-        // Inline JS.
+        // Custom JS. Raw JS is only ever persisted for users with unfiltered_html
+        // — see REST_Controller::save_widget_data().
+        //
+        // On the frontend it is queued for the footer rather than echoed here: an
+        // inline <script> in this position sits inside the_content, where core's
+        // convert_chars() rewrites every `&` to `&#038;` (it does not skip script
+        // blocks), which breaks any `&&` on parse.
+        //
+        // The editor canvas needs the opposite: it swaps a widget's markup on
+        // every edit without reloading the document, so a footer script would run
+        // once and never again — leaving anything the script reveals invisible.
+        // Editor output is not run through the_content, so inline is safe there.
         $js_rendered = ('' !== trim($js)) ? $this->jltma_render_template($js, $context) : '';
-        $js_output   = apply_filters('master_addons/widget_builder/render_js', '', $js_rendered, $context);
-        if ('' !== $js_output) {
-            echo $js_output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- premium-rendered markup; value substitution escaped per-output
+        if ('' !== trim($js_rendered)) {
+            if (Widget_Builder_Init::is_editor_context()) {
+                echo '<script>' . $js_rendered . '</script>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- plugin-sanitized JS body; value substitution escaped per-output
+            } else {
+                Widget_Builder_Init::enqueue_inline_js($js_rendered, $this->jltma_post_id);
+            }
         }
     }
 

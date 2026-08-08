@@ -99,28 +99,34 @@ class Shortcode_Manager {
 
             $output = '<div class="jltma-widget-shortcode jltma-wb-' . esc_attr($widget_id) . '">';
 
-            // Emitting custom CSS/JS is premium-only, matching Dynamic_Widget:
-            // values are rendered here but the wrapping markup comes from Pro.
+            // Custom CSS/JS output, matching Dynamic_Widget::render(): the stored
+            // bodies are sanitized on save and placeholder substitution is escaped
+            // per output, so only the <style>/<script> wrappers are added here.
             $css = isset($data['css_code']) ? (string) $data['css_code'] : '';
             if ('' !== trim($css)) {
-                $output .= apply_filters(
-                    'master_addons/widget_builder/render_css',
-                    '',
-                    $engine->render($css, $settings),
-                    $settings
-                );
+                $css_rendered = $engine->render($css, $settings);
+                if ('' !== trim($css_rendered)) {
+                    $output .= '<style>' . $css_rendered . '</style>';
+                }
             }
 
             $output .= $engine->render($html, $settings);
 
+            // Custom JS goes to the footer, not into the returned markup: the
+            // shortcode output passes through the_content, where convert_chars()
+            // would turn every `&` inside a <script> into `&#038;`. In the editor
+            // it stays inline so it re-runs when the canvas re-renders — same
+            // split as Dynamic_Widget::render().
             $js = isset($data['js_code']) ? (string) $data['js_code'] : '';
             if ('' !== trim($js)) {
-                $output .= apply_filters(
-                    'master_addons/widget_builder/render_js',
-                    '',
-                    $engine->render($js, $settings),
-                    $settings
-                );
+                $js_rendered = $engine->render($js, $settings);
+                if ('' !== trim($js_rendered)) {
+                    if (Widget_Builder_Init::is_editor_context()) {
+                        $output .= '<script>' . $js_rendered . '</script>';
+                    } else {
+                        Widget_Builder_Init::enqueue_inline_js($js_rendered, $widget_id);
+                    }
+                }
             }
 
             return $output . '</div>';
@@ -207,28 +213,15 @@ class Shortcode_Manager {
      * @param int $widget_id Widget ID
      */
     private function enqueue_widget_assets($widget_id) {
-        $includes = get_post_meta($widget_id, '_jltma_widget_includes', true);
+        // Premium-gated, normalised and URL-validated; empty on free builds.
+        $includes = Widget_Builder_Init::get_widget_includes($widget_id);
 
-        if (!empty($includes) && is_array($includes)) {
-            // CSS libraries
-            if (!empty($includes['css_libraries']) && is_array($includes['css_libraries'])) {
-                foreach ($includes['css_libraries'] as $css) {
-                    if (!empty($css['handle']) && !empty($css['src'])) {
-                        $deps = !empty($css['dependencies']) && is_array($css['dependencies']) ? $css['dependencies'] : [];
-                        wp_enqueue_style($css['handle'], $css['src'], $deps, JLTMA_VER);
-                    }
-                }
-            }
+        foreach ($includes['css_libraries'] as $css) {
+            wp_enqueue_style($css['handle'], $css['src'], $css['dependencies'], JLTMA_VER);
+        }
 
-            // JS libraries
-            if (!empty($includes['js_libraries']) && is_array($includes['js_libraries'])) {
-                foreach ($includes['js_libraries'] as $js) {
-                    if (!empty($js['handle']) && !empty($js['src'])) {
-                        $deps = !empty($js['dependencies']) && is_array($js['dependencies']) ? $js['dependencies'] : [];
-                        wp_enqueue_script($js['handle'], $js['src'], $deps, JLTMA_VER, true);
-                    }
-                }
-            }
+        foreach ($includes['js_libraries'] as $js) {
+            wp_enqueue_script($js['handle'], $js['src'], $js['dependencies'], JLTMA_VER, true);
         }
     }
 

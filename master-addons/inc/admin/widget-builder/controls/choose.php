@@ -1,5 +1,7 @@
 <?php
-namespace MasterAddons\Admin\WidgetBuilder\Controls;
+namespace MasterAddons\Inc\Admin\WidgetBuilder\Controls;
+
+use MasterAddons\Inc\Admin\WidgetBuilder\Controls\Control_Base;
 
 defined('ABSPATH') || exit;
 
@@ -112,5 +114,44 @@ class Choose extends Control_Base {
         }
         $content .= "\t\t\t\t],\n";
         return $content;
+    }
+
+    protected function default_label() {
+        return 'Choose';
+    }
+
+    protected function get_type_specific_config($field) {
+        $config = [];
+        if (!empty($field['options']) && is_array($field['options'])) {
+            $config['options'] = $this->normalize_choose_options($field['options']);
+        }
+        if (!empty($field['toggle'])) {
+            $config['toggle'] = true;
+        }
+        return $config;
+    }
+
+    private function normalize_choose_options($options) {
+        $out = [];
+        foreach ($options as $index => $option) {
+            if (isset($option['key']) && !empty($option['key'])) {
+                $out[$option['key']] = [
+                    // translators: dynamic user-defined choose option title.
+                    'title' => esc_html($option['title'] ?? ''),
+                    'icon'  => $option['icon'] ?? '',
+                ];
+            } else {
+                $entry = [];
+                if (isset($option['title'])) {
+                    // translators: dynamic user-defined choose option title.
+                    $entry['title'] = esc_html($option['title']);
+                }
+                if (isset($option['icon'])) {
+                    $entry['icon'] = $option['icon'];
+                }
+                $out[$index] = $entry;
+            }
+        }
+        return $out;
     }
 }

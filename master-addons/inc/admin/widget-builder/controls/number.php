@@ -1,5 +1,7 @@
 <?php
-namespace MasterAddons\Admin\WidgetBuilder\Controls;
+namespace MasterAddons\Inc\Admin\WidgetBuilder\Controls;
+
+use MasterAddons\Inc\Admin\WidgetBuilder\Controls\Control_Base;
 
 defined('ABSPATH') || exit;
 
@@ -70,5 +72,19 @@ class Number extends Control_Base {
         }
 
         return $content;
+    }
+
+    protected function default_label() {
+        return 'Number';
+    }
+
+    protected function get_type_specific_config($field) {
+        $config = [];
+        foreach (['min', 'max', 'step'] as $prop) {
+            if (isset($field[$prop]) && $field[$prop] !== '' && $field[$prop] !== null) {
+                $config[$prop] = is_numeric($field[$prop]) ? $field[$prop] + 0 : $field[$prop];
+            }
+        }
+        return $config;
     }
 }

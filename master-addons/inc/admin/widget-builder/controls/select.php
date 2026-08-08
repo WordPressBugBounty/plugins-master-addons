@@ -1,5 +1,7 @@
 <?php
-namespace MasterAddons\Admin\WidgetBuilder\Controls;
+namespace MasterAddons\Inc\Admin\WidgetBuilder\Controls;
+
+use MasterAddons\Inc\Admin\WidgetBuilder\Controls\Control_Base;
 
 defined('ABSPATH') || exit;
 
@@ -123,5 +125,55 @@ class Select extends Control_Base {
 
         $content .= "\t\t\t\t],\n";
         return $content;
+    }
+
+    protected function default_label() {
+        return 'Select';
+    }
+
+    public function get_config($control_key, $field) {
+        // First option becomes the default when none is set (mirrors build()).
+        if (!isset($field['default']) || $field['default'] === '') {
+            if (!empty($field['options']) && is_array($field['options'])) {
+                if (isset($field['options'][0]) && is_array($field['options'][0]) && isset($field['options'][0]['value'])) {
+                    $field['default'] = $field['options'][0]['value'];
+                } elseif (!isset($field['options'][0])) {
+                    $firstKey = array_key_first($field['options']);
+                    if ($firstKey !== null) {
+                        $field['default'] = $firstKey;
+                    }
+                }
+            }
+        }
+        return parent::get_config($control_key, $field);
+    }
+
+    protected function get_type_specific_config($field) {
+        $config = [];
+        if (!empty($field['options']) && is_array($field['options'])) {
+            $config['options'] = $this->normalize_select_options($field['options']);
+        }
+        return $config;
+    }
+
+    private function normalize_select_options($options) {
+        $out = [];
+        if (isset($options[0]) && is_array($options[0])) {
+            foreach ($options as $option) {
+                if (isset($option['value']) && isset($option['label'])) {
+                    // translators: dynamic user-defined select option label.
+                    $out[$option['value']] = esc_html($option['label']);
+                }
+            }
+        } else {
+            foreach ($options as $key => $label) {
+                if (is_array($label)) {
+                    $label = isset($label['label']) ? $label['label'] : 'Option ' . $key;
+                }
+                // translators: dynamic user-defined select option label.
+                $out[$key] = esc_html($label);
+            }
+        }
+        return $out;
     }
 }

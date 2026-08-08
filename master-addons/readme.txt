@@ -4,7 +4,7 @@ Tags: elementor addons, elementor widgets, mega menu builder, popup builder, ele
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 3.1.7
+Stable tag: 3.1.8
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -369,6 +369,15 @@ This plugin connects to a few external services from inside the WordPress admin.
 
 
 == Changelog ==
+= Master Elementor Addons v3.1.8 (08-08-2026) =
+* Added: Widget Builder custom CSS and JavaScript are now free for everyone.
+* Fixed: Widget Builder custom JavaScript no longer breaks on the frontend, so effects and animations run as expected.
+* Fixed: One widget's JavaScript error no longer stops other widgets on the same page from working.
+* Fixed: Widget Builder widgets now show correctly in the Elementor editor again.
+* Fixed: Pro controls in an imported widget are now locked on the free version instead of being editable.
+* Changed: External CSS/JS libraries (Includes) are now a Pro feature.
+* Changed: number, choose, divider, font, media, select, switcher & wysiwyg are now free.
+
 = Master Elementor Addons v3.1.7 (06-08-2026) =
 * Fixed: Imported widget builder json file infinite loading in elementor editor issue fixed.
 * Fixed: Widget Builder CSS & JS unlock Pro & Includes lock to pro badge.

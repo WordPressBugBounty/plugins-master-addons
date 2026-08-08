@@ -1,5 +1,7 @@
 <?php
-namespace MasterAddons\Admin\WidgetBuilder\Controls;
+namespace MasterAddons\Inc\Admin\WidgetBuilder\Controls;
+
+use MasterAddons\Inc\Admin\WidgetBuilder\Controls\Control_Base;
 
 defined('ABSPATH') || exit;
 
@@ -44,5 +46,9 @@ class Font extends Control_Base {
         $content .= $this->build_control_footer();
 
         return $content;
+    }
+
+    protected function default_label() {
+        return 'Font Family';
     }
 }

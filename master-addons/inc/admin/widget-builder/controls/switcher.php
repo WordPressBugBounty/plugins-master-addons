@@ -1,5 +1,7 @@
 <?php
-namespace MasterAddons\Admin\WidgetBuilder\Controls;
+namespace MasterAddons\Inc\Admin\WidgetBuilder\Controls;
+
+use MasterAddons\Inc\Admin\WidgetBuilder\Controls\Control_Base;
 
 defined('ABSPATH') || exit;
 
@@ -76,5 +78,25 @@ class Switcher extends Control_Base {
         }
 
         return $content;
+    }
+
+    protected function default_label() {
+        return 'Switcher';
+    }
+
+    protected function get_type_specific_config($field) {
+        $config = [];
+        if (!empty($field['label_on'])) {
+            // translators: dynamic user-defined switcher ON label.
+            $config['label_on'] = esc_html($field['label_on']);
+        }
+        if (!empty($field['label_off'])) {
+            // translators: dynamic user-defined switcher OFF label.
+            $config['label_off'] = esc_html($field['label_off']);
+        }
+        if (isset($field['return_value'])) {
+            $config['return_value'] = $field['return_value'];
+        }
+        return $config;
     }
 }

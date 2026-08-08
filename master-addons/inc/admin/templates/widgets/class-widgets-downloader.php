@@ -2,6 +2,8 @@
 
 namespace MasterAddons\Inc\Admin\Templates\Widgets;
 
+use MasterAddons\Inc\Admin\WidgetBuilder\Widget_Builder_Init;
+
 defined('ABSPATH') || exit;
 
 /**
@@ -86,8 +88,21 @@ class Widgets_Downloader
         update_post_meta($post_id, '_jltma_widget_sections', is_array($widget['sections']) ? $widget['sections'] : []);
         update_post_meta($post_id, '_jltma_widget_category', self::CATEGORY_SLUG);
 
+        // External CSS/JS libraries are premium-only, same gate the Widget
+        // Builder's own save path uses: free builds store an empty set.
         if (!empty($widget['includes']) && is_array($widget['includes'])) {
-            update_post_meta($post_id, '_jltma_widget_includes', $widget['includes']);
+            $includes = apply_filters(
+                'master_addons/widget_builder/persist_includes',
+                Widget_Builder_Init::normalize_includes(null),
+                Widget_Builder_Init::normalize_includes($widget['includes']),
+                $widget
+            );
+
+            update_post_meta(
+                $post_id,
+                '_jltma_widget_includes',
+                Widget_Builder_Init::normalize_includes($includes)
+            );
         }
         if (!empty($widget['dependencies']) && is_array($widget['dependencies'])) {
             update_post_meta($post_id, '_jltma_widget_dependencies', $widget['dependencies']);

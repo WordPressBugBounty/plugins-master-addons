@@ -1,5 +1,7 @@
 <?php
-namespace MasterAddons\Admin\WidgetBuilder\Controls;
+namespace MasterAddons\Inc\Admin\WidgetBuilder\Controls;
+
+use MasterAddons\Inc\Admin\WidgetBuilder\Controls\Control_Base;
 
 defined('ABSPATH') || exit;
 
@@ -72,5 +74,24 @@ class Media extends Control_Base {
         }
 
         return $content;
+    }
+
+    protected function default_label() {
+        return 'Media';
+    }
+
+    public function get_config($control_key, $field) {
+        if (empty($field['default']) || !is_array($field['default'])) {
+            $field['default'] = ['id' => '', 'url' => ''];
+        }
+        return parent::get_config($control_key, $field);
+    }
+
+    protected function get_type_specific_config($field) {
+        $config = [];
+        if (!empty($field['media_type'])) {
+            $config['media_type'] = $field['media_type'];
+        }
+        return $config;
     }
 }
