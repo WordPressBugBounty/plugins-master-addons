@@ -667,11 +667,35 @@ class Popup_Frontend {
             wp_send_json_error(['message' => esc_html__('Invalid popup', 'master-addons')]);
         }
 
+        $elementor_settings = get_post_meta($popup_id, '_elementor_page_settings', true);
+        if (!is_array($elementor_settings)) {
+            $elementor_settings = [];
+        }
+
+        // The frontend nonce is handed to every visitor, including logged-out ones,
+        // so it is a CSRF token and not an authorization boundary. Users who can edit
+        // the popup may disable it outright; for everyone else the expiration is
+        // re-verified server side, so an untrusted request can only trigger the same
+        // deactivation should_display_popup() would perform on its own. Without this
+        // check any visitor could disable an arbitrary popup by post ID.
+        if (!current_user_can('edit_post', $popup_id)) {
+            $auto_disable  = isset($elementor_settings['popup_disable_automatic']) ? $elementor_settings['popup_disable_automatic'] : '';
+            $disable_after = isset($elementor_settings['popup_disable_after']) ? $elementor_settings['popup_disable_after'] : '';
+
+            if ('yes' !== $auto_disable || empty($disable_after)) {
+                wp_send_json_error(['message' => esc_html__('Popup is not scheduled for automatic expiration', 'master-addons')]);
+            }
+
+            $expiration_date = strtotime($disable_after);
+            if (false === $expiration_date || current_time('timestamp') <= $expiration_date) {
+                wp_send_json_error(['message' => esc_html__('Popup has not expired', 'master-addons')]);
+            }
+        }
+
         // Deactivate the popup
         update_post_meta($popup_id, '_jltma_popup_activation', 'no');
 
         // Reset the automatic disable settings in Elementor page settings
-        $elementor_settings = get_post_meta($popup_id, '_elementor_page_settings', true);
         if (!empty($elementor_settings)) {
             $elementor_settings['popup_disable_automatic'] = 'no';
             update_post_meta($popup_id, '_elementor_page_settings', $elementor_settings);

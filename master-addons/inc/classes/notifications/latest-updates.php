@@ -71,13 +71,8 @@ if (!class_exists('Latest_Updates')) {
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
                 // Changelogs
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Added: Widget Builder custom CSS and JavaScript are now free for everyone. </span><br>', 'master-addons')
-                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Widget Builder custom JavaScript no longer breaks on the frontend, so effects and animations run as expected. </span><br>', 'master-addons')
-                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: One widget\'s JavaScript error no longer stops other widgets on the same page from working. </span><br>', 'master-addons')
-                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Widget Builder widgets now show correctly in the Elementor editor again. </span><br>', 'master-addons')
-                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Fixed: Pro controls in an imported widget are now locked on the free version instead of being editable. </span><br>', 'master-addons')
-                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Changed: External CSS/JS libraries (Includes) are now a Pro feature. </span><br>', 'master-addons')
-                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Changed: number, choose, divider, font, media, select, switcher & wysiwyg are now free. </span><br>', 'master-addons')
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Security: Security update. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Changed: Custom CSS Pro to Free. </span><br>', 'master-addons')
             );
             printf(wp_kses_post($jltma_changelog_message));
         }

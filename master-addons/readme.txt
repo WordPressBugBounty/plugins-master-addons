@@ -1,10 +1,10 @@
 === Master Addons for Elementor – Elementor Addons, Widgets, Mega Menu Builder, Popup Builder, Widget Builder & Template Kits ===
-Contributors: jwthemeltd, litonice13, masteraddons
+Contributors: pixarlabs, jwthemeltd, litonice13, masteraddons
 Tags: elementor addons, elementor widgets, mega menu builder, popup builder, elementor template kits
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 3.1.8
+Stable tag: 3.1.9
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -369,6 +369,10 @@ This plugin connects to a few external services from inside the WordPress admin.
 
 
 == Changelog ==
+= Master Elementor Addons v3.1.9 (13-08-2026) =
+* Security: Security update.
+* Changed: Custom CSS Pro to Free.
+
 = Master Elementor Addons v3.1.8 (08-08-2026) =
 * Added: Widget Builder custom CSS and JavaScript are now free for everyone.
 * Fixed: Widget Builder custom JavaScript no longer breaks on the frontend, so effects and animations run as expected.

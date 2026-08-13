@@ -1,4 +1,8 @@
 == Changelog ==
+= Master Elementor Addons v3.1.9 (13-08-2026) =
+* Security: Security update.
+* Changed: Custom CSS Pro to Free.
+
 = Master Elementor Addons v3.1.8 (08-08-2026) =
 * Added: Widget Builder custom CSS and JavaScript are now free for everyone.
 * Fixed: Widget Builder custom JavaScript no longer breaks on the frontend, so effects and animations run as expected.
