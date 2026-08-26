@@ -92,7 +92,31 @@ function isEditMode() {
 */
 (function($, elementor) {
 	"use strict";
+	/**
+	* The dropdown menu ships as an empty mount rather than a second server
+	* render of the whole menu — see get_dropdown() in ma-navmenu.php. This
+	* clones the main nav's list into it.
+	*
+	* Called at parse time, before Elementor's init and before any ready
+	* handler, so everything downstream sees the same DOM it always has.
+	*/
+	function hydrateDropdownMounts(root) {
+		var mounts = (root || document).querySelectorAll(".jltma-nav-menu__dropdown-mount[data-clone-from]");
+		for (var i = 0; i < mounts.length; i++) {
+			var mount = mounts[i];
+			var source = document.getElementById(mount.getAttribute("data-clone-from"));
+			if (!source) continue;
+			var clone = source.cloneNode(true);
+			var withIds = clone.querySelectorAll("[id]");
+			for (var j = 0; j < withIds.length; j++) withIds[j].removeAttribute("id");
+			clone.id = mount.getAttribute("data-clone-id");
+			clone.className = mount.getAttribute("data-clone-class");
+			mount.parentNode.replaceChild(clone, mount);
+		}
+	}
+	hydrateDropdownMounts();
 	var JLTMA_NavMenu = function($scope, $) {
+		hydrateDropdownMounts($scope[0]);
 		getElementSettings($scope);
 		var $menuContainer = $scope.find(".jltma-nav-menu-element"), $menuID = $menuContainer.data("menu-id"), $menu_type = $menuContainer.data("menu-layout");
 		$menuContainer.data("menu-trigger");

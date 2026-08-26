@@ -41,6 +41,16 @@ class Nav_Menu extends Master_Widget
     use \MasterAddons\Inc\Traits\Widget_Notice;
 	use \MasterAddons\Inc\Traits\Widget_Assets_Trait;
 
+    /**
+     * The id of the <ul> the main nav rendered, so the dropdown can point at it
+     * instead of rendering the whole menu a second time. Empty when there is no
+     * main nav to clone from — the 'dropdown' layout, where the dropdown is the
+     * only menu on the page and still has to be rendered server side.
+     *
+     * @var string
+     */
+    private $main_menu_list_id = '';
+
     public function get_name()
     {
         return 'ma-navmenu';
@@ -4857,6 +4867,14 @@ class Nav_Menu extends Master_Widget
      */
     public function added_span_in_link($item, $depth)
     {
+        // The widget calls wp_nav_menu() twice — once for the main nav and once
+        // for the dropdown — and menu item objects are cached per request, so
+        // this can be handed a title it has already wrapped. Wrapping again
+        // would nest the spans one level deeper on every extra render.
+        if (false !== strpos($item->title, $this->get_widget_class() . '__main-item-text-wrap')) {
+            return $item->title;
+        }
+
         $settings = $this->get_active_settings();
 
         $layout = $settings['layout'];
@@ -5077,7 +5095,34 @@ class Nav_Menu extends Master_Widget
 
         $args['menu_id'] = 'jltma_menu-' . $this->get_nav_menu_index() . '-' . $this->get_id();
 
-        echo wp_nav_menu($args);
+        if ('' !== $this->main_menu_list_id) {
+            // The main nav already rendered this menu, mega panels and all.
+            // Sending a second copy doubled the widget's share of the page —
+            // and both copies painted before the stylesheet that hides this one
+            // had loaded, which is the header flash. Instead the list is named
+            // here and ma-navmenu.js clones it into this mount before any
+            // ready handler runs, so the finished DOM is what it always was.
+            printf(
+                '<span class="jltma-nav-menu__dropdown-mount" data-clone-from="%1$s" data-clone-id="%2$s" data-clone-class="%3$s"></span>',
+                esc_attr($this->main_menu_list_id),
+                esc_attr($args['menu_id']),
+                esc_attr($args['menu_class'])
+            );
+        } else {
+            // The same three filters the main nav renders under. Without them
+            // the dropdown's links came out bare — no __dropdown-item, no
+            // __item-link-top, no text-wrap spans — so none of the widget's
+            // link styling controls reached the menu.
+            add_filter('nav_menu_link_attributes', array($this, 'get_link_classes'), 10, 4);
+            add_filter('nav_menu_item_args', array($this, 'change_menu_item_css_classes'), 10, 3);
+            add_filter('nav_menu_submenu_css_class', array($this, 'get_sub_menu_classes'));
+
+            echo wp_nav_menu($args); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nav_menu output
+
+            remove_filter('nav_menu_link_attributes', array($this, 'get_link_classes'));
+            remove_filter('nav_menu_item_args', array($this, 'change_menu_item_css_classes'));
+            remove_filter('nav_menu_submenu_css_class', array($this, 'get_sub_menu_classes'));
+        }
 
         if ('popup' === $dropdown_menu_type) {
             $this->get_dropdown_close();
@@ -5149,6 +5194,11 @@ class Nav_Menu extends Master_Widget
 
     protected function render()
     {
+        // Reset per render — the 'dropdown' layout never sets it, and a stale
+        // id from an earlier render would leave that layout with an empty mount
+        // pointing at a list that is not on the page.
+        $this->main_menu_list_id = '';
+
         $available_menus          = $this->get_available_menus();
         $jltma_extensions_setting = Settings::get_extensions();
         if (!is_array($jltma_extensions_setting)) {
@@ -5163,11 +5213,15 @@ class Nav_Menu extends Master_Widget
 
         $layout = $settings['layout'];
 
+        // get_nav_menu_index() increments on every read, so the index is taken
+        // once and reused — the dropdown needs to name this exact list id.
+        $menu_index = $this->get_nav_menu_index();
+
         $args = array(
             'echo' => false,
             'menu' => $settings['jltma_nav_menu'],
             'menu_class' => $this->get_widget_class() . '__container-inner',
-            'menu_id' => 'menu-' . $this->get_nav_menu_index() . '-' . $this->get_id(),
+            'menu_id' => 'menu-' . $menu_index . '-' . $this->get_id(),
             'fallback_cb' => '__return_empty_string',
             'container' => ''
         );
@@ -5230,6 +5284,10 @@ class Nav_Menu extends Master_Widget
                     $this->add_render_attribute('main-menu', 'class', 'jltma-nav-menu-open-link');
                 }
             }
+
+            // Recorded before get_dropdown() runs so it can clone this list
+            // rather than render the whole menu, mega panels included, twice.
+            $this->main_menu_list_id = 'menu-' . $menu_index . '-' . $this->get_id();
 
             echo '<nav ' . $this->get_render_attribute_string('main-menu') . '>' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor safe attribute string
                 $menu_html . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nav_menu output

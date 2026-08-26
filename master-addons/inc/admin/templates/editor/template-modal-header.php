@@ -2,6 +2,10 @@
 
 /**
  * Template Library Header
+ *
+ * Rendered as an Underscore/Backbone view template on editor load, so no cache
+ * lookups happen here. The cache count is fetched over AJAX only when the
+ * Master Addons templates modal is actually opened.
  */
 
 if (!defined('ABSPATH')) {
@@ -11,20 +15,12 @@ if (!defined('ABSPATH')) {
 <div id="ma-el-template-modal-header-logo-area"></div>
 <div id="ma-el-template-modal-header-tabs"></div>
 <div id="ma-el-template-modal-header-actions">
-    <?php if (class_exists('MasterAddons\Inc\Classes\Template_Library_Cache')): 
-        $cache_manager = \MasterAddons\Inc\Classes\Template_Library_Cache::get_instance();
-        $cache_stats = $cache_manager->get_cache_stats();
-        $total_templates = isset($cache_stats['total_templates']) ? $cache_stats['total_templates'] : 0;
-        
-        // Only show cache status if templates are cached
-        if ($total_templates > 0):
-    ?>
-        <div id="ma-el-template-cache-status" class="elementor-template-library-header-item" title="Cache Status: <?php echo esc_attr($total_templates); ?> templates cached">
-            <i class="eicon-database-solid"></i>
-            <span class="cache-count"><?php echo esc_html($total_templates); ?></span>
+    <?php if (class_exists('MasterAddons\Inc\Classes\Template_Library_Cache')): ?>
+        <div id="ma-el-template-cache-status" class="elementor-template-library-header-item" style="display:none;" title="<?php echo esc_attr__('Cache Status', 'master-addons'); ?>">
+            <i class="eicon-database"></i>
+            <span class="cache-count"></span>
         </div>
-    <?php endif; ?>
-        <div id="ma-el-template-cache-refresh" class="elementor-template-library-header-item" title="Refresh Cache">
+        <div id="ma-el-template-cache-refresh" class="elementor-template-library-header-item" title="<?php echo esc_attr__('Refresh Cache', 'master-addons'); ?>">
             <i class="eicon-sync"></i>
         </div>
     <?php endif; ?>

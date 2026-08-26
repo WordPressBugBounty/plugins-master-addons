@@ -2017,6 +2017,9 @@
 .jltma-templates .template-library-content .templates-grid-container .templates-grid .template-item .template-preview .template-image {
   width: 100%;
   height: auto;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: top center;
   display: block;
   transform: translateY(0);
   transition: transform 4s linear;
@@ -3302,10 +3305,11 @@
 .template-favorite-btn.is-favorite:hover .eicon-heart {
   color: #d00970;
 }
-.template-favorite-btn.has-tooltip {
+
+.has-tooltip {
   position: relative;
 }
-.template-favorite-btn.has-tooltip::after {
+.has-tooltip::after {
   content: attr(data-tooltip);
   position: absolute;
   bottom: 100%;
@@ -3325,7 +3329,7 @@
   z-index: 1000;
   line-height: 1.4;
 }
-.template-favorite-btn.has-tooltip::before {
+.has-tooltip::before {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -3339,14 +3343,14 @@
   transition: all 0.2s ease;
   z-index: 1000;
 }
-.template-favorite-btn.has-tooltip:hover::after, .template-favorite-btn.has-tooltip:hover::before {
+.has-tooltip:hover::after, .has-tooltip:hover::before {
   opacity: 1;
   visibility: visible;
 }
-.template-favorite-btn.has-tooltip:hover::after {
+.has-tooltip:hover::after {
   transform: translateX(50%) translateY(-12px);
 }
-.template-favorite-btn.has-tooltip:hover::before {
+.has-tooltip:hover::before {
   transform: translateX(50%) translateY(-2px);
 }
 

@@ -21,6 +21,8 @@ class Template_Library_Cache
     private $cache_dir;
     private $cache_expiry;
     private $config;
+    private $initialized = false;
+    private $cache_dir_ready = false;
 
     public function __construct()
     {
@@ -29,13 +31,25 @@ class Template_Library_Cache
         $this->cache_dir = $basedir . '/master_addons/templates-library/';
         $this->cache_expiry = apply_filters('jltma_cache_expiry', 6 * HOUR_IN_SECONDS); // 6 hours default, filterable
 
-        // Initialize config safely
-        add_action('init', [$this, 'init_config'], 20);
-        add_action('init', [$this, 'init'], 25);
+        // The class is instantiated lazily (first get_instance() call), which may
+        // happen before or after `init` has run. Hooking `init` after it already
+        // fired would silently skip bootstrapping, leaving $config empty and the
+        // cache directory missing, so bootstrap immediately in that case.
+        if (did_action('init')) {
+            $this->init_config();
+            $this->init();
+        } else {
+            add_action('init', [$this, 'init_config'], 20);
+            add_action('init', [$this, 'init'], 25);
+        }
     }
 
     public function init_config()
     {
+        if (!empty($this->config)) {
+            return $this->config;
+        }
+
         // Initialize config after templates system is ready
         if (function_exists('MasterAddons\\Inc\\Admin\\Templates\\master_addons_templates')) {
             $templates_instance = Templates\master_addons_templates();
@@ -44,15 +58,33 @@ class Template_Library_Cache
             }
         }
 
+        return $this->config;
+    }
+
+    /**
+     * Resolve the API config on demand.
+     *
+     * The templates system may register itself after this class is built, so
+     * retry the lookup instead of assuming init_config() succeeded.
+     */
+    private function get_api_config()
+    {
+        if (empty($this->config)) {
+            $this->init_config();
+        }
+
+        return $this->config;
     }
 
     public function init()
     {
-        // Clean up old incorrect template-kits folder if it exists
-        $this->cleanup_incorrect_folders();
-        
-        // Ensure cache directory exists
-        $this->ensure_cache_directory();
+        if ($this->initialized) {
+            return;
+        }
+        $this->initialized = true;
+
+        // Directory cleanup/creation is deferred to the first actual cache access
+        // (see maybe_bootstrap_cache_dir()) so a plain page load does no disk work.
 
         // Schedule cache updates
         add_action('wp', [$this, 'schedule_cache_updates']);
@@ -87,7 +119,7 @@ class Template_Library_Cache
 
             // Create subdirectories for different template types
             // Removed 'template-kits' as it should be in its own separate folder
-            $subdirs = ['master_section', 'master_pages', 'master_popups', 'master_headers', 'master_footers'];
+            $subdirs = ['master_section', 'master_pages', 'master_popups', 'master_headers', 'master_footers', 'master_widgets'];
             foreach ($subdirs as $subdir) {
                 wp_mkdir_p($this->cache_dir . $subdir . '/');
                 wp_mkdir_p($this->cache_dir . $subdir . '/categories/');
@@ -354,15 +386,205 @@ class Template_Library_Cache
     }
 
     /**
+     * Get the cached widgets catalog.
+     *
+     * The Widgets Library has a single flat endpoint rather than one per tab,
+     * so it gets its own accessor instead of a $tab argument, but it lands in
+     * the same uploads/master_addons/templates-library tree as the templates
+     * and is cleared by the same clear_cache().
+     */
+    public function get_cached_widgets($force_refresh = false)
+    {
+        if (!$this->is_file_cache_available()) {
+            return $this->get_transient_cached_widgets($force_refresh);
+        }
+
+        $cache_file = $this->cache_dir . 'master_widgets/widgets/widgets.json';
+        $meta_file  = $this->cache_dir . 'master_widgets/widgets/meta.json';
+
+        if (!$force_refresh && $this->is_cache_valid($meta_file)) {
+            $cached_data = $this->read_cache_file($cache_file);
+            if ($cached_data !== false) {
+                return $this->localize_widget_images($cached_data);
+            }
+        }
+
+        $fresh_data = $this->fetch_remote_widgets($force_refresh);
+
+        if ($fresh_data !== false) {
+            $this->write_cache_file($cache_file, $fresh_data);
+            $this->write_cache_meta($meta_file);
+            $this->cache_widget_images($fresh_data);
+
+            return $this->localize_widget_images($fresh_data);
+        }
+
+        // Serve the expired copy rather than an empty grid when the hub is down.
+        $fallback_data = $this->read_cache_file($cache_file);
+
+        return $fallback_data === false ? false : $this->localize_widget_images($fallback_data);
+    }
+
+    /**
+     * Transient fallback, for installs whose uploads directory is not writable.
+     */
+    private function get_transient_cached_widgets($force_refresh = false)
+    {
+        $transient_key      = 'jltma_widgets_catalog';
+        $meta_transient_key = 'jltma_widgets_catalog_meta';
+
+        if (!$force_refresh) {
+            $cached_meta = get_transient($meta_transient_key);
+            if ($cached_meta && (time() - $cached_meta['timestamp']) < $this->cache_expiry) {
+                $cached_data = get_transient($transient_key);
+                if ($cached_data !== false) {
+                    return $cached_data;
+                }
+            }
+        }
+
+        $fresh_data = $this->fetch_remote_widgets($force_refresh);
+
+        if ($fresh_data !== false) {
+            set_transient($transient_key, $fresh_data, $this->cache_expiry);
+            set_transient($meta_transient_key, ['timestamp' => time()], $this->cache_expiry);
+
+            return $fresh_data;
+        }
+
+        return get_transient($transient_key);
+    }
+
+    /**
+     * Fetch the widgets catalog from the remote API
+     */
+    private function fetch_remote_widgets($force_refresh = false)
+    {
+        $config = $this->get_api_config();
+
+        if (empty($config) || empty($config['endpoints']['widgets'])) {
+            return false;
+        }
+
+        $api_url = $this->remote_url($config['base'] . $config['path'] . $config['endpoints']['widgets'], $force_refresh);
+
+        $response = wp_remote_get($api_url, [
+            'timeout'   => 60,
+            'sslverify' => false,
+            'headers'   => [
+                'User-Agent' => 'Master Addons Widgets Cache/' . JLTMA_VER
+            ]
+        ]);
+
+        if (is_wp_error($response)) {
+            return false;
+        }
+
+        $data = json_decode(wp_remote_retrieve_body($response), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE || empty($data['success']) || !isset($data['widgets'])) {
+            return false;
+        }
+
+        return $data['widgets'];
+    }
+
+    /**
+     * Pull widget thumbnails down beside the catalog
+     */
+    private function cache_widget_images($widgets)
+    {
+        if (!is_array($widgets)) {
+            return;
+        }
+
+        foreach ($widgets as $widget) {
+            if (empty($widget['widget_id'])) {
+                continue;
+            }
+
+            if (!empty($widget['thumbnail'])) {
+                $this->cache_image($widget['thumbnail'], 'master_widgets', "widget-{$widget['widget_id']}-thumb");
+            }
+        }
+    }
+
+    /**
+     * Swap remote thumbnail URLs for local copies where one has been pulled down.
+     */
+    private function localize_widget_images($widgets)
+    {
+        if (!is_array($widgets)) {
+            return $widgets;
+        }
+
+        $upload_dir = wp_upload_dir();
+
+        foreach ($widgets as &$widget) {
+            if (empty($widget['widget_id']) || empty($widget['thumbnail'])) {
+                continue;
+            }
+
+            $extension = pathinfo($widget['thumbnail'], PATHINFO_EXTENSION);
+            if (empty($extension)) {
+                $extension = 'jpg';
+            }
+
+            $local_file = $this->cache_dir . "master_widgets/images/widget-{$widget['widget_id']}-thumb.{$extension}";
+
+            if (!file_exists($local_file)) {
+                continue;
+            }
+
+            $local_url = $upload_dir['baseurl'] . str_replace($upload_dir['basedir'], '', $local_file);
+
+            // The hub sends the same image as preview unless the entry has a
+            // laid-out preview page, in which case preview_url carries the
+            // permalink and must stay pointing at the hub.
+            $preview_matches = !empty($widget['preview']) && $widget['preview'] === $widget['thumbnail'];
+
+            $widget['thumbnail'] = $local_url;
+
+            if ($preview_matches) {
+                $widget['preview'] = $local_url;
+            }
+        }
+
+        return $widgets;
+    }
+
+    /**
+     * Add the cache-busting parameter for an explicit refresh.
+     *
+     * The library API serves its list endpoints from a static file on the
+     * server, rebuilt on a schedule. A plain request is answered from that
+     * file, so clearing the local cache and re-requesting returns the same
+     * stale listing — which is what made "Refresh from server" appear to do
+     * nothing. Any query parameter makes the server answer live, so only an
+     * explicit refresh sends one; routine reads still hit the static file and
+     * leave the server's database alone.
+     *
+     * @param string $url
+     * @param bool   $force_refresh
+     * @return string
+     */
+    private function remote_url($url, $force_refresh)
+    {
+        return $force_refresh ? add_query_arg('force_refresh', '1', $url) : $url;
+    }
+
+    /**
      * Fetch templates from remote API
      */
     private function fetch_remote_templates($tab)
     {
-        if (empty($this->config)) {
+        $config = $this->get_api_config();
+
+        if (empty($config) || empty($config['endpoints']['templates'])) {
             return false;
         }
 
-        $api_url = $this->config['base'] . $this->config['path'] . $this->config['endpoints']['templates'] . $tab;
+        $api_url = $config['base'] . $config['path'] . $config['endpoints']['templates'] . $tab;
 
         $response = wp_remote_get($api_url, [
             'timeout' => 60,
@@ -390,11 +612,13 @@ class Template_Library_Cache
      */
     private function fetch_remote_categories($tab)
     {
-        if (empty($this->config)) {
+        $config = $this->get_api_config();
+
+        if (empty($config) || empty($config['endpoints']['categories'])) {
             return false;
         }
 
-        $api_url = $this->config['base'] . $this->config['path'] . $this->config['endpoints']['categories'] . $tab;
+        $api_url = $config['base'] . $config['path'] . $config['endpoints']['categories'] . $tab;
 
         $response = wp_remote_get($api_url, [
             'timeout' => 60,
@@ -420,11 +644,13 @@ class Template_Library_Cache
      */
     private function fetch_remote_keywords($tab)
     {
-        if (empty($this->config)) {
+        $config = $this->get_api_config();
+
+        if (empty($config) || empty($config['endpoints']['keywords'])) {
             return false;
         }
 
-        $api_url = $this->config['base'] . $this->config['path'] . $this->config['endpoints']['keywords'] . $tab;
+        $api_url = $config['base'] . $config['path'] . $config['endpoints']['keywords'] . $tab;
 
         $response = wp_remote_get($api_url, [
             'timeout' => 60,
@@ -532,6 +758,16 @@ class Template_Library_Cache
             } catch (\Exception $e) {
                 // Individual tab failure logged by execute_with_retry; continue with others
             }
+        }
+
+        // The widgets catalog is a single flat endpoint, so it sits outside the
+        // per-tab loop.
+        try {
+            $btm->execute_with_retry(function () {
+                $this->get_cached_widgets(true);
+            }, 3, 'widgets_cache_sync');
+        } catch (\Exception $e) {
+            // Logged by execute_with_retry.
         }
 
         // Clean up old cache files
@@ -917,6 +1153,35 @@ class Template_Library_Cache
     }
 
     /**
+     * Get only the cached templates count.
+     *
+     * Lightweight counterpart of get_cache_stats(): skips directory size
+     * calculation and kit manifest parsing, so it is safe to call on demand
+     * (e.g. when the templates modal is opened).
+     */
+    public function get_cached_templates_count()
+    {
+        $template_types = ['master_section', 'master_pages', 'master_popups', 'master_headers', 'master_footers'];
+        $file_cache     = $this->is_file_cache_available();
+        $total          = 0;
+
+        foreach ($template_types as $type) {
+            if ($file_cache) {
+                $files = glob($this->cache_dir . "{$type}/templates/template-*.json");
+                $total += is_array($files) ? count($files) : 0;
+                continue;
+            }
+
+            $cached_templates = get_transient("jltma_templates_{$type}");
+            if ($cached_templates && is_array($cached_templates)) {
+                $total += count($cached_templates);
+            }
+        }
+
+        return $total;
+    }
+
+    /**
      * Get cache statistics
      */
     public function get_cache_stats()
@@ -1019,7 +1284,28 @@ class Template_Library_Cache
      */
     private function is_file_cache_available()
     {
+        $this->maybe_bootstrap_cache_dir();
+
         return file_exists($this->cache_dir) && is_writable($this->cache_dir);
+    }
+
+    /**
+     * Create/clean the cache directory the first time the cache is touched.
+     *
+     * Runs once per request, and only when a cache read/write actually happens.
+     */
+    private function maybe_bootstrap_cache_dir()
+    {
+        if ($this->cache_dir_ready) {
+            return;
+        }
+        $this->cache_dir_ready = true;
+
+        // Clean up old incorrect template-kits folders if they exist
+        $this->cleanup_incorrect_folders();
+
+        // Ensure cache directory exists
+        $this->ensure_cache_directory();
     }
 
     /**

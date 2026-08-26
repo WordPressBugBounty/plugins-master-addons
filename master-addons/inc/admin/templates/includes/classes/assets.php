@@ -148,6 +148,9 @@ if (!class_exists(__NAMESPACE__ . '\\Assets')) {
 						// Initialize filters and keywords
 						initFiltersAndKeywords();
 
+						// Fetch cache status only when the templates modal is opened
+						initCacheStatusLazyLoad();
+
 						// Add banner click tracking
 						$(document).on('click', '.ma-el-template-library--banner', function(e) {
 							// Track banner click for analytics (optional)
@@ -183,18 +186,8 @@ if (!class_exists(__NAMESPACE__ . '\\Assets')) {
 								success: function(response) {
 									if (response.success) {
 
-										// Update cache count if cache status element exists
-										var $cacheStatus = $('#ma-el-template-cache-status');
-										if ($cacheStatus.length && response.data.total_templates) {
-											var newCount = response.data.total_templates;
-											$cacheStatus.find('.cache-count').text(newCount);
-											$cacheStatus.attr('title', 'Cache Status: ' + newCount + ' templates cached');
-											if (newCount > 0) {
-												$cacheStatus.show();
-											} else {
-												$cacheStatus.hide();
-											}
-										}
+										// Re-read the cache count after a refresh
+										fetchCacheCount(true);
 
 										// Reset button state
 										$button.removeClass('updating');
@@ -235,6 +228,73 @@ if (!class_exists(__NAMESPACE__ . '\\Assets')) {
 								}
 							});
 						});
+					}
+
+					// ---- Template cache status (lazy) ----
+					var cacheCountRequested = false;
+
+					function updateCacheStatus(count) {
+						var $cacheStatus = $('#ma-el-template-cache-status');
+						if (!$cacheStatus.length) {
+							return;
+						}
+
+						count = parseInt(count, 10) || 0;
+
+						if (count > 0) {
+							$cacheStatus.find('.cache-count').text(count);
+							$cacheStatus.attr('title', 'Cache Status: ' + count + ' templates cached');
+							$cacheStatus.show();
+						} else {
+							$cacheStatus.hide();
+						}
+					}
+
+					function fetchCacheCount(force) {
+						if (cacheCountRequested && !force) {
+							return;
+						}
+						cacheCountRequested = true;
+
+						$.ajax({
+							type: 'POST',
+							url: ajaxurl,
+							data: {
+								action: 'jltma_get_templates_cache_count',
+								_wpnonce: MasterAddonsData.refresh_cache_nonce
+							},
+							success: function(response) {
+								if (response && response.success) {
+									updateCacheStatus(response.data.total_templates);
+								} else {
+									cacheCountRequested = false;
+								}
+							},
+							error: function() {
+								cacheCountRequested = false;
+							}
+						});
+					}
+
+					// Only run the cache lookup when the Master Addons templates modal is opened
+					function initCacheStatusLazyLoad() {
+						function bindPreviewTriggers() {
+							if (typeof window.elementor === 'undefined' || !window.elementor.$previewContents) {
+								return;
+							}
+
+							window.elementor.$previewContents
+								.off('click.jltmaCacheStatus')
+								.on('click.jltmaCacheStatus', '.ma-el-add-section-btn, .elementor-editor-section-settings .elementor-editor-element-add', function() {
+									fetchCacheCount(false);
+								});
+						}
+
+						bindPreviewTriggers();
+
+						if (typeof window.elementor !== 'undefined' && window.elementor.on) {
+							window.elementor.on('preview:loaded', bindPreviewTriggers);
+						}
 					}
 
 					// Initialize Macy.js masonry layout for template grid

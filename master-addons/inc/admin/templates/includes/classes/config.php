@@ -45,6 +45,8 @@ if (!class_exists(__NAMESPACE__ . '\\Config')) {
 						'categories' => '/categories/',
 						'template'   => '/template/',
 						'info'       => '/info/',
+						'widgets'    => '/widgets',
+						'widget'     => '/widget/',
 					),
 				)
 			);

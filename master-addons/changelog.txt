@@ -1,4 +1,13 @@
 == Changelog ==
+= Master Elementor Addons v3.2.0 (26-08-2026) =
+* Security: Security update.
+* Added: The Widgets Library is available, with the catalog stored on disk so the screen loads without waiting on the network.
+* Fixed: Refresh in the Widgets Library now genuinely re-reads the catalog from the server instead of returning the same cached list.
+* Fixed: Edit Widget after importing now opens the Widget Builder instead of an empty editor screen.
+* Fixed: Removed the empty gap under shorter thumbnails in the Templates and Widgets libraries.
+* Fixed: The loading spinner logo no longer fails to load on the Widgets Library.
+* Fixed: Elementor editor infinite loading issue fixed.
+
 = Master Elementor Addons v3.1.9 (13-08-2026) =
 * Security: Security update.
 * Changed: Custom CSS Pro to Free.

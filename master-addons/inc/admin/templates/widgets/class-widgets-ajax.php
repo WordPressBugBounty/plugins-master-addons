@@ -75,6 +75,15 @@ class Widgets_Ajax
      */
     private function fetch_catalog($force_refresh = false)
     {
+        // File cache first, so the catalog and its thumbnails live under
+        // uploads/master_addons/templates-library alongside the templates and
+        // survive a transient flush. Falls through to the remote fetch below
+        // when the class is unavailable or the hub could not be reached.
+        $file_cached = $this->file_cache_catalog($force_refresh);
+        if (is_array($file_cached)) {
+            return $file_cached;
+        }
+
         if (!$force_refresh) {
             $cached = get_transient(self::CACHE_KEY);
             if (is_array($cached)) {
@@ -87,7 +96,17 @@ class Widgets_Ajax
             return new \WP_Error('no_config', __('Template API is not configured.', 'master-addons'));
         }
 
-        $response = wp_remote_get($base . '/widgets', [
+        // The catalog endpoint is answered from a static file on the server that
+        // is rebuilt on a schedule, so a plain re-request after clearing the
+        // local cache returns the same stale listing. Any query parameter makes
+        // the server answer live, so an explicit refresh sends one and routine
+        // reads keep hitting the static file.
+        $url = $base . '/widgets';
+        if ($force_refresh) {
+            $url = add_query_arg('force_refresh', '1', $url);
+        }
+
+        $response = wp_remote_get($url, [
             'timeout'   => 15,
             'sslverify' => false,
             'headers'   => ['User-Agent' => 'Master Addons Widgets Library/' . JLTMA_VER],
@@ -106,6 +125,27 @@ class Widgets_Ajax
         set_transient(self::CACHE_KEY, $body['widgets'], self::CACHE_TTL);
 
         return $body['widgets'];
+    }
+
+    /**
+     * Catalog from the shared templates-library file cache.
+     *
+     * @param bool $force_refresh
+     * @return array|false
+     */
+    private function file_cache_catalog($force_refresh)
+    {
+        if (!class_exists('\\MasterAddons\\Inc\\Classes\\Template_Library_Cache')) {
+            return false;
+        }
+
+        $cache = \MasterAddons\Inc\Classes\Template_Library_Cache::get_instance();
+
+        if (!method_exists($cache, 'get_cached_widgets')) {
+            return false;
+        }
+
+        return $cache->get_cached_widgets($force_refresh);
     }
 
     public function get_widgets()
@@ -274,7 +314,11 @@ class Widgets_Ajax
         wp_send_json_success([
             'message'   => __('Widget imported successfully!', 'master-addons'),
             'widget_id' => $post_id,
-            'edit_url'  => admin_url('post.php?post=' . $post_id . '&action=edit'),
+            // A jltma_widget is edited in the Widget Builder, not the classic
+            // post editor — post.php would open a screen with none of the
+            // widget's markup, styles or controls on it. This is the same URL
+            // the CPT list table substitutes for its own Edit row action.
+            'edit_url'  => admin_url('admin.php?page=jltma-widget-editor&widget_id=' . $post_id),
         ]);
     }
 

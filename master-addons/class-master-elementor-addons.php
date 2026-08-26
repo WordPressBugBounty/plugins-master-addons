@@ -400,15 +400,15 @@ if (!class_exists('Master_Elementor_Addons')) {
 				}
 
 				// Handle Widgets subnamespace (Widgets Library)
-				// if (0 === strpos($templates_class, 'Widgets\\')) {
-				// 	$widgets_class = str_replace('Widgets\\', '', $templates_class);
-				// 	$widgets_file_name = strtolower(preg_replace(['/([a-z])([A-Z])/', '/_/'], ['$1-$2', '-'], $widgets_class));
-				// 	$file = JLTMA_PATH . 'inc/admin/templates/widgets/class-' . $widgets_file_name . '.php';
-				// 	if (is_readable($file)) {
-				// 		include_once $file;
-				// 		return;
-				// 	}
-				// }
+				if (0 === strpos($templates_class, 'Widgets\\')) {
+					$widgets_class = str_replace('Widgets\\', '', $templates_class);
+					$widgets_file_name = strtolower(preg_replace(['/([a-z])([A-Z])/', '/_/'], ['$1-$2', '-'], $widgets_class));
+					$file = JLTMA_PATH . 'inc/admin/templates/widgets/class-' . $widgets_file_name . '.php';
+					if (is_readable($file)) {
+						include_once $file;
+						return;
+					}
+				}
 
 				// Handle Includes subnamespace (types, classes, sources, documents)
 				if (0 === strpos($templates_class, 'Includes\\')) {

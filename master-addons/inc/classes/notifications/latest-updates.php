@@ -72,7 +72,12 @@ if (!class_exists('Latest_Updates')) {
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
                 // Changelogs
                 __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list"> Security: Security update. </span><br>', 'master-addons')
-                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Changed: Custom CSS Pro to Free. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Added: The Widgets Library is available, with the catalog stored on disk so the screen loads without waiting on the network. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Fixed: Refresh in the Widgets Library now genuinely re-reads the catalog from the server instead of returning the same cached list. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Fixed: Edit Widget after importing now opens the Widget Builder instead of an empty editor screen. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Fixed: Removed the empty gap under shorter thumbnails in the Templates and Widgets libraries. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Fixed: The loading spinner logo no longer fails to load on the Widgets Library. </span><br>', 'master-addons')
+                . __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Fixed: Elementor editor infinite loading issue fixed. </span><br>', 'master-addons')
             );
             printf(wp_kses_post($jltma_changelog_message));
         }

@@ -1,10 +1,10 @@
 === Master Addons for Elementor – Elementor Addons, Widgets, Mega Menu Builder, Popup Builder, Widget Builder & Template Kits ===
 Contributors: pixarlabs, jwthemeltd, litonice13, masteraddons
-Tags: elementor addons, elementor widgets, mega menu builder, popup builder, elementor template kits
+Tags: elementor addons, elementor widgets, mega menu builder, popup builder, template kits
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 3.1.9
+Stable tag: 3.2.0
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -369,6 +369,15 @@ This plugin connects to a few external services from inside the WordPress admin.
 
 
 == Changelog ==
+= Master Elementor Addons v3.2.0 (26-08-2026) =
+* Security: Security update.
+* Added: The Widgets Library is available, with the catalog stored on disk so the screen loads without waiting on the network.
+* Fixed: Refresh in the Widgets Library now genuinely re-reads the catalog from the server instead of returning the same cached list.
+* Fixed: Edit Widget after importing now opens the Widget Builder instead of an empty editor screen.
+* Fixed: Removed the empty gap under shorter thumbnails in the Templates and Widgets libraries.
+* Fixed: The loading spinner logo no longer fails to load on the Widgets Library.
+* Fixed: Elementor editor infinite loading issue fixed.
+
 = Master Elementor Addons v3.1.9 (13-08-2026) =
 * Security: Security update.
 * Changed: Custom CSS Pro to Free.
@@ -428,3 +437,8 @@ This plugin connects to a few external services from inside the WordPress admin.
 * Fixed: Removed an empty duplicate Patterns section from the Advanced tab.
 
 [Full Changelog →](https://master-addons.com/changelogs/?utm_source=wordpressorg&utm_medium=readme&utm_campaign=master-addons)
+
+== Upgrade Notice ==
+
+= 3.2.0 =
+Security update. Updating is recommended for all users.

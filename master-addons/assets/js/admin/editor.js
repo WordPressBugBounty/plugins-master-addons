@@ -530,6 +530,11 @@
 					page: 1
 				},
 				success: function(e) {
+					if (!e || !e.success || !e.data) {
+						console.error("Master Addons: template request failed", e && e.data ? e.data.message : e);
+						o.layout.showTemplatesView(new a.LibraryCollection([]), new a.CategoriesCollection([]), {});
+						return;
+					}
 					var n = new a.LibraryCollection(e.data.templates), i = new a.CategoriesCollection(e.data.categories);
 					o.tabs[t].data = {
 						templates: n,
@@ -537,6 +542,10 @@
 						keywords: e.data.keywords,
 						pagination: e.data.pagination || null
 					}, o.layout.showTemplatesView(n, i, e.data.keywords);
+				},
+				error: function(xhr, status, error) {
+					console.error("Master Addons: template request error", status, error, xhr && xhr.responseText);
+					o.layout.showTemplatesView(new a.LibraryCollection([]), new a.CategoriesCollection([]), {});
 				}
 			});
 		},

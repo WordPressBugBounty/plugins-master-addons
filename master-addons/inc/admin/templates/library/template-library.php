@@ -31,6 +31,7 @@ class JLTMA_Template_Library {
         add_action('wp_ajax_jltma_open_template', array($this, 'jltma_template_kit_open_kit'));
         add_action('wp_ajax_jltma_get_plugins_status', array($this, 'jltma_get_plugins_status'));
         add_action('wp_ajax_jltma_refresh_templates_cache', array($this, 'refresh_templates_cache'));
+        add_action('wp_ajax_jltma_get_templates_cache_count', array($this, 'get_templates_cache_count'));
         add_action('wp_ajax_jltma_delete_purchased_kit', array($this, 'delete_purchased_kit'));
     }
 
@@ -601,6 +602,36 @@ class JLTMA_Template_Library {
         }
 
         return $categories;
+    }
+
+    /**
+     * AJAX: Get cached templates count
+     *
+     * Called only when the templates modal is opened, so the editor page load
+     * itself never touches the cache directory.
+     */
+    public function get_templates_cache_count() {
+        $wpnonce = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
+        $nonce_valid = wp_verify_nonce($wpnonce, 'jltma_template_library_nonce') ||
+                        wp_verify_nonce($wpnonce, 'master_addons_nonce');
+
+        if (!$nonce_valid) {
+            wp_send_json_error(array('message' => 'Permission denied - nonce failed'));
+        }
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(array('message' => 'Permission denied - insufficient capabilities'));
+        }
+
+        if (!class_exists('MasterAddons\Inc\Classes\Template_Library_Cache')) {
+            wp_send_json_error(array('message' => 'Cache manager not available'));
+        }
+
+        $cache_manager = \MasterAddons\Inc\Classes\Template_Library_Cache::get_instance();
+
+        wp_send_json_success(array(
+            'total_templates' => $cache_manager->get_cached_templates_count(),
+        ));
     }
 
     /**

@@ -1130,7 +1130,7 @@ ul.jltma-dropdown.jltma-sub-menu.dropdown-menu {
     width: inherit !important;
   }
 }
-@media (min-width: ELEMENTOR_SCREEN_MD_MIN) and (max-width: ELEMENTOR_SCREEN_MD_MAX) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .jltma-dropdown-tablet-align-left .jltma-nav-menu__container > ul a {
     justify-content: flex-start;
   }
@@ -1181,7 +1181,7 @@ ul.jltma-dropdown.jltma-sub-menu.dropdown-menu {
     width: 100%;
   }
 }
-@media (max-width: ELEMENTOR_SCREEN_SM_MAX) {
+@media (max-width: 767px) {
   .elementor-widget-ma-navmenu.jltma-dropdown-breakpoints-none .jltma-nav-menu__main.jltma-layout-horizontal > ul > li > a,
   .elementor-widget-ma-navmenu.jltma-dropdown-breakpoints-none .jltma-nav-menu__main.jltma-layout-vertical.jltma-vertical-type-normal > ul > li > a {
     padding-left: 15px;
