@@ -4,7 +4,7 @@ Tags: elementor addons, elementor widgets, mega menu builder, popup builder, tem
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -369,6 +369,25 @@ This plugin connects to a few external services from inside the WordPress admin.
 
 
 == Changelog ==
+= Master Elementor Addons v3.2.1 (02-09-2026) =
+* Improved: Template, kit, widget and popup libraries now load one page at a time, sized to the window, and keep the next page ready so scrolling does not wait on the network.
+* Improved: Libraries paint the previous visit's first page straight away instead of showing a loading screen.
+* Improved: Templates and kits are no longer copied into the site's uploads folder. Everything is served from the remote library, and copies left by earlier versions are removed on activation.
+* Fixed: Template screenshots keep their own proportions instead of being cropped to a fixed frame, and are served full size.
+* Fixed: Pro templates are marked Pro in the Template Library, and importing or inserting one without a licence now offers the upgrade instead of failing part way through. The preview stays available either way.
+* Fixed: The All Keywords filter lists its keywords and opens without running off the edge of the modal.
+* Fixed: MA Comments lost its submit button and its name, email and website fields, showed a logged-out visitor the last signed-in user's name, and rendered the like and dislike counts without their icons.
+* Fixed: Author archive templates render the author name and profile picture instead of leaving them empty.
+* Fixed: The Template Library opens on Pages, and its page no longer has a horizontal scrollbar.
+* Fixed: Template Kits no longer reports "No Templates Found" for a library it has just fetched.
+* Fixed: Refreshing the template cache from the editor no longer throws, and the misleading cache count beside it is gone.
+* Fixed: The plugin no longer leaves folders under uploads/master_addons. The cache directory was recreated on every page load, so deleting the tree brought it straight back empty; anything left by an earlier version is removed on activation.
+* Fixed: Pages imported from a kit are named after the kit again -- "Fundora - Home" rather than "New - Home".
+* Fixed: Importing the same template twice now numbers the second copy instead of leaving two entries with the same title.
+* Fixed: A site with an active licence is no longer told to upgrade. Pro templates showed the Pro badge and the upgrade prompt even after activation, because the check asked only for a licence key and a site licensed through Freemius has none.
+* Fixed: Filtering the Template Library by category returns that category's templates instead of the first page of everything.
+* Changed: Theme Builder lists Archive, Category, Tag, Author and Date under their own Archive heading.
+
 = Master Elementor Addons v3.2.0 (26-08-2026) =
 * Security: Security update.
 * Added: The Widgets Library is available, with the catalog stored on disk so the screen loads without waiting on the network.

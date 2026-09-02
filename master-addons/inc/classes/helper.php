@@ -1761,10 +1761,151 @@ class Helper {
 	}
 
 
+	/**
+	 * Whether this site may import pro templates.
+	 *
+	 * Two things can say yes and they do not agree on how. Freemius knows
+	 * whether a licence is active; the template config knows whether a key was
+	 * entered by hand. Asking only for the key locked out a site licensed
+	 * through Freemius, and asking only for the status let through an install
+	 * whose status read "valid" with no licence behind it at all.
+	 *
+	 * @return bool
+	 */
+	public static function jltma_can_use_pro_templates() {
+		if ( function_exists( 'ma_el_fs' ) ) {
+			$fs = ma_el_fs();
+
+			foreach ( array( 'has_active_valid_license', 'is_paying', 'can_use_premium_code__premium_only' ) as $check ) {
+				if ( method_exists( $fs, $check ) && $fs->$check() ) {
+					return true;
+				}
+			}
+		}
+
+		if ( function_exists( '\MasterAddons\Inc\Admin\Templates\master_addons_templates' ) ) {
+			$config = \MasterAddons\Inc\Admin\Templates\master_addons_templates()->config;
+			$key    = $config->get( 'key' );
+
+			if ( ! empty( $key ) && 'valid' === $config->get( 'status' ) ) {
+				return true;
+			}
+		}
+
+		return (bool) apply_filters( 'jltma_can_use_pro_templates', false );
+	}
+
+
+	/**
+	 * The licence key the template library should be asked with.
+	 *
+	 * The remote library unlocks a pro template for a request that carries a
+	 * licence; a request without one comes back with no content at all. A site
+	 * licensed through Freemius holds its key there, so read it from the
+	 * licence rather than from the template config, which never stored one.
+	 *
+	 * @return string Empty when the site has no licence to send.
+	 */
+	public static function jltma_template_license_key() {
+		if ( ! self::jltma_can_use_pro_templates() ) {
+			return '';
+		}
+
+		if ( function_exists( 'ma_el_fs' ) ) {
+			$fs = ma_el_fs();
+
+			if ( method_exists( $fs, '_get_license' ) ) {
+				$license = $fs->_get_license();
+
+				if ( is_object( $license ) && ! empty( $license->secret_key ) ) {
+					return (string) $license->secret_key;
+				}
+			}
+		}
+
+		if ( function_exists( '\MasterAddons\Inc\Admin\Templates\master_addons_templates' ) ) {
+			$key = \MasterAddons\Inc\Admin\Templates\master_addons_templates()->config->get( 'key' );
+
+			if ( ! empty( $key ) ) {
+				return (string) $key;
+			}
+		}
+
+		return '';
+	}
+
+
+	/**
+	 * A title no post of this type is using yet.
+	 *
+	 * Importing the same template twice left two posts with identical titles --
+	 * WordPress only made the slugs unique, so the list table showed the same
+	 * name twice with nothing to tell them apart. The second copy is numbered
+	 * the way WordPress numbers a duplicate slug.
+	 *
+	 * @param string $title
+	 * @param string $post_type
+	 * @return string
+	 */
+	public static function jltma_unique_post_title( $title, $post_type = 'page' ) {
+		$title = trim( (string) $title );
+
+		if ( '' === $title ) {
+			return $title;
+		}
+
+		$candidate = $title;
+		$suffix    = 1;
+
+		// A hundred copies of one template is already absurd; the guard is only
+		// there so a broken query cannot spin.
+		while ( $suffix < 100 ) {
+			$existing = get_posts( array(
+				'post_type'              => $post_type,
+				'post_status'            => 'any',
+				'title'                  => $candidate,
+				'posts_per_page'         => 1,
+				'fields'                 => 'ids',
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+			) );
+
+			if ( empty( $existing ) ) {
+				return $candidate;
+			}
+
+			$suffix++;
+			$candidate = $title . ' ' . $suffix;
+		}
+
+		return $candidate;
+	}
+
+
 	public static function jltma_set_global_authordata() {
 		global $authordata;
-		if ( ! isset( $authordata->ID ) ) {
-			$post       = get_post();
+
+		if ( isset( $authordata->ID ) ) {
+			return;
+		}
+
+		// On an author archive the author is the thing being queried, and a
+		// theme-builder template renders outside the loop -- so nothing has set
+		// $authordata and get_the_author_meta() comes back empty, which left
+		// the name blank and the avatar on the anonymous gravatar.
+		if ( is_author() ) {
+			$queried = get_queried_object();
+
+			if ( $queried instanceof \WP_User ) {
+				$authordata = $queried; // WPCS: override ok.
+				return;
+			}
+		}
+
+		$post = get_post();
+
+		if ( $post ) {
 			$authordata = get_userdata( $post->post_author ); // WPCS: override ok.
 		}
 	}

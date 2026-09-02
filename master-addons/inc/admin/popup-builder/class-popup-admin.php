@@ -343,8 +343,16 @@ class Popup_Admin {
             return;
         }
 
+        // The grid measures itself and asks for what fills the window; without
+        // it the API's small default page size left the picker with six cards.
+        $per_page = isset($_POST['per_page']) ? absint($_POST['per_page']) : 24;
+        if ($per_page < 1) {
+            $per_page = 24;
+        }
+        $per_page = min($per_page, 50);
+
         $cache = Template_Library_Cache::get_instance();
-        $templates = $cache->get_cached_templates('master_popups');
+        $templates = $cache->get_cached_templates('master_popups', false, $per_page);
         $categories = $cache->get_cached_categories('master_popups');
 
         if ($templates === false) {

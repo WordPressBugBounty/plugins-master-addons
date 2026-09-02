@@ -103,6 +103,11 @@ if (!class_exists('Master_Elementor_Addons')) {
 
 			// Run pending upgrade migrations (e.g. legacy option key migration)
 			add_action('admin_init', [$this, 'jltma_maybe_run_upgrades'], 5);
+
+			// One-time removal of the local template-library mirror under
+			// uploads/master_addons. Self-gates: never runs on the library
+			// server (see Local_Cache_Cleanup::allowed()).
+			\MasterAddons\Inc\Classes\Local_Cache_Cleanup::get_instance();
 		}
 
 		/**
@@ -201,6 +206,15 @@ if (!class_exists('Master_Elementor_Addons')) {
 			self::activated_extensions();
 			self::activated_third_party_plugins();
 			self::activated_icons_library();
+
+			// The template library and kits are served from the remote API, so a
+			// client site has no reason to carry a copy of them on its own disk.
+			// Reactivating is the thing site owners do when they expect the
+			// plugin to tidy up, so the mirror goes now rather than a minute
+			// later on a cron that may never fire.
+			if (class_exists('\\MasterAddons\\Inc\\Classes\\Local_Cache_Cleanup')) {
+				\MasterAddons\Inc\Classes\Local_Cache_Cleanup::purge_now();
+			}
 
 			// Current Master Addons Version
 			$current_version = get_option('_master_addons_version', null);

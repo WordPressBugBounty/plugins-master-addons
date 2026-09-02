@@ -713,18 +713,29 @@ class Importer
             } else {
                 if (class_exists('MasterAddons\Inc\Classes\Template_Kit_Cache')) {
                     $cache_manager = \MasterAddons\Inc\Classes\Template_Kit_Cache::get_instance();
-                    if (method_exists($cache_manager, 'get_kit_manifest')) {
+
+                    // get_kit_manifest() reads a manifest.json under uploads,
+                    // which is no longer written, so this asked for the name
+                    // and got nothing -- leaving every imported page prefixed
+                    // "New". get_kit_title() falls back to the kit listing the
+                    // API already returns.
+                    $kit_title = method_exists($cache_manager, 'get_kit_title')
+                        ? $cache_manager->get_kit_title($parent_template)
+                        : '';
+
+                    if (empty($kit_title) && method_exists($cache_manager, 'get_kit_manifest')) {
                         $manifest = $cache_manager->get_kit_manifest($parent_template);
                         if ($manifest) {
                             $kit_title = $manifest['title'] ?? $manifest['kit_name'] ?? '';
-                            if (!empty($kit_title)) {
-                                if (strpos($kit_title, '-') !== false) {
-                                    $parts = explode('-', $kit_title);
-                                    $page_prefix = trim($parts[0]);
-                                } else {
-                                    $page_prefix = $kit_title;
-                                }
-                            }
+                        }
+                    }
+
+                    if (!empty($kit_title)) {
+                        if (strpos($kit_title, '-') !== false) {
+                            $parts = explode('-', $kit_title);
+                            $page_prefix = trim($parts[0]);
+                        } else {
+                            $page_prefix = $kit_title;
                         }
                     }
                 }
@@ -1703,6 +1714,17 @@ class Importer
      */
     public function preimport_kit_images()
     {
+
+        // These exist purely to warm a local mirror of the remote library.
+        // Client sites keep no such mirror, so there is nothing to pre-download
+        // — the import path fetches what it needs at the time.
+        if (!apply_filters('jltma_local_template_cache', false)) {
+            wp_send_json_success([
+                'message' => 'Local caching is disabled; nothing to pre-download.',
+                'skipped' => true,
+            ]);
+            return;
+        }
         if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
@@ -1802,6 +1824,17 @@ class Importer
      */
     public function predownload_kit()
     {
+
+        // These exist purely to warm a local mirror of the remote library.
+        // Client sites keep no such mirror, so there is nothing to pre-download
+        // — the import path fetches what it needs at the time.
+        if (!apply_filters('jltma_local_template_cache', false)) {
+            wp_send_json_success([
+                'message' => 'Local caching is disabled; nothing to pre-download.',
+                'skipped' => true,
+            ]);
+            return;
+        }
         if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;
@@ -1848,6 +1881,17 @@ class Importer
      */
     public function download_all_kits()
     {
+
+        // These exist purely to warm a local mirror of the remote library.
+        // Client sites keep no such mirror, so there is nothing to pre-download
+        // — the import path fetches what it needs at the time.
+        if (!apply_filters('jltma_local_template_cache', false)) {
+            wp_send_json_success([
+                'message' => 'Local caching is disabled; nothing to pre-download.',
+                'skipped' => true,
+            ]);
+            return;
+        }
         if (!wp_verify_nonce( isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '', 'jltma_template_kits_nonce_action') || !current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'Permission denied']);
             return;

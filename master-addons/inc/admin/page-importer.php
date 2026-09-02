@@ -74,7 +74,7 @@ final class Page_Importer {
             'restNonce' => wp_create_nonce('wp_rest'),
             'pluginUrl' => $plugin_url,
             'assetsUrl' => $plugin_url . '/assets/',
-            'isProActive' => Helper::jltma_premium(),
+            'isProActive' => Helper::jltma_can_use_pro_templates(),
             'strings' => array(
                 'searchPlaceholder' => __('Search templates...', 'master-addons'),
                 'importTemplate' => __('Import', 'master-addons'),
