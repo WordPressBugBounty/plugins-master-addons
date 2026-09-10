@@ -4,7 +4,7 @@ Tags: elementor addons, elementor widgets, mega menu builder, popup builder, tem
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -369,6 +369,11 @@ This plugin connects to a few external services from inside the WordPress admin.
 
 
 == Changelog ==
+= Master Elementor Addons v3.2.2 (10-09-2026) =
+* Improved: Nav Menu Improved style.
+* Fixed: Unnecessary style loading issue fixed.
+* Fixed: Filterable Gallery widget issue fixed.
+
 = Master Elementor Addons v3.2.1 (02-09-2026) =
 * Improved: Template, kit, widget and popup libraries now load one page at a time, sized to the window, and keep the next page ready so scrolling does not wait on the network.
 * Improved: Libraries paint the previous visit's first page straight away instead of showing a loading screen.

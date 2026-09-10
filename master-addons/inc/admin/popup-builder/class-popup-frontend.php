@@ -12,6 +12,7 @@ class Popup_Frontend {
     private static $instance = null;
     private $conditions_checker;
     private $displayed_popups = [];
+    private $renderable_popups = null;
 
     public static function get_instance() {
         if (self::$instance === null) {
@@ -21,11 +22,24 @@ class Popup_Frontend {
     }
 
     public function __construct() {
-        // Initialize conditions checker
-        add_action('init', function(){
-            $this->conditions_checker = new Popup_Conditions();
-        });
         $this->init_hooks();
+    }
+
+    /**
+     * Condition checker, built on first use.
+     *
+     * Only requests that actually have a popup to evaluate need it, so it is
+     * not worth instantiating on 'init' for every frontend, admin, AJAX and
+     * cron request.
+     *
+     * @return Popup_Conditions
+     */
+    private function conditions() {
+        if (!$this->conditions_checker) {
+            $this->conditions_checker = new Popup_Conditions();
+        }
+
+        return $this->conditions_checker;
     }
 
     private function init_hooks() {
@@ -42,6 +56,15 @@ class Popup_Frontend {
 
     public function enqueue_frontend_assets() {
         $popups = $this->get_active_popups_cpt();
+        $popups_data = $this->prepare_popups_data($popups);
+
+        // Nothing will be shown on this request, so ship no popup CSS/JS. The
+        // popup stylesheet depends on the shared animation stylesheet, so an
+        // unconditional enqueue here loaded assets/css/common/animations.css on
+        // every single page, popups or not.
+        if (empty($popups_data) && empty($this->get_renderable_popups())) {
+            return;
+        }
 
         // Enqueue popup builder frontend assets via Assets Manager
         Assets_Manager::enqueue('popup-builder-frontend');
@@ -49,7 +72,7 @@ class Popup_Frontend {
         wp_localize_script('jltma-popup-builder-frontend', 'jltma_popup_frontend', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('jltma_popup_frontend'),
-            'popups' => $this->prepare_popups_data($popups)
+            'popups' => $popups_data
         ]);
 
         // Pro: enqueue additional popup frontend scripts (triggers, etc.)
@@ -57,28 +80,44 @@ class Popup_Frontend {
     }
 
     public function render_popups() {
-        // Get all published popup posts
-        $args = [
+        foreach ($this->get_renderable_popups() as $popup_id) {
+            $this->render_single_popup($popup_id);
+            $this->displayed_popups[] = $popup_id;
+        }
+    }
+
+    /**
+     * Popup IDs that pass activation and display conditions for this request.
+     *
+     * Resolved once and cached: enqueue_frontend_assets() needs the answer to
+     * decide whether to load any popup assets at all, and render_popups() then
+     * renders exactly that set. should_display_popup() also writes meta when a
+     * popup has expired, so running it twice per request is wasteful.
+     *
+     * @return int[]
+     */
+    private function get_renderable_popups() {
+        if ($this->renderable_popups !== null) {
+            return $this->renderable_popups;
+        }
+
+        $this->renderable_popups = [];
+
+        $popups = get_posts([
             'post_type' => 'jltma_popup',
             'post_status' => 'publish',
             'posts_per_page' => -1,
             'orderby' => 'date',
             'order' => 'ASC',
-        ];
-
-        $popups = get_posts($args);
-
-        if (empty($popups) || !$popups) {
-            return;
-        }
+        ]);
 
         foreach ($popups as $popup) {
-            // Check conditions before rendering
             if ($this->should_display_popup($popup->ID)) {
-                $this->render_single_popup($popup->ID);
-                $this->displayed_popups[] = $popup->ID;
+                $this->renderable_popups[] = $popup->ID;
             }
         }
+
+        return $this->renderable_popups;
     }
 
     public function get_displayed_popups() {
@@ -439,7 +478,7 @@ class Popup_Frontend {
         $data = [];
 
         foreach ($popups as $popup) {
-            if (!$this->conditions_checker->check_conditions($popup['id'])) {
+            if (!$this->conditions()->check_conditions($popup['id'])) {
                 continue;
             }
 

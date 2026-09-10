@@ -1,4 +1,9 @@
 == Changelog ==
+= Master Elementor Addons v3.2.2 (10-09-2026) =
+* Improved: Nav Menu Improved style.
+* Fixed: Unnecessary style loading issue fixed.
+* Fixed: Filterable Gallery widget issue fixed.
+
 = Master Elementor Addons v3.2.1 (02-09-2026) =
 * Improved: Template, kit, widget and popup libraries now load one page at a time, sized to the window, and keep the next page ready so scrolling does not wait on the network.
 * Improved: Libraries paint the previous visit's first page straight away instead of showing a loading screen.
