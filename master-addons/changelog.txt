@@ -1,4 +1,7 @@
 == Changelog ==
+= Master Elementor Addons v3.2.3 (10-09-2026) =
+* Security: Security update.
+
 = Master Elementor Addons v3.2.2 (10-09-2026) =
 * Improved: Nav Menu Improved style.
 * Fixed: Unnecessary style loading issue fixed.
