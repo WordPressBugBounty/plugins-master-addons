@@ -190,7 +190,7 @@ class Helper {
 				'start_date'       => $start_date,
 				'end_date'         => $end_data,
 				'counter_time'     => '',
-				'is_campaign'      => 'false',
+				'is_live'          => false,
 				'button_text'      => 'Get Premium',
 				'button_url'       => 'https://jeweltheme.com',
 				'btn_color'        => '#CC22FF',
@@ -2702,7 +2702,7 @@ class Helper {
 		$pro_upgrade = new \MasterAddons\Inc\Classes\Pro_Upgrade();
 
 		// Check if campaign is active, otherwise use fallback
-		if ( 'FALSE' === $pro_upgrade->get_content( 'is_campaign' ) ) {
+		if ( ! wp_validate_boolean( $pro_upgrade->get_content( 'is_live' ) ) ) {
 			$notice   = 'Use "SPECIAL40" to Get Flat 40% OFF';
 			$btn_url  = 'https://master-addons.com/pricing/';
 			$btn_text = 'GET THE DEAL';

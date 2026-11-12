@@ -34,7 +34,6 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 
 			$this->slug = Helper::jltma_slug_cleanup();
 
-			$this->maybe_sync_remote_data();
 			$this->register_sync_hook();
 			$this->set_data();
 
@@ -44,6 +43,8 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 			add_action('elementor/editor/footer', array($this, 'display_popup'));
 
 			add_action('wp_dashboard_setup', array($this, 'dashboard_widget'), 999);
+			add_action('wp_dashboard_setup', array($this, 'deals_widget'));
+			add_action('wp_network_dashboard_setup', array($this, 'deals_widget'));
 		}
 
 		/**
@@ -80,6 +81,89 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 		}
 
 		/**
+		 * Register Deals dashboard widget while a campaign is live (hideable via Screen Options).
+		 *
+		 * @return void
+		 */
+		public function deals_widget()
+		{
+			if (! current_user_can('manage_options') || ! wp_validate_boolean($this->get_content('is_live')) || $this->is_hidden_for_user()) {
+				return;
+			}
+
+			wp_add_dashboard_widget(
+				'jltma_deals_widget',
+				esc_html__('Master Addons Deals', 'master-addons'),
+				array($this, 'deals_widget_render')
+			);
+		}
+
+		/**
+		 * Render Deals dashboard widget
+		 *
+		 * @return void
+		 */
+		public function deals_widget_render()
+		{
+			?>
+				<div class="jltma-dashboard-promo" style="--jltma-popup-color: <?php echo esc_attr($this->get_content('btn_color')); ?>; text-align: center;">
+					<div style="position: relative;">
+						<a target="_blank" rel="noopener" href="<?php echo esc_url($this->get_content('button_url')); ?>">
+							<img src="<?php echo esc_url($this->get_content('image_url')); ?>" alt="<?php esc_attr_e('Master Addons promotion', 'master-addons'); ?>" style="width: 100%; height: auto; display: block;">
+						</a>
+						<?php
+						// Both sides in site-local time, so no browser timezone drift.
+						$seconds_left = $this->get_content('end_date') ? strtotime($this->get_content('end_date')) - current_time('timestamp') : 0;
+						if ($seconds_left > 0) {
+							// Reuses the upgrade popup countdown styles (master-addons-admin-sdk.scss), overlaid on the banner bottom.
+							?>
+							<div class="jltma-popup-countdown jltma-widget-countdown" data-seconds="<?php echo esc_attr($seconds_left); ?>" style="position: absolute; left: 0; right: 0; bottom: 15px; pointer-events: none;">
+								<span class="jltma-popup-countdown-text"><?php esc_html_e('Deal Ends In', 'master-addons'); ?></span>
+								<div class="jltma-popup-countdown-time">
+									<div><span data-counter="days">00</span><span><?php esc_html_e('Days', 'master-addons'); ?></span></div>
+									<span>:</span>
+									<div><span data-counter="hours">00</span><span><?php esc_html_e('Hours', 'master-addons'); ?></span></div>
+									<span>:</span>
+									<div><span data-counter="minutes">00</span><span><?php esc_html_e('Minutes', 'master-addons'); ?></span></div>
+									<span>:</span>
+									<div><span data-counter="seconds">00</span><span><?php esc_html_e('Seconds', 'master-addons'); ?></span></div>
+								</div>
+							</div>
+							<script>
+								( function () {
+									var el = document.querySelector( '.jltma-widget-countdown' );
+									var left = parseInt( el.getAttribute( 'data-seconds' ), 10 );
+									function set( key, value ) {
+										el.querySelector( '[data-counter="' + key + '"]' ).textContent = value;
+									}
+									function tick() {
+										if ( left <= 0 ) {
+											el.style.display = 'none';
+											return clearInterval( timer );
+										}
+										set( 'days', Math.floor( left / 86400 ) );
+										set( 'hours', Math.floor( left % 86400 / 3600 ) );
+										set( 'minutes', Math.floor( left % 3600 / 60 ) );
+										set( 'seconds', left % 60 );
+										left--;
+									}
+									var timer = setInterval( tick, 1000 );
+									tick();
+								} )();
+							</script>
+						<?php } ?>
+					</div>
+					<?php if ($this->get_content('notice')) { ?>
+						<p><?php echo wp_kses_post($this->get_content('notice')); ?></p>
+					<?php } ?>
+					<a class="jltma-popup-button" style="color: #fff !important;" target="_blank" rel="noopener" href="<?php echo esc_url($this->get_content('button_url')); ?>">
+						<?php echo esc_html($this->get_content('button_text')); ?>
+					</a>
+				</div>
+			<?php
+		}
+
+		/**
 		 * Render dashboard widget
 		 *
 		 * @author Jewel Theme <support@jeweltheme.com>
@@ -91,17 +175,7 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 
 			echo '<div class="jltma-overview-widget">';
 
-			if (wp_validate_boolean($this->get_content('is_campaign'))) { ?>
-				<div class="jltma-dashboard-promo" style="--jltma-popup-color: <?php echo esc_attr($this->get_content('btn_color')); ?>;">
-					<a target="_blank" href="<?php echo esc_url($this->get_content('button_url')); ?>">
-						<img src="<?php echo esc_url($this->get_content('image_url')); ?>" alt="<?php esc_html__('Master Addons Promo Image', 'master-addons'); ?>" style="width: 100%; height: auto;">
-					</a>
-					<a class="jltma-popup-button" target="_blank" href="<?php echo esc_url($this->get_content('button_url')); ?>">
-						<?php echo esc_html($this->get_content('button_text')); ?>
-					</a>
-				</div>
-			<?php } ?>
-
+			?>
 
 			<?php if (!empty($feed_items)) { ?>
 				<ul class="jltma-overview-list">
@@ -349,7 +423,50 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 		 */
 		public static function get_data()
 		{
-			return get_option('jltma_sheet_promo_data');
+			$data = get_option('jltma_sheet_promo_data');
+
+			if (! is_array($data) || empty($data)) {
+				return array();
+			}
+
+			// is_live is forced off outside the start/end window (dates stored as 'Y-m-d H:i:s').
+			$now = current_time('mysql');
+
+			if ((! empty($data['start_date']) && $now < $data['start_date']) || (! empty($data['end_date']) && $now > $data['end_date'])) {
+				$data['is_live'] = false;
+			}
+
+			return $data;
+		}
+
+		/**
+		 * Upgrade popup is opened by pro-locked clicks, so print it only on the Dashboard,
+		 * Master Addons own pages (settings, theme/popup builder, template library...) and the Elementor editor.
+		 */
+		public function is_popup_screen()
+		{
+			if (doing_action('elementor/editor/footer')) {
+				return true;
+			}
+
+			$screen = function_exists('get_current_screen') ? get_current_screen() : null;
+
+			if (! $screen) {
+				return false;
+			}
+
+			// Page ids carry the (white-labelable) menu prefix, so match on the page slug part.
+			return in_array($screen->id, array('dashboard', 'dashboard-network'), true)
+				|| preg_match('/_page_(master-addons|jltma-)/', $screen->id)
+				|| in_array($screen->post_type, array('master_template', 'jltma_popup'), true);
+		}
+
+		/**
+		 * Premium users only see a campaign flagged "Show For Premium" in the backend.
+		 */
+		public function is_hidden_for_user()
+		{
+			return Helper::jltma_premium() && ! wp_validate_boolean($this->get_content('show_for_premium'));
 		}
 
 		/**
@@ -376,21 +493,22 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 		}
 
 		/**
-		 * Sync to remote data
-		 *
-		 * @author Jewel Theme <support@jeweltheme.com>
+		 * Fetch campaigns only when the admin allowed Freemius opt-in.
+		 * Required by WordPress.org guideline 7: no external calls without consent.
 		 */
-		public function maybe_sync_remote_data()
+		public static function is_opted_in()
 		{
-			$data = self::get_data();
-
-			if (empty($data)) {
-				$this->sheet_data_remote_sync();
+			if (! function_exists('ma_el_fs')) {
+				return false;
 			}
+
+			$fs = ma_el_fs();
+
+			return $fs->is_registered() && $fs->is_tracking_allowed();
 		}
 
 		/**
-		 * Register Sync hook
+		 * Register Sync hook: schedule daily sync when opted in, tear it down (and drop stored data) otherwise.
 		 *
 		 * @return void
 		 * @author Jewel Theme <support@jeweltheme.com>
@@ -400,8 +518,18 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 			$hook_action = 'jltma_sheet_promo_data_remote_sync';
 			add_action($hook_action, array($this, 'sheet_data_remote_sync'));
 
-			if (!wp_next_scheduled($hook_action)) {
-				wp_schedule_event(time(), 'daily', $hook_action);
+			$scheduled = wp_next_scheduled($hook_action);
+
+			if (self::is_opted_in()) {
+				if (! $scheduled) {
+					// First fetch now (once, right after opt-in); cron handles the daily refresh.
+					wp_schedule_event(time() + DAY_IN_SECONDS, 'daily', $hook_action);
+					$this->sheet_data_remote_sync();
+				}
+			} elseif ($scheduled || false !== get_option('jltma_sheet_promo_data')) {
+				wp_clear_scheduled_hook($hook_action);
+				delete_option('jltma_sheet_promo_data');
+				delete_option('jltma_sheet_promo_data_hash');
 			}
 
 			register_deactivation_hook(JLTMA_FILE, array($this, 'clear_register_sync_hook'));
@@ -426,6 +554,10 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 		 */
 		public function sheet_data_remote_sync()
 		{
+			if (! self::is_opted_in()) {
+				return;
+			}
+
 			$data  = self::get_data();
 			$force = empty( $data );
 
@@ -526,10 +658,8 @@ if (!class_exists('MasterAddons\Inc\Classes\Pro_Upgrade')) {
 		 */
 		public function display_popup()
 		{
-			if (Helper::jltma_premium()) {
-				if (!$this->get_content('show_for_premium')) {
-					return;
-				}
+			if ($this->is_hidden_for_user() || ! $this->is_popup_screen()) {
+				return;
 			}
 
 			if (empty( $this->get_content('is_live') )) {

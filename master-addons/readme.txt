@@ -4,7 +4,7 @@ Tags: elementor addons, elementor widgets, mega menu builder, popup builder, tem
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 3.2.3
+Stable tag: 3.2.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -369,6 +369,11 @@ This plugin connects to a few external services from inside the WordPress admin.
 
 
 == Changelog ==
+= Master Elementor Addons v3.2.4 (12-11-2026) =
+* Improved: Admin dashboard improvements.
+* Improved: Performance and stability improvements.
+* Maintenance: Updated the Freemius licensing library to 2.13.5.
+
 = Master Elementor Addons v3.2.3 (10-09-2026) =
 * Security: Security update.
 

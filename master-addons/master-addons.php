@@ -10,7 +10,7 @@
  * Domain Path: /languages
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Version: 3.2.3
+ * Version: 3.2.4
  * Elementor tested up to: 4.2.4
  * Elementor Pro tested up to: 4.2.3
  * Wordfence Vendor Key: qgxtflvqaabgarz4gu9nozmceloswzrg
