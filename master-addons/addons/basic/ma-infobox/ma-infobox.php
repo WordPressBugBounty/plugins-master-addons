@@ -1061,7 +1061,7 @@ class Infobox extends Master_Widget
 		// }
 
 		if (!empty($settings['ma_el_infobox_readmore_link']['url'])) {
-			$this->add_render_attribute('ma_el_infobox_readmore_link', 'href', $settings['ma_el_infobox_readmore_link']['url']);
+			$this->add_render_attribute('ma_el_infobox_readmore_link', 'href', esc_url($settings['ma_el_infobox_readmore_link']['url']));
 
 			if (!empty($settings['ma_el_infobox_readmore_link']['is_external'])) {
 				$this->add_render_attribute('ma_el_infobox_readmore_link', 'target', '_blank');

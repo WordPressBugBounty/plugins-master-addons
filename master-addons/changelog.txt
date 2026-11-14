@@ -1,4 +1,7 @@
 == Changelog ==
+= Master Elementor Addons v3.2.5 (14-11-2026) =
+* Security: Security update.
+
 = Master Elementor Addons v3.2.4 (12-11-2026) =
 * Improved: Admin dashboard improvements.
 * Improved: Performance and stability improvements.
