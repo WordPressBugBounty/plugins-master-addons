@@ -5,6 +5,7 @@ namespace MasterAddons\Addons;
 // Elementor Classes
 use MasterAddons\Inc\Classes\Base\Master_Widget;
 use Elementor\Icons_Manager;
+use MasterAddons\Inc\Admin\WidgetBuilder\Icon_Library_Helper;
 // Master Addons
 use MasterAddons\Inc\Classes\Animation;
 use MasterAddons\Inc\Admin\Config;
@@ -28,7 +29,53 @@ if (!defined('ABSPATH')) {
 class Nav_Menu extends Master_Widget
 {
     use \MasterAddons\Inc\Traits\Widget_Notice;
-	use \MasterAddons\Inc\Traits\Widget_Assets_Trait;
+	use \MasterAddons\Inc\Traits\Widget_Assets_Trait {
+		get_style_depends as get_config_style_depends;
+	}
+
+    /**
+     * Elementor loads eicons only for logged-in users (admin bar / editor),
+     * so load them here when Elementor Icons is enabled in the Icon Library settings.
+     *
+     * @return array
+     */
+    public function get_style_depends()
+    {
+        $styles = $this->get_config_style_depends();
+
+        if (Icon_Library_Helper::is_library_enabled('elementor-icons')) {
+            $styles[] = Icon_Library_Helper::get_eicons_handle();
+        }
+
+        return $styles;
+    }
+
+    /**
+     * Icon markup. An empty icon gets the default eicon; any eicon falls back
+     * to an inline SVG when Elementor Icons is disabled, as its font isn't loaded then.
+     *
+     * @param array  $icon   Icon control value.
+     * @param string $eicon  Default eicon class.
+     * @param string $svg    Fallback SVG key: 'menu' or 'close'.
+     * @return string
+     */
+    private function get_icon_html($icon, $eicon, $svg)
+    {
+        if (empty($icon['value'])) {
+            $icon = array('value' => $eicon, 'library' => 'eicon');
+        }
+
+        if (is_string($icon['value']) && 0 === strpos($icon['value'], 'eicon-') && !Icon_Library_Helper::is_library_enabled('elementor-icons')) {
+            $paths = array(
+                'menu'  => 'M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z',
+                'close' => 'M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z',
+            );
+
+            return '<svg aria-hidden="true" class="jltma-fallback-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="' . $paths[$svg] . '"></path></svg>';
+        }
+
+        return Icons_Manager::try_get_icon_html($icon, array('aria-hidden' => 'true'));
+    }
 
     /**
      * The id of the <ul> the main nav rendered, so the dropdown can point at it
@@ -388,21 +435,13 @@ class Nav_Menu extends Master_Widget
         $icon = !empty($settings['dropdown_toggle_icon']) ? $settings['dropdown_toggle_icon'] : array();
         $active_icon = !empty($settings['dropdown_toggle_icon_active']) ? $settings['dropdown_toggle_icon_active'] : array();
 
-        if (empty($icon['value'])) {
-            $icon = array('value' => 'eicon-menu-bar', 'library' => 'eicon');
-        }
-
-        if (empty($active_icon['value'])) {
-            $active_icon = array('value' => 'eicon-close', 'library' => 'eicon');
-        }
-
-        // try_get_icon_html() returns the markup; render_icon() would echo it
+        // get_icon_html() returns the markup; render_icon() would echo it
         // straight out of the widget, ahead of everything built here.
         return '<span class="jltma-toggle-icon">' .
-            Icons_Manager::try_get_icon_html($icon, array('aria-hidden' => 'true')) .
+            $this->get_icon_html($icon, 'eicon-menu-bar', 'menu') .
         '</span>' .
         '<span class="jltma-toggle-icon-active">' .
-            Icons_Manager::try_get_icon_html($active_icon, array('aria-hidden' => 'true')) .
+            $this->get_icon_html($active_icon, 'eicon-close', 'close') .
         '</span>';
     }
 
@@ -422,12 +461,8 @@ class Nav_Menu extends Master_Widget
         $icon = !empty($settings['close_icon']) ? $settings['close_icon'] : array();
         $inner = '';
 
-        if (empty($icon['value'])) {
-            $icon = array('value' => 'eicon-close', 'library' => 'eicon');
-        }
-
         if ('text' !== $close_type) {
-            $inner .= Icons_Manager::try_get_icon_html($icon, array('aria-hidden' => 'true'));
+            $inner .= $this->get_icon_html($icon, 'eicon-close', 'close');
         }
 
         if ('icon' !== $close_type) {

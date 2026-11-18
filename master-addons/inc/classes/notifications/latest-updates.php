@@ -71,7 +71,7 @@ if (!class_exists('Latest_Updates')) {
 
                 '<h3 class="jltma-update-head">' . JLTMA . ' <span><small><em>v' . esc_html(JLTMA_VER) . '</em></small>' . __(' has some updates..', 'master-addons') . '</span></h3><br>', // %3$s
                 // Changelogs
-                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Security: Security update. </span><br>', 'master-addons'),
+                __('<span class="dashicons dashicons-yes"></span> <span class="jltma-changes-list">Fixed: Nav Menu frontend icons issue fixed. </span><br>', 'master-addons'),
             );
             printf(wp_kses_post($jltma_changelog_message));
         }

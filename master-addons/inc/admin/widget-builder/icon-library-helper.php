@@ -25,6 +25,41 @@ class Icon_Library_Helper
     }
 
     /**
+     * Whether an icon library is enabled under Settings > Extensions > Icon Library.
+     *
+     * @param string $library Library key, e.g. 'elementor-icons'.
+     * @return bool
+     */
+    public static function is_library_enabled($library)
+    {
+        return 1 == \MasterAddons\Inc\Admin\Settings\Settings::get_icons($library);
+    }
+
+    /**
+     * Elementor Icons style handle — Elementor's copy if registered, otherwise local fallback.
+     *
+     * @return string
+     */
+    public static function get_eicons_handle()
+    {
+        return wp_style_is('elementor-icons', 'registered') ? 'elementor-icons' : 'jltma-elementor-icons';
+    }
+
+    /**
+     * Elementor Icons stylesheet URL — Elementor's copy if present, otherwise local fallback.
+     *
+     * @return string
+     */
+    public static function get_eicons_url()
+    {
+        if (defined('ELEMENTOR_ASSETS_PATH') && defined('ELEMENTOR_ASSETS_URL') && file_exists(ELEMENTOR_ASSETS_PATH . 'lib/eicons/css/elementor-icons.min.css')) {
+            return ELEMENTOR_ASSETS_URL . 'lib/eicons/css/elementor-icons.min.css';
+        }
+
+        return trailingslashit(JLTMA_URL) . 'assets/fonts/elementor-icon/elementor-icons.css';
+    }
+
+    /**
      * Enqueue icon library CSS files
      */
     public function enqueue_icon_libraries()
@@ -32,12 +67,7 @@ class Icon_Library_Helper
         $plugin_url = trailingslashit(JLTMA_URL);
         $fonts_path = $plugin_url . 'assets/fonts/';
 
-        // Elementor Icons — use Elementor's copy if available, otherwise local fallback
-        if (wp_style_is('elementor-icons', 'registered')) {
-            wp_enqueue_style('elementor-icons');
-        } else {
-            wp_enqueue_style('jltma-elementor-icons');
-        }
+        wp_enqueue_style(self::get_eicons_handle());
 
         // Simple Line Icons
         wp_enqueue_style(

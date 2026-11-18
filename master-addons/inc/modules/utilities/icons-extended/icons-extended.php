@@ -40,6 +40,8 @@ class IconsExtended
         $tabs['elementor-icons'] = [
             'name'          => 'elementor-icons',
             'label'         => __('Elementor Icons', 'master-addons' ),
+            // Without 'url' Elementor never enqueues eicons for logged-out visitors.
+            'url'           => \MasterAddons\Inc\Admin\WidgetBuilder\Icon_Library_Helper::get_eicons_url(),
             'prefix'        => 'eicon-',
             'displayPrefix' => 'elementor-icons',
             'labelIcon'     => 'jltma-icon jltma-icon-ma elementor-icons eicon eicon-elementor-circle jltma-font-manager',

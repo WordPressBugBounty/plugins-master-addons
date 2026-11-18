@@ -1,4 +1,7 @@
 == Changelog ==
+= Master Elementor Addons v3.2.6 (18-11-2026) =
+* Fixed: Nav Menu frontend icons issue fixed.
+
 = Master Elementor Addons v3.2.5 (14-11-2026) =
 * Security: Security update.
 
